@@ -1,0 +1,29 @@
+﻿
+// must publish the release version first
+dotnet publish -c Release
+
+// builds the image
+docker build --tag psharp .
+
+// Single use run - runs the image and removes it when exiting - great for developing
+docker run -it --rm psharp
+
+// To create a container for the image
+docker create --name psharp-container psharp
+
+// list all the containers
+docker ps -a
+
+// start the container
+docker start psharp-container
+
+// top the container
+docker top psharp-container
+
+// attach to a running container to see its output
+docker attach --sig-proxy=false psharp-container
+
+// remove the container
+docker stop psharp-container
+docker rm psharp-container
+
