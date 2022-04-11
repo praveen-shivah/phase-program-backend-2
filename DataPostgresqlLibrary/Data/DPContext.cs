@@ -1,12 +1,12 @@
 ﻿namespace DataPostgresqlLibrary
 {
+    using DataModelsLibrary;
+
     using Microsoft.EntityFrameworkCore;
 
     public class DPContext : DbContext
     {
-        public DPContext(DbContextOptions<DPContext> options) : base(options)
-        {
-        }
+        public DbSet<SiteInformation> SiteInformation { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
