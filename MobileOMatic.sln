@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp9", "ConsoleApp9\ConsoleApp9.csproj", "{084E4685-BC92-4EDE-8C82-639192616C3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuppeteerClassLibrary", "PuppeteerClassLibrary\PuppeteerClassLibrary.csproj", "{7334028E-C6C1-4FDD-915F-223D38DCF48A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PuppeteerClassLibrary", "PuppeteerClassLibrary\PuppeteerClassLibrary.csproj", "{7334028E-C6C1-4FDD-915F-223D38DCF48A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileRequestApi", "MobileRequestApi\MobileRequestApi.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileRequestApi", "MobileRequestApi\MobileRequestApi.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Information", "Docker Information", "{04B0A01A-9B26-4A77-A4FF-F9383FC9A685}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Information", "Docke
 		ConsoleApp9\Instructions for docker.txt = ConsoleApp9\Instructions for docker.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPostgresqlLibrary", "DataPostgresqlLibrary\DataPostgresqlLibrary.csproj", "{ED598848-A89E-40DE-81D5-0ACB81C978FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataPostgresqlLibrary", "DataPostgresqlLibrary\DataPostgresqlLibrary.csproj", "{ED598848-A89E-40DE-81D5-0ACB81C978FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModelsLibrary", "DataModelsLibrary\DataModelsLibrary.csproj", "{315660FA-A8C3-4D6A-AC36-7F0416B8C405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModelsLibrary", "DataModelsLibrary\DataModelsLibrary.csproj", "{315660FA-A8C3-4D6A-AC36-7F0416B8C405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSharedLibrary", "DataSharedLibrary\DataSharedLibrary.csproj", "{8AA3A907-83BB-4450-AAFD-8BC4018A4347}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSharedLibrary", "DataSharedLibrary\DataSharedLibrary.csproj", "{8AA3A907-83BB-4450-AAFD-8BC4018A4347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileOMaticBackgroundServicesLibrary", "MobileOMaticBackgroundServicesLibrary\MobileOMaticBackgroundServicesLibrary.csproj", "{FB8468AD-6CE8-4054-9F2F-C1129D203015}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{8AA3A907-83BB-4450-AAFD-8BC4018A4347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA3A907-83BB-4450-AAFD-8BC4018A4347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA3A907-83BB-4450-AAFD-8BC4018A4347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8468AD-6CE8-4054-9F2F-C1129D203015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8468AD-6CE8-4054-9F2F-C1129D203015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8468AD-6CE8-4054-9F2F-C1129D203015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8468AD-6CE8-4054-9F2F-C1129D203015}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
