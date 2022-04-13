@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+  </ItemGroup>
+
+</Project>
