@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Release-Linux;Debug-Linux</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.32" />
+    <PackageReference Include="GamingSystem.LoggingLibrary" Version="1.0.24" />
+    <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

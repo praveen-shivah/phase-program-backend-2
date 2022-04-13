@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Release-Linux;Debug-Linux</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.32" />
+    <PackageReference Include="GamingSystem.EncryptionLibrary" Version="1.0.21" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
+    <PackageReference Include="SimpleInjector" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
+  </ItemGroup>
+
+</Project>
