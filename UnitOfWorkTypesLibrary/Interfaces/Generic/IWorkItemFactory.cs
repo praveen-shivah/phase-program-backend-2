@@ -4,7 +4,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    public interface IWorkItemFactoryGeneric<T> where T : DbContext
+    public interface IWorkItemFactory<T> where T : DbContext
     {
         IWorkItem Create(Func<T, WorkItemResultEnum> function);
     }

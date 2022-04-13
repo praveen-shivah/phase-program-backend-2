@@ -12,10 +12,10 @@
     public sealed class UnitOfWork<T> : IUnitOfWork where T : DbContext
     {
         private readonly ILogger logger;
-        private readonly IUnitOfWorkContextContainerGeneric<T> unitOfWorkContextContainer;
+        private readonly IUnitOfWorkContextContainer<T> unitOfWorkContextContainer;
         private readonly IWorkItemList workItemList = new WorkItemList();
 
-        public UnitOfWork(ILogger logger, IUnitOfWorkContextContainerGeneric<T> unitOfWorkContextContainer)
+        public UnitOfWork(ILogger logger, IUnitOfWorkContextContainer<T> unitOfWorkContextContainer)
         {
             this.logger = logger;
             this.unitOfWorkContextContainer = unitOfWorkContextContainer;
@@ -62,7 +62,7 @@
             while (retriesRemaining > 0)
             {
                 IDbContextTransaction dbContextTransaction;
-                if (this.unitOfWorkContextContainer.CurrentDbContext.InTransaction)
+                if (this.unitOfWorkContextContainer.CurrentDbContext.Database.CurrentTransaction != null)
                 {
                     dbContextTransaction = this.unitOfWorkContextContainer.CurrentDbContext.Database.CurrentTransaction;
                 }

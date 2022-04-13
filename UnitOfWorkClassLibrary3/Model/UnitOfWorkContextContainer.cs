@@ -4,18 +4,18 @@
 
     using UnitOfWorkTypesLibrary;
 
-    public class UnitOfWorkContextContainerGeneric<T> : IUnitOfWorkContextContainerGeneric<T> where T : DbContext
+    public class UnitOfWorkContextContainer<T> : IUnitOfWorkContextContainer<T> where T : DbContext
     {
-        private readonly IEntityContextFrameWorkFactoryGeneric<T> entityContextFrameWorkFactory;
+        private readonly IEntityContextFrameWorkFactory<T> entityContextFrameWorkFactory;
         private T context;
         private int numberOfTransactions;
 
-        public UnitOfWorkContextContainerGeneric(IEntityContextFrameWorkFactoryGeneric<T> entityContextFrameWorkFactory)
+        public UnitOfWorkContextContainer(IEntityContextFrameWorkFactory<T> entityContextFrameWorkFactory)
         {
             this.entityContextFrameWorkFactory = entityContextFrameWorkFactory;
-        }        
-        
-        T IUnitOfWorkContextContainerGeneric<T>.CurrentDbContext
+        }
+
+        T IUnitOfWorkContextContainer<T>.CurrentDbContext
         {
             get
             {
@@ -30,15 +30,15 @@
             }
         }
 
-        int IUnitOfWorkContextContainerGeneric<T>.NumberOfTransactions
+        int IUnitOfWorkContextContainer<T>.NumberOfTransactions
         {
             get => this.numberOfTransactions;
             set => this.numberOfTransactions = value;
         }
 
-        void IUnitOfWorkContextContainerGeneric<T>.Refresh()
+        void IUnitOfWorkContextContainer<T>.Refresh()
         {
-            this.context?.CloseConnection();
+            this.context?.Database.CloseConnection();
             this.context?.Dispose();
             this.context = default(T);
             this.numberOfTransactions = 0;

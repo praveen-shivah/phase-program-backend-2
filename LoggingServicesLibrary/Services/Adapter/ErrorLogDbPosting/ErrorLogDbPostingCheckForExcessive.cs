@@ -4,7 +4,7 @@
 
     using CommonServices;
 
-    using Database.Domain.Models.Library;
+    using DataPostgresqlLibrary;
 
     public class ErrorLogDbPostingCheckForExcessive : IErrorLogDbPosting
     {
@@ -17,7 +17,7 @@
             this.dateTimeService = dateTimeService;
         }
 
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(IDataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
             var response = this.errorLogDbPosting.Post(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)

@@ -9,6 +9,9 @@
     <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.32" />
     <PackageReference Include="GamingSystem.EncryptionLibrary" Version="1.0.21" />
     <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
+    <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
     <PackageReference Include="SimpleInjector" Version="4.9.1" />
   </ItemGroup>
 

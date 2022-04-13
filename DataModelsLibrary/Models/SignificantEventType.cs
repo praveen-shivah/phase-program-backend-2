@@ -6,7 +6,6 @@
 
     public class SignificantEventType : BaseEntity
     {
-        [MaxLength(100)]
         public string Description { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using Database.Domain.Models.Library;
+    using DataPostgresqlLibrary;
 
     public class ErrorLogDbPostingStart : IErrorLogDbPosting
     {
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(IDataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
             return new ErrorLogDbPostingResponse() { IsSuccessful = true };
         }

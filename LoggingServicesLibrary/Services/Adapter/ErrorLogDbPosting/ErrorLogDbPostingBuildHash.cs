@@ -1,8 +1,6 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using System.Linq;
-
-    using Database.Domain.Models.Library;
+    using DataPostgresqlLibrary;
 
     using SharedUtilities;
 
@@ -17,7 +15,7 @@
             this.guidFactory = guidFactory;
         }
 
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(IDataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
             var response = this.errorLogDbPosting.Post(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)

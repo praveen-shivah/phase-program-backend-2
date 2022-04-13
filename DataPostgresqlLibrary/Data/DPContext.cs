@@ -2,21 +2,13 @@
 {
     using DataModelsLibrary;
 
-    using JetBrains.Annotations;
-
     using Microsoft.EntityFrameworkCore;
 
-    public class DPContext : DbContext
+    public partial class DPContext : DbContext
     {
-        public DPContext([NotNull] DbContextOptions options)
-            : base(options)
+        public DPContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DPContext()
-        {
-        }
-
         public DbSet<ErrorLog> ErrorLog { get; set; }
         public DbSet<SignificantEvent> SignificantEvent { get; set; }
         public DbSet<SiteInformation> SiteInformation { get; set; }

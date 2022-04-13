@@ -6,18 +6,18 @@
 
     using UnitOfWorkTypesLibrary;
 
-    public class WorkItem : IWorkItem
+    public class WorkItem<T> : IWorkItem where T : DbContext
     {
-        private readonly Func<DbContext, WorkItemResultEnum> function;
+        private readonly Func<T, WorkItemResultEnum> function;
 
-        public WorkItem(Func<DbContext, WorkItemResultEnum> function)
+        public WorkItem(Func<T, WorkItemResultEnum> function)
         {
             this.function = function;
         }
 
         WorkItemResultEnum IWorkItem.Execute(DbContext context)
         {
-            return this.function((DbContext)context);
+            return this.function((T)context);
         }
     }
 }

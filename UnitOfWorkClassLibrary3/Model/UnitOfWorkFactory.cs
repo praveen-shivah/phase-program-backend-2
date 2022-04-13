@@ -8,20 +8,20 @@
 
     using UnitOfWorkTypesLibrary;
 
-    public class UnitOfWorkFactoryGeneric<T> : IUnitOfWorkFactoryGeneric<T> where T : DbContext
+    public class UnitOfWorkFactory<T> : IUnitOfWorkFactory<T> where T : DbContext
     {
         private readonly ILogger logger;
-        private readonly IUnitOfWorkContextContainerFactoryGeneric<T> unitOfWorkContextContainerFactory;
-        private readonly IWorkItemFactoryGeneric<T> workItemFactory;
+        private readonly IUnitOfWorkContextContainerFactory<T> unitOfWorkContextContainerFactory;
+        private readonly IWorkItemFactory<T> workItemFactory;
 
-        public UnitOfWorkFactoryGeneric(ILogger logger, IUnitOfWorkContextContainerFactoryGeneric<T> unitOfWorkContextContainerFactory, IWorkItemFactoryGeneric<T> workItemFactory)
+        public UnitOfWorkFactory(ILogger logger, IUnitOfWorkContextContainerFactory<T> unitOfWorkContextContainerFactory, IWorkItemFactory<T> workItemFactory)
         {
             this.logger = logger;
             this.unitOfWorkContextContainerFactory = unitOfWorkContextContainerFactory;
             this.workItemFactory = workItemFactory;
         }
 
-        IUnitOfWork IUnitOfWorkFactoryGeneric<T>.Create(Func<T, WorkItemResultEnum> function)
+        IUnitOfWork IUnitOfWorkFactory<T>.Create(Func<T, WorkItemResultEnum> function)
         {
             IUnitOfWork result = new UnitOfWork<T>(this.logger, this.unitOfWorkContextContainerFactory.CreateContainer());
             result.AddWorkItem(this.workItemFactory.Create(function));

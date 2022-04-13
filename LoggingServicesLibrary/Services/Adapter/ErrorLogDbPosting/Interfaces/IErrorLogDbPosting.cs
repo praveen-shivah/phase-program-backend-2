@@ -1,9 +1,9 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using Database.Domain.Models.Library;
+    using DataPostgresqlLibrary;
 
     public interface IErrorLogDbPosting
     {
-        ErrorLogDbPostingResponse Post(IDataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest);
+        ErrorLogDbPostingResponse Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest);
     }
 }

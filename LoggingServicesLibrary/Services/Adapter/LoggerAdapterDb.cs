@@ -2,14 +2,15 @@
 {
     using System;
 
-    using Database.Domain.Models.Library;
-    using Database.Domain.Models.Library.Models;
-
     using DataModelsLibrary;
+
+    using DataPostgresqlLibrary;
 
     using log4net;
 
     using LoggingLibrary;
+
+    using UnitOfWorkTypesLibrary;
 
     using SignificantEventType = LoggingLibraryTypes.SignificantEventType;
 
@@ -22,11 +23,11 @@
     {
         private readonly IErrorLogDbPosting errorLogDbPosting;
         private readonly ILog log4Net;
-        private readonly IEntityContextFrameWorkFactory entityContextFrameWorkFactory;
+        private readonly IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory;
         private readonly ISignificantEventLogDbPosting significantEventLogDbPosting;
 
         public LoggerAdapterDb(ILog log4Net,
-                               IEntityContextFrameWorkFactory entityContextFrameWorkFactory,
+                               IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory,
                                IErrorLogDbPosting errorLogDbPosting,
                                ISignificantEventLogDbPosting significantEventLogDbPosting)
             : base(log4Net)
