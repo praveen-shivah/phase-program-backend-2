@@ -22,7 +22,7 @@
             builder.UseNpgsql(dbConnection);
             var options = builder.Options;
 
-            return new DPContext(options);
+            return new DPContext(options, null);
         }
 
         public void Dispose()
