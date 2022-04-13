@@ -1,6 +1,7 @@
 ﻿namespace DataPostgresqlLibrary
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
 
     using SharedUtilities;
 
@@ -10,9 +11,12 @@
     {
         private readonly IConnectionFactory connectionFactory;
 
-        public EntityContextFrameWorkFactoryNormal(IConnectionFactory connectionFactory)
+        private readonly IConfiguration configuration;
+
+        public EntityContextFrameWorkFactoryNormal(IConnectionFactory connectionFactory, IConfiguration configuration)
         {
             this.connectionFactory = connectionFactory;
+            this.configuration = configuration;
         }
 
         DPContext IEntityContextFrameWorkFactory<DPContext>.CreateContext(string dbName)
@@ -22,7 +26,7 @@
             builder.UseNpgsql(dbConnection);
             var options = builder.Options;
 
-            return new DPContext(options, null);
+            return new DPContext(options, this.configuration);
         }
 
         public void Dispose()
