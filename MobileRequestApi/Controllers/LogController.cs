@@ -25,5 +25,14 @@
 
             return this.Ok();
         }
+
+        [HttpPost("log")]
+        public IActionResult Log()
+        {
+            this.logger.Debug(LogClass.General, "test of a log message");
+            this.logger.Error(LogClass.General, "LogController", "Index", "Test of an error message", new Exception("Test of an error exception"));
+
+            return this.Ok();
+        }
     }
 }
