@@ -1,11 +1,13 @@
 ﻿namespace UnitOfWorkTypesLibrary
 {
+    using System.Threading.Tasks;
+
     public interface IUnitOfWork
     {
         void AddWorkItem(IWorkItem workItem);
 
         void AddWorkItems(IWorkItem[] workItems);
 
-        WorkItemResultEnum Execute();
+        Task<WorkItemResultEnum> Execute();
     }
 }

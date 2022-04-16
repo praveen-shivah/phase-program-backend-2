@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataPostgresqlLibrary.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20220413231648_Added indexes to log tables")]
-    partial class Addedindexestologtables
+    [Migration("20220416180950_Initial Create")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,9 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("StackTrace")
                         .IsRequired()
                         .HasColumnType("text");
@@ -67,6 +70,115 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasDatabaseName("IX_ErrorLog_Hash");
 
                     b.ToTable("ErrorLog");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BalanceFormatted")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CfCustomerType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CfCustomerTypeUnformatted")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CfSiteNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CfSiteNumberUnformatted")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedDate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedDateFormatted")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvoiceId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvoiceNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InvoiceUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StatusFormatted")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("LineItem");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.SignificantEvent", b =>
@@ -92,6 +204,9 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("ShortDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -109,9 +224,15 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -139,6 +260,18 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SiteInformation");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
+                {
+                    b.HasOne("DataModelsLibrary.Invoice", null)
+                        .WithMany("LineItems")
+                        .HasForeignKey("InvoiceId");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.Invoice", b =>
+                {
+                    b.Navigation("LineItems");
                 });
 #pragma warning restore 612, 618
         }

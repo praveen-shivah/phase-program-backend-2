@@ -1,6 +1,7 @@
 ﻿namespace UnitOfWorkClassLibrary
 {
     using System;
+    using System.Threading.Tasks;
 
     using LoggingLibrary;
 

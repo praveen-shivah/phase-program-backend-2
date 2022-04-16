@@ -32,6 +32,9 @@
         {
         }
 
+        public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<LineItem> LineItem { get; set; }
+
         public DbSet<ErrorLog> ErrorLog { get; set; }
 
         public DbSet<SignificantEvent> SignificantEvent { get; set; }

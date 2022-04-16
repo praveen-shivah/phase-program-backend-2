@@ -1,6 +1,7 @@
 ﻿namespace UnitOfWorkClassLibrary
 {
     using System;
+    using System.Threading.Tasks;
 
     using LoggingLibrary;
 
@@ -31,9 +32,9 @@
             this.workItemList.AddWorkItems(workItems);
         }
 
-        WorkItemResultEnum IUnitOfWork.Execute()
+        async Task<WorkItemResultEnum> IUnitOfWork.Execute()
         {
-            return this.executeUnitOfWork();
+            return await this.executeUnitOfWork();
         }
 
         private WorkItemResultEnum doUnitOfWork(DbContext context)
@@ -50,7 +51,7 @@
             return WorkItemResultEnum.commitSuccessfullyCompleted;
         }
 
-        private WorkItemResultEnum executeUnitOfWork()
+        private async Task<WorkItemResultEnum> executeUnitOfWork()
         {
             var result = WorkItemResultEnum.notSet;
 
@@ -79,16 +80,16 @@
                     {
                         case WorkItemResultEnum.cancelWithoutError:
                         case WorkItemResultEnum.rollbackExit:
-                            this.rollBack(dbContextTransaction);
+                            await this.rollBack(dbContextTransaction);
                             this.unitOfWorkContextContainer.Refresh();
                             break;
                         case WorkItemResultEnum.doneContinue:
                         case WorkItemResultEnum.commitExit:
                         case WorkItemResultEnum.commitSuccessfullyCompleted:
-                            this.unitOfWorkContextContainer.CurrentDbContext.SaveChanges();
+                            await this.unitOfWorkContextContainer.CurrentDbContext.SaveChangesAsync();
                             if (this.unitOfWorkContextContainer.NumberOfTransactions == 1)
                             {
-                                dbContextTransaction.Commit();
+                                await dbContextTransaction.CommitAsync();
                             }
 
                             break;
@@ -100,13 +101,14 @@
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    this.rollBack(dbContextTransaction);
+                    await this.rollBack(dbContextTransaction);
                     this.unitOfWorkContextContainer.Refresh();
                     retriesRemaining--;
                     result = WorkItemResultEnum.concurrencyError;
                 }
-                //catch (SqlException ex)
-                //{
+
+                // catch (SqlException ex)
+                // {
                 //    result = WorkItemResultEnum.exceptionError;
                 //    if (ex.ErrorCode == 1205)
                 //    {
@@ -115,7 +117,7 @@
                 //        retriesRemaining--;
                 //        result = WorkItemResultEnum.deadlockError;
                 //    }
-                //}
+                // }
                 catch (Exception ex)
                 {
                     if (ex.Message.ToUpper()
@@ -128,7 +130,7 @@
                     }
                     else
                     {
-                        this.rollBack(dbContextTransaction);
+                        await this.rollBack(dbContextTransaction);
                         throw;
                     }
                 }
@@ -146,11 +148,16 @@
             return result;
         }
 
-        private void rollBack(IDbContextTransaction dbContextTransaction)
+        private async Task rollBack(IDbContextTransaction dbContextTransaction)
         {
             try
             {
-                dbContextTransaction?.Rollback();
+                if (dbContextTransaction == null)
+                {
+                    return;
+                }
+
+                await dbContextTransaction.RollbackAsync();
             }
             catch
             {

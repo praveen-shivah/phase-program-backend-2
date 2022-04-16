@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
     <ProjectReference Include="..\LoggingServicesLibrary\LoggingServicesLibrary.csproj" />
     <ProjectReference Include="..\MobileOMaticBackgroundServicesLibrary\MobileOMaticBackgroundServicesLibrary.csproj" />
     <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />

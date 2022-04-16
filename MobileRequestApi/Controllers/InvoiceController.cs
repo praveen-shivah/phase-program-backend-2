@@ -1,5 +1,9 @@
 ﻿namespace MobileRequestApi.Controllers
 {
+    using System.Threading.Tasks;
+
+    using InvoiceRepositoryTypes;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
@@ -16,10 +20,13 @@
 
         private readonly ILogger logger;
 
-        public InvoiceController(ILogger logger)
+        private readonly IInvoiceRepository invoiceRepository;
+
+        public InvoiceController(ILogger logger, IInvoiceRepository invoiceRepository)
         {
             // this.messageSession = messageSession;
             this.logger = logger;
+            this.invoiceRepository = invoiceRepository;
         }
 
         [HttpPost("invoice-test")]
@@ -32,12 +39,12 @@
 
         [HttpPost("invoice-paid")]
         [Consumes("application/x-www-form-urlencoded")]
-        public IActionResult InvoicePaid([FromForm]string JSONString)
+        public async Task<IActionResult> InvoicePaid([FromForm]string jsonString)
         {
-            this.logger.Debug(LogClass.General, "Invoice Paid");
-            var invoice = JsonConvert.DeserializeObject<Root>(JSONString);
+            this.logger.Debug(LogClass.General, $"Invoice Paid {jsonString}");
+            var response = await this.invoiceRepository.Store(new InvoiceStoreRequest(jsonString));
 
-            return this.Ok();
+            return response.IsSuccessful ? this.Ok() : this.StatusCode(500, response.InvoiceStoreResponseType);
         }
     }
 }
