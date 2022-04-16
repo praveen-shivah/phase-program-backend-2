@@ -32,14 +32,17 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitOfWorkClassLibrary3", "UnitOfWorkClassLibrary3\UnitOfWorkClassLibrary3.csproj", "{C4C73691-80C2-4F0F-BCC5-89CDF23D68D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC6DB5FA-8A0C-4F86-9504-F1C7DF55AE26}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitOfWorkTypesLibrary", "UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj", "{772CA7EE-D81A-4F70-A870-917B9FE274F6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskLibrary", "AutomaticTaskLibrary\AutomaticTaskLibrary.csproj", "{1B946E24-3063-4C90-B494-DCD261F2B853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskMessageLibrary", "AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj", "{AB33D57E-0A33-4F13-B0F1-C449B1CC9BBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskMessageLibrary", "AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj", "{AB33D57E-0A33-4F13-B0F1-C449B1CC9BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileRequestApiDTO", "MobileRequestApiDTO\MobileRequestApiDTO.csproj", "{A79ED1B3-5967-4ECA-8E73-5566182C1A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileRequestApiDTO", "MobileRequestApiDTO\MobileRequestApiDTO.csproj", "{A79ED1B3-5967-4ECA-8E73-5566182C1A7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

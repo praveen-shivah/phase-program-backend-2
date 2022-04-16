@@ -1,4 +1,6 @@
-﻿using DataPostgresqlLibrary;
+﻿using CommonServices;
+
+using DataPostgresqlLibrary;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -16,6 +18,6 @@ public class DesignTimeDbContextFactory :
         var builder = new DbContextOptionsBuilder<DPContext>();
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         builder.UseNpgsql(connectionString);
-        return new DPContext(builder.Options, configuration);
+        return new DPContext(builder.Options, configuration, new DateTimeServiceDefault());
     }
 }

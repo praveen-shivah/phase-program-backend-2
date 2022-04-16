@@ -1,18 +1,18 @@
 ﻿namespace MobileRequestApi.Controllers
 {
-    using System;
-
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using NServiceBus;
+    using MobileRequestApiDTO;
+
+    using Newtonsoft.Json;
 
     [ApiController]
     [Route("api/invoice")]
     public class InvoiceController : Controller
     {
-        private readonly IMessageSession messageSession;
+        // private readonly IMessageSession messageSession;
 
         private readonly ILogger logger;
 
@@ -22,10 +22,20 @@
             this.logger = logger;
         }
 
+        [HttpPost("invoice-test")]
+        public IActionResult InvoicePaid(Invoice information)
+        {
+            this.logger.Debug(LogClass.General, $"Invoice Paid {information}");
+
+            return this.Ok();
+        }
+
         [HttpPost("invoice-paid")]
-        public IActionResult InvoicePaid(int invoiceId)
+        [Consumes("application/x-www-form-urlencoded")]
+        public IActionResult InvoicePaid([FromForm]string JSONString)
         {
             this.logger.Debug(LogClass.General, "Invoice Paid");
+            var invoice = JsonConvert.DeserializeObject<Root>(JSONString);
 
             return this.Ok();
         }

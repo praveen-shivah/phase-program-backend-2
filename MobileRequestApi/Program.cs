@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 
 using MobileOMaticBackgroundServicesLibrary;
 
+using MobileRequestApi.Middleware;
+
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 Console.WriteLine("Starting");
@@ -58,6 +60,7 @@ app.MigrateDatabase();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseRequestResponseLogging();
     app.UseSwagger();
     app.UseSwaggerUI();
 }

@@ -25,4 +25,8 @@
     <ProjectReference Include="..\DataSharedLibrary\DataSharedLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Invoice\" />
+  </ItemGroup>
+
 </Project>

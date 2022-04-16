@@ -1,5 +1,7 @@
 ﻿namespace DataPostgresqlLibrary
 {
+    using CommonServices;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
@@ -13,10 +15,13 @@
 
         private readonly IConfiguration configuration;
 
-        public EntityContextFrameWorkFactoryNormal(IConnectionFactory connectionFactory, IConfiguration configuration)
+        private readonly IDateTimeService dateTimeService;
+
+        public EntityContextFrameWorkFactoryNormal(IConnectionFactory connectionFactory, IConfiguration configuration, IDateTimeService dateTimeService)
         {
             this.connectionFactory = connectionFactory;
             this.configuration = configuration;
+            this.dateTimeService = dateTimeService;
         }
 
         DPContext IEntityContextFrameWorkFactory<DPContext>.CreateContext(string dbName)
@@ -26,7 +31,7 @@
             builder.UseNpgsql(dbConnection);
             var options = builder.Options;
 
-            return new DPContext(options, this.configuration);
+            return new DPContext(options, this.configuration, this.dateTimeService);
         }
 
         public void Dispose()

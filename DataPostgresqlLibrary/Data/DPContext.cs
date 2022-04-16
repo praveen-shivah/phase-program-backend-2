@@ -1,6 +1,10 @@
 ﻿namespace DataPostgresqlLibrary
 {
+    using CommonServices;
+
     using DataModelsLibrary;
+
+    using DataSharedLibrary;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -12,10 +16,16 @@
     {
         private readonly IConfiguration configuration;
 
-        public DPContext(DbContextOptions options, IConfiguration configuration)
+        private readonly IDateTimeService dateTimeService;
+
+        public DPContext(
+            DbContextOptions options,
+            IConfiguration configuration,
+            IDateTimeService dateTimeService)
             : base(options)
         {
             this.configuration = configuration;
+            this.dateTimeService = dateTimeService;
         }
 
         public DPContext()
@@ -28,14 +38,41 @@
 
         public DbSet<SiteInformation> SiteInformation { get; set; }
 
+        public override int SaveChanges()
+        {
+            this.ChangeTracker.DetectChanges();
+            var added = this.ChangeTracker.Entries().Where(t => t.State == EntityState.Added).Select(t => t.Entity).ToArray();
+
+            foreach (var entity in added)
+            {
+                if (entity is BaseEntity track)
+                {
+                    track.CreatedOn = this.dateTimeService.UtcNow;
+                    track.ModifiedOn = this.dateTimeService.UtcNow;
+                }
+            }
+
+            var modified = this.ChangeTracker.Entries().Where(t => t.State == EntityState.Modified).Select(t => t.Entity).ToArray();
+
+            foreach (var entity in modified)
+            {
+                if (entity is BaseEntity track)
+                {
+                    track.ModifiedOn = this.dateTimeService.UtcNow;
+                }
+            }
+
+            return base.SaveChanges();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = this.configuration.GetConnectionString("MobileOMatic") ?? "host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";
             var sqlConnectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString)
-            {
-                MaxPoolSize = 10000,
-                MinPoolSize = 200
-            };
+                                                 {
+                                                     MaxPoolSize = 10000,
+                                                     MinPoolSize = 200
+                                                 };
 
             // We have a connection string
             var dbContextOptionsBuilder = new DbContextOptionsBuilder();
@@ -50,10 +87,10 @@
                     {
                         entity.HasIndex(
                             e => new
-                            {
-                                e.Hash,
-                                e.CreatedOn
-                            }).HasDatabaseName("IX_ErrorLog_Hash");
+                                     {
+                                         e.Hash,
+                                         e.CreatedOn
+                                     }).HasDatabaseName("IX_ErrorLog_Hash");
 
                         entity.Property(e => e.CreatedOn).HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
 
@@ -65,13 +102,13 @@
                     {
                         entity.HasIndex(
                             e => new
-                            {
-                                e.Id,
-                                e.ShortDescription,
-                                e.CreatedBy,
-                                e.EventTypeId,
-                                e.CreatedOn
-                            }).HasDatabaseName("IX_SignificantEvent_EventId_CreatedOn");
+                                     {
+                                         e.Id,
+                                         e.ShortDescription,
+                                         e.CreatedBy,
+                                         e.EventTypeId,
+                                         e.CreatedOn
+                                     }).HasDatabaseName("IX_SignificantEvent_EventId_CreatedOn");
 
                         entity.Property(e => e.CreatedOn).HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
                     });
