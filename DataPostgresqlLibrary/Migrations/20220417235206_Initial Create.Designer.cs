@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataPostgresqlLibrary.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20220416180950_Initial Create")]
+    [Migration("20220417235206_Initial Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -153,6 +153,40 @@ namespace DataPostgresqlLibrary.Migrations
                     b.ToTable("Invoice");
                 });
 
+            modelBuilder.Entity("DataModelsLibrary.InvoiceRevision", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Invoice_Id")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Json")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex(new[] { "Invoice_Id" }, "IX_InvoiceRevisionInvoice_Id");
+
+                    b.ToTable("InvoiceRevision");
+                });
+
             modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
                 {
                     b.Property<int>("Id")
@@ -262,6 +296,13 @@ namespace DataPostgresqlLibrary.Migrations
                     b.ToTable("SiteInformation");
                 });
 
+            modelBuilder.Entity("DataModelsLibrary.InvoiceRevision", b =>
+                {
+                    b.HasOne("DataModelsLibrary.Invoice", null)
+                        .WithMany("InvoiceRevisions")
+                        .HasForeignKey("InvoiceId");
+                });
+
             modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
                 {
                     b.HasOne("DataModelsLibrary.Invoice", null)
@@ -271,6 +312,8 @@ namespace DataPostgresqlLibrary.Migrations
 
             modelBuilder.Entity("DataModelsLibrary.Invoice", b =>
                 {
+                    b.Navigation("InvoiceRevisions");
+
                     b.Navigation("LineItems");
                 });
 #pragma warning restore 612, 618

@@ -34,6 +34,8 @@ namespace DataModelsLibrary
 
         public List<LineItem> LineItems { get; set; }
 
+        public List<InvoiceRevision> InvoiceRevisions { get; set; }
+
         public string Status { get; set; }
 
         public string StatusFormatted { get; set; }

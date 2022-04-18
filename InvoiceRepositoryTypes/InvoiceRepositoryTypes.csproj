@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataModelsLibrary\DataModelsLibrary.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />
+  </ItemGroup>
+
 </Project>
