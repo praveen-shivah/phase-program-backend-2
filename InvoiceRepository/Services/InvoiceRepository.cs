@@ -28,11 +28,11 @@
                         return WorkItemResultEnum.doneContinue;
                     });
 
-            var result = await uow.Execute();
+            var result = await uow.ExecuteAsync();
             return new InvoiceStoreResponse()
             {
-                IsSuccessful = result == WorkItemResultEnum.doneContinue,
-                InvoiceStoreResponseType = result == WorkItemResultEnum.doneContinue ? InvoiceStoreResponseType.success : InvoiceStoreResponseType.databaseError
+                IsSuccessful = result == WorkItemResultEnum.commitSuccessfullyCompleted,
+                InvoiceStoreResponseType = result == WorkItemResultEnum.commitSuccessfullyCompleted ? InvoiceStoreResponseType.success : InvoiceStoreResponseType.databaseError
             };
         }
     }

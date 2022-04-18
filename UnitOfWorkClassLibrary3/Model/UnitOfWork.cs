@@ -32,7 +32,7 @@
             this.workItemList.AddWorkItems(workItems);
         }
 
-        async Task<WorkItemResultEnum> IUnitOfWork.Execute()
+        async Task<WorkItemResultEnum> IUnitOfWork.ExecuteAsync()
         {
             return await this.executeUnitOfWork();
         }

@@ -6,6 +6,8 @@
 
     using DataPostgresqlLibrary;
 
+    using InvoiceRepositoryTypes;
+
     using LoggingLibrary;
 
     using Microsoft.Extensions.Configuration;

@@ -30,7 +30,8 @@
         }
 
         [HttpPost("invoice-test")]
-        public IActionResult InvoicePaid(Invoice information)
+        [Consumes("application/x-www-form-urlencoded")]
+        public IActionResult InvoiceTest([FromForm] string information)
         {
             this.logger.Debug(LogClass.General, $"Invoice Paid {information}");
 
@@ -39,7 +40,7 @@
 
         [HttpPost("invoice-paid")]
         [Consumes("application/x-www-form-urlencoded")]
-        public async Task<IActionResult> InvoicePaid([FromForm]string jsonString)
+        public async Task<IActionResult> InvoicePaid([FromForm] string jsonString)
         {
             this.logger.Debug(LogClass.General, $"Invoice Paid {jsonString}");
             var response = await this.invoiceRepository.Store(new InvoiceStoreRequest(jsonString));

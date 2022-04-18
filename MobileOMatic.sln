@@ -54,9 +54,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{32A6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{5AE88197-6AFE-4BAB-BB90-971AB0A0AC68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceRepository", "InvoiceRepository\InvoiceRepository.csproj", "{BA07E48E-410B-44BD-81FE-874FAED9DB86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceRepository", "InvoiceRepository\InvoiceRepository.csproj", "{BA07E48E-410B-44BD-81FE-874FAED9DB86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceRepositoryTypes", "InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj", "{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceRepositoryTypes", "InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj", "{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizationRepositoryTypes", "OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj", "{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizationRepository", "OrganizationRepository\OrganizationRepository.csproj", "{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -194,6 +198,22 @@ Global
 		{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
 		{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +234,8 @@ Global
 		{A79ED1B3-5967-4ECA-8E73-5566182C1A7A} = {5AE88197-6AFE-4BAB-BB90-971AB0A0AC68}
 		{BA07E48E-410B-44BD-81FE-874FAED9DB86} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{68CFC54F-31E6-4C45-84FF-0641C0EE67B0} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B70FE91-13AB-4324-B0D4-CBA8FCB24D18}

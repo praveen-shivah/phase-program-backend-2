@@ -1,21 +1,30 @@
 using System;
+using System.Configuration;
 using System.IO;
+using System.Net.Mime;
 using System.Reflection;
+using System.Text;
 
 using DataPostgresqlLibrary;
+
+using InvoiceRepositoryTypes;
 
 using log4net;
 using log4net.Config;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 using MobileOMaticBackgroundServicesLibrary;
 
 using MobileRequestApi.Middleware;
+
+using OrganizationRepositoryTypes;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -42,6 +51,9 @@ builder.Services.AddSwaggerGen();
 // Register dependencies here
 builder.Services.AddSingleton<LoggingLibrary.ILogger>(logger);
 builder.Services.AddDbContext<DPContext>();
+builder.Services.AddSingleton<IOrganizationRepository>(applicationLifeCycle.Resolve<IOrganizationRepository>());
+builder.Services.AddSingleton<IInvoiceRepository>(applicationLifeCycle.Resolve<IInvoiceRepository>());
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 connectionString = @"host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";
 
@@ -67,7 +79,9 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseValidateAPICall();
 
 app.MapControllers();
 

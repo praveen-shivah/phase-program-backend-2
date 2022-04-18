@@ -1,8 +1,8 @@
-﻿namespace UnitOfWorkClassLibrary
+﻿namespace InvoiceRepository
 {
     using ApplicationLifeCycle;
 
-    using InvoiceRepository;
+    using InvoiceRepositoryTypes;
 
     using SimpleInjector;
 
@@ -10,6 +10,8 @@
     {
         protected override bool registerBindings()
         {
+            this.GlobalContainer.Register<IInvoiceRepository, InvoiceRepository>(Lifestyle.Singleton);
+
             this.GlobalContainer.Register<IInvoiceStore, InvoiceStoreStart>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreDeserialize>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreCreateInvoice>(Lifestyle.Singleton);
