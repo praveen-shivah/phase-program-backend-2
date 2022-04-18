@@ -34,7 +34,7 @@
 
         public DbSet<InvoiceRevision> InvoiceRevision { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
-        public DbSet<LineItem> LineItem { get; set; }
+        public DbSet<InvoiceLineItem> InvoiceLineItem { get; set; }
         public DbSet<ErrorLog> ErrorLog { get; set; }
         public DbSet<SignificantEvent> SignificantEvent { get; set; }
         public DbSet<SiteInformation> SiteInformation { get; set; }

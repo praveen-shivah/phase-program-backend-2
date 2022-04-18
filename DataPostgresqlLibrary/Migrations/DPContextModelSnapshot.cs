@@ -151,6 +151,34 @@ namespace DataPostgresqlLibrary.Migrations
                     b.ToTable("Invoice");
                 });
 
+            modelBuilder.Entity("DataModelsLibrary.InvoiceLineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoiceLineItem");
+                });
+
             modelBuilder.Entity("DataModelsLibrary.InvoiceRevision", b =>
                 {
                     b.Property<int>("Id")
@@ -162,7 +190,7 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("InvoiceId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Invoice_Id")
@@ -183,34 +211,6 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasIndex(new[] { "Invoice_Id" }, "IX_InvoiceRevisionInvoice_Id");
 
                     b.ToTable("InvoiceRevision");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("InvoiceId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ItemId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("LineItem");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.SignificantEvent", b =>
@@ -294,18 +294,22 @@ namespace DataPostgresqlLibrary.Migrations
                     b.ToTable("SiteInformation");
                 });
 
+            modelBuilder.Entity("DataModelsLibrary.InvoiceLineItem", b =>
+                {
+                    b.HasOne("DataModelsLibrary.Invoice", null)
+                        .WithMany("LineItems")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DataModelsLibrary.InvoiceRevision", b =>
                 {
                     b.HasOne("DataModelsLibrary.Invoice", null)
                         .WithMany("InvoiceRevisions")
-                        .HasForeignKey("InvoiceId");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.LineItem", b =>
-                {
-                    b.HasOne("DataModelsLibrary.Invoice", null)
-                        .WithMany("LineItems")
-                        .HasForeignKey("InvoiceId");
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DataModelsLibrary.Invoice", b =>

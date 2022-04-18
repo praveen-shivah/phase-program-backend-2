@@ -1,10 +1,10 @@
 ﻿namespace InvoiceRepository
 {
-    using System.ComponentModel.Design.Serialization;
-
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
+
+    using LoggingLibrary;
 
     using MobileRequestApiDTO;
 
@@ -14,9 +14,12 @@
     {
         private readonly IInvoiceStore invoiceStore;
 
-        public InvoiceStoreDeserialize(IInvoiceStore invoiceStore)
+        private readonly ILogger logger;
+
+        public InvoiceStoreDeserialize(IInvoiceStore invoiceStore, ILogger logger)
         {
             this.invoiceStore = invoiceStore;
+            this.logger = logger;
         }
 
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
@@ -27,15 +30,27 @@
                 return response;
             }
 
-            var root = JsonConvert.DeserializeObject<Root>(request.JsonString);
-            if (root == null)
+            try
+            {
+                var root = JsonConvert.DeserializeObject<Root>(request.JsonString);
+
+                if (root == null)
+                {
+                    response.IsSuccessful = false;
+                    response.InvoiceStoreResponseType = InvoiceStoreResponseType.jsonDeserializationError;
+                    return response;
+                }
+
+                response.Invoice = root.Invoice;
+
+                return response;
+            }
+            catch (Exception e)
             {
                 response.IsSuccessful = false;
                 response.InvoiceStoreResponseType = InvoiceStoreResponseType.jsonDeserializationError;
-                return response;
+                this.logger.Error(LogClass.General, "InvoiceStoreDeserializer", "Store", $"Error: {e.Message} {e.StackTrace}", e);
             }
-
-            response.Invoice = root.Invoice;
 
             return response;
         }

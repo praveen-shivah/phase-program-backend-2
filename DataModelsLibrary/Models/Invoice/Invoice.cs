@@ -32,7 +32,7 @@ namespace DataModelsLibrary
 
         public string InvoiceUrl { get; set; }
 
-        public List<LineItem> LineItems { get; set; }
+        public List<InvoiceLineItem> LineItems { get; set; }
 
         public List<InvoiceRevision> InvoiceRevisions { get; set; }
 

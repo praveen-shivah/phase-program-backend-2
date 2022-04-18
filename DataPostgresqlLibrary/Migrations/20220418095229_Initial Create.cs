@@ -108,14 +108,36 @@ namespace DataPostgresqlLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InvoiceLineItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    InvoiceId = table.Column<int>(type: "integer", nullable: false),
+                    ItemId = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceLineItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvoiceLineItem_Invoice_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoice",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvoiceRevision",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    InvoiceId = table.Column<int>(type: "integer", nullable: false),
                     Invoice_Id = table.Column<string>(type: "text", nullable: false),
                     Json = table.Column<string>(type: "text", nullable: false),
-                    InvoiceId = table.Column<int>(type: "integer", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -126,34 +148,19 @@ namespace DataPostgresqlLibrary.Migrations
                         name: "FK_InvoiceRevision_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoice",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LineItem",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ItemId = table.Column<string>(type: "text", nullable: false),
-                    InvoiceId = table.Column<int>(type: "integer", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LineItem", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LineItem_Invoice_InvoiceId",
-                        column: x => x.InvoiceId,
-                        principalTable: "Invoice",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ErrorLog_Hash",
                 table: "ErrorLog",
                 columns: new[] { "Hash", "CreatedOn" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceLineItem_InvoiceId",
+                table: "InvoiceLineItem",
+                column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceRevision_InvoiceId",
@@ -164,11 +171,6 @@ namespace DataPostgresqlLibrary.Migrations
                 name: "IX_InvoiceRevisionInvoice_Id",
                 table: "InvoiceRevision",
                 column: "Invoice_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LineItem_InvoiceId",
-                table: "LineItem",
-                column: "InvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SignificantEvent_EventId_CreatedOn",
@@ -182,10 +184,10 @@ namespace DataPostgresqlLibrary.Migrations
                 name: "ErrorLog");
 
             migrationBuilder.DropTable(
-                name: "InvoiceRevision");
+                name: "InvoiceLineItem");
 
             migrationBuilder.DropTable(
-                name: "LineItem");
+                name: "InvoiceRevision");
 
             migrationBuilder.DropTable(
                 name: "SignificantEvent");
