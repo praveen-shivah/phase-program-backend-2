@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataPostgresqlLibrary.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,25 @@ namespace DataPostgresqlLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoice", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Organization",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    URL = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    APIKey = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organization", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,6 +134,8 @@ namespace DataPostgresqlLibrary.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     InvoiceId = table.Column<int>(type: "integer", nullable: false),
                     ItemId = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -188,6 +209,9 @@ namespace DataPostgresqlLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "InvoiceRevision");
+
+            migrationBuilder.DropTable(
+                name: "Organization");
 
             migrationBuilder.DropTable(
                 name: "SignificantEvent");
