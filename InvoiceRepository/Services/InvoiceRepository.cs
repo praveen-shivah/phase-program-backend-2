@@ -10,21 +10,20 @@
     {
         private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
 
-        public InvoiceRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory)
+        private readonly IInvoiceStore invoiceStore;
+
+        public InvoiceRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IInvoiceStore invoiceStore)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
+            this.invoiceStore = invoiceStore;
         }
 
         async Task<InvoiceStoreResponse> IInvoiceRepository.Store(InvoiceStoreRequest request)
         {
             var uow = this.unitOfWorkFactory.Create(
-                context =>
+                async context =>
                     {
-                        // Store json string in a revision table
-                        // create invoice if does not exist
-                        // create line items
-                        // if requires automation, then add to service bus to get 
-                        // response will update invoice in zoho
+                        await this.invoiceStore.Store(context, request);
                         return WorkItemResultEnum.doneContinue;
                     });
 

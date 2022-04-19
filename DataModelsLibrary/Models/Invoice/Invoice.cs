@@ -4,6 +4,8 @@ namespace DataModelsLibrary
 
     public class Invoice : BaseEntity
     {
+        public string OrganizationId { get; set; }
+
         public int Balance { get; set; }
 
         public string BalanceFormatted { get; set; }

@@ -43,7 +43,7 @@
         public async Task<IActionResult> InvoicePaid([FromForm] string jsonString)
         {
             this.logger.Debug(LogClass.General, $"Invoice Paid {jsonString}");
-            var response = await this.invoiceRepository.Store(new InvoiceStoreRequest(jsonString));
+            var response = await this.invoiceRepository.Store(new InvoiceStoreRequest(this.HttpContext.Request.Headers["OrganizationId"], jsonString));
 
             return response.IsSuccessful ? this.Ok() : this.StatusCode(500, response.InvoiceStoreResponseType);
         }

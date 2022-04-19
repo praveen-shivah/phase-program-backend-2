@@ -2,6 +2,8 @@
 {
     using DataPostgresqlLibrary;
 
+    using Microsoft.EntityFrameworkCore;
+
     using OrganizationRepositoryTypes;
 
     using UnitOfWorkTypesLibrary;
@@ -19,9 +21,9 @@
         {
             var response = new OrganizationResponse();
             var uow = this.unitOfWorkFactory.Create(
-                context =>
+                async context =>
                     {
-                        var organizationRecord = context.Organization.SingleOrDefault(x => x.UserId == organizationRequest.OrganizationId && x.APIKey == organizationRequest.APIKey);
+                        var organizationRecord = await context.Organization.SingleOrDefaultAsync(x => x.UserId == organizationRequest.OrganizationId && x.APIKey == organizationRequest.APIKey);
                         if (organizationRecord == null)
                         {
                             return WorkItemResultEnum.cancelWithoutError;
