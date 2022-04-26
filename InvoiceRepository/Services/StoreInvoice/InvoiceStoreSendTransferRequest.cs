@@ -8,12 +8,12 @@
     {
         private readonly IInvoiceStore invoiceStore;
 
-        private readonly ISendPointsTransfer sendPointsTransfer;
+        private readonly IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer;
 
-        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, ISendPointsTransfer sendPointsTransfer)
+        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer)
         {
             this.invoiceStore = invoiceStore;
-            this.sendPointsTransfer = sendPointsTransfer;
+            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
         }
 
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
@@ -26,8 +26,8 @@
 
             foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
             {
-                this.sendPointsTransfer.SendPointsTransfer(
-                    new SendPointsTransferRequest()
+                this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
+                    new VendorToOperatorSendPointsTransferRequest()
                         {
                             AccountId = int.Parse(invoiceLineItem.Description),
                             Points = invoiceLineItem.Quantity,

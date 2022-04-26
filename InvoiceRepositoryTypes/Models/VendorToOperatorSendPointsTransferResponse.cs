@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    public class SendPointsTransferResponse
+    public class VendorToOperatorSendPointsTransferResponse
     {
         public bool IsSuccessful { get; set; }
     }

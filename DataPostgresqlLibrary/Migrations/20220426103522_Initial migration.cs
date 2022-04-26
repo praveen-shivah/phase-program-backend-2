@@ -36,6 +36,7 @@ namespace DataPostgresqlLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OrganizationId = table.Column<string>(type: "text", nullable: false),
                     Balance = table.Column<int>(type: "integer", nullable: false),
                     BalanceFormatted = table.Column<string>(type: "text", nullable: false),
                     CfCustomerType = table.Column<string>(type: "text", nullable: false),
@@ -112,18 +113,18 @@ namespace DataPostgresqlLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SiteInformation",
+                name: "Vendor",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SiteInformation", x => x.Id);
+                    table.PrimaryKey("PK_Vendor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,6 +133,7 @@ namespace DataPostgresqlLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OrganizationId = table.Column<string>(type: "text", nullable: false),
                     InvoiceId = table.Column<int>(type: "integer", nullable: false),
                     ItemId = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
@@ -156,6 +158,7 @@ namespace DataPostgresqlLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OrganizationId = table.Column<string>(type: "text", nullable: false),
                     InvoiceId = table.Column<int>(type: "integer", nullable: false),
                     Invoice_Id = table.Column<string>(type: "text", nullable: false),
                     Json = table.Column<string>(type: "text", nullable: false),
@@ -169,6 +172,33 @@ namespace DataPostgresqlLibrary.Migrations
                         name: "FK_InvoiceRevision_Invoice_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoice",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SiteInformation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OrganizationId = table.Column<string>(type: "text", nullable: false),
+                    Item_Id = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    URL = table.Column<string>(type: "text", nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    VendorId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteInformation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SiteInformation_Vendor_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -191,12 +221,17 @@ namespace DataPostgresqlLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_InvoiceRevisionInvoice_Id",
                 table: "InvoiceRevision",
-                column: "Invoice_Id");
+                columns: new[] { "OrganizationId", "Invoice_Id" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_SignificantEvent_EventId_CreatedOn",
                 table: "SignificantEvent",
                 columns: new[] { "Id", "ShortDescription", "CreatedBy", "EventTypeId", "CreatedOn" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SiteInformation_VendorId",
+                table: "SiteInformation",
+                column: "VendorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -224,6 +259,9 @@ namespace DataPostgresqlLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Invoice");
+
+            migrationBuilder.DropTable(
+                name: "Vendor");
         }
     }
 }

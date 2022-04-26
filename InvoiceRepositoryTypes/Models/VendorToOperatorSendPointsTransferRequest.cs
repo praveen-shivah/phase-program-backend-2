@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    public class SendPointsTransferRequest
+    public class VendorToOperatorSendPointsTransferRequest
     {
         public int SiteId { get; set; }
         public int AccountId { get; set; }
