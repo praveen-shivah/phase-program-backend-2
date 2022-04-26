@@ -39,6 +39,7 @@
         public DbSet<SignificantEvent> SignificantEvent { get; set; }
         public DbSet<SiteInformation> SiteInformation { get; set; }
         public DbSet<Organization> Organization { get; set; }
+        public DbSet<Vendor> Vendor { get; set; }
 
         public override int SaveChanges()
         {
