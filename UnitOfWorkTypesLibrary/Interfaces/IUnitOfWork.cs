@@ -8,6 +8,6 @@
 
         void AddWorkItems(IWorkItem[] workItems);
 
-        Task<WorkItemResultEnum> Execute();
+        Task<WorkItemResultEnum> ExecuteAsync();
     }
 }

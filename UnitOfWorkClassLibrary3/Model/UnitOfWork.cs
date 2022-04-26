@@ -32,16 +32,16 @@
             this.workItemList.AddWorkItems(workItems);
         }
 
-        async Task<WorkItemResultEnum> IUnitOfWork.Execute()
+        async Task<WorkItemResultEnum> IUnitOfWork.ExecuteAsync()
         {
             return await this.executeUnitOfWork();
         }
 
-        private WorkItemResultEnum doUnitOfWork(DbContext context)
+        private async Task<WorkItemResultEnum> doUnitOfWorkAsync(DbContext context)
         {
             foreach (var item in this.workItemList)
             {
-                var result = item.Execute(context);
+                var result = await item.ExecuteAsync(context);
                 if (result != WorkItemResultEnum.doneContinue)
                 {
                     return result;
@@ -75,7 +75,7 @@
 
                 try
                 {
-                    result = this.doUnitOfWork(this.unitOfWorkContextContainer.CurrentDbContext);
+                    result = await this.doUnitOfWorkAsync(this.unitOfWorkContextContainer.CurrentDbContext);
                     switch (result)
                     {
                         case WorkItemResultEnum.cancelWithoutError:

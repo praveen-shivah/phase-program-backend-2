@@ -1,5 +1,7 @@
 ﻿namespace UnitOfWorkTypesLibrary
 {
+    using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
 
     public enum WorkItemResultEnum
@@ -25,6 +27,6 @@
 
     public interface IWorkItem
     {
-        WorkItemResultEnum Execute(DbContext context);
+        Task<WorkItemResultEnum> ExecuteAsync(DbContext context);
     }
 }

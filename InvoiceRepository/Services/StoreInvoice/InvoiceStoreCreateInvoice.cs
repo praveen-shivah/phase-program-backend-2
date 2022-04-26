@@ -33,6 +33,7 @@
                 invoiceRecord = new Invoice
                 {
                     Id = 0,
+                    OrganizationId = request.OrganizationId,
                     Balance = response.Invoice.Balance,
                     BalanceFormatted = response.Invoice.BalanceFormatted,
                     CfCustomerType = response.Invoice.CfCustomerType,

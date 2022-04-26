@@ -38,6 +38,7 @@
         public DbSet<ErrorLog> ErrorLog { get; set; }
         public DbSet<SignificantEvent> SignificantEvent { get; set; }
         public DbSet<SiteInformation> SiteInformation { get; set; }
+        public DbSet<Organization> Organization { get; set; }
 
         public override int SaveChanges()
         {

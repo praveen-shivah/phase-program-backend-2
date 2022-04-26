@@ -22,7 +22,7 @@
             this.workItemFactory = workItemFactory;
         }
 
-        IUnitOfWork IUnitOfWorkFactory<T>.Create(Func<T, WorkItemResultEnum> function)
+        IUnitOfWork IUnitOfWorkFactory<T>.Create(Func<T, Task<WorkItemResultEnum>> function)
         {
             IUnitOfWork result = new UnitOfWork<T>(this.logger, this.unitOfWorkContextContainerFactory.CreateContainer());
             result.AddWorkItem(this.workItemFactory.Create(function));

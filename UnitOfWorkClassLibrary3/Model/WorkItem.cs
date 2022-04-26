@@ -1,6 +1,7 @@
 ﻿namespace UnitOfWorkClassLibrary
 {
     using System;
+    using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -8,16 +9,16 @@
 
     public class WorkItem<T> : IWorkItem where T : DbContext
     {
-        private readonly Func<T, WorkItemResultEnum> function;
+        private readonly Func<T, Task<WorkItemResultEnum>> function;
 
-        public WorkItem(Func<T, WorkItemResultEnum> function)
+        public WorkItem(Func<T, Task<WorkItemResultEnum>> function)
         {
             this.function = function;
         }
 
-        WorkItemResultEnum IWorkItem.Execute(DbContext context)
+        async Task<WorkItemResultEnum> IWorkItem.ExecuteAsync(DbContext context)
         {
-            return this.function((T)context);
+            return await this.function((T)context);
         }
     }
 }
