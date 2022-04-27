@@ -4,6 +4,6 @@
 
     public interface IVendorToOperatorSendPointsTransfer
     {
-        VendorToOperatorSendPointsTransferResponse SendPointsTransfer(VendorToOperatorSendPointsTransferRequest request);
+        Task<VendorToOperatorSendPointsTransferResponse> SendPointsTransfer(VendorToOperatorSendPointsTransferRequest request);
     }
 }

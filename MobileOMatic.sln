@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitOfWorkTypesLibrary", "UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj", "{772CA7EE-D81A-4F70-A870-917B9FE274F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskLibrary", "AutomaticTaskLibrary\AutomaticTaskLibrary.csproj", "{1B946E24-3063-4C90-B494-DCD261F2B853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskSharedLibrary", "AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj", "{1B946E24-3063-4C90-B494-DCD261F2B853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskMessageLibrary", "AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj", "{AB33D57E-0A33-4F13-B0F1-C449B1CC9BBB}"
 EndProject
@@ -58,11 +58,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceRepository", "Invoic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceRepositoryTypes", "InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj", "{68CFC54F-31E6-4C45-84FF-0641C0EE67B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizationRepositoryTypes", "OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj", "{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationRepositoryTypes", "OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj", "{FFDE5333-94BC-4645-98DE-A7A17BFE86AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganizationRepository", "OrganizationRepository\OrganizationRepository.csproj", "{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationRepository", "OrganizationRepository\OrganizationRepository.csproj", "{505FE7CA-E443-43C8-B7AD-26A5CF2A7887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZohoBooksService", "ZohoBooksService\ZohoBooksService.csproj", "{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZohoBooksService", "ZohoBooksService\ZohoBooksService.csproj", "{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskMessageHandlerLibrary", "AutomaticTaskMessageHandlerLibrary\AutomaticTaskMessageHandlerLibrary.csproj", "{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskBrowserCommandProcessingLibrary", "AutomaticTaskBrowserCommandProcessingLibrary\AutomaticTaskBrowserCommandProcessingLibrary.csproj", "{37A70522-6B27-476F-8BCF-A0B9A3B2F956}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,6 +228,22 @@ Global
 		{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
 		{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -247,6 +267,8 @@ Global
 		{FFDE5333-94BC-4645-98DE-A7A17BFE86AD} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{505FE7CA-E443-43C8-B7AD-26A5CF2A7887} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{F809F973-33BF-41C0-B4AA-D993FCD9CA1A} = {5AE88197-6AFE-4BAB-BB90-971AB0A0AC68}
+		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
+		{37A70522-6B27-476F-8BCF-A0B9A3B2F956} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B70FE91-13AB-4324-B0D4-CBA8FCB24D18}

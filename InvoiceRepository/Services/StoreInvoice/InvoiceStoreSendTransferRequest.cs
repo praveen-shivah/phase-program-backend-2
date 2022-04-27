@@ -29,6 +29,7 @@
                 this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new VendorToOperatorSendPointsTransferRequest()
                         {
+                            OrganizationId = int.Parse(invoiceLineItem.OrganizationId),
                             AccountId = int.Parse(invoiceLineItem.Description),
                             Points = invoiceLineItem.Quantity,
                             SiteId = int.Parse(invoiceLineItem.ItemId)

@@ -1,10 +1,6 @@
-﻿namespace AutomaticTaskLibrary
+﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
     using ApplicationLifeCycle;
-
-    using InvoiceRepository;
-
-    using InvoiceRepositoryTypes;
 
     using SimpleInjector;
 
@@ -12,6 +8,8 @@
     {
         protected override bool registerBindings()
         {
+            this.GlobalContainer.Register<IBrowserContextFactory, BrowserContextFactory>(Lifestyle.Singleton);
+
             return true;
         }
     }
