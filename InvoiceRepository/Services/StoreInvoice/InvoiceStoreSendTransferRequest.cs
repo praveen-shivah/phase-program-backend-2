@@ -6,6 +6,8 @@
 
     using InvoiceRepositoryTypes;
 
+    using Microsoft.EntityFrameworkCore;
+
     internal class InvoiceStoreSendTransferRequest : IInvoiceStore
     {
         private readonly IInvoiceStore invoiceStore;
@@ -30,11 +32,13 @@
             {
                 var organizationId = invoiceLineItem.OrganizationId.Trim();
                 var siteId = int.Parse(invoiceLineItem.ItemId);
-                var site = dpContext.SiteInformation.Single(x => x.OrganizationId == organizationId && x.Id == siteId);
+                var site = dpContext.SiteInformation.Include(x=>x.Vendor).Single(x => x.OrganizationId == organizationId && x.Id == siteId);
+                var vendor = site.Vendor;
 
                 await this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new VendorToOperatorSendPointsTransferRequest()
                     {
+                        SoftwareType = vendor.SoftwareType,
                         SiteUrl = site.URL,
                         UserId = site.UserName,
                         Password = site.Password,

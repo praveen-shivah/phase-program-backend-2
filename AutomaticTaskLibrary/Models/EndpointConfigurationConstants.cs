@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskLibrary
 {
-    public enum OrganizationType
+    public enum SoftwareType
     {
         notSet,
         riverSweeps

@@ -19,7 +19,7 @@
             Task.Factory.StartNew(
                 () =>
                     {
-                        var organizationType = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.OrganizationType;
+                        var softwareType = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SoftwareType;
                         var url = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SiteUrl;
                         var userId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.UserId;
                         var password = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Password;
