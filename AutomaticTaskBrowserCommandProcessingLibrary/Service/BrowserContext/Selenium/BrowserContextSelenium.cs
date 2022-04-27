@@ -51,7 +51,7 @@
             try
             {
                 this.webDriver = new ChromeDriver();
-                this.waitForTenSeconds = new WebDriverWait(this.webDriver, TimeSpan.FromSeconds(10));
+                this.waitForTenSeconds = new WebDriverWait(this.webDriver, TimeSpan.FromSeconds(30));
             }
             catch (Exception e)
             {

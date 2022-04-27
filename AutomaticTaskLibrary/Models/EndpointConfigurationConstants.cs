@@ -1,5 +1,11 @@
 ﻿namespace AutomaticTaskLibrary
 {
+    public enum OrganizationType
+    {
+        notSet,
+        riverSweeps
+    }
+
     public static class EndpointConfigurationConstants
     {
         public static readonly string AutomaticTaskMessageQueueEndpointQueue = "AUTOMATIC_TASK_MESSAGE_QUEUE_ENDPOINT";

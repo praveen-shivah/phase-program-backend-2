@@ -8,10 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.32" />
-    <PackageReference Include="NServiceBus" Version="7.7.0" />
+    <PackageReference Include="NServiceBus" Version="7.7.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
     <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />

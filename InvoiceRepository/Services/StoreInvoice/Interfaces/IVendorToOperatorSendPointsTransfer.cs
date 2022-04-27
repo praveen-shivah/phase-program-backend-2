@@ -1,5 +1,7 @@
 ﻿namespace InvoiceRepository
 {
+    using AutomaticTaskLibrary;
+
     using InvoiceRepositoryTypes;
 
     public interface IVendorToOperatorSendPointsTransfer

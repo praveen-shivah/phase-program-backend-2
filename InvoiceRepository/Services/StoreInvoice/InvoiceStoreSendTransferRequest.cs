@@ -1,5 +1,7 @@
 ﻿namespace InvoiceRepository
 {
+    using AutomaticTaskLibrary;
+
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
@@ -26,14 +28,19 @@
 
             foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
             {
-                this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
+                var organizationId = invoiceLineItem.OrganizationId.Trim();
+                var siteId = int.Parse(invoiceLineItem.ItemId);
+                var site = dpContext.SiteInformation.Single(x => x.OrganizationId == organizationId && x.Id == siteId);
+
+                await this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new VendorToOperatorSendPointsTransferRequest()
-                        {
-                            OrganizationId = int.Parse(invoiceLineItem.OrganizationId),
-                            AccountId = int.Parse(invoiceLineItem.Description),
-                            Points = invoiceLineItem.Quantity,
-                            SiteId = int.Parse(invoiceLineItem.ItemId)
-                        });
+                    {
+                        SiteUrl = site.URL,
+                        UserId = site.UserName,
+                        Password = site.Password,
+                        AccountId = invoiceLineItem.Description.Trim(),
+                        Points = invoiceLineItem.Quantity,
+                    });
             }
 
             return response;

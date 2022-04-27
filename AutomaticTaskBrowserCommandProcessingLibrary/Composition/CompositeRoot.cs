@@ -10,6 +10,8 @@
         {
             this.GlobalContainer.Register<IBrowserContextFactory, BrowserContextFactory>(Lifestyle.Singleton);
 
+            this.GlobalContainer.Collection.Append<IAutomaticTaskMessageHandler, VendorToOperatorSendPointsTransferHandler>();
+
             return true;
         }
     }

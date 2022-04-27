@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganizationRepository", "O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZohoBooksService", "ZohoBooksService\ZohoBooksService.csproj", "{F809F973-33BF-41C0-B4AA-D993FCD9CA1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskMessageHandlerLibrary", "AutomaticTaskMessageHandlerLibrary\AutomaticTaskMessageHandlerLibrary.csproj", "{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskMessageHandlerHost", "AutomaticTaskMessageHandlerLibrary\AutomaticTaskMessageHandlerHost.csproj", "{505A726B-1ED4-4406-A2D0-4CC27B8EE36B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskBrowserCommandProcessingLibrary", "AutomaticTaskBrowserCommandProcessingLibrary\AutomaticTaskBrowserCommandProcessingLibrary.csproj", "{37A70522-6B27-476F-8BCF-A0B9A3B2F956}"
 EndProject
