@@ -1,4 +1,4 @@
-﻿namespace AutomaticTaskMessageHandlerLibrary
+﻿namespace AutomaticTaskMessageHandlerHost
 {
     using AutomaticTaskBrowserCommandProcessingLibrary;
 

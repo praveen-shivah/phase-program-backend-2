@@ -51,8 +51,8 @@ builder.Services.AddSwaggerGen();
 // Register dependencies here
 builder.Services.AddSingleton<LoggingLibrary.ILogger>(logger);
 builder.Services.AddDbContext<DPContext>();
-builder.Services.AddSingleton<IOrganizationRepository>(applicationLifeCycle.Resolve<IOrganizationRepository>());
-builder.Services.AddSingleton<IInvoiceRepository>(applicationLifeCycle.Resolve<IInvoiceRepository>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IOrganizationRepository>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IInvoiceRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 connectionString = @"host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";

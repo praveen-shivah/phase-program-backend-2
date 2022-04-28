@@ -25,6 +25,10 @@
                         var password = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Password;
                         var accountId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.AccountId;
                         var points = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Points;
+
+                        // Login Page
+                        // Transfer Page
+                        //   Transfer points button
                     });
 
             throw new NotImplementedException();
