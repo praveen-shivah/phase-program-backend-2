@@ -48,7 +48,19 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(
         services =>
             {
-                services.AddTransient<IVendorToOperatorSendPointsTransferHandler, VendorToOperatorSendPointsTransferHandler>();
+                services.AddScoped((_) => applicationLifeCycle.Resolve<IVendorToOperatorSendPointsTransferHandler>());
+
+                services.AddTransient<Func<AutomaticTaskType, IAutomaticTaskMessageHandler?>>(
+                    serviceProvider => key =>
+                        {
+                            switch (key)
+                            {
+                                case AutomaticTaskType.vendorToOperatorSendPointsTransfer:
+                                    return serviceProvider.GetService<IVendorToOperatorSendPointsTransferHandler>();
+                                default:
+                                    throw new ArgumentOutOfRangeException(nameof(key), key, null);
+                            }
+                        });
             })
     .UseNServiceBus(context =>
         {

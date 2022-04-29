@@ -16,7 +16,7 @@
         public Task<bool> Execute(IAutomaticTask message)
         {
             var automaticTaskTransferPoints = (AutomaticTaskTransferPoints)message;
-            Task.Factory.StartNew(
+            return Task.Factory.StartNew(
                 () =>
                     {
                         var softwareType = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SoftwareType;
@@ -29,9 +29,8 @@
                         // Login Page
                         // Transfer Page
                         //   Transfer points button
+                        return true;
                     });
-
-            throw new NotImplementedException();
         }
     }
 }

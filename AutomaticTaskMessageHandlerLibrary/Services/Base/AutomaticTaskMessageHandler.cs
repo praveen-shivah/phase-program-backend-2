@@ -8,24 +8,18 @@
 
     public class AutomaticTaskMessageHandler : IHandleMessages<IAutomaticTask>
     {
-        //private readonly Dictionary<AutomaticTaskType, IAutomaticTaskMessageHandler> automaticTaskMessageHandlerDictionary = new();
+        private readonly Func<AutomaticTaskType, IAutomaticTaskMessageHandler?> handlerProvider;
 
-        //public AutomaticTaskMessageHandler(IAutomaticTaskMessageHandler[] automaticTaskMessageHandlers)
-        //{
-        //    foreach(var automaticTaskMessageHandler in automaticTaskMessageHandlers)
-        //    {
-        //        this.automaticTaskMessageHandlerDictionary.Add(automaticTaskMessageHandler.AutomaticTaskType, automaticTaskMessageHandler);
-        //    }
-        //}
-
-        public Task Handle(IAutomaticTask automaticTask, IMessageHandlerContext context)
+        public AutomaticTaskMessageHandler(Func<AutomaticTaskType, IAutomaticTaskMessageHandler?> handlerProvider)
         {
-            return Task.CompletedTask;
+            this.handlerProvider = handlerProvider;
+        }
 
-            //if (this.automaticTaskMessageHandlerDictionary.TryGetValue(automaticTask.AutomaticTaskType, out var automaticTaskMessageHandler))
-            //{
-            //    await automaticTaskMessageHandler.Execute(automaticTask);
-            //}
+        public async Task Handle(IAutomaticTask automaticTask, IMessageHandlerContext context)
+        {
+            var automaticTaskMessageHandler = this.handlerProvider(automaticTask.AutomaticTaskType);
+            if (automaticTaskMessageHandler == null) return;
+            await automaticTaskMessageHandler.Execute(automaticTask);
         }
     }
 }
