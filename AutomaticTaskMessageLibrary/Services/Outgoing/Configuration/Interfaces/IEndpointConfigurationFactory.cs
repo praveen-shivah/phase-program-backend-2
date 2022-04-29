@@ -4,6 +4,6 @@
 
     public interface IEndpointConfigurationFactory
     {
-        EndpointConfiguration CreateEndpointConfiguration();
+        EndpointConfiguration CreateEndpointConfiguration(string endpointName, string destinationName);
     }
 }

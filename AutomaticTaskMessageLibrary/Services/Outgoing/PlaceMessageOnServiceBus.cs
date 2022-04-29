@@ -1,5 +1,7 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
+    using AutomaticTaskLibrary;
+
     using LoggingLibrary;
 
     using NServiceBus;
@@ -20,10 +22,9 @@
         {
             try
             {
-                var endpointConfiguration = this.endpointConfigurationFactory.CreateEndpointConfiguration();
+                var endpointConfiguration = this.endpointConfigurationFactory.CreateEndpointConfiguration(EndpointConfigurationConstants.QueueEndpoint, EndpointConfigurationConstants.HandlerEndpoint);
                 var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
-                await endpointInstance.Send(placeMessageOnServiceBusRequest.Command).ConfigureAwait(false);
-                await endpointInstance.Stop().ConfigureAwait(false);
+                await endpointInstance.Send(placeMessageOnServiceBusRequest.AutomaticTask).ConfigureAwait(false);
 
                 return new PlaceMessageOnServiceBusResponse() { IsSuccessful = true };
             }

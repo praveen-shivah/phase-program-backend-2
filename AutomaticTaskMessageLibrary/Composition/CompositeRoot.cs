@@ -15,7 +15,7 @@
             this.GlobalContainer.Register<IVendorToOperatorSendPointsTransfer, VendorToOperatorSendPointsTransfer>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IPlaceMessageOnServiceBus, PlaceMessageOnServiceBus>(Lifestyle.Singleton);
 
-            this.GlobalContainer.Register<IEndpointConfigurationFactory, EndpointConfigurationFactoryAzureTestingLocal>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IEndpointConfigurationFactory, EndpointConfigurationFactoryTestingLocal>(Lifestyle.Singleton);
             return true;
         }
     }

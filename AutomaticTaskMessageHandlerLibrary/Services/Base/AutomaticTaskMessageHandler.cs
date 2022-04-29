@@ -8,22 +8,24 @@
 
     public class AutomaticTaskMessageHandler : IHandleMessages<IAutomaticTask>
     {
-        private readonly Dictionary<AutomaticTaskType, IAutomaticTaskMessageHandler> automaticTaskMessageHandlerDictionary = new();
+        //private readonly Dictionary<AutomaticTaskType, IAutomaticTaskMessageHandler> automaticTaskMessageHandlerDictionary = new();
 
-        public AutomaticTaskMessageHandler(IAutomaticTaskMessageHandler[] automaticTaskMessageHandlers)
-        {
-            foreach(var automaticTaskMessageHandler in automaticTaskMessageHandlers)
-            {
-                this.automaticTaskMessageHandlerDictionary.Add(automaticTaskMessageHandler.AutomaticTaskType, automaticTaskMessageHandler);
-            }
-        }
+        //public AutomaticTaskMessageHandler(IAutomaticTaskMessageHandler[] automaticTaskMessageHandlers)
+        //{
+        //    foreach(var automaticTaskMessageHandler in automaticTaskMessageHandlers)
+        //    {
+        //        this.automaticTaskMessageHandlerDictionary.Add(automaticTaskMessageHandler.AutomaticTaskType, automaticTaskMessageHandler);
+        //    }
+        //}
 
-        public async Task Handle(IAutomaticTask message, IMessageHandlerContext context)
+        public Task Handle(IAutomaticTask automaticTask, IMessageHandlerContext context)
         {
-            if (this.automaticTaskMessageHandlerDictionary.TryGetValue(message.AutomaticTaskType, out var automaticTaskMessageHandler))
-            {
-                await automaticTaskMessageHandler.Execute(message);
-            }
+            return Task.CompletedTask;
+
+            //if (this.automaticTaskMessageHandlerDictionary.TryGetValue(automaticTask.AutomaticTaskType, out var automaticTaskMessageHandler))
+            //{
+            //    await automaticTaskMessageHandler.Execute(automaticTask);
+            //}
         }
     }
 }

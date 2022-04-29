@@ -4,14 +4,14 @@
 
     using NServiceBus;
 
-    public class EndpointConfigurationFactory : IEndpointConfigurationFactory
+    public class EndpointConfigurationFactoryTestingLocal : IEndpointConfigurationFactory
     {
         EndpointConfiguration IEndpointConfigurationFactory.CreateEndpointConfiguration(string endpointName, string destinationName)
         {
             var endpointConfiguration = new EndpointConfiguration(endpointName);
-            var transport = endpointConfiguration.UseTransport<AzureServiceBusTransport>();
+            var transport = endpointConfiguration.UseTransport<LearningTransport>();
             transport.ConnectionString(EndpointConfigurationConstants.AzureServiceBusConnectionString);
-            transport.Routing().RouteToEndpoint(typeof(IAutomaticTask), destinationName);
+            transport.Routing().RouteToEndpoint(typeof(AutomaticTaskTransferPoints), destinationName);
             endpointConfiguration.EnableInstallers();
             return endpointConfiguration;
         }

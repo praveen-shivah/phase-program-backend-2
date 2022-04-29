@@ -8,6 +8,11 @@
     {
         private readonly IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer;
 
+        public VendorToOperatorSendPointsTransferTest(IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer)
+        {
+            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
+        }
+
         void IVendorToOperatorSendPointsTransferTest.RunTest()
         {
             var vendorToOperatorSendPointsTransferRequest = new VendorToOperatorSendPointsTransferRequest
@@ -20,11 +25,6 @@
                                                                     UserId = ""
                                                                 };
             var response = this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(vendorToOperatorSendPointsTransferRequest);
-        }
-
-        public VendorToOperatorSendPointsTransferTest(IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer)
-        {
-            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
         }
     }
 }

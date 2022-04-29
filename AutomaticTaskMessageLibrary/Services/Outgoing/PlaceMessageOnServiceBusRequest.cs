@@ -1,14 +1,14 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
-    using NServiceBus;
+    using AutomaticTaskLibrary;
 
     public class PlaceMessageOnServiceBusRequest
     {
-        public PlaceMessageOnServiceBusRequest(ICommand command)
+        public PlaceMessageOnServiceBusRequest(IAutomaticTask automaticTask)
         {
-            this.Command = command;
+            this.AutomaticTask = automaticTask;
         }
 
-        public ICommand Command { get; }
+        public IAutomaticTask AutomaticTask { get; }
     }
 }

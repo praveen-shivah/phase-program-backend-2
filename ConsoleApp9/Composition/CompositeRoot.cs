@@ -32,7 +32,7 @@
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().Build());
-            this.GlobalContainer.Register<IGuidFactory, GuidFactory>();
+            this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
 
             return true;
         }
