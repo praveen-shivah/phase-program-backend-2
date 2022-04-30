@@ -2,6 +2,8 @@
 {
     using AutomaticTaskLibrary;
 
+    using OpenQA.Selenium.Chrome;
+
     public class VendorToOperatorSendPointsTransferHandler : IVendorToOperatorSendPointsTransferHandler
     {
         private readonly IBrowserContextFactory browserContextFactory;
@@ -25,6 +27,12 @@
                         var password = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Password;
                         var accountId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.AccountId;
                         var points = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Points;
+
+                        var driver = new ChromeDriver(@"C:\Program Files (x86)");
+                        
+                        var loginPage = new RiverSweepsLogin(driver, "golddist", "239239");
+                        loginPage.VerifyPageLoaded();
+                        loginPage.Submit();
 
                         // Login Page
                         // Transfer Page

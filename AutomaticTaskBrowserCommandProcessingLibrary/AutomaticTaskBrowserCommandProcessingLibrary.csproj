@@ -12,7 +12,6 @@
     <PackageReference Include="DotNetSeleniumExtras.PageObjects.Core.Linq" Version="1.0.0" />
     <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
     <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
-    <PackageReference Include="Selenium.Chrome.WebDriver" Version="85.0.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.1.1" />
   </ItemGroup>
 
