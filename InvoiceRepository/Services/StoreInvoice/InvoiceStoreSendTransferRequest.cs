@@ -1,8 +1,12 @@
 ﻿namespace InvoiceRepository
 {
+    using AutomaticTaskLibrary;
+
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
+
+    using Microsoft.EntityFrameworkCore;
 
     internal class InvoiceStoreSendTransferRequest : IInvoiceStore
     {
@@ -26,13 +30,21 @@
 
             foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
             {
-                this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
+                var organizationId = invoiceLineItem.OrganizationId.Trim();
+                var siteId = int.Parse(invoiceLineItem.ItemId);
+                var site = dpContext.SiteInformation.Include(x=>x.Vendor).Single(x => x.OrganizationId == organizationId && x.Id == siteId);
+                var vendor = site.Vendor;
+
+                await this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new VendorToOperatorSendPointsTransferRequest()
-                        {
-                            AccountId = int.Parse(invoiceLineItem.Description),
-                            Points = invoiceLineItem.Quantity,
-                            SiteId = int.Parse(invoiceLineItem.ItemId)
-                        });
+                    {
+                        SoftwareType = vendor.SoftwareType,
+                        SiteUrl = site.URL,
+                        UserId = site.UserName,
+                        Password = site.Password,
+                        AccountId = invoiceLineItem.Description.Trim(),
+                        Points = invoiceLineItem.Quantity,
+                    });
             }
 
             return response;

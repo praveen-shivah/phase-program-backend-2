@@ -1,9 +1,13 @@
 ﻿namespace InvoiceRepository
 {
+    using AutomaticTaskLibrary;
+
     using InvoiceRepositoryTypes;
+
+    using NServiceBus;
 
     public interface IVendorToOperatorSendPointsTransfer
     {
-        VendorToOperatorSendPointsTransferResponse SendPointsTransfer(VendorToOperatorSendPointsTransferRequest request);
+        Task<VendorToOperatorSendPointsTransferResponse> SendPointsTransfer(VendorToOperatorSendPointsTransferRequest request);
     }
 }

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.32" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
     <PackageReference Include="GamingSystem.LoggingLibrary" Version="1.0.24" />
     <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
   </ItemGroup>
