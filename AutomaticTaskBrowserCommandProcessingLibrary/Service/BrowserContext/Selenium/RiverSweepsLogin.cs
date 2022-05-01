@@ -1,3 +1,5 @@
+using AutomaticTaskBrowserCommandProcessingLibrary;
+
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -45,6 +47,7 @@ public class RiverSweepsLogin
     public RiverSweepsLogin ClickLogInButton()
     {
         this.logIn.Click();
+
         return this;
     }
 
@@ -52,12 +55,19 @@ public class RiverSweepsLogin
     ///     Submit the form to target page.
     /// </summary>
     /// <returns>The Login class instance.</returns>
-    public RiverSweepsLogin Submit()
+    public RiverSweepsShopsManagement Submit()
     {
         this.userName.SendKeys(this.userNameValue);
         this.password.SendKeys(this.passwordValue);
         this.ClickLogInButton();
-        return this;
+
+        var result = new RiverSweepsShopsManagement(this.driver);
+        if (result.IsPageUrlSet() && result.VerifyPageLoaded())
+        {
+            return result;
+        }
+
+        return null;
     }
 
     /// <summary>

@@ -22,21 +22,29 @@
                 () =>
                     {
                         var softwareType = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SoftwareType;
-                        var url = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SiteUrl;
                         var userId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.UserId;
                         var password = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Password;
                         var accountId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.AccountId;
                         var points = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Points;
 
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
-                        
-                        var loginPage = new RiverSweepsLogin(driver, "golddist", "239239");
-                        loginPage.VerifyPageLoaded();
-                        loginPage.Submit();
+                        try
+                        {
+                            var loginPage = new RiverSweepsLogin(driver, userId, password);
+                            loginPage.VerifyPageLoaded();
+                            var riverSweepsShopsManagement = loginPage.Submit();
+                            if (riverSweepsShopsManagement == null)
+                            {
+                                return false;
+                            }
 
-                        // Login Page
-                        // Transfer Page
-                        //   Transfer points button
+                            riverSweepsShopsManagement.MakeDeposit(accountId, points);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+
+                        // driver?.Quit();
                         return true;
                     });
         }
