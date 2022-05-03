@@ -8,9 +8,12 @@
     {
         private readonly IBrowserContextFactory browserContextFactory;
 
-        public VendorToOperatorSendPointsTransferHandler(IBrowserContextFactory browserContextFactory)
+        private readonly IVendorToOperatorSendPointsTransferFactory vendorToOperatorSendPointsTransferFactory;
+
+        public VendorToOperatorSendPointsTransferHandler(IBrowserContextFactory browserContextFactory, IVendorToOperatorSendPointsTransferFactory vendorToOperatorSendPointsTransferFactory)
         {
             this.browserContextFactory = browserContextFactory;
+            this.vendorToOperatorSendPointsTransferFactory = vendorToOperatorSendPointsTransferFactory;
         }
 
         public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.vendorToOperatorSendPointsTransfer;
@@ -30,22 +33,18 @@
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
                         try
                         {
-                            var loginPage = new RiverSweepsLogin(driver, userId, password);
-                            loginPage.VerifyPageLoaded();
-                            var riverSweepsShopsManagement = loginPage.Submit();
-                            if (riverSweepsShopsManagement == null)
-                            {
-                                return false;
-                            }
-
-                            riverSweepsShopsManagement.MakeDeposit(accountId, points);
+                            var adapter = this.vendorToOperatorSendPointsTransferFactory.Create(softwareType);
+                            var request = new VendorToOperatorSendPointsTransferRequest(userId, password, accountId, points);
+                            var response = adapter.Execute(driver, request);
+                            driver?.Quit();
+                            return response.IsSuccessful;
                         }
                         catch (Exception e)
                         {
                         }
 
-                        // driver?.Quit();
-                        return true;
+                        driver?.Quit();
+                        return false;
                     });
         }
     }

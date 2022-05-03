@@ -11,6 +11,7 @@
             this.GlobalContainer.Register<IBrowserContextFactory, BrowserContextFactory>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferHandler, VendorToOperatorSendPointsTransferHandler>();
+            this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferFactory, VendorToOperatorSendPointsTransferFactory>();
 
             return true;
         }
