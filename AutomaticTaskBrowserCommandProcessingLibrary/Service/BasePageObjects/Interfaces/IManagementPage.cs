@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public interface IVendorToOperatorTransferManagementPage
+    public interface IManagementPage
     {
         bool IsPageUrlSet();
 
@@ -11,5 +11,7 @@
         bool MakeDeposit(int amount);
 
         bool VerifyPageLoaded();
+
+        string GetBalance();
     }
 }

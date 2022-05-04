@@ -1,24 +1,24 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public enum VendorToOperatorTransferResponseType
+    public enum VendorBalanceRetrieveResponseType
     {
         start,
         loginCreate,
         loginVerifyLoad,
         loginSubmit,
-        managementVerifyFundsAvailable,
-        managementMakeLocateAndClickDepositButton,
-        managementMakeDeposit
+        managementRetrieveBalance
     }
 
-    public class VendorToOperatorTransferResponse
+    public class VendorBalanceRetrieveResponse
     {
         public bool IsSuccessful { get; set; }
 
-        public VendorToOperatorTransferResponseType ResponseType { get; set; }
+        public VendorBalanceRetrieveResponseType ResponseType { get; set; }
 
         public ILoginPage LoginPage { get; set; }
 
         public IManagementPage? ManagementPage { get; set; }
+
+        public string VendorBalance { get; set; }
     }
 }

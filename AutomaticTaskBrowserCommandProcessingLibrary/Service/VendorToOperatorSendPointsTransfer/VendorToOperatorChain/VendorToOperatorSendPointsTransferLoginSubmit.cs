@@ -4,22 +4,22 @@
 
     public class VendorToOperatorSendPointsTransferLoginSubmit : IVendorToOperatorSendPointsTransferChain
     {
-        private readonly IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer;
+        private readonly IVendorToOperatorSendPointsTransferChain vendorToOperatorSendPointsTransfer;
 
-        public VendorToOperatorSendPointsTransferLoginSubmit(IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer)
+        public VendorToOperatorSendPointsTransferLoginSubmit(IVendorToOperatorSendPointsTransferChain vendorToOperatorSendPointsTransfer)
         {
-            this.riverSweepsVendorToOperatorSendPointsTransfer = riverSweepsVendorToOperatorSendPointsTransfer;
+            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
         }
 
         VendorToOperatorTransferResponse IVendorToOperatorSendPointsTransferChain.Execute(IWebDriver driver, VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
         {
-            var response = this.riverSweepsVendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.vendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.VendorToOperatorTransferResponseType = VendorToOperatorTransferResponseType.loginSubmit;
+            response.ResponseType = VendorToOperatorTransferResponseType.loginSubmit;
 
             response.ManagementPage = response.LoginPage.Submit();
             if (response.ManagementPage == null)

@@ -4,6 +4,6 @@
 
     public interface IVendorToOperatorSendPointsTransferAdapter
     {
-        VendorToOperatorSendPointsTransferResponse Execute(IWebDriver driver, VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest);
+        VendorToOperatorTransferResponse Execute(IWebDriver driver, VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest);
     }
 }

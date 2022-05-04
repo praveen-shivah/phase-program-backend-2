@@ -1,8 +1,8 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public interface IVendorToOperatorTransferLoginPage
+    public interface ILoginPage
     {
-        IVendorToOperatorTransferManagementPage? Submit();
+        IManagementPage? Submit();
 
         bool VerifyPageLoaded();
 

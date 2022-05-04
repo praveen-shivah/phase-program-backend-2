@@ -21,15 +21,7 @@
         [CacheLookup]
         private IWebElement depositAmountElement;
 
-        [FindsBy(How = How.XPath, Using = "//*[@id='yw0']/div[3]/input[1]")]
-        [CacheLookup]
-        private IWebElement depositBtnElement;
-
         private IWebElement depositButtonElement;
-
-        [FindsBy(How = How.XPath, Using = @"//*[@id='table-accounts']/tbody/tr[8]/td[1]")]
-        [CacheLookup]
-        private IWebElement jung;
 
         [FindsBy(How = How.Id, Using = "table-accounts")]
         [CacheLookup]
@@ -39,6 +31,11 @@
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
+        }
+
+        protected override string getBalance()
+        {
+            return this.currentBalanceAmount.Text.Replace(" ", string.Empty).Replace("usd", string.Empty);
         }
 
         protected override bool isPageUrlSet()
@@ -76,19 +73,19 @@
             return true;
         }
 
-        protected override bool verifyPageLoaded()
-        {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var result = wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
-            return result;
-        }
-
         protected override bool verifyFundsAvailable(int points)
         {
             var balanceAsString = this.currentBalanceAmount.Text.Replace(" ", string.Empty).Replace("usd", string.Empty);
             var currentBalance = decimal.Parse(balanceAsString);
             var pointsAsDollars = points * 1.0M / 100.0M;
             return currentBalance >= pointsAsDollars;
+        }
+
+        protected override bool verifyPageLoaded()
+        {
+            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
+            var result = wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
+            return result;
         }
     }
 }

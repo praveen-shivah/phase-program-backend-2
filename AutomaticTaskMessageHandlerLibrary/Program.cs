@@ -49,6 +49,7 @@ var host = Host.CreateDefaultBuilder(args)
         services =>
             {
                 services.AddScoped((_) => applicationLifeCycle.Resolve<IVendorToOperatorSendPointsTransferHandler>());
+                services.AddScoped((_) => applicationLifeCycle.Resolve<IVendorBalanceRetrieveHandler>());
 
                 services.AddTransient<Func<AutomaticTaskType, IAutomaticTaskMessageHandler?>>(
                     serviceProvider => key =>
@@ -57,6 +58,8 @@ var host = Host.CreateDefaultBuilder(args)
                             {
                                 case AutomaticTaskType.vendorToOperatorSendPointsTransfer:
                                     return serviceProvider.GetService<IVendorToOperatorSendPointsTransferHandler>();
+                                case AutomaticTaskType.vendorBalanceRetrieve:
+                                    return serviceProvider.GetService<IVendorBalanceRetrieveHandler>();
                                 default:
                                     throw new ArgumentOutOfRangeException(nameof(key), key, null);
                             }

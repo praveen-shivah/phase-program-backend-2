@@ -12,6 +12,7 @@
             var transport = endpointConfiguration.UseTransport<LearningTransport>();
             transport.ConnectionString(EndpointConfigurationConstants.AzureServiceBusConnectionString);
             transport.Routing().RouteToEndpoint(typeof(AutomaticTaskTransferPoints), destinationName);
+            transport.Routing().RouteToEndpoint(typeof(AutomaticTaskVendorBalanceRetrieve), destinationName);
             endpointConfiguration.EnableInstallers();
             return endpointConfiguration;
         }

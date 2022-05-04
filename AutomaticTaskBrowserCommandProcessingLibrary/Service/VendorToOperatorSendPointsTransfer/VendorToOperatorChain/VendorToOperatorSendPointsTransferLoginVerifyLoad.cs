@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class VendorToOperatorSendPointsTransferManagementLocateDepositBtn : IVendorToOperatorSendPointsTransferChain
+    public class VendorToOperatorSendPointsTransferLoginVerifyLoad : IVendorToOperatorSendPointsTransferChain
     {
         private readonly IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer;
 
-        public VendorToOperatorSendPointsTransferManagementLocateDepositBtn(IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer)
+        public VendorToOperatorSendPointsTransferLoginVerifyLoad(IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer)
         {
             this.riverSweepsVendorToOperatorSendPointsTransfer = riverSweepsVendorToOperatorSendPointsTransfer;
         }
@@ -19,8 +19,8 @@
                 return response;
             }
 
-            response.VendorToOperatorTransferResponseType = VendorToOperatorTransferResponseType.managementMakeLocateAndClickDepositButton;
-            response.IsSuccessful = response.ManagementPage.LocateDepositButtonAndClick(vendorToOperatorSendPointsTransferRequest.DestinationAccountId);
+            response.ResponseType = VendorToOperatorTransferResponseType.loginVerifyLoad;
+            response.LoginPage.VerifyPageLoaded();
 
             return response;
         }

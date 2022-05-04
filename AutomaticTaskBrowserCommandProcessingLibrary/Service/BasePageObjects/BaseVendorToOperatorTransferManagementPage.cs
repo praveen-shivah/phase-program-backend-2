@@ -1,8 +1,8 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public abstract class BaseVendorToOperatorTransferManagementPage : IVendorToOperatorTransferManagementPage
+    public abstract class BaseVendorToOperatorTransferManagementPage : IManagementPage
     {
-        bool IVendorToOperatorTransferManagementPage.IsPageUrlSet()
+        bool IManagementPage.IsPageUrlSet()
         {
             try
             {
@@ -15,7 +15,22 @@
             return false;
         }
 
-        bool IVendorToOperatorTransferManagementPage.LocateDepositButtonAndClick(string userId)
+        string IManagementPage.GetBalance()
+        {
+            try
+            {
+                return this.getBalance();
+            }
+            catch
+            {
+            }
+
+            return string.Empty;
+        }
+
+        protected abstract string getBalance();
+
+        bool IManagementPage.LocateDepositButtonAndClick(string userId)
         {
             try
             {
@@ -28,7 +43,7 @@
             return false;
         }
 
-        bool IVendorToOperatorTransferManagementPage.MakeDeposit(int amount)
+        bool IManagementPage.MakeDeposit(int amount)
         {
             try
             {
@@ -41,7 +56,7 @@
             return true;
         }
 
-        bool IVendorToOperatorTransferManagementPage.VerifyFundsAvailable(int points)
+        bool IManagementPage.VerifyFundsAvailable(int points)
         {
             try
             {
@@ -54,7 +69,7 @@
             return false;
         }
 
-        bool IVendorToOperatorTransferManagementPage.VerifyPageLoaded()
+        bool IManagementPage.VerifyPageLoaded()
         {
             try
             {

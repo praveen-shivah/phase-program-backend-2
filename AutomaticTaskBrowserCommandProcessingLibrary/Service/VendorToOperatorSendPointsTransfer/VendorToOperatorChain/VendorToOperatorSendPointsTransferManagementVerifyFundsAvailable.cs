@@ -4,22 +4,22 @@
 
     public class VendorToOperatorSendPointsTransferManagementVerifyFundsAvailable : IVendorToOperatorSendPointsTransferChain
     {
-        private readonly IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer;
+        private readonly IVendorToOperatorSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
 
-        public VendorToOperatorSendPointsTransferManagementVerifyFundsAvailable(IVendorToOperatorSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer)
+        public VendorToOperatorSendPointsTransferManagementVerifyFundsAvailable(IVendorToOperatorSendPointsTransferChain vendorToOperatorSendPointsTransferChain)
         {
-            this.riverSweepsVendorToOperatorSendPointsTransfer = riverSweepsVendorToOperatorSendPointsTransfer;
+            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
         }
 
         VendorToOperatorTransferResponse IVendorToOperatorSendPointsTransferChain.Execute(IWebDriver driver, VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
         {
-            var response = this.riverSweepsVendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.VendorToOperatorTransferResponseType = VendorToOperatorTransferResponseType.managementVerifyFundsAvailable;
+            response.ResponseType = VendorToOperatorTransferResponseType.managementVerifyFundsAvailable;
             response.IsSuccessful = response.ManagementPage.VerifyFundsAvailable(vendorToOperatorSendPointsTransferRequest.Points);
 
             return response;

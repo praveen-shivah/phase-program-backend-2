@@ -5,15 +5,11 @@ using OpenQA.Selenium.Support.UI;
 
 using SeleniumExtras.PageObjects;
 
-public class RiverSweepsVendorToOperatorTransferLogin : BaseVendorToOperatorTransferLogin
+public class RiverSweepsVendorToOperatorTransferLogin : BaseLoginPage
 {
     private readonly string pageLoadedText = "";
 
     private readonly string pageUrl = "https://river-pay.com/office/login";
-
-    private readonly IWebDriver driver;
-
-    private readonly VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest;
 
     [FindsBy(How = How.Name, Using = "yt0")]
     [CacheLookup]
@@ -28,12 +24,10 @@ public class RiverSweepsVendorToOperatorTransferLogin : BaseVendorToOperatorTran
 
     public RiverSweepsVendorToOperatorTransferLogin(
         IWebDriver driver,
-        VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
-        : base(driver, vendorToOperatorSendPointsTransferRequest)
+        LoginPageInformation loginPageInformation)
+        : base(driver, loginPageInformation)
     {
-        this.driver = driver;
-        this.vendorToOperatorSendPointsTransferRequest = vendorToOperatorSendPointsTransferRequest;
-        this.driver.Url = this.pageUrl;
+        driver.Url = this.pageUrl;
         PageFactory.InitElements(driver, this);
     }
 
@@ -46,13 +40,13 @@ public class RiverSweepsVendorToOperatorTransferLogin : BaseVendorToOperatorTran
         this.logIn.Click();
     }
 
-    protected override IVendorToOperatorTransferManagementPage? submit()
+    protected override IManagementPage? submit(IWebDriver driver, LoginPageInformation loginPageInformation)
     {
-        this.userName.SendKeys(this.vendorToOperatorSendPointsTransferRequest.SiteUserId);
-        this.password.SendKeys(this.vendorToOperatorSendPointsTransferRequest.SitePassword);
+        this.userName.SendKeys(loginPageInformation.SiteUserId);
+        this.password.SendKeys(loginPageInformation.SitePassword);
         this.clickLogInButton();
 
-        IVendorToOperatorTransferManagementPage result = new RiverSweepsVendorToOperatorTransferShopsManagement(this.driver);
+        IManagementPage result = new RiverSweepsVendorToOperatorTransferShopsManagement(driver);
         if (result.IsPageUrlSet() && result.VerifyPageLoaded())
         {
             return result;
@@ -61,15 +55,15 @@ public class RiverSweepsVendorToOperatorTransferLogin : BaseVendorToOperatorTran
         return null;
     }
 
-    protected override bool verifyPageLoaded()
+    protected override bool verifyPageLoaded(IWebDriver driver)
     {
-        new WebDriverWait(this.driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.PageSource.Contains(this.pageLoadedText); });
+        new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.PageSource.Contains(this.pageLoadedText); });
         return true;
     }
 
-    protected override bool verifyPageUrl()
+    protected override bool verifyPageUrl(IWebDriver driver)
     {
-        new WebDriverWait(this.driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.Url.Contains(this.pageUrl); });
+        new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.Url.Contains(this.pageUrl); });
         return true;
     }
 }

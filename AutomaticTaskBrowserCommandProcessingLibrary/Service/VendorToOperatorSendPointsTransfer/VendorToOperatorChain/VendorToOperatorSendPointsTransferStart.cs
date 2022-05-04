@@ -11,7 +11,7 @@
             return new VendorToOperatorTransferResponse
             {
                 IsSuccessful = true,
-                VendorToOperatorTransferResponseType = VendorToOperatorTransferResponseType.start
+                ResponseType = VendorToOperatorTransferResponseType.start
             };
         }
     }
