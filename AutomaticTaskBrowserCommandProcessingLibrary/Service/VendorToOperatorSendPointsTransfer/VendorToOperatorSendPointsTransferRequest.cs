@@ -1,12 +1,17 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
+    using AutomaticTaskLibrary;
+
     public class VendorToOperatorSendPointsTransferRequest
     {
-        public VendorToOperatorSendPointsTransferRequest(string siteUserId,
-                                                         string sitePassword,
-                                                         string destinationAccountId,
-                                                         int points)
+        public VendorToOperatorSendPointsTransferRequest(
+            SoftwareType softwareType,
+            string siteUserId,
+            string sitePassword,
+            string destinationAccountId,
+            int points)
         {
+            this.SoftwareType = softwareType;
             this.SiteUserId = siteUserId;
             this.SitePassword = sitePassword;
             this.DestinationAccountId = destinationAccountId;
@@ -20,5 +25,7 @@
         public string SitePassword { get; }
 
         public string SiteUserId { get; }
+
+        public SoftwareType SoftwareType { get; }
     }
 }

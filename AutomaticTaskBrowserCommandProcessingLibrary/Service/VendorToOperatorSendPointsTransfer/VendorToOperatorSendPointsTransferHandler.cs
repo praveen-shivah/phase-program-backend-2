@@ -6,14 +6,11 @@
 
     public class VendorToOperatorSendPointsTransferHandler : IVendorToOperatorSendPointsTransferHandler
     {
-        private readonly IBrowserContextFactory browserContextFactory;
+        private readonly IVendorToOperatorSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter;
 
-        private readonly IVendorToOperatorSendPointsTransferFactory vendorToOperatorSendPointsTransferFactory;
-
-        public VendorToOperatorSendPointsTransferHandler(IBrowserContextFactory browserContextFactory, IVendorToOperatorSendPointsTransferFactory vendorToOperatorSendPointsTransferFactory)
+        public VendorToOperatorSendPointsTransferHandler(IVendorToOperatorSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter)
         {
-            this.browserContextFactory = browserContextFactory;
-            this.vendorToOperatorSendPointsTransferFactory = vendorToOperatorSendPointsTransferFactory;
+            this.vendorToOperatorSendPointsTransferAdapter = vendorToOperatorSendPointsTransferAdapter;
         }
 
         public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.vendorToOperatorSendPointsTransfer;
@@ -33,9 +30,8 @@
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
                         try
                         {
-                            var adapter = this.vendorToOperatorSendPointsTransferFactory.Create(softwareType);
-                            var request = new VendorToOperatorSendPointsTransferRequest(userId, password, accountId, points);
-                            var response = adapter.Execute(driver, request);
+                            var request = new VendorToOperatorSendPointsTransferRequest(softwareType, userId, password, accountId, points);
+                            var response = this.vendorToOperatorSendPointsTransferAdapter.Execute(driver, request);
                             driver?.Quit();
                             return response.IsSuccessful;
                         }

@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 
 using SeleniumExtras.PageObjects;
 
-public class RiverSweepsVendorToOperatorTransferLogin
+public class RiverSweepsVendorToOperatorTransferLogin : BaseVendorToOperatorTransferLogin
 {
     private readonly string pageLoadedText = "";
 
@@ -29,6 +29,7 @@ public class RiverSweepsVendorToOperatorTransferLogin
     public RiverSweepsVendorToOperatorTransferLogin(
         IWebDriver driver,
         VendorToOperatorSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        : base(driver, vendorToOperatorSendPointsTransferRequest)
     {
         this.driver = driver;
         this.vendorToOperatorSendPointsTransferRequest = vendorToOperatorSendPointsTransferRequest;
@@ -39,25 +40,19 @@ public class RiverSweepsVendorToOperatorTransferLogin
     /// <summary>
     ///     Click on Log In Button.
     /// </summary>
-    /// <returns>The Login class instance.</returns>
-    public RiverSweepsVendorToOperatorTransferLogin ClickLogInButton()
+    /// <returns>The LoginPage class instance.</returns>
+    private void clickLogInButton()
     {
         this.logIn.Click();
-
-        return this;
     }
 
-    /// <summary>
-    ///     Submit the form to target page.
-    /// </summary>
-    /// <returns>The Login class instance.</returns>
-    public RiverSweepsVendorToOperatorTransferShopsManagement Submit()
+    protected override IVendorToOperatorTransferManagementPage? submit()
     {
         this.userName.SendKeys(this.vendorToOperatorSendPointsTransferRequest.SiteUserId);
         this.password.SendKeys(this.vendorToOperatorSendPointsTransferRequest.SitePassword);
-        this.ClickLogInButton();
+        this.clickLogInButton();
 
-        var result = new RiverSweepsVendorToOperatorTransferShopsManagement(this.driver);
+        IVendorToOperatorTransferManagementPage result = new RiverSweepsVendorToOperatorTransferShopsManagement(this.driver);
         if (result.IsPageUrlSet() && result.VerifyPageLoaded())
         {
             return result;
@@ -66,23 +61,15 @@ public class RiverSweepsVendorToOperatorTransferLogin
         return null;
     }
 
-    /// <summary>
-    ///     Verify that the page loaded completely.
-    /// </summary>
-    /// <returns>The Login class instance.</returns>
-    public RiverSweepsVendorToOperatorTransferLogin VerifyPageLoaded()
+    protected override bool verifyPageLoaded()
     {
         new WebDriverWait(this.driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.PageSource.Contains(this.pageLoadedText); });
-        return this;
+        return true;
     }
 
-    /// <summary>
-    ///     Verify that current page URL matches the expected URL.
-    /// </summary>
-    /// <returns>The Login class instance.</returns>
-    public RiverSweepsVendorToOperatorTransferLogin VerifyPageUrl()
+    protected override bool verifyPageUrl()
     {
         new WebDriverWait(this.driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.Url.Contains(this.pageUrl); });
-        return this;
+        return true;
     }
 }
