@@ -17,13 +17,12 @@
         {
             var vendorToOperatorSendPointsTransferRequest = new VendorToOperatorSendPointsTransferRequest
                                                                 {
-                                                                    SiteUrl = "",
-                                                                    AccountId = "1234",
-                                                                    Password = "",
-                                                                    Points = 100,
+                                                                    AccountId = "goldshop",
+                                                                    Password = "239239",
+                                                                    Points = 1,
                                                                     SoftwareType = SoftwareType.riverSweeps,
-                                                                    UserId = ""
-                                                                };
+                                                                    UserId = "golddist"
+            };
             var response = this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(vendorToOperatorSendPointsTransferRequest);
         }
     }

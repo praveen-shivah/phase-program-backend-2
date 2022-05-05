@@ -6,11 +6,11 @@
 
     public class VendorToOperatorSendPointsTransferHandler : IVendorToOperatorSendPointsTransferHandler
     {
-        private readonly IBrowserContextFactory browserContextFactory;
+        private readonly IVendorToOperatorSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter;
 
-        public VendorToOperatorSendPointsTransferHandler(IBrowserContextFactory browserContextFactory)
+        public VendorToOperatorSendPointsTransferHandler(IVendorToOperatorSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter)
         {
-            this.browserContextFactory = browserContextFactory;
+            this.vendorToOperatorSendPointsTransferAdapter = vendorToOperatorSendPointsTransferAdapter;
         }
 
         public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.vendorToOperatorSendPointsTransfer;
@@ -22,22 +22,25 @@
                 () =>
                     {
                         var softwareType = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SoftwareType;
-                        var url = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.SiteUrl;
                         var userId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.UserId;
                         var password = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Password;
                         var accountId = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.AccountId;
                         var points = automaticTaskTransferPoints.VendorToOperatorSendPointsTransferRequest.Points;
 
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
-                        
-                        var loginPage = new RiverSweepsLogin(driver, "golddist", "239239");
-                        loginPage.VerifyPageLoaded();
-                        loginPage.Submit();
+                        try
+                        {
+                            var request = new VendorToOperatorSendPointsTransferRequest(softwareType, userId, password, accountId, points);
+                            var response = this.vendorToOperatorSendPointsTransferAdapter.Execute(driver, request);
+                            driver?.Quit();
+                            return response.IsSuccessful;
+                        }
+                        catch (Exception e)
+                        {
+                        }
 
-                        // Login Page
-                        // Transfer Page
-                        //   Transfer points button
-                        return true;
+                        driver?.Quit();
+                        return false;
                     });
         }
     }

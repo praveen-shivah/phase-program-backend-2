@@ -39,7 +39,6 @@
                     new VendorToOperatorSendPointsTransferRequest()
                     {
                         SoftwareType = vendor.SoftwareType,
-                        SiteUrl = site.URL,
                         UserId = site.UserName,
                         Password = site.Password,
                         AccountId = invoiceLineItem.Description.Trim(),

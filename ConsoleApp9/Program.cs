@@ -22,8 +22,8 @@ var response = applicationLifeCycle.StartRequest();
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
 
-var vendorToOperatorSendPointsTransferTest = applicationLifeCycle.Resolve<IVendorToOperatorSendPointsTransferTest>();
-vendorToOperatorSendPointsTransferTest.RunTest();
+var test = applicationLifeCycle.Resolve<IVendorBalanceRetrieveTest>();
+test.RunTest();
 
 Console.WriteLine("Hit any key to continue");
 Console.ReadKey();

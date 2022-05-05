@@ -27,6 +27,8 @@
         protected override bool registerBindings()
         {
             this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferTest, VendorToOperatorSendPointsTransferTest>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IVendorBalanceRetrieveTest, VendorBalanceRetrieveTest>(Lifestyle.Singleton);
+
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);

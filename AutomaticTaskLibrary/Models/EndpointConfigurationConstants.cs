@@ -2,7 +2,6 @@
 {
     public enum SoftwareType
     {
-        notSet,
         riverSweeps
     }
 

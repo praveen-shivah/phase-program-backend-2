@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp9
 {
-    internal interface IVendorToOperatorSendPointsTransferTest
+    internal interface IVendorBalanceRetrieveTest
     {
         void RunTest();
     }

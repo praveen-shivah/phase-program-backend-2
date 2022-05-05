@@ -4,8 +4,8 @@
 
     public enum AutomaticTaskType
     {
-        notSet,
-        vendorToOperatorSendPointsTransfer
+        vendorToOperatorSendPointsTransfer,
+        vendorBalanceRetrieve
     }
 
     public interface IAutomaticTask : ICommand
