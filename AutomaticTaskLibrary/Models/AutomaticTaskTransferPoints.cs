@@ -2,8 +2,8 @@
 {
     public class AutomaticTaskTransferPoints : IAutomaticTask
     {
-        public VendorToOperatorSendPointsTransferRequest VendorToOperatorSendPointsTransferRequest { get; set; }
+        public DistributorToResellerSendPointsTransferRequest DistributorToResellerSendPointsTransferRequest { get; set; }
 
-        public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.vendorToOperatorSendPointsTransfer;
+        public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.distributorToResellerSendPointsTransfer;
     }
 }

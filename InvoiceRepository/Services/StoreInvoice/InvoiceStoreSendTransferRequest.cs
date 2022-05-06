@@ -12,12 +12,12 @@
     {
         private readonly IInvoiceStore invoiceStore;
 
-        private readonly IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer;
+        private readonly IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer;
 
-        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IVendorToOperatorSendPointsTransfer vendorToOperatorSendPointsTransfer)
+        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer)
         {
             this.invoiceStore = invoiceStore;
-            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
+            this.distributorToOperatorSendPointsTransfer = distributorToOperatorSendPointsTransfer;
         }
 
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
@@ -35,8 +35,8 @@
                 var site = dpContext.SiteInformation.Include(x=>x.Vendor).Single(x => x.Organization.Id == organizationId && x.Id == siteId);
                 var vendor = site.Vendor;
 
-                await this.vendorToOperatorSendPointsTransfer.SendPointsTransfer(
-                    new VendorToOperatorSendPointsTransferRequest()
+                await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
+                    new DistributorToResellerSendPointsTransferRequest()
                     {
                         SoftwareType = vendor.SoftwareType,
                         UserId = site.UserName,

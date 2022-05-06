@@ -4,7 +4,7 @@
 
     public enum AutomaticTaskType
     {
-        vendorToOperatorSendPointsTransfer,
+        distributorToResellerSendPointsTransfer,
         vendorBalanceRetrieve
     }
 

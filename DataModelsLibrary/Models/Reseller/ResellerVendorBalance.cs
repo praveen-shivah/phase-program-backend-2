@@ -1,7 +1,5 @@
 ﻿namespace DataModelsLibrary
 {
-    using DataSharedLibrary;
-
     public class ResellerVendorBalance : BaseOrganizationEntity
     {
         public int Balance { get; set; }

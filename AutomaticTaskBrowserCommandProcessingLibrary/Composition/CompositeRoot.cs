@@ -10,27 +10,27 @@
         {
             this.GlobalContainer.Register<IBrowserContextFactory, BrowserContextFactory>(Lifestyle.Singleton);
 
-            this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferHandler, VendorToOperatorSendPointsTransferHandler>();
-            this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferAdapter, VendorToOperatorTransferAdapter>();
+            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferHandler, DistributorToResellerSendPointsTransferHandler>();
+            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferAdapter, DistributorToResellerTransferAdapter>();
 
-            this.GlobalContainer.Register<IVendorBalanceRetrieveHandler, VendorBalanceRetrieveHandler>();
-            this.GlobalContainer.Register<IVendorBalanceRetrieveAdapter, VendorBalanceRetrieveAdapter>();
+            this.GlobalContainer.Register<IResellerBalanceRetrieveHandler, ResellerBalanceRetrieveHandler>();
+            this.GlobalContainer.Register<IResellerBalanceRetrieveAdapter, ResellerBalanceRetrieveAdapter>();
 
             this.GlobalContainer.Register<ILoginPageFactory, LoginPageFactory>();
 
-            this.GlobalContainer.Register<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferStart>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferLoginCreate>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferLoginVerifyLoad>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferLoginSubmit>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferManagementVerifyFundsAvailable>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferManagementLocateDepositBtn>();
-            this.GlobalContainer.RegisterDecorator<IVendorToOperatorSendPointsTransferChain, VendorToOperatorSendPointsTransferManagementMakeDeposit>();
+            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferStart>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLoginCreate>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLoginVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLoginSubmit>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementVerifyFundsAvailable>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementLocateDepositBtn>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementMakeDeposit>();
 
-            this.GlobalContainer.Register<IVendorBalanceRetrieveChain, VendorBalanceRetrieveChainStart>();
-            this.GlobalContainer.RegisterDecorator<IVendorBalanceRetrieveChain, VendorBalanceRetrieveChainLoginCreate>();
-            this.GlobalContainer.RegisterDecorator<IVendorBalanceRetrieveChain, VendorBalanceRetrieveChainLoginVerifyLoad>();
-            this.GlobalContainer.RegisterDecorator<IVendorBalanceRetrieveChain, VendorBalanceRetrieveChainLoginSubmit>();
-            this.GlobalContainer.RegisterDecorator<IVendorBalanceRetrieveChain, VendorBalanceRetrieveManagementGetBalance>();
+            this.GlobalContainer.Register<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainStart>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLoginCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLoginVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLoginSubmit>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveManagementGetBalance>();
 
             return true;
         }

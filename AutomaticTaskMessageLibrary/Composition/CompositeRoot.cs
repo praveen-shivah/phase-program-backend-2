@@ -12,8 +12,8 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IVendorToOperatorSendPointsTransfer, VendorToOperatorSendPointsTransfer>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<IVendorBalanceRetrieve, VendorBalanceRetrieve>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IDistributorToOperatorSendPointsTransfer, DistributorToResellerSendPointsTransfer>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IResellerBalanceRetrieve, ResellerBalanceRetrieve>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IPlaceMessageOnServiceBus, PlaceMessageOnServiceBus>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEndpointConfigurationFactory, EndpointConfigurationFactoryTestingLocal>(Lifestyle.Singleton);

@@ -1,7 +1,5 @@
 ﻿namespace DataModelsLibrary
 {
-    using DataSharedLibrary;
-
     public class Reseller : BaseOrganizationEntity
     {
         public string Name { get; set; }
