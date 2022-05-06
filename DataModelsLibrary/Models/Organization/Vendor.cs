@@ -2,9 +2,7 @@
 {
     using AutomaticTaskLibrary;
 
-    using DataSharedLibrary;
-
-    public class Vendor : BaseEntity
+    public class Vendor : BaseOrganizationEntity
     {
         public string Name { get; set; }
 

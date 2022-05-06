@@ -6,19 +6,18 @@ using Microsoft.Extensions.Hosting;
 
 public static class MigrationManager
 {
-    public static IHost MigrateDatabase(this IHost host)
+    public static async Task<IHost> MigrateDatabaseAsync(this IHost host)
     {
-        using (var scope = host.Services.CreateScope())
+        await using (var scope = host.Services.CreateAsyncScope())
         {
-            using (var appContext = scope.ServiceProvider.GetRequiredService<DPContext>())
+            await using (var appContext = scope.ServiceProvider.GetRequiredService<DPContext>())
             {
                 try
                 {
-                    appContext.Database.Migrate();
+                    await appContext.Database.MigrateAsync();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    //Log errors or do anything you think it's needed
                     throw;
                 }
             }

@@ -67,7 +67,7 @@ builder.Services.AddHostedService<DataHostedService>();
 
 var app = builder.Build();
 
-app.MigrateDatabase();
+await app.MigrateDatabaseAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

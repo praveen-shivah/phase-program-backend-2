@@ -1,7 +1,5 @@
 ﻿namespace InvoiceRepository
 {
-    using System.Security.Cryptography.X509Certificates;
-
     using DataModelsLibrary;
 
     using DataPostgresqlLibrary;
@@ -27,13 +25,21 @@
                 return response;
             }
 
+            var organization = await dpContext.Organization.SingleOrDefaultAsync(x => x.Id == request.OrganizationId);
+            if (organization == null)
+            {
+                response.IsSuccessful = false;
+                response.InvoiceStoreResponseType = InvoiceStoreResponseType.invalidOrganizationId;
+                return response;
+            }
+
             var invoiceRecord = await dpContext.Invoice.SingleOrDefaultAsync(x => x.InvoiceId == response.Invoice.InvoiceId);
             if (invoiceRecord == null)
             {
                 invoiceRecord = new Invoice
                 {
                     Id = 0,
-                    OrganizationId = request.OrganizationId,
+                    Organization = organization,
                     Balance = response.Invoice.Balance,
                     BalanceFormatted = response.Invoice.BalanceFormatted,
                     CfCustomerType = response.Invoice.CfCustomerType,

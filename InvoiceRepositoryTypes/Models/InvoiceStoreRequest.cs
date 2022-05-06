@@ -2,13 +2,13 @@
 {
     public class InvoiceStoreRequest
     {
-        public InvoiceStoreRequest(string organizationId, string jsonString)
+        public InvoiceStoreRequest(int organizationId, string jsonString)
         {
             this.OrganizationId = organizationId;
             this.JsonString = jsonString;
         }
 
-        public string OrganizationId { get; }
+        public int OrganizationId { get; }
 
         public string JsonString { get; }
     }

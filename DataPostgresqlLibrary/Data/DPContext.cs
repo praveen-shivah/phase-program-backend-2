@@ -40,6 +40,15 @@
         public DbSet<SiteInformation> SiteInformation { get; set; }
         public DbSet<Organization> Organization { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
+        public DbSet<ResellerVendorBalance> ResellerVendorBalance { get; set; }
+        public DbSet<Reseller> Reseller { get; set; }
+        public DbSet<Address> Address { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<PhoneNumber> PhoneNumber { get; set; }
+        public DbSet<PostalCode> PostalCode { get; set; }
+        public DbSet<StateProvince> StateProvince { get; set; }
 
         public override int SaveChanges()
         {
