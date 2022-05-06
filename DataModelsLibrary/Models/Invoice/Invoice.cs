@@ -1,11 +1,7 @@
 namespace DataModelsLibrary
 {
-    using DataSharedLibrary;
-
-    public class Invoice : BaseEntity
+    public class Invoice : BaseOrganizationEntity
     {
-        public string OrganizationId { get; set; }
-
         public int Balance { get; set; }
 
         public string BalanceFormatted { get; set; }

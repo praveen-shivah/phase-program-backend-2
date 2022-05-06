@@ -7,6 +7,7 @@
         notSet,
         success,
         databaseError,
+        invalidOrganizationId,
         jsonDeserializationError
     }
 
