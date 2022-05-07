@@ -5,7 +5,7 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class RiverSweepsVendorToOperatorTransferShopsManagement : BaseVendorToOperatorTransferManagementPage
+    public class RiverSweepsShopsManagement : BaseManagementPage
     {
         private readonly IWebDriver driver;
 
@@ -27,7 +27,7 @@
         [CacheLookup]
         private IWebElement tableAccounts;
 
-        public RiverSweepsVendorToOperatorTransferShopsManagement(IWebDriver driver)
+        public RiverSweepsShopsManagement(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
