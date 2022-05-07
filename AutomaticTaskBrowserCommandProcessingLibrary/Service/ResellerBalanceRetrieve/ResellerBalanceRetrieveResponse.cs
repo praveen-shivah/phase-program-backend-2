@@ -8,7 +8,8 @@
         loginSubmit,
         managementCreate,
         managementVerifyLoad,
-        managementRetrieveBalance
+        managementRetrieveBalance,
+        apiStore
     }
 
     public class ResellerBalanceRetrieveResponse
@@ -21,6 +22,6 @@
 
         public IManagementPage ManagementPage { get; set; }
 
-        public string VendorBalance { get; set; }
+        public string ResellerBalance { get; set; }
     }
 }

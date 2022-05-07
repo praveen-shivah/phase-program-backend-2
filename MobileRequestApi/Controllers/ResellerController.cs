@@ -1,10 +1,14 @@
 ﻿namespace MobileRequestApi.Controllers
 {
+    using System.Threading.Tasks;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
 
     using MobileRequestApiDTO;
+
+    using ResellerRepository;
 
     [ApiController]
     [Route("api/reseller")]
@@ -12,17 +16,20 @@
     {
         private readonly ILogger logger;
 
-        public ResellerController(ILogger logger)
+        private readonly IResellerBalanceService resellerBalanceService;
+
+        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService)
         {
             this.logger = logger;
+            this.resellerBalanceService = resellerBalanceService;
         }
 
         [HttpPost("reseller-balance")]
-        public IActionResult ResellerBalance(ResellerBalance resellerBalance)
+        public async Task<IActionResult> ResellerBalance(ResellerBalance resellerBalance)
         {
             this.logger.Debug(LogClass.General, "ResellerBalance received");
-
-            return this.Ok();
+            var result = await this.resellerBalanceService.UpdateBalance(resellerBalance);
+            return result ? this.Ok() : this.StatusCode(500, 0);
         }
     }
 }

@@ -33,6 +33,7 @@
     <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />
     <ProjectReference Include="..\OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj" />
     <ProjectReference Include="..\OrganizationRepository\OrganizationRepository.csproj" />
+    <ProjectReference Include="..\ResellerRepository\ResellerRepository.csproj" />
   </ItemGroup>
 
 </Project>

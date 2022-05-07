@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\StoreResellerVendor\" />
+    <Compile Remove="Services\StoreResellerVendor\**" />
+    <EmbeddedResource Remove="Services\StoreResellerVendor\**" />
+    <None Remove="Services\StoreResellerVendor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
   </ItemGroup>
 
 </Project>

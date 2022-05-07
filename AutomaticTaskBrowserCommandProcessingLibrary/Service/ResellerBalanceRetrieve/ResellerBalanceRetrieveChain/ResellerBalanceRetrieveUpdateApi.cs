@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class ResellerBalanceRetrieveManagementGetBalance : IResellerBalanceRetrieveChain
+    public class ResellerBalanceRetrieveUpdateApi : IResellerBalanceRetrieveChain
     {
         private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveManagementGetBalance(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
+        public ResellerBalanceRetrieveUpdateApi(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
         {
             this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
         }
@@ -19,9 +19,10 @@
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.managementRetrieveBalance;
-
+            response.ResponseType = VendorBalanceRetrieveResponseType.apiStore;
             response.ResellerBalance = response.ManagementPage.GetBalance();
+
+            // call restsharp here
 
             return response;
         }
