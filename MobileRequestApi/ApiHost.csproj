@@ -30,7 +30,7 @@
     <ProjectReference Include="..\InvoiceRepository\InvoiceRepository.csproj" />
     <ProjectReference Include="..\LoggingServicesLibrary\LoggingServicesLibrary.csproj" />
     <ProjectReference Include="..\MobileOMaticBackgroundServicesLibrary\MobileOMaticBackgroundServicesLibrary.csproj" />
-    <ProjectReference Include="..\MobileRequestApiDTO\MobileRequestApiDTO.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
     <ProjectReference Include="..\OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj" />
     <ProjectReference Include="..\OrganizationRepository\OrganizationRepository.csproj" />
     <ProjectReference Include="..\ResellerRepository\ResellerRepository.csproj" />

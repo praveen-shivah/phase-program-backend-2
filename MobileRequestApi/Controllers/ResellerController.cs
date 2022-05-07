@@ -25,7 +25,7 @@
         }
 
         [HttpPost("reseller-balance")]
-        public async Task<IActionResult> ResellerBalance(ResellerBalance resellerBalance)
+        public async Task<IActionResult> ResellerBalance(ResellerBalanceDTO resellerBalance)
         {
             this.logger.Debug(LogClass.General, "ResellerBalance received");
             var result = await this.resellerBalanceService.UpdateBalance(resellerBalance);

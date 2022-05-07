@@ -81,7 +81,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseValidateAPICall();
+
+// app.UseValidateAPICall();
 
 app.MapControllers();
 

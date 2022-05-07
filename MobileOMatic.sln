@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp9", "ConsoleApp9\ConsoleApp9.csproj", "{084E4685-BC92-4EDE-8C82-639192616C3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileRequestApi", "MobileRequestApi\MobileRequestApi.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiHost", "MobileRequestApi\ApiHost.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Information", "Docker Information", "{04B0A01A-9B26-4A77-A4FF-F9383FC9A685}"
 	ProjectSection(SolutionItems) = preProject
@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskSharedLibrary"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskMessageLibrary", "AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj", "{AB33D57E-0A33-4F13-B0F1-C449B1CC9BBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileRequestApiDTO", "MobileRequestApiDTO\MobileRequestApiDTO.csproj", "{A79ED1B3-5967-4ECA-8E73-5566182C1A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDTO", "MobileRequestApiDTO\ApiDTO.csproj", "{A79ED1B3-5967-4ECA-8E73-5566182C1A7A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{04F3A803-EB5A-49FD-AE92-090C9B8B52A0}"
 EndProject
@@ -67,6 +67,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskBrowserCommandProcessingLibrary", "AutomaticTaskBrowserCommandProcessingLibrary\AutomaticTaskBrowserCommandProcessingLibrary.csproj", "{37A70522-6B27-476F-8BCF-A0B9A3B2F956}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResellerRepository", "ResellerRepository\ResellerRepository.csproj", "{AD8DC8D2-A387-46C9-8685-72F14CD1F539}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiRequestLibrary", "ApiRequestLibrary\ApiRequestLibrary.csproj", "{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +246,14 @@ Global
 		{AD8DC8D2-A387-46C9-8685-72F14CD1F539}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD8DC8D2-A387-46C9-8685-72F14CD1F539}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
 		{AD8DC8D2-A387-46C9-8685-72F14CD1F539}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +279,7 @@ Global
 		{505A726B-1ED4-4406-A2D0-4CC27B8EE36B} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
 		{37A70522-6B27-476F-8BCF-A0B9A3B2F956} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
 		{AD8DC8D2-A387-46C9-8685-72F14CD1F539} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{4036FAB0-6733-4FCE-9BBC-459E015B4CD8} = {5AE88197-6AFE-4BAB-BB90-971AB0A0AC68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B70FE91-13AB-4324-B0D4-CBA8FCB24D18}

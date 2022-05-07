@@ -14,9 +14,9 @@
             this.vendorToOperatorTransferLoginPageFactory = vendorToOperatorTransferLoginPageFactory;
         }
 
-        ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest vendorBalanceRetrieveRequest)
+        ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            var response = this.vendorBalanceRetrieveChain.Execute(driver, vendorBalanceRetrieveRequest);
+            var response = this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -26,7 +26,7 @@
 
             try
             {
-                response.LoginPage = this.vendorToOperatorTransferLoginPageFactory.Create(driver, vendorBalanceRetrieveRequest.LoginPageInformation);
+                response.LoginPage = this.vendorToOperatorTransferLoginPageFactory.Create(driver, resellerBalanceRetrieveRequest.LoginPageInformation);
             }
             catch
             {
