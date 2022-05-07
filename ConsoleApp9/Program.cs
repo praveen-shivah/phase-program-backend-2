@@ -22,7 +22,7 @@ var response = applicationLifeCycle.StartRequest();
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
 
-var test = applicationLifeCycle.Resolve<IResellerBalanceRetrieveTest>();
+var test = applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferTest>();
 test.RunTest();
 
 Console.WriteLine("Hit any key to continue");

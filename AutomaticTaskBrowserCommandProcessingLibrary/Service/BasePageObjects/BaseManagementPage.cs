@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public abstract class BaseVendorToOperatorTransferManagementPage : IManagementPage
+    public abstract class BaseManagementPage : IManagementPage
     {
         bool IManagementPage.IsPageUrlSet()
         {

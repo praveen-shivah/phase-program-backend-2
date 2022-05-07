@@ -11,7 +11,7 @@
             switch (loginPageInformation.SoftwareType)
             {
                 case SoftwareType.riverSweeps:
-                    return new RiverSweepsVendorToOperatorTransferLogin(webDriver, loginPageInformation);
+                    return new RiverSweepsLogin(webDriver, loginPageInformation);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);
             }

@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 
 using SeleniumExtras.PageObjects;
 
-public class RiverSweepsVendorToOperatorTransferLogin : BaseLoginPage
+public class RiverSweepsLogin : BaseLoginPage
 {
     private readonly string pageLoadedText = "";
 
@@ -19,10 +19,13 @@ public class RiverSweepsVendorToOperatorTransferLogin : BaseLoginPage
 
     private readonly int timeout = 15;
 
+    [FindsBy(How = How.XPath, Using = @"//*[@id='yw0']/div/ul/li")]
+    private IWebElement errorMessage;
+
     [FindsBy(How = How.Id, Using = "LoginForm_login")]
     private IWebElement userName;
 
-    public RiverSweepsVendorToOperatorTransferLogin(
+    public RiverSweepsLogin(
         IWebDriver driver,
         LoginPageInformation loginPageInformation)
         : base(driver, loginPageInformation)
@@ -40,19 +43,15 @@ public class RiverSweepsVendorToOperatorTransferLogin : BaseLoginPage
         this.logIn.Click();
     }
 
-    protected override IManagementPage? submit(IWebDriver driver, LoginPageInformation loginPageInformation)
+    protected override bool submit(IWebDriver driver, LoginPageInformation loginPageInformation)
     {
         this.userName.SendKeys(loginPageInformation.SiteUserId);
         this.password.SendKeys(loginPageInformation.SitePassword);
         this.clickLogInButton();
 
-        IManagementPage result = new RiverSweepsVendorToOperatorTransferShopsManagement(driver);
-        if (result.IsPageUrlSet() && result.VerifyPageLoaded())
-        {
-            return result;
-        }
+        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => driver.Url != this.pageUrl || this.errorMessage.Displayed);
 
-        return null;
+        return driver.Url != this.pageUrl;
     }
 
     protected override bool verifyPageLoaded(IWebDriver driver)

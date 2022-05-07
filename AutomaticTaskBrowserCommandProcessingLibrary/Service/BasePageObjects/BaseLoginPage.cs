@@ -14,7 +14,7 @@
             this.loginPageInformation = loginPageInformation;
         }
 
-        IManagementPage? ILoginPage.Submit()
+        bool ILoginPage.Submit()
         {
             try
             {
@@ -24,7 +24,7 @@
             {
             }
 
-            return null;
+            return false;
         }
 
         bool ILoginPage.VerifyPageLoaded()
@@ -53,7 +53,7 @@
             return false;
         }
 
-        protected abstract IManagementPage? submit(IWebDriver driver, LoginPageInformation loginPageInformation);
+        protected abstract bool submit(IWebDriver driver, LoginPageInformation loginPageInformation);
 
         protected abstract bool verifyPageLoaded(IWebDriver driver);
 

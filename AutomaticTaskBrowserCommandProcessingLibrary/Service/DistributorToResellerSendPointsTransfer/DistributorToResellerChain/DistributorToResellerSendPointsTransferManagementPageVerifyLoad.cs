@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class DistributorToResellerSendPointsTransferLoginSubmit : IDistributorToResellerSendPointsTransferChain
+    public class DistributorToResellerSendPointsTransferManagementPageVerifyLoad : IDistributorToResellerSendPointsTransferChain
     {
         private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer;
 
-        public DistributorToResellerSendPointsTransferLoginSubmit(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
+        public DistributorToResellerSendPointsTransferManagementPageVerifyLoad(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
         {
             this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
         }
@@ -19,12 +19,13 @@
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.loginSubmit;
-            response.IsSuccessful = response.LoginPage.Submit();
-            if (response.ManagementPage == null)
+            response.ResponseType = VendorToOperatorTransferResponseType.managementVerifyLoad;
+            if (response.ManagementPage.IsPageUrlSet() && response.ManagementPage.VerifyPageLoaded())
             {
-                response.IsSuccessful = false;
+                return response;
             }
+
+            response.IsSuccessful = false;
 
             return response;
         }

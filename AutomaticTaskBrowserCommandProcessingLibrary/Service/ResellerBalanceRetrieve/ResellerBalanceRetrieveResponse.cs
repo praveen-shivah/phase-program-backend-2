@@ -6,6 +6,8 @@
         loginCreate,
         loginVerifyLoad,
         loginSubmit,
+        managementCreate,
+        managementVerifyLoad,
         managementRetrieveBalance
     }
 
@@ -17,7 +19,7 @@
 
         public ILoginPage LoginPage { get; set; }
 
-        public IManagementPage? ManagementPage { get; set; }
+        public IManagementPage ManagementPage { get; set; }
 
         public string VendorBalance { get; set; }
     }

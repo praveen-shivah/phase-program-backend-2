@@ -6,6 +6,8 @@
         loginCreate,
         loginVerifyLoad,
         loginSubmit,
+        managementCreate,
+        managementVerifyLoad,
         managementVerifyFundsAvailable,
         managementMakeLocateAndClickDepositButton,
         managementMakeDeposit
@@ -19,6 +21,6 @@
 
         public ILoginPage LoginPage { get; set; }
 
-        public IManagementPage? ManagementPage { get; set; }
+        public IManagementPage ManagementPage { get; set; }
     }
 }

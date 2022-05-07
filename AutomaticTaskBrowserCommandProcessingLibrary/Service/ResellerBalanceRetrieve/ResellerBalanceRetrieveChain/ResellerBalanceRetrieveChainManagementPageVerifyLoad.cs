@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class ResellerBalanceRetrieveChainLoginSubmit : IResellerBalanceRetrieveChain
+    public class ResellerBalanceRetrieveChainManagementPageVerifyLoad : IResellerBalanceRetrieveChain
     {
         private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveChainLoginSubmit(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
+        public ResellerBalanceRetrieveChainManagementPageVerifyLoad(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
         {
             this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
         }
@@ -19,13 +19,13 @@
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.loginSubmit;
-
-            response.IsSuccessful = response.LoginPage.Submit();
-            if (response.IsSuccessful)
+            response.ResponseType = VendorBalanceRetrieveResponseType.managementVerifyLoad;
+            if (response.ManagementPage.IsPageUrlSet() && response.ManagementPage.VerifyPageLoaded())
             {
-                response.ManagementPage = new RiverSweepsShopsManagement(driver);
+                return response;
             }
+
+            response.IsSuccessful = false;
 
             return response;
         }

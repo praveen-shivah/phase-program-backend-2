@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class DistributorToResellerSendPointsTransferLoginSubmit : IDistributorToResellerSendPointsTransferChain
+    public class DistributorToResellerSendPointsTransferManagementPageCreate : IDistributorToResellerSendPointsTransferChain
     {
         private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer;
 
-        public DistributorToResellerSendPointsTransferLoginSubmit(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
+        public DistributorToResellerSendPointsTransferManagementPageCreate(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
         {
             this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
         }
@@ -19,9 +19,12 @@
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.loginSubmit;
-            response.IsSuccessful = response.LoginPage.Submit();
-            if (response.ManagementPage == null)
+            response.ResponseType = VendorToOperatorTransferResponseType.managementCreate;
+            try
+            {
+                response.ManagementPage = new RiverSweepsShopsManagement(driver);
+            }
+            catch
             {
                 response.IsSuccessful = false;
             }

@@ -1,11 +1,11 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public interface ILoginPage
+    public interface IResellerBalancePage
     {
-        bool Submit();
+        bool IsPageUrlSet();
 
         bool VerifyPageLoaded();
 
-        bool VerifyPageUrl();
+        string GetBalance();
     }
 }
