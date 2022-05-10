@@ -26,6 +26,8 @@ using MobileRequestApi.Middleware;
 
 using OrganizationRepositoryTypes;
 
+using ResellerRepository;
+
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 Console.WriteLine("Starting");
@@ -53,6 +55,7 @@ builder.Services.AddSingleton<LoggingLibrary.ILogger>(logger);
 builder.Services.AddDbContext<DPContext>();
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IOrganizationRepository>());
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IInvoiceRepository>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IResellerBalanceService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 connectionString = @"host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";
@@ -81,7 +84,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseValidateAPICall();
+
+// app.UseValidateAPICall();
 
 app.MapControllers();
 

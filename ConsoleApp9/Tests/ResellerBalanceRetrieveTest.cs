@@ -17,6 +17,7 @@
         {
             var request = new ResellerBalanceRetrieveRequest
                                                    {
+                                                       ResellerId = 1,
                                                        Password = "239239",
                                                        SoftwareType = SoftwareType.riverSweeps,
                                                        UserId = "golddist"

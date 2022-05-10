@@ -6,7 +6,7 @@
     {
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(
             IWebDriver driver,
-            ResellerBalanceRetrieveRequest vendorBalanceRetrieveRequest)
+            ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
             return new ResellerBalanceRetrieveResponse
             {

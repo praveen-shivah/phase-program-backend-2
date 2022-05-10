@@ -17,7 +17,7 @@
             this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        async Task<bool> IResellerBalanceService.UpdateBalance(ResellerBalance resellerBalance)
+        async Task<bool> IResellerBalanceService.UpdateBalance(ResellerBalanceDTO resellerBalance)
         {
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
