@@ -18,7 +18,7 @@
         {
             try
             {
-                await this.webRequestClient.PostAsync<ResellerBalanceDTO>(this.apiUrlFactory.GetURL(ApiEndPointType.resellerBalance), resellerBalance);
+                await this.webRequestClient.PostAsync<ResellerBalanceDTO>(this.apiUrlFactory.GetBaseURL(), this.apiUrlFactory.GetURL(ApiEndPointType.resellerBalance), resellerBalance);
                 return true;
             }
             catch

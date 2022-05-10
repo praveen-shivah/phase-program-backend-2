@@ -2,14 +2,19 @@
 {
     public class ApiURLFactory : IApiURLFactory
     {
-        private string apiUrlBase = "localhost";
+        private string apiUrlBase = "http://localhost";
+
+        string IApiURLFactory.GetBaseURL()
+        {
+            return this.apiUrlBase;
+        }
 
         string IApiURLFactory.GetURL(ApiEndPointType apiEndPointType)
         {
             switch (apiEndPointType)
             {
                 case ApiEndPointType.resellerBalance:
-                    return $"{this.apiUrlBase}/api/reseller/reseller-balance";
+                    return $"api/reseller/reseller-balance";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(apiEndPointType), apiEndPointType, null);
             }

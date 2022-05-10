@@ -7,6 +7,7 @@
 
     public interface IApiURLFactory
     {
+        string GetBaseURL();
         string GetURL(ApiEndPointType apiEndPointType);
     }
 }
