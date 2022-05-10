@@ -1,35 +1,30 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using PuppeteerSharp;
+using System.Reflection;
 
-Console.WriteLine("PuppeteerSharp");
-// await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultChromiumRevision);
+using AutomaticTaskLibrary;
 
-// Create an instance of the browser and configure launch options
-Console.WriteLine("PuppeteerSharp - launching browser");
-Browser browser = await Puppeteer.LaunchAsync(
-                      new LaunchOptions
-                          {
-                              ExecutablePath = "/opt/google/chrome/chrome",
-                              Headless = true,
-                              Args = new[] { "--disable-gpu", "--disable-dev-shm-usage", "--disable-setuid-sandbox", "--no-sandbox" }
-                          });
+using ConsoleApp9;
 
-// Create a new page and go to Bing Maps
-Console.WriteLine("PuppeteerSharp - launching maps");
-Page page = await browser.NewPageAsync();
-await page.GoToAsync("https://www.bing.com/maps");
+using log4net;
+using log4net.Config;
 
-// Search for a local tourist attraction on Bing Maps
-Console.WriteLine("PuppeteerSharp - awaiting input");
-await page.WaitForSelectorAsync(".searchbox input");
-await page.FocusAsync(".searchbox input");
-await page.Keyboard.TypeAsync("CN Tower, Toronto, Ontario, Canada");
-await page.ClickAsync(".searchIcon");
-await page.WaitForNavigationAsync(new NavigationOptions() { WaitUntil = new WaitUntilNavigation[] { WaitUntilNavigation.DOMContentLoaded, WaitUntilNavigation.Networkidle0, WaitUntilNavigation.Networkidle2 } });
+Console.WriteLine("Test automation api");
+var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+Console.WriteLine("Starting");
 
-Console.WriteLine("PuppeteerSharp - saving screenshot");
-await page.ScreenshotAsync("screenshot.png");
+var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("ConsoleAoo");
+applicationLifeCycle.Initialize();
+var response = applicationLifeCycle.StartRequest();
 
-await browser.CloseAsync();
 
+var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
+var logger = loggerFactory.Create("HostingApplicationService");
+
+// var test = applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferTest>();
+var test = applicationLifeCycle.Resolve<IResellerBalanceRetrieveTest>();
+test.RunTest();
+
+Console.WriteLine("Hit any key to continue");
+Console.ReadKey();

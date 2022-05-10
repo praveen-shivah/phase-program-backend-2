@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://carl0182@dev.azure.com/carl0182/Online%20Gaming%20Portals/_git/Online%20Gaming%20Portals
+	fetch = +refs/*:refs/*
+	mirror = true

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\StoreResellerVendor\**" />
+    <EmbeddedResource Remove="Services\StoreResellerVendor\**" />
+    <None Remove="Services\StoreResellerVendor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

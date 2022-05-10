@@ -8,7 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PuppeteerSharp" Version="6.2.0" />
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
+    <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj" />
+    <ProjectReference Include="..\InvoiceRepository\InvoiceRepository.csproj" />
+    <ProjectReference Include="..\LoggingServicesLibrary\LoggingServicesLibrary.csproj" />
   </ItemGroup>
 
 </Project>
