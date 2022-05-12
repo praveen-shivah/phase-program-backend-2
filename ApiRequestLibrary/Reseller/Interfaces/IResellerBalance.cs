@@ -1,6 +1,6 @@
 ﻿namespace ApiRequestLibrary
 {
-    using MobileRequestApiDTO;
+    using ApiDTO;
 
     public interface IResellerBalance
     {

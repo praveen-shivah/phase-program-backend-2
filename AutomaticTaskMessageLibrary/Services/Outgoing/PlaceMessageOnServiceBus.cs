@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using LoggingLibrary;
 
@@ -22,9 +22,14 @@
         {
             try
             {
+                if (string.IsNullOrEmpty(placeMessageOnServiceBusRequest.CallBackInformationRequest.APIKey) || string.IsNullOrEmpty(placeMessageOnServiceBusRequest.CallBackInformationRequest.OrganizationId))
+                {
+                    throw new InvalidDataException("Organization Id and/or api key not supplied for request.");
+                }
+
                 var endpointConfiguration = this.endpointConfigurationFactory.CreateEndpointConfiguration(EndpointConfigurationConstants.QueueEndpoint, EndpointConfigurationConstants.HandlerEndpoint);
                 var endpointInstance = await Endpoint.Start(endpointConfiguration).ConfigureAwait(false);
-                await endpointInstance.Send(placeMessageOnServiceBusRequest.AutomaticTask).ConfigureAwait(false);
+                await endpointInstance.Send(placeMessageOnServiceBusRequest.CallBackInformationRequest).ConfigureAwait(false);
 
                 return new PlaceMessageOnServiceBusResponse() { IsSuccessful = true };
             }

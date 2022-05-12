@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp9
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using InvoiceRepository;
 

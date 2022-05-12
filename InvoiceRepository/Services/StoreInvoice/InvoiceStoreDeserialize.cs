@@ -1,12 +1,12 @@
 ﻿namespace InvoiceRepository
 {
+    using ApiDTO;
+
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
 
     using LoggingLibrary;
-
-    using MobileRequestApiDTO;
 
     using Newtonsoft.Json;
 

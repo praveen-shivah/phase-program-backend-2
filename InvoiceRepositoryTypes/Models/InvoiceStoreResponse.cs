@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    using MobileRequestApiDTO;
+    using ApiDTO;
 
     public enum InvoiceStoreResponseType
     {

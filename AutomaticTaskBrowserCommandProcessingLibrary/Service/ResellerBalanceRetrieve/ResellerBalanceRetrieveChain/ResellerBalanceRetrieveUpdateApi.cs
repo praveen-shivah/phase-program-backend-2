@@ -1,8 +1,8 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    using ApiRequestLibrary;
+    using ApiDTO;
 
-    using MobileRequestApiDTO;
+    using ApiRequestLibrary;
 
     using OpenQA.Selenium;
 
@@ -33,7 +33,9 @@
                 new ResellerBalanceDTO()
                 {
                     Balance = response.ResellerBalance,
-                    ResellerId = resellerBalanceRetrieveRequest.ResellerId
+                    ResellerId = resellerBalanceRetrieveRequest.ResellerId,
+                    OrganizationId = resellerBalanceRetrieveRequest.OrganizationId,
+                    APIKey = resellerBalanceRetrieveRequest.ApiKey
                 });
 
             return response;

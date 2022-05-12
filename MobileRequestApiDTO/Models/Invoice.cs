@@ -1,7 +1,8 @@
 using Newtonsoft.Json; 
 using System.Collections.Generic; 
 using System; 
-namespace MobileRequestApiDTO{ 
+namespace ApiDTO
+{ 
 
     public class Invoice
     {

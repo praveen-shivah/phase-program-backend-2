@@ -1,6 +1,6 @@
 ﻿namespace ConsoleApp9
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using InvoiceRepository;
 
@@ -17,6 +17,8 @@
         {
             var request = new ResellerBalanceRetrieveRequest
                                                    {
+                                                       OrganizationId = "1",
+                                                       ApiKey = "test",
                                                        ResellerId = 1,
                                                        Password = "239239",
                                                        SoftwareType = SoftwareType.riverSweeps,

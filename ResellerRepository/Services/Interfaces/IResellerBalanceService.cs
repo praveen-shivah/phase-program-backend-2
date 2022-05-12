@@ -1,6 +1,6 @@
 ﻿namespace ResellerRepository
 {
-    using MobileRequestApiDTO;
+    using ApiDTO;
 
     public interface IResellerBalanceService
     {

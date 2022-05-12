@@ -11,9 +11,9 @@
             this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
         }
 
-        ResellerBalanceRetrieveResponse IResellerBalanceRetrieveAdapter.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest vendorBalanceRetrieveRequest)
+        ResellerBalanceRetrieveResponse IResellerBalanceRetrieveAdapter.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            return this.vendorBalanceRetrieveChain.Execute(driver, vendorBalanceRetrieveRequest);
+            return this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
         }
     }
 }

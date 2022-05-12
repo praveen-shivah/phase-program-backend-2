@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using OpenQA.Selenium;
 

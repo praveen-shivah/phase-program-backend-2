@@ -1,11 +1,11 @@
-﻿namespace AutomaticTaskLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
     using NServiceBus;
 
     public enum AutomaticTaskType
     {
         distributorToResellerSendPointsTransfer,
-        vendorBalanceRetrieve
+        resellerBalanceRetrieve
     }
 
     public interface IAutomaticTask : ICommand

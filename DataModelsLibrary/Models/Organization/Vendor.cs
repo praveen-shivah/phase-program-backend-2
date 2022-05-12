@@ -1,6 +1,6 @@
 ﻿namespace DataModelsLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     public class Vendor : BaseOrganizationEntity
     {

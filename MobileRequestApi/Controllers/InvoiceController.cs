@@ -8,10 +8,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using MobileRequestApiDTO;
-
-    using Newtonsoft.Json;
-
     [ApiController]
     [Route("api/invoice")]
     public class InvoiceController : Controller

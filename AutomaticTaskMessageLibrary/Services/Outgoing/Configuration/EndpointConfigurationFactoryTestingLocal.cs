@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using NServiceBus;
 

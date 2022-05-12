@@ -1,9 +1,12 @@
-﻿namespace AutomaticTaskLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
-    public class AutomaticTaskTransferPoints : IAutomaticTask
+    public class AutomaticTaskTransferPoints : CallBackInformationRequest
     {
         public DistributorToResellerSendPointsTransferRequest DistributorToResellerSendPointsTransferRequest { get; set; }
 
-        public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.distributorToResellerSendPointsTransfer;
+        protected override AutomaticTaskType getAutomaticTaskType()
+        {
+            return AutomaticTaskType.distributorToResellerSendPointsTransfer;
+        }
     }
 }

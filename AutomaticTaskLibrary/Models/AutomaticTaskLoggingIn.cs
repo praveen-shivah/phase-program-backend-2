@@ -1,4 +1,4 @@
-﻿namespace AutomaticTaskLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
     internal class AutomaticTaskLoggingIn
     {

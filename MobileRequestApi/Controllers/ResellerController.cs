@@ -2,11 +2,11 @@
 {
     using System.Threading.Tasks;
 
+    using ApiDTO;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
-
-    using MobileRequestApiDTO;
 
     using ResellerRepository;
 

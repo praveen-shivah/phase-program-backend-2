@@ -1,10 +1,10 @@
 ﻿namespace ResellerRepository
 {
+    using ApiDTO;
+
     using DataPostgresqlLibrary;
 
     using Microsoft.EntityFrameworkCore;
-
-    using MobileRequestApiDTO;
 
     using UnitOfWorkTypesLibrary;
 

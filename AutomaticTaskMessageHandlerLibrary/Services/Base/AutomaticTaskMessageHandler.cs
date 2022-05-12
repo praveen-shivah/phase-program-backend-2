@@ -2,7 +2,7 @@
 {
     using AutomaticTaskBrowserCommandProcessingLibrary;
 
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using NServiceBus;
 

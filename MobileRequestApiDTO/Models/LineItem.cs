@@ -1,7 +1,6 @@
-using Newtonsoft.Json; 
-using System.Collections.Generic; 
-namespace MobileRequestApiDTO{ 
-
+using Newtonsoft.Json;
+namespace ApiDTO
+{
     public class LineItem
     {
         [JsonProperty("discount_amount_formatted")]

@@ -2,6 +2,8 @@
 {
     using AutomaticTaskMessageLibrary;
 
+    using AutomaticTaskSharedLibrary;
+
     using InvoiceRepository;
 
     using InvoiceRepositoryTypes;
@@ -15,11 +17,17 @@
             this.placeMessageOnServiceBus = placeMessageOnServiceBus;
         }
 
-        async Task<ResellerBalanceRetrieveResponse> IResellerBalanceRetrieve.GetBalance(ResellerBalanceRetrieveRequest vendorBalanceRetrieveRequest)
+        async Task<ResellerBalanceRetrieveResponse> IResellerBalanceRetrieve.GetBalance(ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            var placeMessageOnServiceBusRequest = new PlaceMessageOnServiceBusRequest(new AutomaticTaskResellerBalanceRetrieve() { VendorBalanceRetrieveRequest = vendorBalanceRetrieveRequest });
+            var placeMessageOnServiceBusRequest = new PlaceMessageOnServiceBusRequest(new AutomaticTaskResellerBalanceRetrieve
+                                                                                          {
+                                                                                              ResellerBalanceRetrieveRequest = resellerBalanceRetrieveRequest,
+                                                                                              OrganizationId = resellerBalanceRetrieveRequest.OrganizationId,
+                                                                                              APIKey = resellerBalanceRetrieveRequest.ApiKey
+                                                                                          });
+
             var response = await this.placeMessageOnServiceBus.Send(placeMessageOnServiceBusRequest);
-            return new ResellerBalanceRetrieveResponse() { IsSuccessful = response.IsSuccessful };
+            return new ResellerBalanceRetrieveResponse { IsSuccessful = response.IsSuccessful };
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace MobileRequestApiDTO
+﻿namespace ApiDTO
 {
-    public class ResellerBalanceDTO
+    public class ResellerBalanceDTO : CallBackInformationDTO
     {
         public int ResellerId { get; set; }
 

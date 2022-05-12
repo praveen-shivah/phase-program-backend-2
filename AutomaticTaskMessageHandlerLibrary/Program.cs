@@ -3,9 +3,9 @@ using System.Reflection;
 
 using AutomaticTaskBrowserCommandProcessingLibrary;
 
-using AutomaticTaskLibrary;
-
 using AutomaticTaskMessageLibrary;
+
+using AutomaticTaskSharedLibrary;
 
 using log4net;
 using log4net.Config;
@@ -58,7 +58,7 @@ var host = Host.CreateDefaultBuilder(args)
                             {
                                 case AutomaticTaskType.distributorToResellerSendPointsTransfer:
                                     return serviceProvider.GetService<IDistributorToResellerSendPointsTransferHandler>();
-                                case AutomaticTaskType.vendorBalanceRetrieve:
+                                case AutomaticTaskType.resellerBalanceRetrieve:
                                     return serviceProvider.GetService<IResellerBalanceRetrieveHandler>();
                                 default:
                                     throw new ArgumentOutOfRangeException(nameof(key), key, null);

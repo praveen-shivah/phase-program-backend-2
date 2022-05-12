@@ -2,6 +2,8 @@
 {
     using AutomaticTaskMessageLibrary;
 
+    using AutomaticTaskSharedLibrary;
+
     using InvoiceRepository;
 
     using InvoiceRepositoryTypes;

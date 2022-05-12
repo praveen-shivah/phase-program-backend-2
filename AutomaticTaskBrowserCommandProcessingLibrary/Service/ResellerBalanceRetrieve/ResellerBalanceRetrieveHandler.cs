@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using OpenQA.Selenium.Chrome;
 
@@ -21,15 +21,17 @@
             return Task.Factory.StartNew(
                 () =>
                     {
-                        var resellerId = automaticTask.VendorBalanceRetrieveRequest.ResellerId;
-                        var softwareType = automaticTask.VendorBalanceRetrieveRequest.SoftwareType;
-                        var userId = automaticTask.VendorBalanceRetrieveRequest.UserId;
-                        var password = automaticTask.VendorBalanceRetrieveRequest.Password;
+                        var resellerId = automaticTask.ResellerBalanceRetrieveRequest.ResellerId;
+                        var softwareType = automaticTask.ResellerBalanceRetrieveRequest.SoftwareType;
+                        var userId = automaticTask.ResellerBalanceRetrieveRequest.UserId;
+                        var password = automaticTask.ResellerBalanceRetrieveRequest.Password;
+                        var organizationId = automaticTask.OrganizationId;
+                        var apiKey = automaticTask.APIKey;
 
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
                         try
                         {
-                            var request = new ResellerBalanceRetrieveRequest(softwareType, resellerId, userId, password);
+                            var request = new ResellerBalanceRetrieveRequest(softwareType, organizationId, apiKey, resellerId, userId, password);
                             var response = this.vendorBalanceRetrieveAdapter.Execute(driver, request);
                             driver.Quit();
                             return response.IsSuccessful;

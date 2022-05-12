@@ -1,7 +1,6 @@
-namespace MobileRequestApiDTO{ 
-
+namespace ApiDTO
+{ 
     public class CustomFieldHash
     {
     }
-
 }

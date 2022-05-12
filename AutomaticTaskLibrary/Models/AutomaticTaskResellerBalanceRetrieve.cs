@@ -1,9 +1,12 @@
-﻿namespace AutomaticTaskLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
-    public class AutomaticTaskResellerBalanceRetrieve : IAutomaticTask
+    public class AutomaticTaskResellerBalanceRetrieve : CallBackInformationRequest
     {
-        public ResellerBalanceRetrieveRequest VendorBalanceRetrieveRequest { get; set; }
+        public ResellerBalanceRetrieveRequest ResellerBalanceRetrieveRequest { get; set; }
 
-        public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.vendorBalanceRetrieve;
+        protected override AutomaticTaskType getAutomaticTaskType()
+        {
+            return AutomaticTaskType.resellerBalanceRetrieve;
+        }
     }
 }

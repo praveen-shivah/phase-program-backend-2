@@ -1,6 +1,6 @@
 using Newtonsoft.Json; 
-namespace MobileRequestApiDTO{ 
-
+namespace ApiDTO
+{
     public class ShippingAddress
     {
         [JsonProperty("zip")]

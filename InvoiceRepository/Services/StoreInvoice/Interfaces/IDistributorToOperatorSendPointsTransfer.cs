@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using InvoiceRepositoryTypes;
 

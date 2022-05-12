@@ -1,14 +1,14 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     public class PlaceMessageOnServiceBusRequest
     {
-        public PlaceMessageOnServiceBusRequest(IAutomaticTask automaticTask)
+        public PlaceMessageOnServiceBusRequest(CallBackInformationRequest callBackInformationRequest)
         {
-            this.AutomaticTask = automaticTask;
+            this.CallBackInformationRequest = callBackInformationRequest;
         }
 
-        public IAutomaticTask AutomaticTask { get; }
+        public CallBackInformationRequest CallBackInformationRequest { get; }
     }
 }
