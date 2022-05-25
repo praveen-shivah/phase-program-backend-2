@@ -5,6 +5,8 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 
+using AuthenticationRepositoryTypes;
+
 using DataPostgresqlLibrary;
 
 using InvoiceRepositoryTypes;
@@ -56,9 +58,10 @@ builder.Services.AddDbContext<DPContext>();
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IOrganizationRepository>());
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IInvoiceRepository>());
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IResellerBalanceService>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IAuthenticationRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-connectionString = @"host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";
+connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0";
 
 builder.Services.AddDbContext<DPContext>(options =>
     {
@@ -81,12 +84,21 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
+// app.UseValidateAPICall();
+
+app.MapControllers();
+
+
+// Shows UseCors with CorsPolicyBuilder.
+app.UseCors(bld =>
+    {
+        bld
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseValidateAPICall();
-
-app.MapControllers();
 
 app.Run();

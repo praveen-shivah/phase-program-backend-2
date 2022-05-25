@@ -1,8 +1,8 @@
-﻿namespace OrganizationRepository
+﻿namespace AuthenticationRepository
 {
     using ApplicationLifeCycle;
 
-    using OrganizationRepositoryTypes;
+    using AuthenticationRepositoryTypes;
 
     using SimpleInjector;
 
@@ -10,8 +10,8 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IOrganizationRepository, OrganizationRepository>(Lifestyle.Singleton);
-
+            this.GlobalContainer.Register<IAuthenticationRepository, AuthenticationRepository>(Lifestyle.Singleton);
+            
             return true;
         }
     }
