@@ -4,6 +4,8 @@
     {
         public bool IsAuthenticated { get; set; }
 
-        public string Token { get; set; }
+        public string accessToken { get; set; }
+
+        public int[] roles { get; set; }
     }
 }

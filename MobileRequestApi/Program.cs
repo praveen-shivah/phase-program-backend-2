@@ -45,6 +45,16 @@ var logger = loggerFactory.Create("HostingApplicationService");
 
 var builder = WebApplication.CreateBuilder(args);
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: myAllowSpecificOrigins,
+            policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                });
+    });
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -71,6 +81,18 @@ builder.Services.AddDbContext<DPContext>(options =>
 // Register background services here
 builder.Services.AddHostedService<DataHostedService>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+        });
+
 var app = builder.Build();
 
 await app.MigrateDatabaseAsync();
@@ -86,19 +108,9 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 // app.UseValidateAPICall();
 
-app.MapControllers();
-
-
-// Shows UseCors with CorsPolicyBuilder.
-app.UseCors(bld =>
-    {
-        bld
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-    });
-
+app.UseCors(myAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

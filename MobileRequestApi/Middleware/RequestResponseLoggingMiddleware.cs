@@ -64,6 +64,7 @@
             }
         }
 
+
         private async Task LogRequest(HttpContext context)
         {
             context.Request.EnableBuffering();
