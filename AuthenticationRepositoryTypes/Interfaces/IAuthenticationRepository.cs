@@ -17,6 +17,6 @@
 
         Task<CheckRefreshTokenResponse> CheckRefreshToken(string refreshToken);
 
-        Task StoreRefreshToken(int userId, RefreshToken newRefreshToken);
+        Task<StoreRefreshTokenResponse> StoreRefreshToken(int userId, RefreshToken newRefreshToken);
     }
 }

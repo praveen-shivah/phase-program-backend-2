@@ -7,12 +7,16 @@ using System.Text;
 
 using AuthenticationRepositoryTypes;
 
+using CommonServices;
+
 using DataPostgresqlLibrary;
 
 using InvoiceRepositoryTypes;
 
 using log4net;
 using log4net.Config;
+
+using LoggingLibrary;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -30,11 +34,14 @@ using OrganizationRepositoryTypes;
 
 using ResellerRepository;
 
+using SimpleInjector.Lifestyles;
+
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 Console.WriteLine("Starting");
 
 var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("HostingRestService");
+applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.Initialize();
 var response = applicationLifeCycle.StartRequest();
 
@@ -51,7 +58,7 @@ builder.Services.AddCors(options =>
         options.AddPolicy(name: myAllowSpecificOrigins,
             policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    policy.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
     });
 
@@ -63,12 +70,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register dependencies here
-builder.Services.AddSingleton<LoggingLibrary.ILogger>(logger);
+builder.Services.AddSingleton(logger);
 builder.Services.AddDbContext<DPContext>();
-builder.Services.AddSingleton(applicationLifeCycle.Resolve<IOrganizationRepository>());
-builder.Services.AddSingleton(applicationLifeCycle.Resolve<IInvoiceRepository>());
-builder.Services.AddSingleton(applicationLifeCycle.Resolve<IResellerBalanceService>());
-builder.Services.AddSingleton(applicationLifeCycle.Resolve<IAuthenticationRepository>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IDateTimeService>());
+
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IOrganizationRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceService>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAuthenticationRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0";

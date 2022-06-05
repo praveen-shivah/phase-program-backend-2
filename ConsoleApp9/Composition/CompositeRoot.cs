@@ -26,8 +26,8 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferTest, DistributorToResellerSendPointsTransferTest>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<IResellerBalanceRetrieveTest, ResellerBalanceRetrieveTest>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferTest, DistributorToResellerSendPointsTransferTest>(Lifestyle.Scoped);
+            this.GlobalContainer.Register<IResellerBalanceRetrieveTest, ResellerBalanceRetrieveTest>(Lifestyle.Scoped);
 
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);

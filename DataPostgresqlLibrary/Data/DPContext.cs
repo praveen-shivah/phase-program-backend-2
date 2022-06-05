@@ -49,6 +49,7 @@
         public DbSet<PhoneNumber> PhoneNumber { get; set; }
         public DbSet<PostalCode> PostalCode { get; set; }
         public DbSet<StateProvince> StateProvince { get; set; }
+        public DbSet<User> User { get; set; }
 
         public override int SaveChanges()
         {

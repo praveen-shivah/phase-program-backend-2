@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationRepositoryTypes\AuthenticationRepositoryTypes.csproj" />
+    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
   </ItemGroup>
 
 </Project>

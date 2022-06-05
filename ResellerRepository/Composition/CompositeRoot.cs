@@ -8,7 +8,7 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IResellerBalanceService, ResellerBalanceService>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IResellerBalanceService, ResellerBalanceService>(Lifestyle.Transient);
 
             return true;
         }

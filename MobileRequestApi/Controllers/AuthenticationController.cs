@@ -12,6 +12,8 @@
 
     using AuthenticationRepositoryTypes;
 
+    using CommonServices;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Cors;
@@ -27,6 +29,8 @@
     {
         private readonly IAuthenticationRepository authenticationRepository;
 
+        private readonly IDateTimeService dateTimeService;
+
         private readonly IConfiguration configuration;
 
         private readonly ILogger logger;
@@ -34,11 +38,13 @@
         public AuthenticationController(
             ILogger logger,
             IConfiguration configuration,
-            IAuthenticationRepository authenticationRepository)
+            IAuthenticationRepository authenticationRepository,
+            IDateTimeService dateTimeService)
         {
             this.logger = logger;
             this.configuration = configuration;
             this.authenticationRepository = authenticationRepository;
+            this.dateTimeService = dateTimeService;
         }
 
         [HttpPost("admin-login")]
@@ -100,7 +106,7 @@
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration.GetSection("AppSettings:Token").Value));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddMinutes(15), signingCredentials: signingCredentials);
+            var token = new JwtSecurityToken(claims: claims, expires: this.dateTimeService.UtcNow.AddMinutes(15), signingCredentials: signingCredentials);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
@@ -111,9 +117,9 @@
             var refreshToken = new RefreshToken
                                    {
                                        Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                                       Expires = DateTime.Now.AddMinutes(7),
-                                       Created = DateTime.Now
-                                   };
+                                       Expires = this.dateTimeService.UtcNow.AddMinutes(7),
+                                       Created = this.dateTimeService.UtcNow
+            };
 
             return refreshToken;
         }

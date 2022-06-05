@@ -10,7 +10,7 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IOrganizationRepository, OrganizationRepository>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IOrganizationRepository, OrganizationRepository>(Lifestyle.Transient);
 
             return true;
         }

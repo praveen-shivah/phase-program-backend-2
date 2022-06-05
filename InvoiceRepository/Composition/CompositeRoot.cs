@@ -10,14 +10,14 @@
     {
         protected override bool registerBindings()
         {
-            this.GlobalContainer.Register<IInvoiceRepository, InvoiceRepository>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IInvoiceRepository, InvoiceRepository>(Lifestyle.Transient);
 
-            this.GlobalContainer.Register<IInvoiceStore, InvoiceStoreStart>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreDeserialize>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreCreateInvoice>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreAddJsonRevision>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreUpdateInvoice>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreSendTransferRequest>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IInvoiceStore, InvoiceStoreStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreDeserialize>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreCreateInvoice>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreAddJsonRevision>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreUpdateInvoice>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreSendTransferRequest>(Lifestyle.Transient);
 
             return true;
         }

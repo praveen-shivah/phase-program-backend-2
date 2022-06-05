@@ -9,15 +9,17 @@ using ConsoleApp9;
 using log4net;
 using log4net.Config;
 
+using SimpleInjector.Lifestyles;
+
 Console.WriteLine("Test automation api");
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 Console.WriteLine("Starting");
 
 var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("ConsoleAoo");
+applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.Initialize();
 var response = applicationLifeCycle.StartRequest();
-
 
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
