@@ -1,5 +1,6 @@
 ﻿namespace ApiHost.Middleware
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -39,57 +40,70 @@
 
         public async Task Invoke(HttpContext context)
         {
-            // Validate token  If not valid let through, but user won't be set.
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var userId = this.jwtValidate.ValidateJwtToken(token);
-            if (userId != null)
+            try
             {
-                // attach user to context on successful jwt validation
-                var response = await this.authenticationRepository.GetUserById(userId.Value);
-                if (!response.IsAuthenticated || !response.IsSuccessful)
+                // Validate token  If not valid let through, but user won't be set.
+                var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                var userId = this.jwtValidate.ValidateJwtToken(token);
+                if (userId != null)
                 {
-                    context.Items["UserId"] = null;
-                    await this.next(context);
-                    return;
-                }
-            }
-
-            var headers = context.Request.Headers;
-            var org = headers["OrganizationId"];
-            if (!context.Request.Headers.TryGetValue("OrganizationId", out var organizationId))
-            {
-                context.Items["UserId"] = null;
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Unauthorized client. OrganizationId missing");
-                return;
-            }
-
-            if (!context.Request.Headers.TryGetValue("APIKey", out var apiKey))
-            {
-                context.Items["UserId"] = null;
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Unauthorized client. APIKey missing");
-                return;
-            }
-
-            var organizationResponse = await this.organizationRepository.GetOrganizationRequestAsync(
-                new OrganizationRequest()
+                    // attach user to context on successful jwt validation
+                    var response = await this.authenticationRepository.GetUserById(userId.Value);
+                    if (!response.IsAuthenticated || !response.IsSuccessful)
                     {
-                        OrganizationId = organizationId,
-                        APIKey = apiKey
-                    });
+                        context.Items["UserId"] = null;
+                        await this.next(context);
+                        return;
+                    }
+                }
 
-            if (!organizationResponse.IsSuccessful)
-            {
-                context.Items["UserId"] = null;
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Unauthorized client. Invalid data.");
-                return;
+                // Anonymous or not - must have valid organizationId/key
+                var organizationId = 0;
+                var values = context.Request.Headers["OrganizationId"];
+
+                if (values.Count > 0)
+                {
+                    organizationId = int.Parse(values[0]);
+                }
+
+                if (organizationId <= 0)
+                {
+                    userId = null;
+                }
+                else if (!context.Request.Headers.TryGetValue("APIKey", out var apiKey))
+                {
+                    userId = null;
+                }
+                else
+                {
+                    var organizationResponse = await this.organizationRepository.GetOrganizationRequestAsync(
+                                                   new OrganizationRequest()
+                                                   {
+                                                       OrganizationId = organizationId.ToString(),
+                                                       APIKey = apiKey
+                                                   });
+
+                    if (organizationResponse.IsSuccessful)
+                    {
+                        context.Items["OrganizationId"] = organizationId;
+                    }
+                    else
+                    {
+                        context.Items["OrganizationId"] = null;
+                        userId = null;
+                    }
+                }
+
+                context.Items["UserId"] = userId;
+
+                await this.next(context);
             }
-
-            context.Items["UserId"] = userId;
-
-            await this.next(context);
+            catch (Exception e)
+            {
+                context.Items["OrganizationId"] = null;
+                context.Items["UserId"] = null;
+                await this.next(context);
+            }
         }
     }
 }

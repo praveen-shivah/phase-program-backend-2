@@ -46,12 +46,10 @@
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-                // return user id from JWT token if validation successful
                 return userId;
             }
             catch
             {
-                // return null if validation fails
                 return null;
             }
         }

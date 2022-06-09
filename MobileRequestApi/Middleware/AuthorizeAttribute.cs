@@ -18,15 +18,40 @@
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            // skip authorization if action is decorated with [AllowAnonymous] attribute
-            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-            if (allowAnonymous)
+            try
             {
-                return;
-            }
+                // Anonymous or not - must have valid organizationId/key
+                var organizationId = 0;
+                var value = context.HttpContext.Items["OrganizationId"];
 
-            // authorization
-            if (context.HttpContext.Items["UserId"] is not int)
+                if (value != null)
+                {
+                    organizationId = (int)value;
+                }
+
+                if (organizationId <= 0)
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    return;
+                }
+
+                // skip authorization if action is decorated with [AllowAnonymous] attribute
+                var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+                if (allowAnonymous)
+                {
+                    return;
+                }
+
+                if (context.HttpContext.Items["OrganizationId"] is not int)
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                }
+                else if (context.HttpContext.Items["UserId"] is not int)
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                }
+            }
+            catch
             {
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
             }
