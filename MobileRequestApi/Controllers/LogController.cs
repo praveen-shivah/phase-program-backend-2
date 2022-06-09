@@ -2,10 +2,13 @@
 {
     using System;
 
+    using ApiHost.Middleware;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     [ApiController]
     [Route("api/log")]
     public class LogController : Controller

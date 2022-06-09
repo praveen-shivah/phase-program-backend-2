@@ -1,9 +1,11 @@
 using System;
-using System.Configuration;
 using System.IO;
-using System.Net.Mime;
 using System.Reflection;
 using System.Text;
+
+using ApiHost.Middleware;
+
+using AuthenticationRepository;
 
 using AuthenticationRepositoryTypes;
 
@@ -16,8 +18,6 @@ using InvoiceRepositoryTypes;
 using log4net;
 using log4net.Config;
 
-using LoggingLibrary;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +28,11 @@ using Microsoft.IdentityModel.Tokens;
 
 using MobileOMaticBackgroundServicesLibrary;
 
-using MobileRequestApi.Middleware;
-
 using OrganizationRepositoryTypes;
 
 using ResellerRepository;
+
+using SecurityUtilitiesTypes;
 
 using SimpleInjector.Lifestyles;
 
@@ -44,7 +44,6 @@ var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("Hostin
 applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.Initialize();
 var response = applicationLifeCycle.StartRequest();
-
 
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
@@ -58,7 +57,7 @@ builder.Services.AddCors(options =>
         options.AddPolicy(name: myAllowSpecificOrigins,
             policy =>
                 {
-                    policy.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    policy.WithOrigins("http://Localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
     });
 
@@ -73,11 +72,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(logger);
 builder.Services.AddDbContext<DPContext>();
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IDateTimeService>());
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IJwtValidate>());
 
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IOrganizationRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAuthenticationRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ISecretKeyRetrieval>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0";
@@ -98,7 +100,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
                 ValidateIssuer = false,
-                ValidateAudience = false
+                ValidateAudience = false,
+                ValidateLifetime = true
             };
         });
 
@@ -115,8 +118,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
-// app.UseValidateAPICall();
-
+app.UseValidateAPICall();
 app.UseCors(myAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();

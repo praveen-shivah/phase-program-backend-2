@@ -6,38 +6,41 @@
 
     using DataPostgresqlLibrary;
 
+    using Microsoft.EntityFrameworkCore;
+
     using UnitOfWorkTypesLibrary;
 
     public class AuthenticationRepository : IAuthenticationRepository
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
-
         private readonly IAuthenticateUser authenticateUser;
 
-        private readonly IStoreRefreshToken storeRefreshToken;
+        private readonly IRefreshToken refreshToken;
 
-        private readonly ICheckRefreshToken checkRefreshToken;
+        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
 
-        public AuthenticationRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IAuthenticateUser authenticateUser, IStoreRefreshToken storeRefreshToken, ICheckRefreshToken checkRefreshToken)
+        public AuthenticationRepository(
+            IUnitOfWorkFactory<DPContext> unitOfWorkFactory,
+            IAuthenticateUser authenticateUser,
+            IRefreshToken refreshToken)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.authenticateUser = authenticateUser;
-            this.storeRefreshToken = storeRefreshToken;
-            this.checkRefreshToken = checkRefreshToken;
+            this.refreshToken = refreshToken;
         }
 
         async Task<AuthenticationResponse> IAuthenticationRepository.Authenticate(AuthenticationRequest authenticationRequest)
         {
-            AuthenticateUserResponse authenticateUserResponse = null;
+            AuthenticateUserResponse? authenticateUserResponse = null;
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
                         authenticateUserResponse = await this.authenticateUser.Authenticate(
                                                        context,
-                                                       new AuthenticateUserRequest()
+                                                       new AuthenticateUserRequest
                                                        {
                                                            UserName = authenticationRequest.UserId,
-                                                           Password = authenticationRequest.Password
+                                                           Password = authenticationRequest.Password,
+                                                           IpAddress = authenticationRequest.IpAddress
                                                        });
 
                         return WorkItemResultEnum.doneContinue;
@@ -46,73 +49,87 @@
             var result = await uow.ExecuteAsync();
             if (result != WorkItemResultEnum.commitSuccessfullyCompleted || authenticateUserResponse == null)
             {
-                return new AuthenticationResponse()
+                return new AuthenticationResponse
                 {
                     IsSuccessful = false,
                     IsAuthenticated = false
                 };
             }
 
-            return new AuthenticationResponse()
+            return new AuthenticationResponse
             {
                 UserId = authenticateUserResponse.UserId,
                 UserName = authenticateUserResponse.UserName,
                 IsAuthenticated = authenticateUserResponse.IsAuthenticated,
-                IsSuccessful = true
+                IsSuccessful = true,
+                RefreshToken = new RefreshTokenDto()
+                {
+                    Created = authenticateUserResponse.RefreshToken.Created,
+                    CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
+                    Expires = authenticateUserResponse.RefreshToken.Expires,
+                    Token = authenticateUserResponse.JwtToken
+                }
             };
         }
 
-        async Task<CheckRefreshTokenResponse> IAuthenticationRepository.CheckRefreshToken(string refreshToken)
+        async Task<RefreshTokenResponse> IAuthenticationRepository.RefreshToken(string refreshToken, int userId, string ipAddress)
         {
-            CheckRefreshTokenResponse checkRefreshTokenResponse = null;
+            RefreshTokenResponse? refreshTokenResponse = null;
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        checkRefreshTokenResponse = await this.checkRefreshToken.Check(context, new CheckRefreshTokenRequest { RefreshToken = refreshToken });
+                        refreshTokenResponse = await this.refreshToken.Refresh(context, new RefreshTokenRequest { RefreshToken = refreshToken, IpAddress = ipAddress });
                         return WorkItemResultEnum.doneContinue;
                     });
 
             var result = await uow.ExecuteAsync();
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || checkRefreshTokenResponse == null)
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || refreshTokenResponse == null)
             {
-                return new CheckRefreshTokenResponse()
-                {
-                    IsSuccessful = false
-                };
+                return new RefreshTokenResponse { IsSuccessful = false };
             }
 
-            return checkRefreshTokenResponse;
+            return refreshTokenResponse;
         }
 
-        async Task<StoreRefreshTokenResponse> IAuthenticationRepository.StoreRefreshToken(int userId, RefreshToken newRefreshToken)
+        async Task<AuthenticationResponse> IAuthenticationRepository.GetUserById(int id)
         {
-            StoreRefreshTokenResponse storeRefreshTokenResponse = null;
+            AuthenticationResponse? authenticationResponse = null;
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        storeRefreshTokenResponse = await this.storeRefreshToken.Store(
-                                                        context,
-                                                        new StoreRefreshTokenRequest()
-                                                        {
-                                                            UserId = userId,
-                                                            Token = newRefreshToken.Token,
-                                                            Created = newRefreshToken.Created,
-                                                            Expires = newRefreshToken.Expires
-                                                        });
+                        var user = await context.User.SingleOrDefaultAsync(x => x.Id == id);
+                        if (user == null)
+                        {
+                            authenticationResponse = new AuthenticationResponse
+                            {
+                                IsAuthenticated = false,
+                                IsSuccessful = false
+                            };
+                        }
+                        else
+                        {
+                            authenticationResponse = new AuthenticationResponse
+                            {
+                                IsAuthenticated = true,
+                                IsSuccessful = true,
+                                UserId = user.Id,
+                            };
+                        }
 
                         return WorkItemResultEnum.doneContinue;
                     });
 
             var result = await uow.ExecuteAsync();
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || storeRefreshTokenResponse == null)
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || authenticationResponse == null)
             {
-                return new StoreRefreshTokenResponse()
+                return new AuthenticationResponse
                 {
-                    IsSuccessful = false
+                    IsSuccessful = false,
+                    IsAuthenticated = false
                 };
             }
 
-            return storeRefreshTokenResponse;
+            return authenticationResponse;
         }
     }
 }

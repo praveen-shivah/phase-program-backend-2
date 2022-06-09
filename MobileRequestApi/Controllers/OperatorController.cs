@@ -1,7 +1,5 @@
 ﻿namespace MobileRequestApi.Controllers
 {
-    using System;
-
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;

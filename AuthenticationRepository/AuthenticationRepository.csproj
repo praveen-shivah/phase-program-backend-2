@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationRepositoryTypes\AuthenticationRepositoryTypes.csproj" />
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\SecurityUtilitiesTypes\SecurityUtilitiesTypes.csproj" />
     <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace MobileRequestApi.Middleware
+﻿namespace ApiHost.Middleware
 {
     using System;
     using System.IO;

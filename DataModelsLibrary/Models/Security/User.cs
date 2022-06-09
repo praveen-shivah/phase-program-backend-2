@@ -1,13 +1,19 @@
 ﻿namespace DataModelsLibrary
 {
+    using Newtonsoft.Json;
+
     public class User : BaseOrganizationEntity
     {
         public string UserName { get; set; }
+
+        [JsonIgnore]
         public string Password { get; set; }
+        [JsonIgnore]
         public string PasswordSalt { get; set; }
+
         public string Email { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime RefreshTokenCreated { get; set; }
-        public DateTime RefreshTokenExpires { get; set; }
+
+        [JsonIgnore]
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

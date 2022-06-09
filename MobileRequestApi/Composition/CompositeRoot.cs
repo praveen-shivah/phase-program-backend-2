@@ -1,5 +1,7 @@
 ﻿namespace MobileRequestApi
 {
+    using ApiHost.Middleware;
+
     using ApplicationLifeCycle;
 
     using DatabaseClassLibrary;
@@ -11,6 +13,10 @@
     using LoggingLibrary;
 
     using Microsoft.Extensions.Configuration;
+
+    using SecurityUtilities;
+
+    using SecurityUtilitiesTypes;
 
     using SharedUtilities;
 
@@ -26,9 +32,11 @@
         {
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IJwtValidate, JwtValidate>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().Build());
+            this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
             return true;

@@ -50,6 +50,7 @@
         public DbSet<PostalCode> PostalCode { get; set; }
         public DbSet<StateProvince> StateProvince { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<RefreshToken> RefreshToken { get; set; }
 
         public override int SaveChanges()
         {

@@ -5,6 +5,8 @@
 
     using DataPostgresqlLibrary;
 
+    using Microsoft.EntityFrameworkCore;
+
     using SharedUtilities;
 
     public class AuthenticateUserRetrieve : IAuthenticateUser
@@ -24,7 +26,7 @@
                 return response;
             }
 
-            var user = dpContext.User.SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
+            var user = dpContext.User.Include(r => r.RefreshTokens).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
             if (user == null || user.Password != this.calculatePassword(authenticateUserRequest.Password, user.PasswordSalt))
             {
                 response.IsSuccessful = false;
@@ -32,6 +34,7 @@
                 return response;
             }
 
+            response.User = user;
             response.IsAuthenticated = true;
             response.UserId = user.Id;
             response.UserName = user.UserName;
