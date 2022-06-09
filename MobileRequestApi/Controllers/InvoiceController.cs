@@ -1,6 +1,8 @@
-﻿namespace MobileRequestApi.Controllers
+﻿namespace ApiHost
 {
     using System.Threading.Tasks;
+
+    using ApiHost;
 
     using InvoiceRepositoryTypes;
 
@@ -10,7 +12,7 @@
 
     [ApiController]
     [Route("api/invoice")]
-    public class InvoiceController : Controller
+    public class InvoiceController : ApiControllerBase
     {
         // private readonly IMessageSession messageSession;
 

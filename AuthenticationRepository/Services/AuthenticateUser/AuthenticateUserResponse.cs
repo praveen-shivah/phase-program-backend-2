@@ -10,6 +10,7 @@
         public string UserName { get; set; }
         public bool IsAuthenticated { get; set; }
         public string JwtToken { get; set; }
+        public List<int> Roles { get; set; }
         public RefreshToken RefreshToken { get; set; }
     }
 }

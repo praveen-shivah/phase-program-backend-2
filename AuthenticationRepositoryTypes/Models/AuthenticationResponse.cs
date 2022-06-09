@@ -9,5 +9,6 @@
         public bool IsSuccessful { get; set; }
         public bool IsAuthenticated { get; set; }
         public RefreshTokenDto RefreshToken { get; set; }
+        public List<int> Roles { get; set; }
     }
 }

@@ -38,7 +38,7 @@
             var refreshToken = new RefreshToken
             {
                 Token = getUniqueToken(),
-                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTL()),
+                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
                 Created = DateTime.UtcNow,
                 CreatedByIp = authenticateUserRequest.IpAddress,
                 ReasonRevoked = string.Empty,
@@ -73,7 +73,7 @@
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                    Expires = DateTime.UtcNow.AddMinutes(this.secretKeyRetrieval.GetJwtTokenTTL()),
+                    Expires = DateTime.UtcNow.AddMinutes(this.secretKeyRetrieval.GetJwtTokenTTLInMinutes()),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 

@@ -4,8 +4,8 @@
     {
         string GetKey();
 
-        double GetRefreshTokenTTL();
+        double GetRefreshTokenTTLInDays();
 
-        double GetJwtTokenTTL();
+        double GetJwtTokenTTLInMinutes();
     }
 }

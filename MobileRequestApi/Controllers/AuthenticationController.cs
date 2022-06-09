@@ -1,4 +1,4 @@
-﻿namespace ApiHost.Controllers
+﻿namespace ApiHost
 {
     using System;
     using System.Threading.Tasks;
@@ -23,7 +23,7 @@
     [ApiController]
     [Route("api/authentication")]
     [EnableCors("_myAllowSpecificOrigins")]
-    public class AuthenticationController : Controller
+    public class AuthenticationController : ApiControllerBase
     {
         private readonly IAuthenticationRepository authenticationRepository;
 
@@ -54,7 +54,7 @@
                 {
                     IsAuthenticated = true,
                     accessToken = result.RefreshToken.Token,
-                    roles = new[] { 2001, 5150 }
+                    roles = result.Roles.ToArray()
                 };
 
                 this.setTokenCookie(result.RefreshToken.Token);
@@ -114,7 +114,7 @@
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTL())
+                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays())
             };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
         }

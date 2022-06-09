@@ -1,6 +1,5 @@
 ﻿namespace ApiHost.Middleware
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -98,7 +97,7 @@
 
                 await this.next(context);
             }
-            catch (Exception e)
+            catch
             {
                 context.Items["OrganizationId"] = null;
                 context.Items["UserId"] = null;

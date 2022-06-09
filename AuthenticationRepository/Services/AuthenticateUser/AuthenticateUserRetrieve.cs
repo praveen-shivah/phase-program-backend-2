@@ -34,10 +34,17 @@
                 return response;
             }
 
+            var temporaryRolesList = new List<int>
+                                         {
+                                             2001,
+                                             5150
+                                         };
+
             response.User = user;
             response.IsAuthenticated = true;
             response.UserId = user.Id;
             response.UserName = user.UserName;
+            response.Roles = temporaryRolesList;
 
             return response;
         }

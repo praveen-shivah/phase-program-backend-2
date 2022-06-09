@@ -1,4 +1,4 @@
-﻿namespace MobileRequestApi.Controllers
+﻿namespace ApiHost
 {
     using System.Threading.Tasks;
 
@@ -12,7 +12,7 @@
 
     [ApiController]
     [Route("api/reseller")]
-    public class ResellerController : Controller
+    public class ResellerController : ApiControllerBase
     {
         private readonly ILogger logger;
 

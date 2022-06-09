@@ -62,6 +62,7 @@
                 UserName = authenticateUserResponse.UserName,
                 IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                 IsSuccessful = true,
+                Roles = authenticateUserResponse.Roles,
                 RefreshToken = new RefreshTokenDto()
                 {
                     Created = authenticateUserResponse.RefreshToken.Created,

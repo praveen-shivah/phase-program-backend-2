@@ -19,9 +19,9 @@
         }
 
         // number of days
-        double ISecretKeyRetrieval.GetRefreshTokenTTL()
+        double ISecretKeyRetrieval.GetRefreshTokenTTLInDays()
         {
-            if (!double.TryParse(this.configuration.GetSection("AppSettings:RefreshTokenTTL").Value, out double result))
+            if (!double.TryParse(this.configuration.GetSection("AppSettings:RefreshTokenTTLInDays").Value, out double result))
             {
                 result = 7.0;
             }
@@ -30,9 +30,9 @@
         }
 
         // Number of minutes
-        double ISecretKeyRetrieval.GetJwtTokenTTL()
+        double ISecretKeyRetrieval.GetJwtTokenTTLInMinutes()
         {
-            if (!double.TryParse(this.configuration.GetSection("AppSettings:JwtTokenTTL").Value, out double result))
+            if (!double.TryParse(this.configuration.GetSection("AppSettings:JwtTokenTTLInMinutes").Value, out double result))
             {
                 result = 1.0;
             }

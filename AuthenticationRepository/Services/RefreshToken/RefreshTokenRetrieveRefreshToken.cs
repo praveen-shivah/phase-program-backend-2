@@ -77,7 +77,7 @@
         private void removeOldRefreshTokens(User user)
         {
             // remove old inactive refresh tokens from user based on TTL in app settings
-            user.RefreshTokens.RemoveAll(x => !x.IsActive && x.Created.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTL()) <= DateTime.UtcNow);
+            user.RefreshTokens.RemoveAll(x => !x.IsActive && x.Created.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()) <= DateTime.UtcNow);
         }
 
         private void revokeDescendantRefreshTokens(

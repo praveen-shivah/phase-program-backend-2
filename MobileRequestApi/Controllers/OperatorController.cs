@@ -1,4 +1,4 @@
-﻿namespace MobileRequestApi.Controllers
+﻿namespace ApiHost
 {
     using LoggingLibrary;
 
@@ -6,7 +6,7 @@
 
     [ApiController]
     [Route("api/operator")]
-    public class OperatorController : Controller
+    public class OperatorController : ApiControllerBase
     {
         private readonly ILogger logger;
 
