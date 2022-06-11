@@ -11,11 +11,16 @@
 
     using AuthenticationRepositoryTypes;
 
+    using CommonServices;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+
+    using Newtonsoft.Json;
 
     using SecurityUtilitiesTypes;
 
@@ -31,13 +36,17 @@
 
         private readonly ISecretKeyRetrieval secretKeyRetrieval;
 
+        private readonly IDateTimeService dateTimeService;
+
         public AuthenticationController(
             ILogger logger,
             ISecretKeyRetrieval secretKeyRetrieval,
+            IDateTimeService dateTimeService,
             IAuthenticationRepository authenticationRepository)
         {
             this.logger = logger;
             this.secretKeyRetrieval = secretKeyRetrieval;
+            this.dateTimeService = dateTimeService;
             this.authenticationRepository = authenticationRepository;
         }
 
@@ -65,7 +74,7 @@
         }
 
         [AllowAnonymous]
-        [HttpGet("refresh-token")]
+        [HttpPost("refresh-token")]
         public async Task<ActionResult<string>> RefreshToken()
         {
             this.logger.Debug(LogClass.General, "RefreshToken received");
@@ -84,10 +93,19 @@
                     this.setTokenCookie(result.RefreshToken.Token);
                     return this.Ok(result.JwtToken);
                 case RefreshTokenResponseType.notFound:
+                    this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Invalid Refresh Token.");
                 case RefreshTokenResponseType.expired:
+                    this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Token expired.");
+                case RefreshTokenResponseType.currentTokenNotFound:
+                    this.setTokenCookie(string.Empty);
+                    return this.Unauthorized("Invalid Refresh Token.");
+                case RefreshTokenResponseType.attemptedReuse:
+                case RefreshTokenResponseType.notActive:
+                case RefreshTokenResponseType.duplicated:
                 default:
+                    this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Invalid Refresh Token.");
             }
         }
@@ -110,13 +128,23 @@
 
         private void setTokenCookie(string token)
         {
+            var expires = this.dateTimeService.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays());
+            if (string.IsNullOrEmpty(token))
+            {
+                expires = this.dateTimeService.UtcNow.AddDays(-1D);
+            }
             // append cookie with refresh token to the http response
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays())
+                IsEssential = true,
+                Secure = false, 
+                SameSite = SameSiteMode.None,
+                Domain = "localhost",
+                Expires = expires
             };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
+
+            this.Response.Cookies.Append("refreshToken", token, cookieOptions);
         }
     }
 }

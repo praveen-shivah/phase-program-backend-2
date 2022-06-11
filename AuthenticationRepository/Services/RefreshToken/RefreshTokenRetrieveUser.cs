@@ -30,14 +30,13 @@
 
             try
             {
-                var user = await dpContext.User.SingleOrDefaultAsync(x => x.UserName == refreshTokenRequest.UserName);
+                var user = await dpContext.User.Include(x => x.RefreshTokens).SingleOrDefaultAsync(x => x.CurrentRefreshToken == refreshTokenRequest.RefreshToken);
                 if (user == null)
                 {
                     response.IsSuccessful = false;
-                    response.RefreshTokenResponseType = RefreshTokenResponseType.notFound;
+                    response.RefreshTokenResponseType = RefreshTokenResponseType.currentTokenNotFound;
                     return response;
                 }
-
 
                 response.User = user;
                 response.UserName = user.UserName;

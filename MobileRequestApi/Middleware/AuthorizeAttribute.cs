@@ -48,7 +48,7 @@
                 }
                 else if (context.HttpContext.Items["UserId"] is not int)
                 {
-                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status403Forbidden };
                 }
             }
             catch

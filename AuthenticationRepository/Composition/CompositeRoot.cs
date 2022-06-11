@@ -20,6 +20,7 @@
 
             this.GlobalContainer.Register<IRefreshToken, RefreshTokenStart>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenRetrieveUser>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenRetrieveRefreshToken>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenValidateExpiration>(Lifestyle.Transient);
 
             return true;

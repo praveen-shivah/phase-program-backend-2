@@ -14,6 +14,9 @@
         public string Email { get; set; }
 
         [JsonIgnore]
+        public string CurrentRefreshToken { get; set; }
+
+        [JsonIgnore]
         public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

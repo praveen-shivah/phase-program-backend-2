@@ -6,6 +6,8 @@
     {
         successful,
 
+        currentTokenNotFound,
+
         notFound,
 
         attemptedReuse,

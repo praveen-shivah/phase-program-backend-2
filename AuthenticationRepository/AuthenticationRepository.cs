@@ -56,20 +56,32 @@
                 };
             }
 
+            if (authenticateUserResponse.IsSuccessful && authenticateUserResponse.IsAuthenticated)
+            {
+                return new AuthenticationResponse
+                {
+                    UserId = authenticateUserResponse.UserId,
+                    UserName = authenticateUserResponse.UserName,
+                    IsAuthenticated = authenticateUserResponse.IsAuthenticated,
+                    IsSuccessful = true,
+                    Roles = authenticateUserResponse.Roles,
+                    RefreshToken = new RefreshTokenDto()
+                    {
+                        Created = authenticateUserResponse.RefreshToken.Created,
+                        CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
+                        Expires = authenticateUserResponse.RefreshToken.Expires,
+                        Token = authenticateUserResponse.RefreshToken.Token
+                    }
+                };
+            }
+
             return new AuthenticationResponse
             {
                 UserId = authenticateUserResponse.UserId,
                 UserName = authenticateUserResponse.UserName,
                 IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                 IsSuccessful = true,
-                Roles = authenticateUserResponse.Roles,
-                RefreshToken = new RefreshTokenDto()
-                {
-                    Created = authenticateUserResponse.RefreshToken.Created,
-                    CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
-                    Expires = authenticateUserResponse.RefreshToken.Expires,
-                    Token = authenticateUserResponse.JwtToken
-                }
+                Roles = authenticateUserResponse.Roles
             };
         }
 

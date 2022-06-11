@@ -5,6 +5,8 @@
     using System.Security.Cryptography;
     using System.Text;
 
+    using CommonServices;
+
     using DataModelsLibrary;
 
     using DataPostgresqlLibrary;
@@ -19,10 +21,13 @@
 
         private readonly ISecretKeyRetrieval secretKeyRetrieval;
 
-        public AuthenticateUserGenerateJwt(IAuthenticateUser authenticateUser, ISecretKeyRetrieval secretKeyRetrieval)
+        private readonly IDateTimeService dateTimeService;
+
+        public AuthenticateUserGenerateJwt(IAuthenticateUser authenticateUser, ISecretKeyRetrieval secretKeyRetrieval, IDateTimeService dateTimeService)
         {
             this.authenticateUser = authenticateUser;
             this.secretKeyRetrieval = secretKeyRetrieval;
+            this.dateTimeService = dateTimeService;
         }
 
         async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
@@ -38,13 +43,14 @@
             var refreshToken = new RefreshToken
             {
                 Token = getUniqueToken(),
-                Expires = DateTime.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
-                Created = DateTime.UtcNow,
+                Expires = this.dateTimeService.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
+                Created = this.dateTimeService.UtcNow,
                 CreatedByIp = authenticateUserRequest.IpAddress,
                 ReasonRevoked = string.Empty,
                 ReplacedByToken = string.Empty
             };
 
+            response.User.CurrentRefreshToken = refreshToken.Token;
             response.User.RefreshTokens.Add(refreshToken);
             response.RefreshToken = refreshToken;
 

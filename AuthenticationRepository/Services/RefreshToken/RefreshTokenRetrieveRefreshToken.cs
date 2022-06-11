@@ -1,6 +1,8 @@
 ﻿namespace AuthenticationRepository
 {
-    using AuthenticationRepositoryTypes;
+    using System.Security.Cryptography;
+
+    using ApiDTO;
 
     using CommonServices;
 
@@ -58,8 +60,16 @@
                     return response;
                 }
 
-                var newRefreshToken = await this.rotateRefreshToken(refreshToken, response.User, refreshTokenRequest.IpAddress);
+                var newRefreshToken = this.rotateRefreshToken(dpContext, refreshTokenRequest.IpAddress);
+                response.User.CurrentRefreshToken = newRefreshToken.Token;
                 response.User.RefreshTokens.Add(newRefreshToken);
+                response.RefreshToken = new RefreshTokenDto
+                {
+                    Token = newRefreshToken.Token,
+                    Created = newRefreshToken.Created,
+                    CreatedByIp = newRefreshToken.CreatedByIp,
+                    Expires = newRefreshToken.Expires
+                };
 
                 this.removeOldRefreshTokens(response.User);
 
@@ -87,17 +97,23 @@
             string reason)
         {
             // recursively traverse the refresh token chain and ensure all descendants are revoked
-            if (!string.IsNullOrEmpty(refreshToken.ReplacedByToken))
+            if (string.IsNullOrEmpty(refreshToken.ReplacedByToken))
             {
-                var childToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
-                if (childToken != null && childToken.IsActive)
-                {
+                return;
+            }
+
+            var childToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
+
+            switch (childToken)
+            {
+                case null:
+                    return;
+                case { IsActive: true }:
                     this.revokeRefreshToken(childToken, ipAddress, reason);
-                }
-                else
-                {
+                    break;
+                default:
                     this.revokeDescendantRefreshTokens(childToken, user, ipAddress, reason);
-                }
+                    break;
             }
         }
 
@@ -113,11 +129,37 @@
             token.ReplacedByToken = replacedByToken;
         }
 
-        private async Task<RefreshToken> rotateRefreshToken(RefreshToken refreshToken, User user, string ipAddress)
+        private RefreshToken rotateRefreshToken(DPContext dpContext, string ipAddress)
         {
-            var newRefreshToken = await this.jwtService.GenerateRefreshToken(user, ipAddress);
-            this.revokeRefreshToken(refreshToken, ipAddress, "Replaced by new token", newRefreshToken.Token);
-            return newRefreshToken;
+            var refreshToken = new RefreshToken
+            {
+                Token = getUniqueToken(),
+                Expires = this.dateTimeService.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
+                Created = this.dateTimeService.UtcNow,
+                CreatedByIp = ipAddress,
+                ReasonRevoked = string.Empty,
+                ReplacedByToken = string.Empty
+            };
+
+            return refreshToken;
+
+            string getUniqueToken()
+            {
+                while (true)
+                {
+                    // token is a cryptographically strong random sequence of values
+                    var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+
+                    // ensure token is unique by checking against db
+                    var tokenIsUnique = !dpContext.User.Any(u => u.RefreshTokens.Any(t => t.Token == token));
+                    if (!tokenIsUnique)
+                    {
+                        continue;
+                    }
+
+                    return token;
+                }
+            }
         }
     }
 }

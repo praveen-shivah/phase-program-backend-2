@@ -28,7 +28,7 @@
                 return response;
             }
 
-            if (!(this.dateTimeService.UtcNow > response.RefreshTokenExpires))
+            if (this.dateTimeService.UtcNow < response.RefreshToken.Expires)
             {
                 return response;
             }
