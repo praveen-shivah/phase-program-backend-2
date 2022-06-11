@@ -16,16 +16,20 @@
 
         private readonly IRefreshToken refreshToken;
 
+        private readonly ILogout logout;
+
         private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
 
         public AuthenticationRepository(
             IUnitOfWorkFactory<DPContext> unitOfWorkFactory,
             IAuthenticateUser authenticateUser,
-            IRefreshToken refreshToken)
+            IRefreshToken refreshToken,
+            ILogout logout)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.authenticateUser = authenticateUser;
             this.refreshToken = refreshToken;
+            this.logout = logout;
         }
 
         async Task<AuthenticationResponse> IAuthenticationRepository.Authenticate(AuthenticationRequest authenticationRequest)
@@ -83,6 +87,25 @@
                 IsSuccessful = true,
                 Roles = authenticateUserResponse.Roles
             };
+        }
+
+        async Task<LogoutResponse> IAuthenticationRepository.Logout(LogoutRequest logoutRequest)
+        {
+            var logoutResponse = new LogoutResponse() { IsSuccessful = true };
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        logoutResponse = await this.logout.Logout(context, logoutRequest);
+                        return WorkItemResultEnum.doneContinue;
+                    });
+
+            var result = await uow.ExecuteAsync();
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
+            {
+                return new LogoutResponse() { IsSuccessful = false };
+            }
+
+            return logoutResponse;
         }
 
         async Task<RefreshTokenResponse> IAuthenticationRepository.RefreshToken(string refreshToken, int userId, string ipAddress)

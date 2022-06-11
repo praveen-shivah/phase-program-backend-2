@@ -1,7 +1,5 @@
 ﻿namespace ApiHost
 {
-    using System.Data;
-
     using Microsoft.AspNetCore.Mvc;
 
     public abstract class ApiControllerBase : Controller
@@ -10,12 +8,7 @@
         {
             get
             {
-                var value = this.HttpContext.Items["OrganizationId"];
-                if (value == null)
-                {
-                    throw new NoNullAllowedException("OrganizationId is null");
-                }
-
+                var value = this.HttpContext.Items["OrganizationId"] ?? 0;
                 return (int)value;
             }
         }
@@ -24,12 +17,7 @@
         {
             get
             {
-                var value = this.HttpContext.Items["UserId"];
-                if (value == null)
-                {
-                    throw new NoNullAllowedException("OrganizationId is null");
-                }
-
+                var value = this.HttpContext.Items["UserId"] ?? 0;
                 return (int)value;
             }
         }

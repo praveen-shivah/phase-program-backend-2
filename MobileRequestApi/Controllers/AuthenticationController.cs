@@ -1,6 +1,5 @@
 ﻿namespace ApiHost
 {
-    using System;
     using System.Threading.Tasks;
 
     using ApiDTO;
@@ -18,9 +17,6 @@
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
-    using Newtonsoft.Json;
 
     using SecurityUtilitiesTypes;
 
@@ -68,6 +64,27 @@
 
                 this.setTokenCookie(result.RefreshToken.Token);
                 return this.Ok(response);
+            }
+
+            return this.StatusCode(500, 0);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            this.logger.Debug(LogClass.General, "RefreshToken received");
+            this.setTokenCookie(string.Empty);
+
+            if (this.UserId <= 0)
+            {
+                return this.Ok();
+            }
+
+            var result = await this.authenticationRepository.Logout(new LogoutRequest(this.UserId));
+            if (result.IsSuccessful)
+            {
+                return this.Ok();
             }
 
             return this.StatusCode(500, 0);

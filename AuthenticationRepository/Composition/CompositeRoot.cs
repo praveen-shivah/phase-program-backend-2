@@ -2,8 +2,6 @@
 {
     using ApplicationLifeCycle;
 
-    using AuthenticationRepositoryTypes;
-
     using SimpleInjector;
 
     public class CompositeRoot : CompositeRootBase
@@ -22,6 +20,9 @@
             this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenRetrieveUser>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenRetrieveRefreshToken>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IRefreshToken, RefreshTokenValidateExpiration>(Lifestyle.Transient);
+
+            this.GlobalContainer.Register<ILogout, LogoutStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<ILogout, LogoutRetrieveUser>(Lifestyle.Transient);
 
             return true;
         }

@@ -26,5 +26,7 @@
         Task<AuthenticationResponse> GetUserById(int id);
 
         Task<RefreshTokenResponse> RefreshToken(string refreshToken, int userId, string ipAddress);
+
+        Task<LogoutResponse> Logout(LogoutRequest logoutRequest);
     }
 }
