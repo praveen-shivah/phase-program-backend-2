@@ -77,6 +77,14 @@
             sb.AppendLine($"Schema:{context.Request.Scheme}");
             sb.AppendLine($"Host: {context.Request.Host}");
             sb.AppendLine($"Path: {context.Request.Path}");
+            sb.AppendLine($"Headers:");
+            if (context.Request.Headers != null)
+            {
+                foreach(var header in  context.Request.Headers)
+                {
+                    sb.AppendLine($"   Key: {header.Key} Value: {header.Value}");
+                }
+            }
             sb.AppendLine($"QueryString: {context.Request.QueryString}");
             sb.AppendLine($"Content-Type: {context.Request.ContentType}");
             sb.AppendLine();

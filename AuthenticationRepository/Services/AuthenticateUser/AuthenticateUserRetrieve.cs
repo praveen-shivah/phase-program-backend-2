@@ -26,7 +26,7 @@
                 return response;
             }
 
-            var user = dpContext.User.Include(r => r.RefreshTokens).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
+            var user = dpContext.User.Include(r => r.RefreshTokens).Include(o=>o.Organization).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
             if (user == null || user.Password != this.calculatePassword(authenticateUserRequest.Password, user.PasswordSalt))
             {
                 response.IsSuccessful = false;

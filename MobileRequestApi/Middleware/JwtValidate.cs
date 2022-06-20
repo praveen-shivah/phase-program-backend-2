@@ -5,13 +5,14 @@
     using System.Linq;
     using System.Text;
 
+    using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Tokens;
 
     using SecurityUtilitiesTypes;
 
     public interface IJwtValidate
     {
-        public int? ValidateJwtToken(string? token);
+        public JwtValidateResponse ValidateJwtToken(string? token);
     }
 
     public class JwtValidate : IJwtValidate
@@ -23,12 +24,13 @@
             this.secretKeyRetrieval = secretKeyRetrieval;
         }
 
-        int? IJwtValidate.ValidateJwtToken(string? token)
+        JwtValidateResponse IJwtValidate.ValidateJwtToken(string? token)
         {
-            if (token == null) return null;
+            if (token == null) return new JwtValidateResponse() { IsSuccessful = false };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(this.secretKeyRetrieval.GetKey());
+            IdentityModelEventSource.ShowPII = true;
             try
             {
                 tokenHandler.ValidateToken(
@@ -44,13 +46,19 @@
                     out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "UserId").Value);
+                var organizationId = int.Parse(jwtToken.Claims.First(x => x.Type == "OrganizationId").Value);
 
-                return userId;
+                return new JwtValidateResponse
+                {
+                    IsSuccessful = true,
+                    UserId = userId,
+                    OrganizationId = organizationId
+                };
             }
             catch
             {
-                return null;
+                return new JwtValidateResponse() { IsSuccessful = false }; ;
             }
         }
     }

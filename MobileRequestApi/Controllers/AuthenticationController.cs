@@ -1,5 +1,6 @@
 ﻿namespace ApiHost
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using ApiDTO;
@@ -58,7 +59,7 @@
                 var response = new AuthenticateResponseDto
                 {
                     IsAuthenticated = true,
-                    accessToken = result.RefreshToken.Token,
+                    accessToken = result.JwtToken,
                     roles = result.Roles.ToArray()
                 };
 
@@ -88,6 +89,15 @@
             }
 
             return this.StatusCode(500, 0);
+        }
+
+        [HttpGet("get-users")]
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        {
+            this.logger.Debug(LogClass.General, "GetUsers received");
+
+            var result = await this.authenticationRepository.GetUsers();
+            return this.Ok(result);
         }
 
         [AllowAnonymous]

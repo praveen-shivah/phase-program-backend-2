@@ -69,6 +69,7 @@
                     IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                     IsSuccessful = true,
                     Roles = authenticateUserResponse.Roles,
+                    JwtToken = authenticateUserResponse.JwtToken,
                     RefreshToken = new RefreshTokenDto()
                     {
                         Created = authenticateUserResponse.RefreshToken.Created,
@@ -87,6 +88,29 @@
                 IsSuccessful = true,
                 Roles = authenticateUserResponse.Roles
             };
+        }
+
+        async Task<List<UserDto>> IAuthenticationRepository.GetUsers()
+        {
+            var userList = new List<UserDto>();
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        var list = await context.User.ToListAsync();
+                        foreach (var user in list)
+                        {
+                            userList.Add(new UserDto(){Id = user.Id, Email = user.Email, UserName = user.UserName});
+                        }
+
+                        return WorkItemResultEnum.doneContinue;
+                    });
+            var result = await uow.ExecuteAsync();
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
+            {
+                return new List<UserDto>();
+            }
+
+            return userList;
         }
 
         async Task<LogoutResponse> IAuthenticationRepository.Logout(LogoutRequest logoutRequest)

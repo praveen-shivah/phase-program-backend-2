@@ -1,5 +1,7 @@
 ﻿namespace AuthenticationRepository
 {
+    using ApiDTO;
+
     using AuthenticationRepositoryTypes;
 
     public enum RefreshTokenResponseType
@@ -28,5 +30,7 @@
         Task<RefreshTokenResponse> RefreshToken(string refreshToken, int userId, string ipAddress);
 
         Task<LogoutResponse> Logout(LogoutRequest logoutRequest);
+
+        Task<List<UserDto>> GetUsers();
     }
 }

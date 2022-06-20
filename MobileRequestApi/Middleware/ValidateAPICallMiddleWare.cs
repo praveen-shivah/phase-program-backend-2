@@ -42,58 +42,64 @@
             try
             {
                 // Validate token  If not valid let through, but user won't be set.
-                var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                var userId = this.jwtValidate.ValidateJwtToken(token);
-                if (userId != null)
+                var token = context.Request.Headers["Access-Token"].FirstOrDefault()?.Split(" ").Last();
+                var jwtValidateResponse = this.jwtValidate.ValidateJwtToken(token);
+                if (jwtValidateResponse.IsSuccessful)
                 {
                     // attach user to context on successful jwt validation
-                    var response = await this.authenticationRepository.GetUserById(userId.Value);
+                    var response = await this.authenticationRepository.GetUserById(jwtValidateResponse.UserId);
                     if (!response.IsAuthenticated || !response.IsSuccessful)
                     {
                         context.Items["UserId"] = null;
                         await this.next(context);
                         return;
                     }
-                }
 
-                // Anonymous or not - must have valid organizationId/key
-                var organizationId = 0;
-                var values = context.Request.Headers["OrganizationId"];
+                    context.Items["UserId"] = jwtValidateResponse.UserId;
+                    context.Items["OrganizationId"] = jwtValidateResponse.OrganizationId;
 
-                if (values.Count > 0)
+                } else
                 {
-                    organizationId = int.Parse(values[0]);
-                }
+                    // Anonymous or not - must have valid organizationId/key
+                    var organizationId = 0;
+                    int? userId = 0;
+                    var values = context.Request.Headers["OrganizationId"];
 
-                if (organizationId <= 0)
-                {
-                    userId = null;
-                }
-                else if (!context.Request.Headers.TryGetValue("APIKey", out var apiKey))
-                {
-                    userId = null;
-                }
-                else
-                {
-                    var organizationResponse = await this.organizationRepository.GetOrganizationRequestAsync(
-                                                   new OrganizationRequest()
-                                                   {
-                                                       OrganizationId = organizationId.ToString(),
-                                                       APIKey = apiKey
-                                                   });
-
-                    if (organizationResponse.IsSuccessful)
+                    if (values.Count > 0)
                     {
-                        context.Items["OrganizationId"] = organizationId;
+                        organizationId = int.Parse(values[0]);
+                    }
+
+                    if (organizationId <= 0)
+                    {
+                        userId = null;
+                    }
+                    else if (!context.Request.Headers.TryGetValue("APIKey", out var apiKey))
+                    {
+                        userId = null;
                     }
                     else
                     {
-                        context.Items["OrganizationId"] = null;
-                        userId = null;
-                    }
-                }
+                        var organizationResponse = await this.organizationRepository.GetOrganizationRequestAsync(
+                                                       new OrganizationRequest()
+                                                       {
+                                                           OrganizationId = organizationId.ToString(),
+                                                           APIKey = apiKey
+                                                       });
 
-                context.Items["UserId"] = userId;
+                        if (organizationResponse.IsSuccessful)
+                        {
+                            context.Items["OrganizationId"] = organizationId;
+                        }
+                        else
+                        {
+                            context.Items["OrganizationId"] = null;
+                            userId = null;
+                        }
+                    }
+
+                    context.Items["UserId"] = userId;
+                }
 
                 await this.next(context);
             }
