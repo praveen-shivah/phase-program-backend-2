@@ -42,11 +42,18 @@
                     return;
                 }
 
+                int userId = 0;
+                value = context.HttpContext.Items["UserId"];
+                if(value != null)
+                {
+                    userId = (int)value;
+                }
+
                 if (context.HttpContext.Items["OrganizationId"] is not int)
                 {
                     context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
                 }
-                else if (context.HttpContext.Items["UserId"] is not int)
+                else if (userId <= 0)
                 {
                     context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status403Forbidden };
                 }

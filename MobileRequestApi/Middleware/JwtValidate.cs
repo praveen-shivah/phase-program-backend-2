@@ -56,7 +56,7 @@
                     OrganizationId = organizationId
                 };
             }
-            catch
+            catch (Exception ex)
             {
                 return new JwtValidateResponse() { IsSuccessful = false }; ;
             }

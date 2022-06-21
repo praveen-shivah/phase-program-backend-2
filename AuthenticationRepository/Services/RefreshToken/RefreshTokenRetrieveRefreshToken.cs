@@ -75,7 +75,7 @@
 
                 response.JwtToken = this.jwtService.GenerateJwtToken(response.User);
             }
-            catch
+            catch (Exception ex)
             {
                 response.IsSuccessful = false;
                 response.RefreshTokenResponseType = RefreshTokenResponseType.duplicated;

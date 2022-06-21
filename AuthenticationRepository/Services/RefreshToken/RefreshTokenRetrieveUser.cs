@@ -30,7 +30,7 @@
 
             try
             {
-                var user = await dpContext.User.Include(x => x.RefreshTokens).SingleOrDefaultAsync(x => x.CurrentRefreshToken == refreshTokenRequest.RefreshToken);
+                var user = await dpContext.User.Include(x => x.RefreshTokens).Include(o => o.Organization).SingleOrDefaultAsync(x => x.CurrentRefreshToken == refreshTokenRequest.RefreshToken);
                 if (user == null)
                 {
                     response.IsSuccessful = false;

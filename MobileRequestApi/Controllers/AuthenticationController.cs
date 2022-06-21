@@ -97,7 +97,7 @@
             this.logger.Debug(LogClass.General, "GetUsers received");
 
             var result = await this.authenticationRepository.GetUsers();
-            return this.Ok(result);
+           return this.Ok(result);
         }
 
         [AllowAnonymous]
@@ -109,6 +109,7 @@
             var refreshToken = this.Request.Cookies["refreshToken"];
             if (refreshToken == null)
             {
+                this.setTokenCookie(string.Empty);
                 return this.Unauthorized("Refresh Token missing.");
             }
 
@@ -165,10 +166,10 @@
             {
                 HttpOnly = true,
                 IsEssential = true,
-                Secure = false, 
+                Secure = false,
                 SameSite = SameSiteMode.None,
                 Domain = "localhost",
-                Expires = expires
+                Expires = expires.AddMinutes(15)
             };
 
             this.Response.Cookies.Append("refreshToken", token, cookieOptions);

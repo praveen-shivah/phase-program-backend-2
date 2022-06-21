@@ -40,10 +40,14 @@
             var key = Encoding.ASCII.GetBytes(this.secretKeyRetrieval.GetKey());
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = this.dateTimeService.UtcNow.AddMinutes(this.secretKeyRetrieval.GetJwtTokenTTLInMinutes()),
+                Subject = new ClaimsIdentity(new[] {
+                        new Claim("UserId", user.Id.ToString()),
+                        new Claim("OrganizationId", user.Organization.Id.ToString())
+                    }),
+                Expires = DateTime.UtcNow.AddMinutes(this.secretKeyRetrieval.GetJwtTokenTTLInMinutes()),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
