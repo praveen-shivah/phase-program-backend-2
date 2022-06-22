@@ -21,17 +21,20 @@
         private readonly IRefreshToken refreshToken;
 
         private readonly ISecretKeyRetrieval secretKeyRetrieval;
+        private readonly IJwtValidate jwtValidate;
 
         public RefreshTokenRetrieveRefreshToken(
             IRefreshToken refreshToken,
             IDateTimeService dateTimeService,
             IJwtService jwtService,
-            ISecretKeyRetrieval secretKeyRetrieval)
+            ISecretKeyRetrieval secretKeyRetrieval,
+            IJwtValidate jwtValidate)
         {
             this.refreshToken = refreshToken;
             this.dateTimeService = dateTimeService;
             this.jwtService = jwtService;
             this.secretKeyRetrieval = secretKeyRetrieval;
+            this.jwtValidate = jwtValidate;
         }
 
         async Task<RefreshTokenResponse> IRefreshToken.Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest)
@@ -74,6 +77,8 @@
                 this.removeOldRefreshTokens(response.User);
 
                 response.JwtToken = this.jwtService.GenerateJwtToken(response.User);
+
+                var validateResponse = this.jwtValidate.ValidateJwtToken(response.JwtToken);
             }
             catch (Exception ex)
             {

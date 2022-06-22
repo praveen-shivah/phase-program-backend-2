@@ -1,9 +1,11 @@
-﻿namespace ApiHost.Middleware
+﻿namespace AuthenticationRepository
 {
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Text;
+
+    using AuthenticationRepositoryTypes;
 
     using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Tokens;

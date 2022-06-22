@@ -32,7 +32,6 @@
         {
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<IJwtValidate, JwtValidate>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);

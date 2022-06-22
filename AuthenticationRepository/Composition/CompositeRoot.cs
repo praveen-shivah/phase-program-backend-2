@@ -10,7 +10,8 @@
         {
             this.GlobalContainer.Register<IAuthenticationRepository, AuthenticationRepository>(Lifestyle.Transient);
             this.GlobalContainer.Register<IJwtService, JwtService>(Lifestyle.Transient);
-            
+            this.GlobalContainer.Register<IJwtValidate, JwtValidate>(Lifestyle.Singleton);
+
             this.GlobalContainer.Register<IAuthenticateUser, AuthenticateUserStart>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IAuthenticateUser, AuthenticateUserCreateAdminIfNecessary>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IAuthenticateUser, AuthenticateUserRetrieve>(Lifestyle.Transient);

@@ -1,4 +1,4 @@
-﻿namespace ApiHost
+﻿namespace AuthenticationRepositoryTypes
 {
     public class JwtValidateResponse
     {
