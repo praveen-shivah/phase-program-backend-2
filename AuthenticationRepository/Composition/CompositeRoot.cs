@@ -25,6 +25,10 @@
             this.GlobalContainer.Register<ILogout, LogoutStart>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<ILogout, LogoutRetrieveUser>(Lifestyle.Transient);
 
+            this.GlobalContainer.Register<IUpdateUser, UpdateUserStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IUpdateUser, UpdateUserRetrieveUser>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IUpdateUser, UpdateUserUpdate>(Lifestyle.Transient);
+
             return true;
         }
     }

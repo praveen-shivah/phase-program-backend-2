@@ -100,6 +100,15 @@
            return this.Ok(result);
         }
 
+        [HttpPost("update-user")]
+        public async Task<IActionResult> UpdateUser(UserDto userDto)
+        {
+            this.logger.Debug(LogClass.General, "UpdateUser received");
+
+            var result = await this.authenticationRepository.UpdateUser(userDto);
+            return this.Ok(result);
+        }
+
         [AllowAnonymous]
         [HttpPost("refresh-token")]
         public async Task<ActionResult<string>> RefreshToken()

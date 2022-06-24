@@ -32,5 +32,7 @@
         Task<LogoutResponse> Logout(LogoutRequest logoutRequest);
 
         Task<List<UserDto>> GetUsers();
+
+        Task<UpdateUserResponse> UpdateUser(UserDto userDto);
     }
 }

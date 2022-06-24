@@ -18,18 +18,22 @@
 
         private readonly ILogout logout;
 
+        private readonly IUpdateUser updateUser;
+
         private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
 
         public AuthenticationRepository(
             IUnitOfWorkFactory<DPContext> unitOfWorkFactory,
             IAuthenticateUser authenticateUser,
             IRefreshToken refreshToken,
-            ILogout logout)
+            ILogout logout,
+            IUpdateUser updateUser)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.authenticateUser = authenticateUser;
             this.refreshToken = refreshToken;
             this.logout = logout;
+            this.updateUser = updateUser;
         }
 
         async Task<AuthenticationResponse> IAuthenticationRepository.Authenticate(AuthenticationRequest authenticationRequest)
@@ -88,6 +92,25 @@
                 IsSuccessful = true,
                 Roles = authenticateUserResponse.Roles
             };
+        }
+
+        async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(UserDto userDto)
+        {
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        await this.updateUser.Update(context, new UpdateUserRequest(userDto));
+
+                        return WorkItemResultEnum.doneContinue;
+                    });
+            var result = await uow.ExecuteAsync();
+
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
+            {
+                return new UpdateUserResponse() { IsSuccessful = false };
+            }
+
+            return new UpdateUserResponse() { IsSuccessful = true };
         }
 
         async Task<List<UserDto>> IAuthenticationRepository.GetUsers()
