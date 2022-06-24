@@ -57,7 +57,6 @@
 
                     context.Items["UserId"] = jwtValidateResponse.UserId;
                     context.Items["OrganizationId"] = jwtValidateResponse.OrganizationId;
-
                 } else
                 {
                     // Anonymous or not - must have valid organizationId/key
