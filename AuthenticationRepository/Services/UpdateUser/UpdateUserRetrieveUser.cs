@@ -23,8 +23,15 @@
                 return response;
             }
 
-            var user = await dpContext.User.SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
-            response.User = user ?? new User();
+            var user = await dpContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
+            if (user == null)
+            {
+                var organization = await dpContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
+                user = new User { Organization = organization, CurrentRefreshToken = string.Empty};
+                dpContext.User.Add(user);
+            }
+
+            response.User = user;
 
             return response;
         }

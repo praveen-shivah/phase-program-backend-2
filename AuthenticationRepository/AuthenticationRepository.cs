@@ -4,6 +4,8 @@
 
     using AuthenticationRepositoryTypes;
 
+    using DataModelsLibrary;
+
     using DataPostgresqlLibrary;
 
     using Microsoft.EntityFrameworkCore;
@@ -94,12 +96,12 @@
             };
         }
 
-        async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(UserDto userDto)
+        async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(int organizationId, UserDto userDto)
         {
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        await this.updateUser.Update(context, new UpdateUserRequest(userDto));
+                        await this.updateUser.Update(context, new UpdateUserRequest(organizationId, userDto));
 
                         return WorkItemResultEnum.doneContinue;
                     });

@@ -1,23 +1,22 @@
 ﻿namespace AuthenticationRepository
 {
-    using System.Security.Cryptography;
-    using System.Text;
-
     using DataModelsLibrary;
 
     using DataPostgresqlLibrary;
-
-    using Microsoft.EntityFrameworkCore;
-
-    using SharedUtilities;
 
     public class AuthenticateUserCreateAdminIfNecessary : IAuthenticateUser
     {
         private readonly IAuthenticateUser authenticateUser;
 
-        public AuthenticateUserCreateAdminIfNecessary(IAuthenticateUser authenticateUser)
+        private readonly ICalculatePassword calculatePassword;
+
+        private readonly ICreatePasswordSalt createPasswordSalt;
+
+        public AuthenticateUserCreateAdminIfNecessary(IAuthenticateUser authenticateUser, ICalculatePassword calculatePassword, ICreatePasswordSalt createPasswordSalt)
         {
             this.authenticateUser = authenticateUser;
+            this.calculatePassword = calculatePassword;
+            this.createPasswordSalt = createPasswordSalt;
         }
 
         async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
@@ -54,39 +53,19 @@
                 await dpContext.SaveChangesAsync();
             }
 
-            var salt = this.createSalt(32);
+            var salt = this.createPasswordSalt.CreateSalt(32);
             user = new User()
                        {
                            Email = AuthenticationConstants.AuthenticationAdminDefaultEmail,
                            UserName = AuthenticationConstants.AuthenticationAdminDefaultUserName,
                            PasswordSalt = salt,
                            Organization = organization,
-                           Password = this.calculatePasswordHash(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt)
+                           Password = this.calculatePassword.calculatePassword(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt)
                        };
             dpContext.User.Add(user);
             await dpContext.SaveChangesAsync();
 
             return response;
-        }
-
-        private string createSalt(int size)
-        {
-            using (var generator = RandomNumberGenerator.Create())
-            {
-                var salt = new byte[size];
-                generator.GetBytes(salt);
-                return Convert.ToBase64String(salt); ;
-            }
-        }
-
-        private string calculatePasswordHash(string password, string passwordSalt)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var combined = $"{password}{passwordSalt}";
-                var hash = sha256.ComputeHash(Encoding.Unicode.GetBytes(combined));
-                return hash.ByteArrayToHexString();
-            }
         }
     }
 }

@@ -105,7 +105,7 @@
         {
             this.logger.Debug(LogClass.General, "UpdateUser received");
 
-            var result = await this.authenticationRepository.UpdateUser(userDto);
+            var result = await this.authenticationRepository.UpdateUser(this.OrganizationId, userDto);
             return this.Ok(result);
         }
 

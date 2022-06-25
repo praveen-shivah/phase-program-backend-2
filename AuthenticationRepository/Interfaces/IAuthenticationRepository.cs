@@ -33,6 +33,6 @@
 
         Task<List<UserDto>> GetUsers();
 
-        Task<UpdateUserResponse> UpdateUser(UserDto userDto);
+        Task<UpdateUserResponse> UpdateUser(int organizationId, UserDto userDto);
     }
 }
