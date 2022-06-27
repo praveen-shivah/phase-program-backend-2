@@ -26,6 +26,12 @@
             var user = await dpContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
             if (user == null)
             {
+                if (updateUserRequest.UserDto.UserName.ToUpper() == AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
+                {
+                    response.IsSuccessful = false;
+                    return response;
+                }
+
                 var organization = await dpContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
                 user = new User { Organization = organization, CurrentRefreshToken = string.Empty};
                 dpContext.User.Add(user);

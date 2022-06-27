@@ -26,7 +26,11 @@
             }
 
             response.User.Email = updateUserRequest.UserDto.Email;
-            response.User.UserName = updateUserRequest.UserDto.UserName;
+
+            if (response.User.UserName.ToUpper() != AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
+            {
+                response.User.UserName = updateUserRequest.UserDto.UserName;
+            }
 
             if (!string.IsNullOrEmpty(updateUserRequest.UserDto.Password) && !string.IsNullOrEmpty(updateUserRequest.UserDto.ConfirmPassword))
             {

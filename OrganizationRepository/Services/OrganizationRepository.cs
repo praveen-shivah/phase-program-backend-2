@@ -1,5 +1,7 @@
 ﻿namespace OrganizationRepository
 {
+    using ApiDTO;
+
     using DataPostgresqlLibrary;
 
     using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,31 @@
             response.IsSuccessful = result == WorkItemResultEnum.commitSuccessfullyCompleted;
 
             return response;
+        }
+
+        async Task<List<OrganizationDto>> IOrganizationRepository.GetOrganizations()
+        {
+            var result = new List<OrganizationDto>();
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        var organizations = await context.Organization.ToListAsync();
+                        foreach (var organization in organizations)
+                        {
+                            result.Add(
+                                new OrganizationDto()
+                                    {
+                                        APIKey = organization.APIKey,
+                                        Id = organization.Id,
+                                        Name = organization.Name,
+                                        URL = organization.URL
+                                    });
+                        }
+
+                        return WorkItemResultEnum.doneContinue;
+                    });
+            var response = await uow.ExecuteAsync();
+            return response == WorkItemResultEnum.commitSuccessfullyCompleted ? result : new List<OrganizationDto>();
         }
     }
 }
