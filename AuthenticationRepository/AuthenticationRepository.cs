@@ -124,7 +124,7 @@
                         var list = await context.User.ToListAsync();
                         foreach (var user in list)
                         {
-                            userList.Add(new UserDto(){Id = user.Id, Email = user.Email, UserName = user.UserName});
+                            userList.Add(new UserDto(){Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive});
                         }
 
                         return WorkItemResultEnum.doneContinue;
@@ -135,7 +135,7 @@
                 return new List<UserDto>();
             }
 
-            return userList;
+            return userList.OrderBy(x=>x.UserName).ToList();
         }
 
         async Task<LogoutResponse> IAuthenticationRepository.Logout(LogoutRequest logoutRequest)

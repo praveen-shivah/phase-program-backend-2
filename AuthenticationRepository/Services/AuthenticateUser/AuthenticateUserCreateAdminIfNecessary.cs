@@ -58,6 +58,7 @@
                        {
                            Email = AuthenticationConstants.AuthenticationAdminDefaultEmail,
                            UserName = AuthenticationConstants.AuthenticationAdminDefaultUserName,
+                           IsActive = true,
                            PasswordSalt = salt,
                            Organization = organization,
                            Password = this.calculatePassword.calculatePassword(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt)
