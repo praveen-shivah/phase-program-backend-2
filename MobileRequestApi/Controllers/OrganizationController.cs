@@ -38,5 +38,14 @@ namespace ApiHost
             var result = await this.organizationRepository.GetOrganizations();
             return this.Ok(result);
         }
+
+        [HttpPost("update-organization")]
+        public async Task<IActionResult> UpdateOrganization(OrganizationDto organizationDto)
+        {
+            this.logger.Debug(LogClass.General, "UpdateOrganization received");
+
+            var result = await this.organizationRepository.UpdateOrganizationRequestAsync(organizationDto);
+            return this.Ok(result);
+        }
     }
 }

@@ -14,9 +14,12 @@
     {
         private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
 
-        public OrganizationRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory)
+        private readonly IUpdateOrganization updateOrganization;
+
+        public OrganizationRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IUpdateOrganization updateOrganization)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
+            this.updateOrganization = updateOrganization;
         }
 
         async Task<OrganizationResponse> IOrganizationRepository.GetOrganizationRequestAsync(OrganizationRequest organizationRequest)
@@ -40,6 +43,26 @@
             return response;
         }
 
+        async Task<UpdateOrgResponse> IOrganizationRepository.UpdateOrganizationRequestAsync(OrganizationDto organizationDto)
+        {
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        await this.updateOrganization.Update(context, new UpdateOrganizationRequest(organizationDto));
+
+                        return WorkItemResultEnum.doneContinue;
+                    });
+            var result = await uow.ExecuteAsync();
+
+            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
+            {
+                return new UpdateOrgResponse() { IsSuccessful = false };
+            }
+
+            return new UpdateOrgResponse() { IsSuccessful = true };
+        }
+
+
         async Task<List<OrganizationDto>> IOrganizationRepository.GetOrganizations()
         {
             var result = new List<OrganizationDto>();
@@ -55,7 +78,9 @@
                                         APIKey = organization.APIKey,
                                         Id = organization.Id,
                                         Name = organization.Name,
-                                        URL = organization.URL
+                                        URL = organization.URL,
+                                        UserId = string.Empty,
+                                        Password = string.Empty
                                     });
                         }
 

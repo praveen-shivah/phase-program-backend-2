@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
     <ProjectReference Include="..\OrganizationRepositoryTypes\OrganizationRepositoryTypes.csproj" />
     <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
   </ItemGroup>
