@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    using AutomaticTaskSharedLibrary;
+    using ApiDTO;
 
     public class ResellerBalanceRetrieveRequest
     {

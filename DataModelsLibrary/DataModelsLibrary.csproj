@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
     <ProjectReference Include="..\DataSharedLibrary\DataSharedLibrary.csproj" />
+    <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,11 +1,13 @@
 ﻿namespace DataModelsLibrary
 {
-    using AutomaticTaskSharedLibrary;
+    using ApiDTO;
 
     public class Vendor : BaseOrganizationEntity
     {
         public string Name { get; set; }
 
         public SoftwareType SoftwareType { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

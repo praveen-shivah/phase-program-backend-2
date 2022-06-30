@@ -1,10 +1,5 @@
 ﻿namespace AutomaticTaskSharedLibrary
 {
-    public enum SoftwareType
-    {
-        riverSweeps
-    }
-
     public static class EndpointConfigurationConstants
     {
         public static readonly string HandlerEndpoint = "HANDLER";

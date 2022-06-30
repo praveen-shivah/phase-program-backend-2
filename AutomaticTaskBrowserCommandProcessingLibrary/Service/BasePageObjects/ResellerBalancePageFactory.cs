@@ -1,5 +1,7 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
+    using ApiDTO;
+
     using AutomaticTaskSharedLibrary;
 
     using OpenQA.Selenium;

@@ -1,5 +1,7 @@
 ﻿namespace AutomaticTaskSharedLibrary
 {
+    using ApiDTO;
+
     public class DistributorToResellerSendPointsTransferRequest
     {
         public SoftwareType SoftwareType { get; set; }

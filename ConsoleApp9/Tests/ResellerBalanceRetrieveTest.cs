@@ -1,5 +1,7 @@
 ﻿namespace ConsoleApp9
 {
+    using ApiDTO;
+
     using AutomaticTaskSharedLibrary;
 
     using InvoiceRepository;

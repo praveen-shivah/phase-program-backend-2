@@ -74,9 +74,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationRepository", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationRepositoryTypes", "AuthenticationRepositoryTypes\AuthenticationRepositoryTypes.csproj", "{F35DACDD-1D70-401A-9BF1-29FB216D4AEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityUtilities", "SecurityUtilities\SecurityUtilities.csproj", "{281450F7-B61A-4162-A835-554C87D4DD12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityUtilities", "SecurityUtilities\SecurityUtilities.csproj", "{281450F7-B61A-4162-A835-554C87D4DD12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityUtilitiesTypes", "SecurityUtilitiesTypes\SecurityUtilitiesTypes.csproj", "{166142B3-801B-4009-BD76-A059801197F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityUtilitiesTypes", "SecurityUtilitiesTypes\SecurityUtilitiesTypes.csproj", "{166142B3-801B-4009-BD76-A059801197F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorRepositoryTypes", "VendorRepositoryTypes\VendorRepositoryTypes.csproj", "{8B815BD7-AE1A-40D0-B640-1B2EE855755F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VendorRepository", "VendorRepository\VendorRepository.csproj", "{8FA99A67-720E-4A49-B99C-7B631EB478D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -294,6 +298,22 @@ Global
 		{166142B3-801B-4009-BD76-A059801197F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{166142B3-801B-4009-BD76-A059801197F5}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
 		{166142B3-801B-4009-BD76-A059801197F5}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -324,6 +344,8 @@ Global
 		{F35DACDD-1D70-401A-9BF1-29FB216D4AEF} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{281450F7-B61A-4162-A835-554C87D4DD12} = {32A6DEAF-2409-4341-984D-4BF92708F525}
 		{166142B3-801B-4009-BD76-A059801197F5} = {32A6DEAF-2409-4341-984D-4BF92708F525}
+		{8B815BD7-AE1A-40D0-B640-1B2EE855755F} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{8FA99A67-720E-4A49-B99C-7B631EB478D3} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B70FE91-13AB-4324-B0D4-CBA8FCB24D18}

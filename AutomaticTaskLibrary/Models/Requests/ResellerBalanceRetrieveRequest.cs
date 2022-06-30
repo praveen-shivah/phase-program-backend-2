@@ -1,5 +1,7 @@
 ﻿namespace AutomaticTaskSharedLibrary
 {
+    using ApiDTO;
+
     public class ResellerBalanceRetrieveRequest
     {
         public string OrganizationId { get; set; }
