@@ -61,7 +61,8 @@
                            IsActive = true,
                            PasswordSalt = salt,
                            Organization = organization,
-                           Password = this.calculatePassword.calculatePassword(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt)
+                           Password = this.calculatePassword.calculatePassword(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt),
+                           CurrentRefreshToken = string.Empty
                        };
             dpContext.User.Add(user);
             await dpContext.SaveChangesAsync();

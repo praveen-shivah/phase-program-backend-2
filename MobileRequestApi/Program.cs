@@ -36,6 +36,8 @@ using SecurityUtilitiesTypes;
 
 using SimpleInjector.Lifestyles;
 
+using VendorRepositoryTypes;
+
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 Console.WriteLine("Starting");
@@ -74,6 +76,7 @@ builder.Services.AddDbContext<DPContext>();
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IDateTimeService>());
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IJwtValidate>());
 
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IVendorRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IOrganizationRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceService>());

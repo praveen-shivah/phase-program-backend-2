@@ -1,10 +1,8 @@
-﻿namespace OrganizationRepository
+﻿namespace VendorRepository
 {
     using ApiDTO;
 
     using DataPostgresqlLibrary;
-
-    using global::VendorRepository;
 
     using Microsoft.EntityFrameworkCore;
 

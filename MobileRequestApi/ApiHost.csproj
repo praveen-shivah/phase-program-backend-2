@@ -38,6 +38,7 @@
     <ProjectReference Include="..\SecurityUtilitiesTypes\SecurityUtilitiesTypes.csproj" />
     <ProjectReference Include="..\SecurityUtilities\SecurityUtilities.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />
+    <ProjectReference Include="..\VendorRepository\VendorRepository.csproj" />
   </ItemGroup>
 
 </Project>
