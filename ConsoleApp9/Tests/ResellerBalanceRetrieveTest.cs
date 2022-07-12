@@ -23,7 +23,7 @@
                                                        ApiKey = "test",
                                                        ResellerId = 1,
                                                        Password = "239239",
-                                                       SoftwareType = SoftwareType.riverSweeps,
+                                                       SoftwareType = SoftwareTypeEnum.riverSweeps,
                                                        UserId = "golddist"
                                                    };
             var response = this.vendorBalanceRetrieve.GetBalance(request);

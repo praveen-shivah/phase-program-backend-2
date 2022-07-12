@@ -28,16 +28,18 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var vendors = await context.Vendor.ToListAsync();
+                        var vendors = await context.Vendor.Include(x => x.SoftwareType).ToListAsync();
+                        result.Add(new VendorDto() { IsPlaceHolder = true });
                         foreach (var vendor in vendors)
                         {
                             result.Add(
                                 new VendorDto()
-                                    {
-                                        Id = vendor.Id,
-                                        Name = vendor.Name,
-                                        IsActive = vendor.IsActive
-                                    });
+                                {
+                                    Id = vendor.Id,
+                                    Name = vendor.Name,
+                                    IsActive = vendor.IsActive,
+                                    SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
+                                });
                         }
 
                         return WorkItemResultEnum.doneContinue;

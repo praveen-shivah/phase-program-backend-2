@@ -122,6 +122,7 @@
                 async context =>
                     {
                         var list = await context.User.ToListAsync();
+                        userList.Add(new UserDto() { IsPlaceHolder = true });
                         foreach (var user in list)
                         {
                             userList.Add(new UserDto(){Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive});

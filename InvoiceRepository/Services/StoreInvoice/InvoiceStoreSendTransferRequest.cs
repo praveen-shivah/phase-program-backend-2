@@ -1,5 +1,7 @@
 ﻿namespace InvoiceRepository
 {
+    using ApiDTO;
+
     using AutomaticTaskSharedLibrary;
 
     using DataPostgresqlLibrary;
@@ -32,13 +34,13 @@
             {
                 var organizationId = invoiceLineItem.Organization.Id;
                 var siteId = int.Parse(invoiceLineItem.ItemId);
-                var site = dpContext.SiteInformation.Include(x=>x.Vendor).Single(x => x.Organization.Id == organizationId && x.Id == siteId);
+                var site = dpContext.SiteInformation.Include(x => x.Vendor).Single(x => x.Organization.Id == organizationId && x.Id == siteId);
                 var vendor = site.Vendor;
 
                 await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new DistributorToResellerSendPointsTransferRequest()
                     {
-                        SoftwareType = vendor.SoftwareType,
+                        SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
                         UserId = site.UserName,
                         Password = site.Password,
                         AccountId = invoiceLineItem.Description.Trim(),

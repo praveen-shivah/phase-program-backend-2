@@ -6,6 +6,6 @@
 
     public interface IResellerBalancePageFactory
     {
-        IResellerBalancePage Create(IWebDriver driver, SoftwareType softwareType);
+        IResellerBalancePage Create(IWebDriver driver, SoftwareTypeEnum softwareType);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ApiDTO
 {
-    public class UserDto
+    public class UserDto : BaseDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }

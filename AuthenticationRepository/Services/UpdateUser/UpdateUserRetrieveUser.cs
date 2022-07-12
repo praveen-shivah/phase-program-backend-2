@@ -33,7 +33,13 @@
                 }
 
                 var organization = await dpContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
-                user = new User { Organization = organization, CurrentRefreshToken = string.Empty};
+                user = new User
+                           {
+                               Organization = organization,
+                               CurrentRefreshToken = string.Empty,
+                               UserName = updateUserRequest.UserDto.UserName,
+                               Email = updateUserRequest.UserDto.Email
+                           };
                 dpContext.User.Add(user);
             }
 

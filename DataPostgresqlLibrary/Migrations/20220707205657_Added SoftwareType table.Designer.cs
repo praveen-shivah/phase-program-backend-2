@@ -3,6 +3,7 @@ using System;
 using DataPostgresqlLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataPostgresqlLibrary.Migrations
 {
     [DbContext(typeof(DPContext))]
-    partial class DPContextModelSnapshot : ModelSnapshot
+    [Migration("20220707205657_Added SoftwareType table")]
+    partial class AddedSoftwareTypetable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -836,6 +838,9 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("ResellerId")
                         .HasColumnType("integer");
 
@@ -843,6 +848,8 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("ResellerId");
 
@@ -1106,6 +1113,12 @@ namespace DataPostgresqlLibrary.Migrations
 
             modelBuilder.Entity("DataModelsLibrary.Vendor", b =>
                 {
+                    b.HasOne("DataModelsLibrary.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataModelsLibrary.Reseller", null)
                         .WithMany("Vendor")
                         .HasForeignKey("ResellerId");
@@ -1115,6 +1128,8 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasForeignKey("SoftwareTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Organization");
 
                     b.Navigation("SoftwareType");
                 });

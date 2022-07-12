@@ -1,12 +1,17 @@
 ﻿namespace ApiDTO
 {
-    public class OrganizationDto
+    public class OrganizationDto : BaseDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string UserId { get; set; }
-        public string Password { get; set; }
-        public string APIKey { get; set; }
-        public string URL { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public string UserId { get; set; } = string.Empty;
+
+        public string Password { get; set; } = string.Empty;
+
+        public string APIKey { get; set; } = string.Empty;
+
+        public string URL { get; set; } = string.Empty;
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace DataModelsLibrary
 {
-    using ApiDTO;
+    using DataSharedLibrary;
 
-    public class Vendor : BaseOrganizationEntity
+    public class Vendor : BaseEntity
     {
         public string Name { get; set; }
 

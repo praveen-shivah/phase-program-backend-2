@@ -30,7 +30,10 @@
                 {
                     Id = updateOrganizationRequest.UpdateOrganizationDto.Id,
                     APIKey = updateOrganizationRequest.UpdateOrganizationDto.APIKey,
-                    Name = updateOrganizationRequest.UpdateOrganizationDto.Name
+                    Name = updateOrganizationRequest.UpdateOrganizationDto.Name,
+                    URL = updateOrganizationRequest.UpdateOrganizationDto.URL,
+                    UserId = updateOrganizationRequest.UpdateOrganizationDto.UserId,
+                    Password = updateOrganizationRequest.UpdateOrganizationDto.Password
                 };
 
                 dpContext.Organization.Add(organization);

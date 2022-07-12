@@ -6,6 +6,6 @@
 
     public interface IManagementPageFactory
     {
-        IManagementPage Create(IWebDriver webDriver, SoftwareType softwareType);
+        IManagementPage Create(IWebDriver webDriver, SoftwareTypeEnum softwareType);
     }
 }

@@ -22,7 +22,7 @@
                                                                     AccountId = "goldshop",
                                                                     Password = "239239",
                                                                     Points = 1,
-                                                                    SoftwareType = SoftwareType.riverSweeps,
+                                                                    SoftwareType = SoftwareTypeEnum.riverSweeps,
                                                                     UserId = "golddist"
             };
             var response = this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(vendorToOperatorSendPointsTransferRequest);

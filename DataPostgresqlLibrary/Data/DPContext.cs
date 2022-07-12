@@ -40,6 +40,7 @@
         public DbSet<SiteInformation> SiteInformation { get; set; }
         public DbSet<Organization> Organization { get; set; }
         public DbSet<Vendor> Vendor { get; set; }
+        public DbSet<SoftwareType> SoftwareType { get; set; }
         public DbSet<ResellerVendorBalance> ResellerVendorBalance { get; set; }
         public DbSet<Reseller> Reseller { get; set; }
         public DbSet<Address> Address { get; set; }
@@ -83,10 +84,10 @@
         {
             var connectionString = this.configuration.GetConnectionString("MobileOMatic") ?? "host=localhost;database=postgres2;user id=postgres;password=~!AmyLee~!0";
             var sqlConnectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString)
-                                                 {
-                                                     MaxPoolSize = 10000,
-                                                     MinPoolSize = 200
-                                                 };
+            {
+                MaxPoolSize = 10000,
+                MinPoolSize = 200
+            };
 
             // We have a connection string
             var dbContextOptionsBuilder = new DbContextOptionsBuilder();
@@ -101,10 +102,10 @@
                     {
                         entity.HasIndex(
                             e => new
-                                     {
-                                         e.Hash,
-                                         e.CreatedOn
-                                     }).HasDatabaseName("IX_ErrorLog_Hash");
+                            {
+                                e.Hash,
+                                e.CreatedOn
+                            }).HasDatabaseName("IX_ErrorLog_Hash");
 
                         entity.Property(e => e.CreatedOn).HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
 
@@ -116,18 +117,30 @@
                     {
                         entity.HasIndex(
                             e => new
-                                     {
-                                         e.Id,
-                                         e.ShortDescription,
-                                         e.CreatedBy,
-                                         e.EventTypeId,
-                                         e.CreatedOn
-                                     }).HasDatabaseName("IX_SignificantEvent_EventId_CreatedOn");
+                            {
+                                e.Id,
+                                e.ShortDescription,
+                                e.CreatedBy,
+                                e.EventTypeId,
+                                e.CreatedOn
+                            }).HasDatabaseName("IX_SignificantEvent_EventId_CreatedOn");
 
                         entity.Property(e => e.CreatedOn).HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
                     });
 
             modelBuilder.Entity<SignificantEventType>(entity => { entity.Property(e => e.Id).ValueGeneratedNever(); });
+
+            modelBuilder.Entity<SoftwareType>().HasData(
+                new SoftwareType
+                    {
+                        Id = 1,
+                        Name = "Riversweeps"
+                    },
+                new SoftwareType
+                    {
+                        Id = 2,
+                        Name = "Dragon"
+                    });
 
             base.OnModelCreating(modelBuilder);
         }

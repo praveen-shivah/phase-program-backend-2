@@ -5,7 +5,7 @@
     public class DistributorToResellerSendPointsTransferRequest
     {
         public DistributorToResellerSendPointsTransferRequest(
-            SoftwareType softwareType,
+            SoftwareTypeEnum softwareType,
             string siteUserId,
             string sitePassword,
             string destinationAccountId,
@@ -23,6 +23,6 @@
 
         public int Points { get; }
 
-        public SoftwareType SoftwareType { get; }
+        public SoftwareTypeEnum SoftwareType { get; }
     }
 }

@@ -5,7 +5,7 @@
     public class LoginPageInformation
     {
         public LoginPageInformation(
-            SoftwareType softwareType,
+            SoftwareTypeEnum softwareType,
             string siteUserId,
             string sitePassword)
         {
@@ -18,6 +18,6 @@
 
         public string SiteUserId { get; }
 
-        public SoftwareType SoftwareType { get; }
+        public SoftwareTypeEnum SoftwareType { get; }
     }
 }

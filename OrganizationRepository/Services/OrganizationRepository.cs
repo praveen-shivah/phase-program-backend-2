@@ -70,6 +70,7 @@
                 async context =>
                     {
                         var organizations = await context.Organization.ToListAsync();
+                        result.Add(new OrganizationDto() { IsPlaceHolder = true });
                         foreach (var organization in organizations)
                         {
                             result.Add(

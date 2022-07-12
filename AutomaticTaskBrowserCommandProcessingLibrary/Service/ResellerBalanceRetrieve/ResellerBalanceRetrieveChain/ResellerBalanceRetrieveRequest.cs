@@ -5,7 +5,7 @@
     public class ResellerBalanceRetrieveRequest
     {
         public ResellerBalanceRetrieveRequest(
-            SoftwareType softwareType,
+            SoftwareTypeEnum softwareType,
             string organizationId,
             string apiKey,
             int resellerId,
@@ -21,7 +21,7 @@
 
         public LoginPageInformation LoginPageInformation { get; }
 
-        public SoftwareType SoftwareType { get; }
+        public SoftwareTypeEnum SoftwareType { get; }
 
         public string OrganizationId { get; }
 

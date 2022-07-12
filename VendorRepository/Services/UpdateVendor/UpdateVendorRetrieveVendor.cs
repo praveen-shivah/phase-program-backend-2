@@ -28,14 +28,13 @@
             var vendor = await dpContext.Vendor.SingleOrDefaultAsync(x => x.Id == request.VendorDto.Id);
             if (vendor == null)
             {
-                var organization = await dpContext.Organization.SingleAsync(o => o.Id == request.VendorDto.OrganizationId);
+                var softwareType = await dpContext.SoftwareType.SingleAsync(x => x.Id == (int)request.VendorDto.SoftwareType);
 
                 vendor = new Vendor()
                 {
                     IsActive = request.VendorDto.IsActive,
                     Name = request.VendorDto.Name,
-                    SoftwareType = request.VendorDto.SoftwareType,
-                    Organization = organization
+                    SoftwareType = softwareType,
                 };
                 dpContext.Vendor.Add(vendor);
             }

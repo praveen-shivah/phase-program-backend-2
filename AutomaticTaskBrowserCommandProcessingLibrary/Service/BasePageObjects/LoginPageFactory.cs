@@ -10,7 +10,7 @@
         {
             switch (loginPageInformation.SoftwareType)
             {
-                case SoftwareType.riverSweeps:
+                case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsLogin(webDriver, loginPageInformation);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);

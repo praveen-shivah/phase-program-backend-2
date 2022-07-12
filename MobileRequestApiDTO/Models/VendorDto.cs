@@ -1,11 +1,13 @@
 ﻿namespace ApiDTO
 {
-    public class VendorDto
+    public class VendorDto : BaseDto
     {
         public int Id { get; set; }
-        public int OrganizationId { get; set; }
-        public string Name { get; set; }
-        public SoftwareType SoftwareType { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public SoftwareTypeEnum SoftwareType { get; set; } = SoftwareTypeEnum.riverSweeps;
+
         public bool IsActive { get; set; }
     }
 }

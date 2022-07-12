@@ -8,11 +8,11 @@
 
     public class ResellerBalancePageFactory : IResellerBalancePageFactory
     {
-        IResellerBalancePage IResellerBalancePageFactory.Create(IWebDriver driver, SoftwareType softwareType)
+        IResellerBalancePage IResellerBalancePageFactory.Create(IWebDriver driver, SoftwareTypeEnum softwareType)
         {
             switch (softwareType)
             {
-                case SoftwareType.riverSweeps:
+                case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsRellerBalancePage(driver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);

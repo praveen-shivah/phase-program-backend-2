@@ -1,8 +1,10 @@
 ﻿namespace ApiDTO
 {
-    public enum SoftwareType
+    public enum SoftwareTypeEnum
     {
-        riverSweeps
+        riverSweeps = 1,
+
+        dragon = 2
     }
 
 }
