@@ -1,5 +1,6 @@
 ﻿namespace ApiHost
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using ApiDTO;
@@ -10,6 +11,8 @@
 
     using ResellerRepository;
 
+    using ResellerRepositoryTypes;
+
     [ApiController]
     [Route("api/reseller")]
     public class ResellerController : ApiControllerBase
@@ -18,10 +21,13 @@
 
         private readonly IResellerBalanceService resellerBalanceService;
 
-        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService)
+        private readonly IResellerRepository resellerRepository;
+
+        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService, IResellerRepository resellerRepository)
         {
             this.logger = logger;
             this.resellerBalanceService = resellerBalanceService;
+            this.resellerRepository = resellerRepository;
         }
 
         [HttpPost("reseller-balance")]
@@ -30,6 +36,24 @@
             this.logger.Debug(LogClass.General, "ResellerBalance received");
             var result = await this.resellerBalanceService.UpdateBalance(resellerBalance);
             return result ? this.Ok() : this.StatusCode(500, 0);
+        }
+
+        [HttpGet("get-resellers")]
+        public async Task<ActionResult<List<ResellerDto>>> GetResellers()
+        {
+            this.logger.Debug(LogClass.General, "GetResellers received");
+
+            var result = await this.resellerRepository.GetResellers();
+            return this.Ok(result);
+        }
+
+        [HttpPost("update-reseller")]
+        public async Task<IActionResult> UpdateReseller(ResellerDto resellerDto)
+        {
+            this.logger.Debug(LogClass.General, "UpdateReseller received");
+
+            var result = await this.resellerRepository.UpdateResellerRequestAsync(this.OrganizationId, resellerDto);
+            return this.Ok(result);
         }
     }
 }

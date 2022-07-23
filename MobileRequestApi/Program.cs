@@ -32,6 +32,8 @@ using OrganizationRepositoryTypes;
 
 using ResellerRepository;
 
+using ResellerRepositoryTypes;
+
 using SecurityUtilitiesTypes;
 
 using SimpleInjector.Lifestyles;
@@ -82,6 +84,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceReposito
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAuthenticationRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ISecretKeyRetrieval>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

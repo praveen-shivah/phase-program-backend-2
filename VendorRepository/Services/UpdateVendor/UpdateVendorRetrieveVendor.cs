@@ -37,6 +37,7 @@
                     SoftwareType = softwareType,
                 };
                 dpContext.Vendor.Add(vendor);
+                await dpContext.SaveChangesAsync();
             }
 
             response.Vendor = vendor;
