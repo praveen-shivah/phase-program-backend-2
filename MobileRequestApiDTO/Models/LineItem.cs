@@ -37,7 +37,7 @@ namespace ApiDTO
         public string ItemTypeFormatted { get; set; }
 
         [JsonProperty("purchase_rate")]
-        public int PurchaseRate { get; set; }
+        public string PurchaseRate { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -97,7 +97,7 @@ namespace ApiDTO
         public string HeaderName { get; set; }
 
         [JsonProperty("item_custom_fields")]
-        public List<ItemCustomField> ItemCustomFields { get; set; }
+        public List<object> ItemCustomFields { get; set; }
 
         [JsonProperty("tax_id")]
         public string TaxId { get; set; }
@@ -135,5 +135,4 @@ namespace ApiDTO
         [JsonProperty("expense_id")]
         public string ExpenseId { get; set; }
     }
-
 }

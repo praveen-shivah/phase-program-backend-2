@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic; 
 using System; 
 namespace ApiDTO
-{ 
+{
 
     public class Invoice
     {
@@ -17,9 +17,6 @@ namespace ApiDTO
 
         [JsonProperty("zcrm_potential_id")]
         public string ZcrmPotentialId { get; set; }
-
-        [JsonProperty("cf_site_number")]
-        public string CfSiteNumber { get; set; }
 
         [JsonProperty("discount")]
         public int Discount { get; set; }
@@ -63,9 +60,6 @@ namespace ApiDTO
         [JsonProperty("payment_options")]
         public PaymentOptions PaymentOptions { get; set; }
 
-        [JsonProperty("cf_customer_type_unformatted")]
-        public string CfCustomerTypeUnformatted { get; set; }
-
         [JsonProperty("sub_total_inclusive_of_tax")]
         public int SubTotalInclusiveOfTax { get; set; }
 
@@ -100,7 +94,7 @@ namespace ApiDTO
         public string SalesChannel { get; set; }
 
         [JsonProperty("customer_custom_fields")]
-        public List<CustomerCustomField> CustomerCustomFields { get; set; }
+        public List<object> CustomerCustomFields { get; set; }
 
         [JsonProperty("shipping_charge_formatted")]
         public string ShippingChargeFormatted { get; set; }
@@ -125,9 +119,6 @@ namespace ApiDTO
 
         [JsonProperty("status")]
         public string Status { get; set; }
-
-        [JsonProperty("cf_customer_type")]
-        public string CfCustomerType { get; set; }
 
         [JsonProperty("discount_total")]
         public int DiscountTotal { get; set; }
@@ -267,6 +258,9 @@ namespace ApiDTO
         [JsonProperty("client_viewed_time")]
         public string ClientViewedTime { get; set; }
 
+        [JsonProperty("currency_name_formatted")]
+        public string CurrencyNameFormatted { get; set; }
+
         [JsonProperty("ecomm_operator_id")]
         public string EcommOperatorId { get; set; }
 
@@ -368,9 +362,6 @@ namespace ApiDTO
 
         [JsonProperty("last_reminder_sent_date")]
         public string LastReminderSentDate { get; set; }
-
-        [JsonProperty("cf_site_number_unformatted")]
-        public string CfSiteNumberUnformatted { get; set; }
 
         [JsonProperty("merchant_id")]
         public string MerchantId { get; set; }
@@ -492,5 +483,4 @@ namespace ApiDTO
         [JsonProperty("payment_reminder_enabled")]
         public bool PaymentReminderEnabled { get; set; }
     }
-
 }

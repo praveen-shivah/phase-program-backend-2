@@ -25,8 +25,8 @@
                 return response;
             }
 
-            var organization = await dpContext.Organization.SingleOrDefaultAsync(x => x.Id == request.OrganizationId);
-            if (organization == null)
+            response.Organization = await dpContext.Organization.SingleOrDefaultAsync(x => x.Id == request.OrganizationId);
+            if (response.Organization == null)
             {
                 response.IsSuccessful = false;
                 response.InvoiceStoreResponseType = InvoiceStoreResponseType.invalidOrganizationId;
@@ -39,13 +39,13 @@
                 invoiceRecord = new Invoice
                 {
                     Id = 0,
-                    Organization = organization,
+                    Organization = response.Organization,
                     Balance = response.Invoice.Balance,
                     BalanceFormatted = response.Invoice.BalanceFormatted,
-                    CfCustomerType = response.Invoice.CfCustomerType,
-                    CfCustomerTypeUnformatted = response.Invoice.CfCustomerTypeUnformatted,
-                    CfSiteNumber = response.Invoice.CfSiteNumber,
-                    CfSiteNumberUnformatted = response.Invoice.CfSiteNumberUnformatted,
+                    CfCustomerType = "1", // response.Invoice.CfCustomerType,
+                    CfCustomerTypeUnformatted = "", // CfCustomerTypeUnformatted = response.Invoice.CfCustomerTypeUnformatted,
+                    CfSiteNumber = "2", //response.Invoice.CfSiteNumber,
+                    CfSiteNumberUnformatted = "", // = response.Invoice.CfSiteNumberUnformatted,
                     CreatedDate = response.Invoice.CreatedDate,
                     CreatedDateFormatted = response.Invoice.CreatedDateFormatted,
                     CreatedTime = response.Invoice.CreatedTime,

@@ -25,14 +25,14 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful)
+            if (!response.IsSuccessful || response.Organization == null)
             {
                 return response;
             }
 
             foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
             {
-                var organizationId = invoiceLineItem.Organization.Id;
+                var organizationId = response.Organization.Id;
                 var siteId = int.Parse(invoiceLineItem.ItemId);
                 var site = dpContext.SiteInformation.Include(x => x.Vendor).Single(x => x.Organization.Id == organizationId && x.Id == siteId);
                 var vendor = site.Vendor;
