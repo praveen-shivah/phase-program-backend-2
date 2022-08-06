@@ -22,13 +22,13 @@
             this.updateReseller = updateReseller;
         }
 
-        async Task<List<ResellerDto>> IResellerRepository.GetResellers()
+        async Task<List<ResellerDto>> IResellerRepository.GetResellers(int organizationId)
         {
             var result = new List<ResellerDto>();
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var Resellers = await context.Reseller.ToListAsync();
+                        var Resellers = await context.Reseller.Where(x => x.Organization.Id == organizationId).ToListAsync();
                         result.Add(new ResellerDto() { IsPlaceHolder = true });
                         foreach (var Reseller in Resellers)
                         {
@@ -44,6 +44,34 @@
                     });
             var response = await uow.ExecuteAsync();
             return response == WorkItemResultEnum.commitSuccessfullyCompleted ? result : new List<ResellerDto>();
+        }
+
+        async Task<List<SiteInformationDto>> IResellerRepository.GetResellerSites(int organizationId, int resellerId)
+        {
+            var result = new List<SiteInformationDto>();
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                    {
+                        var siteInformations = await context.SiteInformation.Where(x => x.Organization.Id == organizationId).ToListAsync();
+                        result.Add(new SiteInformationDto() { IsPlaceHolder = true });
+                        foreach (var siteInformation in siteInformations)
+                        {
+                            result.Add(
+                                new SiteInformationDto()
+                                {
+                                    Description = siteInformation.Description,
+                                    Item_Id = siteInformation.Item_Id,
+                                    Url = siteInformation.URL,
+                                    UserName = siteInformation.UserName,
+                                    Password = siteInformation.Password,
+                                    VendorId = siteInformation.Vendor.Id.ToString()
+                                });
+                        }
+
+                        return WorkItemResultEnum.doneContinue;
+                    });
+            var response = await uow.ExecuteAsync();
+            return response == WorkItemResultEnum.commitSuccessfullyCompleted ? result : new List<SiteInformationDto>();
         }
 
         async Task<UpdateResellerResponse> IResellerRepository.UpdateResellerRequestAsync(int organizationId, ResellerDto ResellerDto)

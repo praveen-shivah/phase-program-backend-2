@@ -40,13 +40,13 @@ namespace ApiDTO
         public string PaymentExpectedDateFormatted { get; set; }
 
         [JsonProperty("balance")]
-        public int Balance { get; set; }
+        public double Balance { get; set; }
 
         [JsonProperty("terms")]
         public string Terms { get; set; }
 
         [JsonProperty("credits_applied")]
-        public int CreditsApplied { get; set; }
+        public double CreditsApplied { get; set; }
 
         [JsonProperty("credits_applied_formatted")]
         public string CreditsAppliedFormatted { get; set; }
@@ -61,7 +61,7 @@ namespace ApiDTO
         public PaymentOptions PaymentOptions { get; set; }
 
         [JsonProperty("sub_total_inclusive_of_tax")]
-        public int SubTotalInclusiveOfTax { get; set; }
+        public double SubTotalInclusiveOfTax { get; set; }
 
         [JsonProperty("stop_reminder_until_payment_expected_date")]
         public bool StopReminderUntilPaymentExpectedDate { get; set; }
@@ -73,7 +73,7 @@ namespace ApiDTO
         public bool InprocessTransactionPresent { get; set; }
 
         [JsonProperty("exchange_rate")]
-        public int ExchangeRate { get; set; }
+        public double ExchangeRate { get; set; }
 
         [JsonProperty("mail_last_viewed_time")]
         public string MailLastViewedTime { get; set; }
@@ -112,7 +112,7 @@ namespace ApiDTO
         public bool IsAutobillEnabled { get; set; }
 
         [JsonProperty("discount_percent")]
-        public int DiscountPercent { get; set; }
+        public double DiscountPercent { get; set; }
 
         [JsonProperty("page_height")]
         public string PageHeight { get; set; }
@@ -121,7 +121,7 @@ namespace ApiDTO
         public string Status { get; set; }
 
         [JsonProperty("discount_total")]
-        public int DiscountTotal { get; set; }
+        public double DiscountTotal { get; set; }
 
         [JsonProperty("reader_offline_payment_initiated")]
         public bool ReaderOfflinePaymentInitiated { get; set; }
@@ -130,7 +130,7 @@ namespace ApiDTO
         public string ScheduleTimeFormatted { get; set; }
 
         [JsonProperty("tax_total")]
-        public int TaxTotal { get; set; }
+        public double TaxTotal { get; set; }
 
         [JsonProperty("adjustment_formatted")]
         public string AdjustmentFormatted { get; set; }
@@ -139,7 +139,7 @@ namespace ApiDTO
         public string BalanceFormatted { get; set; }
 
         [JsonProperty("write_off_amount")]
-        public int WriteOffAmount { get; set; }
+        public double WriteOffAmount { get; set; }
 
         [JsonProperty("is_viewed_by_client")]
         public bool IsViewedByClient { get; set; }
@@ -157,7 +157,7 @@ namespace ApiDTO
         public List<object> SubStatuses { get; set; }
 
         [JsonProperty("bcy_total")]
-        public int BcyTotal { get; set; }
+        public double BcyTotal { get; set; }
 
         [JsonProperty("last_reminder_sent_date_formatted")]
         public string LastReminderSentDateFormatted { get; set; }
@@ -199,7 +199,7 @@ namespace ApiDTO
         public string TransactionRoundingType { get; set; }
 
         [JsonProperty("roundoff_value")]
-        public int RoundoffValue { get; set; }
+        public double RoundoffValue { get; set; }
 
         [JsonProperty("contact_persons_details")]
         public List<ContactPersonsDetail> ContactPersonsDetails { get; set; }
@@ -295,7 +295,7 @@ namespace ApiDTO
         public List<string> ContactPersons { get; set; }
 
         [JsonProperty("bcy_tax_total")]
-        public int BcyTaxTotal { get; set; }
+        public double BcyTaxTotal { get; set; }
 
         [JsonProperty("created_time")]
         public DateTime CreatedTime { get; set; }
@@ -316,7 +316,7 @@ namespace ApiDTO
         public string LastPaymentDate { get; set; }
 
         [JsonProperty("price_precision")]
-        public int PricePrecision { get; set; }
+        public double PricePrecision { get; set; }
 
         [JsonProperty("sub_total_inclusive_of_tax_formatted")]
         public string SubTotalInclusiveOfTaxFormatted { get; set; }
@@ -334,7 +334,7 @@ namespace ApiDTO
         public string ZcrmPotentialName { get; set; }
 
         [JsonProperty("adjustment")]
-        public int Adjustment { get; set; }
+        public double Adjustment { get; set; }
 
         [JsonProperty("created_by_id")]
         public string CreatedById { get; set; }
@@ -373,7 +373,7 @@ namespace ApiDTO
         public string MailFirstViewedTimeFormatted { get; set; }
 
         [JsonProperty("total")]
-        public int Total { get; set; }
+        public double Total { get; set; }
 
         [JsonProperty("tax_total_formatted")]
         public string TaxTotalFormatted { get; set; }
@@ -388,7 +388,7 @@ namespace ApiDTO
         public string SubTotalFormatted { get; set; }
 
         [JsonProperty("tax_amount_withheld")]
-        public int TaxAmountWithheld { get; set; }
+        public double TaxAmountWithheld { get; set; }
 
         [JsonProperty("tax_amount_withheld_formatted")]
         public string TaxAmountWithheldFormatted { get; set; }
@@ -397,7 +397,7 @@ namespace ApiDTO
         public bool IsViewedInMail { get; set; }
 
         [JsonProperty("bcy_shipping_charge")]
-        public int BcyShippingCharge { get; set; }
+        public double BcyShippingCharge { get; set; }
 
         [JsonProperty("shipping_address")]
         public ShippingAddress ShippingAddress { get; set; }
@@ -412,7 +412,7 @@ namespace ApiDTO
         public string Orientation { get; set; }
 
         [JsonProperty("discount_applied_on_amount")]
-        public int DiscountAppliedOnAmount { get; set; }
+        public double DiscountAppliedOnAmount { get; set; }
 
         [JsonProperty("due_date")]
         public string DueDate { get; set; }
@@ -430,7 +430,7 @@ namespace ApiDTO
         public string PaymentMadeFormatted { get; set; }
 
         [JsonProperty("bcy_sub_total")]
-        public int BcySubTotal { get; set; }
+        public double BcySubTotal { get; set; }
 
         [JsonProperty("payment_expected_date")]
         public string PaymentExpectedDate { get; set; }
@@ -454,16 +454,16 @@ namespace ApiDTO
         public string SalespersonId { get; set; }
 
         [JsonProperty("payment_made")]
-        public int PaymentMade { get; set; }
+        public double PaymentMade { get; set; }
 
         [JsonProperty("shipping_charge")]
-        public int ShippingCharge { get; set; }
+        public double ShippingCharge { get; set; }
 
         [JsonProperty("bcy_adjustment")]
-        public int BcyAdjustment { get; set; }
+        public double BcyAdjustment { get; set; }
 
         [JsonProperty("sub_total")]
-        public int SubTotal { get; set; }
+        public double SubTotal { get; set; }
 
         [JsonProperty("allow_partial_payments")]
         public bool AllowPartialPayments { get; set; }

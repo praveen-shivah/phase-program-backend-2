@@ -12,9 +12,9 @@
 
     internal class InvoiceStoreSendTransferRequest : IInvoiceStore
     {
-        private readonly IInvoiceStore invoiceStore;
-
         private readonly IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer;
+
+        private readonly IInvoiceStore invoiceStore;
 
         public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer)
         {
@@ -33,19 +33,19 @@
             foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
             {
                 var organizationId = response.Organization.Id;
-                var siteId = int.Parse(invoiceLineItem.ItemId);
-                var site = dpContext.SiteInformation.Include(x => x.Vendor).Single(x => x.Organization.Id == organizationId && x.Id == siteId);
+                var softwareType = invoiceLineItem.SoftwareType;
+                var site = dpContext.SiteInformation.Include(x => x.Vendor).Single(x => x.Organization.Id == organizationId && x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
                 var vendor = site.Vendor;
 
                 await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
-                    new DistributorToResellerSendPointsTransferRequest()
-                    {
-                        SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
-                        UserId = site.UserName,
-                        Password = site.Password,
-                        AccountId = invoiceLineItem.Description.Trim(),
-                        Points = invoiceLineItem.Quantity,
-                    });
+                    new DistributorToResellerSendPointsTransferRequest
+                        {
+                            SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
+                            UserId = site.UserName,
+                            Password = site.Password,
+                            AccountId = invoiceLineItem.Description.Trim(),
+                            Points = invoiceLineItem.Quantity,
+                        });
             }
 
             return response;

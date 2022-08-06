@@ -36,13 +36,20 @@
 
             foreach (var item in response.Invoice.LineItems)
             {
+                var softwareTypeField = item.ItemCustomFields.SingleOrDefault(x => x.Placeholder.ToUpper() == "CF_SOFTWARE_TYPE");
+                if (softwareTypeField == null || softwareTypeField.Value.ToUpper() == "NONE")
+                {
+                    continue;
+                }
+
                 var invoiceLineItemRecord = new InvoiceLineItem()
                 {
                     Organization = response.Organization,
                     InvoiceId = response.InvoiceRecord.Id,
                     ItemId = item.ItemId,
                     Description = item.Description,
-                    Quantity = item.Quantity
+                    Quantity = item.Quantity,
+                    SoftwareType = softwareTypeField.Value
                 };
 
                 await dpContext.InvoiceLineItem.AddAsync(invoiceLineItemRecord);

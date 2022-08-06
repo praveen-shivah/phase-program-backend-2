@@ -43,7 +43,16 @@
         {
             this.logger.Debug(LogClass.General, "GetResellers received");
 
-            var result = await this.resellerRepository.GetResellers();
+            var result = await this.resellerRepository.GetResellers(this.OrganizationId);
+            return this.Ok(result);
+        }
+
+        [HttpGet("get-reseller-sites")]
+        public async Task<ActionResult<List<SiteInformationDto>>> GetResellerSites(int resellerId)
+        {
+            this.logger.Debug(LogClass.General, "GetResellerSites received");
+
+            var result = await this.resellerRepository.GetResellerSites(this.OrganizationId, resellerId);
             return this.Ok(result);
         }
 

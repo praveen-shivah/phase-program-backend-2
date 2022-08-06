@@ -2,7 +2,7 @@ namespace DataModelsLibrary
 {
     public class Invoice : BaseOrganizationEntity
     {
-        public int Balance { get; set; }
+        public double Balance { get; set; }
 
         public string BalanceFormatted { get; set; }
 

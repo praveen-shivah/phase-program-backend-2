@@ -1,5 +1,7 @@
 ﻿namespace DataPostgresqlLibrary
 {
+    using ApiDTO;
+
     using CommonServices;
 
     using DataModelsLibrary;
@@ -10,6 +12,8 @@
     using Microsoft.Extensions.Configuration;
 
     using Npgsql;
+
+    using Invoice = DataModelsLibrary.Invoice;
 
     // This is here so that when scaffolding we won't get errors
     public class DPContext : DbContext
@@ -32,26 +36,45 @@
         {
         }
 
-        public DbSet<InvoiceRevision> InvoiceRevision { get; set; }
-        public DbSet<Invoice> Invoice { get; set; }
-        public DbSet<InvoiceLineItem> InvoiceLineItem { get; set; }
-        public DbSet<ErrorLog> ErrorLog { get; set; }
-        public DbSet<SignificantEvent> SignificantEvent { get; set; }
-        public DbSet<SiteInformation> SiteInformation { get; set; }
-        public DbSet<Organization> Organization { get; set; }
-        public DbSet<Vendor> Vendor { get; set; }
-        public DbSet<SoftwareType> SoftwareType { get; set; }
-        public DbSet<ResellerVendorBalance> ResellerVendorBalance { get; set; }
-        public DbSet<Reseller> Reseller { get; set; }
         public DbSet<Address> Address { get; set; }
+
         public DbSet<City> City { get; set; }
+
         public DbSet<Contact> Contact { get; set; }
+
         public DbSet<Country> Country { get; set; }
+
+        public DbSet<ErrorLog> ErrorLog { get; set; }
+
+        public DbSet<Invoice> Invoice { get; set; }
+
+        public DbSet<InvoiceLineItem> InvoiceLineItem { get; set; }
+
+        public DbSet<InvoiceRevision> InvoiceRevision { get; set; }
+
+        public DbSet<Organization> Organization { get; set; }
+
         public DbSet<PhoneNumber> PhoneNumber { get; set; }
+
         public DbSet<PostalCode> PostalCode { get; set; }
-        public DbSet<StateProvince> StateProvince { get; set; }
-        public DbSet<User> User { get; set; }
+
         public DbSet<RefreshToken> RefreshToken { get; set; }
+
+        public DbSet<Reseller> Reseller { get; set; }
+
+        public DbSet<ResellerVendorBalance> ResellerVendorBalance { get; set; }
+
+        public DbSet<SignificantEvent> SignificantEvent { get; set; }
+
+        public DbSet<SiteInformation> SiteInformation { get; set; }
+
+        public DbSet<SoftwareType> SoftwareType { get; set; }
+
+        public DbSet<StateProvince> StateProvince { get; set; }
+
+        public DbSet<User> User { get; set; }
+
+        public DbSet<Vendor> Vendor { get; set; }
 
         public override int SaveChanges()
         {
@@ -130,26 +153,43 @@
 
             modelBuilder.Entity<SignificantEventType>(entity => { entity.Property(e => e.Id).ValueGeneratedNever(); });
 
-            modelBuilder.Entity<SoftwareType>().HasData(
-                new SoftwareType
-                    {
-                        Id = 1,
-                        Name = "Riversweeps"
-                    },
-                new SoftwareType
-                    {
-                        Id = 2,
-                        Name = "Dragon"
-                    });
+            var softwareTypeValues = Enum.GetValues(typeof(SoftwareTypeEnum));
+            var softwareTypes = new List<SoftwareType>();
+            foreach (int softwareTypeValue in softwareTypeValues)
+            {
+                var name = Enum.GetName(typeof(SoftwareTypeEnum), softwareTypeValue);
+                if (name == null)
+                {
+                    continue;
+                }
 
-            foreach (var property in modelBuilder.Model.GetEntityTypes()
-                         .SelectMany(t => t.GetProperties())
-                         .Where
-                         (p
-                             => p.ClrType == typeof(DateTime)
-                                || p.ClrType == typeof(DateTime?)
-                         )
-                    )
+                softwareTypes.Add(
+                    new SoftwareType
+                    {
+                        Id = softwareTypeValue,
+                        Name = name
+                    });
+            }
+
+            modelBuilder.Entity<SoftwareType>().HasData(softwareTypes.ToArray());
+
+            var vendorTypes = new List<Vendor>();
+            foreach (var softwareType in softwareTypes)
+            {
+                vendorTypes.Add(new Vendor
+                {
+                    Id = softwareType.Id,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
+                    IsActive = true,
+                    Name = softwareType.Name,
+                    SoftwareTypeId = softwareType.Id
+                });
+            }
+
+            modelBuilder.Entity<Vendor>().HasData(vendorTypes.ToArray());
+
+            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(DateTime) || p.ClrType == typeof(DateTime?)))
             {
                 property.SetColumnType("timestamp without time zone");
             }
