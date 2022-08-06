@@ -1,5 +1,7 @@
 ﻿namespace AuthenticationRepository
 {
+    using AuthenticationRepositoryTypes;
+
     using DataModelsLibrary;
 
     using DataPostgresqlLibrary;

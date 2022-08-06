@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataPostgresqlLibrary.Migrations
 {
-    public partial class Initialmigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,6 +82,19 @@ namespace DataPostgresqlLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SoftwareType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SoftwareType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "City",
                 columns: table => new
                 {
@@ -144,6 +157,56 @@ namespace DataPostgresqlLibrary.Migrations
                         name: "FK_Reseller_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    PasswordSalt = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CurrentRefreshToken = table.Column<string>(type: "text", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_User_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vendor",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    SoftwareTypeId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vendor", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vendor_SoftwareType_SoftwareTypeId",
+                        column: x => x.SoftwareTypeId,
+                        principalTable: "SoftwareType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,12 +305,9 @@ namespace DataPostgresqlLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Balance = table.Column<int>(type: "integer", nullable: false),
+                    Balance = table.Column<double>(type: "double precision", nullable: false),
                     BalanceFormatted = table.Column<string>(type: "text", nullable: false),
-                    CfCustomerType = table.Column<string>(type: "text", nullable: false),
-                    CfCustomerTypeUnformatted = table.Column<string>(type: "text", nullable: false),
-                    CfSiteNumber = table.Column<string>(type: "text", nullable: false),
-                    CfSiteNumberUnformatted = table.Column<string>(type: "text", nullable: false),
+                    ResellerId = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<string>(type: "text", nullable: false),
                     CreatedDateFormatted = table.Column<string>(type: "text", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -258,7 +318,6 @@ namespace DataPostgresqlLibrary.Migrations
                     InvoiceUrl = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
                     StatusFormatted = table.Column<string>(type: "text", nullable: false),
-                    ResellerId = table.Column<int>(type: "integer", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     OrganizationId = table.Column<int>(type: "integer", nullable: false)
@@ -276,36 +335,111 @@ namespace DataPostgresqlLibrary.Migrations
                         name: "FK_Invoice_Reseller_ResellerId",
                         column: x => x.ResellerId,
                         principalTable: "Reseller",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendor",
+                name: "RefreshToken",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    SoftwareType = table.Column<int>(type: "integer", nullable: false),
-                    ResellerId = table.Column<int>(type: "integer", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedByIp = table.Column<string>(type: "text", nullable: false),
+                    Expires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ReasonRevoked = table.Column<string>(type: "text", nullable: false),
+                    ReplacedByToken = table.Column<string>(type: "text", nullable: false),
+                    Revoked = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RevokedByIp = table.Column<string>(type: "text", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResellerVendorBalance",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ResellerId = table.Column<int>(type: "integer", nullable: false),
+                    Balance = table.Column<int>(type: "integer", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    VendorId = table.Column<int>(type: "integer", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     OrganizationId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vendor", x => x.Id);
+                    table.PrimaryKey("PK_ResellerVendorBalance", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vendor_Organization_OrganizationId",
+                        name: "FK_ResellerVendorBalance_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Vendor_Reseller_ResellerId",
+                        name: "FK_ResellerVendorBalance_Reseller_ResellerId",
                         column: x => x.ResellerId,
                         principalTable: "Reseller",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ResellerVendorBalance_Vendor_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SiteInformation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Item_Id = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    URL = table.Column<string>(type: "text", nullable: false),
+                    UserName = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    ResellerId = table.Column<int>(type: "integer", nullable: false),
+                    VendorId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteInformation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SiteInformation_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SiteInformation_Reseller_ResellerId",
+                        column: x => x.ResellerId,
+                        principalTable: "Reseller",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SiteInformation_Vendor_VendorId",
+                        column: x => x.VendorId,
+                        principalTable: "Vendor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -396,6 +530,7 @@ namespace DataPostgresqlLibrary.Migrations
                     ItemId = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
+                    SoftwareType = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     OrganizationId = table.Column<int>(type: "integer", nullable: false)
@@ -423,6 +558,7 @@ namespace DataPostgresqlLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ResellerId = table.Column<int>(type: "integer", nullable: false),
                     InvoiceId = table.Column<int>(type: "integer", nullable: false),
                     Invoice_Id = table.Column<string>(type: "text", nullable: false),
                     Json = table.Column<string>(type: "text", nullable: false),
@@ -443,69 +579,6 @@ namespace DataPostgresqlLibrary.Migrations
                         name: "FK_InvoiceRevision_Organization_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ResellerVendorBalance",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Balance = table.Column<int>(type: "integer", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    VendorId = table.Column<int>(type: "integer", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResellerVendorBalance", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ResellerVendorBalance_Organization_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ResellerVendorBalance_Vendor_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SiteInformation",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Item_Id = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    URL = table.Column<string>(type: "text", nullable: false),
-                    UserName = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    VendorId = table.Column<int>(type: "integer", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    OrganizationId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SiteInformation", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SiteInformation_Organization_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organization",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SiteInformation_Vendor_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -611,6 +684,11 @@ namespace DataPostgresqlLibrary.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RefreshToken_UserId",
+                table: "RefreshToken",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reseller_OrganizationId",
                 table: "Reseller",
                 column: "OrganizationId");
@@ -619,6 +697,11 @@ namespace DataPostgresqlLibrary.Migrations
                 name: "IX_ResellerVendorBalance_OrganizationId",
                 table: "ResellerVendorBalance",
                 column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ResellerVendorBalance_ResellerId",
+                table: "ResellerVendorBalance",
+                column: "ResellerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ResellerVendorBalance_VendorId",
@@ -636,6 +719,11 @@ namespace DataPostgresqlLibrary.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SiteInformation_ResellerId",
+                table: "SiteInformation",
+                column: "ResellerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SiteInformation_VendorId",
                 table: "SiteInformation",
                 column: "VendorId");
@@ -651,14 +739,14 @@ namespace DataPostgresqlLibrary.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vendor_OrganizationId",
-                table: "Vendor",
+                name: "IX_User_OrganizationId",
+                table: "User",
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vendor_ResellerId",
+                name: "IX_Vendor_SoftwareTypeId",
                 table: "Vendor",
-                column: "ResellerId");
+                column: "SoftwareTypeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -677,6 +765,9 @@ namespace DataPostgresqlLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "PhoneNumber");
+
+            migrationBuilder.DropTable(
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "ResellerVendorBalance");
@@ -706,6 +797,9 @@ namespace DataPostgresqlLibrary.Migrations
                 name: "Contact");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Vendor");
 
             migrationBuilder.DropTable(
@@ -713,6 +807,9 @@ namespace DataPostgresqlLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reseller");
+
+            migrationBuilder.DropTable(
+                name: "SoftwareType");
 
             migrationBuilder.DropTable(
                 name: "Organization");

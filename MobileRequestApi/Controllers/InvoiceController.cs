@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using ApiHost;
+    using ApiHost.Middleware;
 
     using InvoiceRepositoryTypes;
 

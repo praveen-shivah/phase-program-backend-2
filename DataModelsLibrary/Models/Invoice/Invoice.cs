@@ -6,13 +6,7 @@ namespace DataModelsLibrary
 
         public string BalanceFormatted { get; set; }
 
-        public string CfCustomerType { get; set; }
-
-        public string CfCustomerTypeUnformatted { get; set; }
-
-        public string CfSiteNumber { get; set; }
-
-        public string CfSiteNumberUnformatted { get; set; }
+        public Reseller Reseller { get; set; }
 
         public string CreatedDate { get; set; }
 

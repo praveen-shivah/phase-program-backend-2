@@ -45,10 +45,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -87,10 +87,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -111,7 +111,7 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("First")
                         .IsRequired()
@@ -126,7 +126,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -160,10 +160,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -189,7 +189,7 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
 
                     b.Property<string>("Hash")
@@ -209,7 +209,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("StackTrace")
                         .IsRequired()
@@ -238,22 +238,6 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("CfCustomerType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfCustomerTypeUnformatted")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfSiteNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfSiteNumberUnformatted")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("CreatedDate")
                         .IsRequired()
                         .HasColumnType("text");
@@ -263,10 +247,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
@@ -289,12 +273,12 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ResellerId")
+                    b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Status")
@@ -323,7 +307,7 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -337,7 +321,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -367,7 +351,7 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("InvoiceId")
                         .HasColumnType("integer");
@@ -381,9 +365,12 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -408,10 +395,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -446,10 +433,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -483,10 +470,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -509,14 +496,14 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedByIp")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Expires")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ReasonRevoked")
                         .IsRequired()
@@ -527,7 +514,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("Revoked")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("RevokedByIp")
                         .IsRequired()
@@ -556,10 +543,10 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -587,13 +574,13 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("LastUpdated")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -628,7 +615,7 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasDefaultValueSql("LOCALTIMESTAMP AT TIME ZONE 'UTC'");
 
                     b.Property<int>("EventTypeId")
@@ -639,7 +626,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
@@ -659,14 +646,14 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -682,7 +669,7 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -693,7 +680,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -701,6 +688,9 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("URL")
                         .IsRequired()
@@ -716,6 +706,8 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ResellerId");
 
                     b.HasIndex("VendorId");
 
@@ -751,10 +743,10 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -781,7 +773,7 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CurrentRefreshToken")
                         .IsRequired()
@@ -795,7 +787,7 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -828,27 +820,22 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("ResellerId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("SoftwareTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ResellerId");
 
                     b.HasIndex("SoftwareTypeId");
 
@@ -939,11 +926,15 @@ namespace DataPostgresqlLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataModelsLibrary.Reseller", null)
+                    b.HasOne("DataModelsLibrary.Reseller", "Reseller")
                         .WithMany("Invoice")
-                        .HasForeignKey("ResellerId");
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organization");
+
+                    b.Navigation("Reseller");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.InvoiceLineItem", b =>
@@ -1067,6 +1058,12 @@ namespace DataPostgresqlLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataModelsLibrary.Reseller", null)
+                        .WithMany("SiteInformation")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataModelsLibrary.Vendor", "Vendor")
                         .WithMany()
                         .HasForeignKey("VendorId")
@@ -1110,10 +1107,6 @@ namespace DataPostgresqlLibrary.Migrations
 
             modelBuilder.Entity("DataModelsLibrary.Vendor", b =>
                 {
-                    b.HasOne("DataModelsLibrary.Reseller", null)
-                        .WithMany("Vendor")
-                        .HasForeignKey("ResellerId");
-
                     b.HasOne("DataModelsLibrary.SoftwareType", "SoftwareType")
                         .WithMany()
                         .HasForeignKey("SoftwareTypeId")
@@ -1143,7 +1136,7 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Navigation("Invoice");
 
-                    b.Navigation("Vendor");
+                    b.Navigation("SiteInformation");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.User", b =>

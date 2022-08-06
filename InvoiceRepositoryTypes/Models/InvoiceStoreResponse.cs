@@ -10,6 +10,7 @@
         success,
         databaseError,
         invalidOrganizationId,
+        invalidResellerId,
         jsonDeserializationError
     }
 

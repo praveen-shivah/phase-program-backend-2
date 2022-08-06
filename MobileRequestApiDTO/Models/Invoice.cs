@@ -153,6 +153,9 @@ namespace ApiDTO
         [JsonProperty("page_width")]
         public string PageWidth { get; set; }
 
+        [JsonProperty("cf_reseller_id")]
+        public int CfResellerId { get; set; }
+
         [JsonProperty("sub_statuses")]
         public List<object> SubStatuses { get; set; }
 
@@ -257,6 +260,9 @@ namespace ApiDTO
 
         [JsonProperty("client_viewed_time")]
         public string ClientViewedTime { get; set; }
+
+        [JsonProperty("cf_reseller_id_unformatted")]
+        public int CfResellerIdUnformatted { get; set; }
 
         [JsonProperty("currency_name_formatted")]
         public string CurrencyNameFormatted { get; set; }

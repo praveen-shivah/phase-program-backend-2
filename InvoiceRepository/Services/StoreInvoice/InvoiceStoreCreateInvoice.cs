@@ -33,6 +33,14 @@
                 return response;
             }
 
+            var reseller = await dpContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.OrganizationId && x.Id == response.Invoice.CfResellerId);
+            if (reseller == null)
+            {
+                response.IsSuccessful = false;
+                response.InvoiceStoreResponseType = InvoiceStoreResponseType.invalidResellerId;
+                return response;
+            }
+
             var invoiceRecord = await dpContext.Invoice.SingleOrDefaultAsync(x => x.InvoiceId == response.Invoice.InvoiceId);
             if (invoiceRecord == null)
             {
@@ -42,10 +50,7 @@
                     Organization = response.Organization,
                     Balance = response.Invoice.Balance,
                     BalanceFormatted = response.Invoice.BalanceFormatted,
-                    CfCustomerType = "1", // response.Invoice.CfCustomerType,
-                    CfCustomerTypeUnformatted = "", // CfCustomerTypeUnformatted = response.Invoice.CfCustomerTypeUnformatted,
-                    CfSiteNumber = "2", //response.Invoice.CfSiteNumber,
-                    CfSiteNumberUnformatted = "", // = response.Invoice.CfSiteNumberUnformatted,
+                    Reseller = reseller,
                     CreatedDate = response.Invoice.CreatedDate,
                     CreatedDateFormatted = response.Invoice.CreatedDateFormatted,
                     CreatedTime = response.Invoice.CreatedTime,

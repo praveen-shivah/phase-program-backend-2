@@ -7,6 +7,7 @@
         public string URL { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public int ResellerId { get; set; }
         public Vendor Vendor { get; set; }
     }
 }

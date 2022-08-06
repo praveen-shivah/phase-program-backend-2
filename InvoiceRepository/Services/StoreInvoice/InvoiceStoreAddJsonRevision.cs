@@ -26,6 +26,7 @@
             var invoiceRevision = new InvoiceRevision()
             {
                 Organization = response.Organization,
+                ResellerId = response.Invoice.CfResellerId,
                 InvoiceId = response.InvoiceRecord.Id,
                 Invoice_Id = response.Invoice.InvoiceId,
                 Json = request.JsonString
