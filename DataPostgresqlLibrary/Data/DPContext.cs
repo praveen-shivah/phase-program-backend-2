@@ -153,42 +153,6 @@
 
             modelBuilder.Entity<SignificantEventType>(entity => { entity.Property(e => e.Id).ValueGeneratedNever(); });
 
-            var softwareTypeValues = Enum.GetValues(typeof(SoftwareTypeEnum));
-            var softwareTypes = new List<SoftwareType>();
-            foreach (int softwareTypeValue in softwareTypeValues)
-            {
-                var name = Enum.GetName(typeof(SoftwareTypeEnum), softwareTypeValue);
-                if (name == null)
-                {
-                    continue;
-                }
-
-                softwareTypes.Add(
-                    new SoftwareType
-                    {
-                        Id = softwareTypeValue,
-                        Name = name
-                    });
-            }
-
-            modelBuilder.Entity<SoftwareType>().HasData(softwareTypes.ToArray());
-
-            var vendorTypes = new List<Vendor>();
-            foreach (var softwareType in softwareTypes)
-            {
-                vendorTypes.Add(new Vendor
-                {
-                    Id = softwareType.Id,
-                    CreatedOn = DateTime.Now,
-                    ModifiedOn = DateTime.Now,
-                    IsActive = true,
-                    Name = softwareType.Name,
-                    SoftwareTypeId = softwareType.Id
-                });
-            }
-
-            modelBuilder.Entity<Vendor>().HasData(vendorTypes.ToArray());
-
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(t => t.GetProperties()).Where(p => p.ClrType == typeof(DateTime) || p.ClrType == typeof(DateTime?)))
             {
                 property.SetColumnType("timestamp without time zone");
