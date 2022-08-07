@@ -1,12 +1,14 @@
 ﻿namespace LoggingServicesLibrary
 {
+    using System.Threading.Tasks;
+
     using DataPostgresqlLibrary;
 
     public class ErrorLogDbPostingStart : IErrorLogDbPosting
     {
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
-            return new ErrorLogDbPostingResponse() { IsSuccessful = true };
+            return Task.FromResult(new ErrorLogDbPostingResponse() { IsSuccessful = true });
         }
     }
 }

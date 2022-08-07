@@ -34,12 +34,16 @@
             {
                 var organizationId = response.Organization.Id;
                 var softwareType = invoiceLineItem.SoftwareType;
-                var site = dpContext.SiteInformation.Include(x => x.Vendor).Single(x => x.Organization.Id == organizationId && x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
+                var site = dpContext.SiteInformation.Include(x => x.Vendor).ThenInclude(x=>x.SoftwareType).Single(x => x.Organization.Id == organizationId &&
+                                                                                        x.ResellerId == response.Invoice.CfResellerId &&
+                                                                                        x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
                 var vendor = site.Vendor;
 
                 await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new DistributorToResellerSendPointsTransferRequest
                         {
+                            OrganizationId = request.OrganizationId,
+                            APIKey = response.Organization.APIKey,
                             SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
                             UserId = site.UserName,
                             Password = site.Password,

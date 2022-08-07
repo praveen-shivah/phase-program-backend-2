@@ -1,5 +1,7 @@
 ﻿namespace LoggingServicesLibrary
 {
+    using System.Threading.Tasks;
+
     using DataModelsLibrary;
 
     using DataPostgresqlLibrary;
@@ -13,9 +15,9 @@
             this.errorLogDbPosting = errorLogDbPosting;
         }
 
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
-            var response = this.errorLogDbPosting.Post(dataContext, errorLogDbPostingRequest);
+            var response = await this.errorLogDbPosting.PostAsync(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)
             {
                 return response;

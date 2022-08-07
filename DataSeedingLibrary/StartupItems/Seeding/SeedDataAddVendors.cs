@@ -36,8 +36,8 @@
                     new Vendor
                         {
                             Id = softwareType.Id,
-                            CreatedOn = DateTime.Now,
-                            ModifiedOn = DateTime.Now,
+                            CreatedOn = DateTime.UtcNow,
+                            ModifiedOn = DateTime.UtcNow,
                             IsActive = true,
                             Name = softwareType.Name,
                             SoftwareTypeId = softwareType.Id

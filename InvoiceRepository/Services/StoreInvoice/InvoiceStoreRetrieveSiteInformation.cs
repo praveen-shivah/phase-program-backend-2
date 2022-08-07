@@ -53,11 +53,14 @@
                                               Password = string.Empty,
                                               UserName = string.Empty,
                                               URL = string.Empty,
-                                              Vendor = vendor
+                                              Vendor = vendor,
+                                              ResellerId = response.Invoice.CfResellerId
                                           };
 
                 dpContext.SiteInformation.Add(siteInformation);
             }
+
+            await dpContext.SaveChangesAsync();
 
             return response;
         }

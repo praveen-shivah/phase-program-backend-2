@@ -43,7 +43,7 @@
                             IssuerSigningKey = new SymmetricSecurityKey(key),
                             ValidateIssuer = false,
                             ValidateAudience = false,
-                            ClockSkew = TimeSpan.Zero
+                            ClockSkew = TimeSpan.FromHours(1.0)
                         },
                     out SecurityToken validatedToken);
 

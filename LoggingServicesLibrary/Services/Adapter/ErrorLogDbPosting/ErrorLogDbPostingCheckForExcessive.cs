@@ -1,10 +1,13 @@
 ﻿namespace LoggingServicesLibrary
 {
     using System.Linq;
+    using System.Threading.Tasks;
 
     using CommonServices;
 
     using DataPostgresqlLibrary;
+
+    using Microsoft.EntityFrameworkCore;
 
     public class ErrorLogDbPostingCheckForExcessive : IErrorLogDbPosting
     {
@@ -17,9 +20,9 @@
             this.dateTimeService = dateTimeService;
         }
 
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
-            var response = this.errorLogDbPosting.Post(dataContext, errorLogDbPostingRequest);
+            var response = await this.errorLogDbPosting.PostAsync(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -27,7 +30,7 @@
 
             // Only look at the last 24 hours
             var dateToLookAt = this.dateTimeService.UtcNow.AddDays(-1);
-            var currentCount = dataContext.ErrorLog.Count(x => x.Hash == response.Hash && x.CreatedOn >= dateToLookAt);
+            var currentCount = await dataContext.ErrorLog.CountAsync(x => x.Hash == response.Hash && x.CreatedOn >= dateToLookAt);
             if (currentCount > 100)
             {
                 response.IsSuccessful = false;

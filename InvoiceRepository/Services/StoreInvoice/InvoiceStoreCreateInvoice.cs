@@ -53,7 +53,7 @@
                     Reseller = reseller,
                     CreatedDate = response.Invoice.CreatedDate,
                     CreatedDateFormatted = response.Invoice.CreatedDateFormatted,
-                    CreatedTime = response.Invoice.CreatedTime,
+                    CreatedTime = response.Invoice.CreatedTime.ToUniversalTime(),
                     CustomerId = response.Invoice.CustomerId,
                     CustomerName = response.Invoice.CustomerName,
                     InvoiceId = response.Invoice.InvoiceId,
