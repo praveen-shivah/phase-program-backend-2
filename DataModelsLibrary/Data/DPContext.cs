@@ -1,12 +1,12 @@
 ﻿namespace DataCore3EFClassLibrary
 {
-    using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
     public partial class DPContext : DbContext
     {
-        public DPContext(DbContextOptions<DPContext> options) : base(options)
-        {
-        }
+public DPContext(DbContextOptions<DPContext> options) : base(options)
+{
+ }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

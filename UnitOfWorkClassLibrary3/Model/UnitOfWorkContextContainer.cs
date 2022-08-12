@@ -38,7 +38,6 @@
 
         void IUnitOfWorkContextContainer<T>.Refresh()
         {
-            this.context?.Database.CloseConnection();
             this.context?.Dispose();
             this.context = default(T);
             this.numberOfTransactions = 0;

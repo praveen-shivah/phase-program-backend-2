@@ -1,0 +1,14 @@
+{
+  "NServiceBus.MessageId": "529ea360-301e-4108-a0ee-aeef00043c5a",
+  "NServiceBus.MessageIntent": "Send",
+  "NServiceBus.ConversationId": "fd972886-6a6e-4f1b-98bf-aeef00043c5d",
+  "NServiceBus.CorrelationId": "529ea360-301e-4108-a0ee-aeef00043c5a",
+  "NServiceBus.ReplyToAddress": "QUEUE",
+  "NServiceBus.OriginatingMachine": "UNITY-PC-CARL",
+  "NServiceBus.OriginatingEndpoint": "QUEUE",
+  "$.diagnostics.originating.hostid": "c46209de81ca25c6ffe139b9f8c8d279",
+  "NServiceBus.ContentType": "text\/xml",
+  "NServiceBus.EnclosedMessageTypes": "AutomaticTaskSharedLibrary.AutomaticTaskTransferPoints, AutomaticTaskSharedLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;AutomaticTaskSharedLibrary.IAutomaticTask, AutomaticTaskSharedLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;AutomaticTaskSharedLibrary.CallBackInformationRequest, AutomaticTaskSharedLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "NServiceBus.Version": "7.7.4",
+  "NServiceBus.TimeSent": "2022-08-12 00:15:25:352509 Z"
+}

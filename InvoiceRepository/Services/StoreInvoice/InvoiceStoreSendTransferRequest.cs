@@ -34,7 +34,7 @@
             {
                 var organizationId = response.Organization.Id;
                 var softwareType = invoiceLineItem.SoftwareType;
-                var site = dpContext.SiteInformation.Include(x => x.Vendor).ThenInclude(x=>x.SoftwareType).Single(x => x.Organization.Id == organizationId &&
+                var site = await dpContext.SiteInformation.Include(x => x.Vendor).ThenInclude(x=>x.SoftwareType).SingleAsync(x => x.Organization.Id == organizationId &&
                                                                                         x.ResellerId == response.Invoice.CfResellerId &&
                                                                                         x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
                 var vendor = site.Vendor;
