@@ -2,18 +2,17 @@
 {
     using OpenQA.Selenium;
 
-    public class DistributorToResellerSendPointsTransferManagementPageCreate : IDistributorToResellerSendPointsTransferChain
+    public class DistributorToResellerSendPointsTransferLogoutCreate : IDistributorToResellerSendPointsTransferChain
     {
         private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        private readonly IManagementPageFactory managementPageFactory;
+        private readonly ILogoutPageFactory logoutPageFactory;
 
-        public DistributorToResellerSendPointsTransferManagementPageCreate(
-            IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain,
-            IManagementPageFactory managementPageFactory)
+        public DistributorToResellerSendPointsTransferLogoutCreate(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain, 
+                                                                   ILogoutPageFactory logoutPageFactory)
         {
             this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
-            this.managementPageFactory = managementPageFactory;
+            this.logoutPageFactory = logoutPageFactory;
         }
 
         DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
@@ -24,10 +23,11 @@
                 return response;
             }
 
-            response.ResponseType = DistributorToOperatorTransferResponseType.managementCreate;
+            response.ResponseType = DistributorToOperatorTransferResponseType.logoutCreate;
+
             try
             {
-                response.ManagementPage = this.managementPageFactory.Create(driver, distributorToResellerSendPointsTransferRequest.SoftwareType);
+                response.LogoutPage = this.logoutPageFactory.Create(driver, distributorToResellerSendPointsTransferRequest.LoginPageInformation.SoftwareType);
             }
             catch
             {

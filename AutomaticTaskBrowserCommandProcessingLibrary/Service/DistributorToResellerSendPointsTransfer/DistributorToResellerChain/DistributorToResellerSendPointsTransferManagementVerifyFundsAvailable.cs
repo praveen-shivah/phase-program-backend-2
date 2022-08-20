@@ -4,23 +4,23 @@
 
     public class DistributorToResellerSendPointsTransferManagementVerifyFundsAvailable : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementVerifyFundsAvailable(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain)
+        public DistributorToResellerSendPointsTransferManagementVerifyFundsAvailable(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
-            if (!response.IsSuccessful)
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
+            if (!response.IsSuccessful || response.ManagementPage == null)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.managementVerifyFundsAvailable;
-            response.IsSuccessful = response.ManagementPage.VerifyFundsAvailable(vendorToOperatorSendPointsTransferRequest.Points);
+            response.ResponseType = DistributorToOperatorTransferResponseType.managementVerifyFundsAvailable;
+            response.IsSuccessful = response.ManagementPage.VerifyFundsAvailable(distributorToResellerSendPointsTransferRequest.Points);
 
             return response;
         }

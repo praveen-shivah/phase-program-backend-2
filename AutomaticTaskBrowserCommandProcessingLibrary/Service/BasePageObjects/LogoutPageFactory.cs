@@ -2,18 +2,16 @@
 {
     using ApiDTO;
 
-    using AutomaticTaskSharedLibrary;
-
     using OpenQA.Selenium;
 
-    public class ResellerBalancePageFactory : IResellerBalancePageFactory
+    public class LogoutPageFactory : ILogoutPageFactory
     {
-        IResellerBalancePage IResellerBalancePageFactory.Create(IWebDriver driver, SoftwareTypeEnum softwareType)
+        ILogoutPage ILogoutPageFactory.Create(IWebDriver webDriver, SoftwareTypeEnum softwareType)
         {
             switch (softwareType)
             {
                 case SoftwareTypeEnum.riverSweeps:
-                    return new RiverSweepsResellerBalancePage(driver);
+                    return new RiverSweepsLogout(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

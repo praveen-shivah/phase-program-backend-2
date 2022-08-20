@@ -5,7 +5,7 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class RiverSweepsRellerBalancePage : BaseResellerBalancePage
+    public class RiverSweepsResellerBalancePage : BaseResellerBalancePage
     {
         private readonly IWebDriver driver;
 
@@ -18,7 +18,7 @@
         private IWebElement currentBalanceAmount;
 
         
-        public RiverSweepsRellerBalancePage(IWebDriver driver)
+        public RiverSweepsResellerBalancePage(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);

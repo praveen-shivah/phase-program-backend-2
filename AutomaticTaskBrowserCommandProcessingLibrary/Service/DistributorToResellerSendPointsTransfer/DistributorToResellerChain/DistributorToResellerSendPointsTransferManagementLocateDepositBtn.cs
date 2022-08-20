@@ -4,25 +4,25 @@
 
     public class DistributorToResellerSendPointsTransferManagementLocateDepositBtn : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementLocateDepositBtn(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain)
+        public DistributorToResellerSendPointsTransferManagementLocateDepositBtn(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.managementMakeLocateAndClickDepositButton;
+            response.ResponseType = DistributorToOperatorTransferResponseType.managementMakeLocateAndClickDepositButton;
             if (response.ManagementPage != null)
             {
-                response.IsSuccessful = response.ManagementPage.LocateDepositButtonAndClick(vendorToOperatorSendPointsTransferRequest.DestinationAccountId);
+                response.IsSuccessful = response.ManagementPage.LocateDepositButtonAndClick(distributorToResellerSendPointsTransferRequest.DestinationAccountId);
             }
 
             return response;

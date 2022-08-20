@@ -4,6 +4,6 @@
 
     public interface IResellerBalanceRetrieveChain
     {
-        ResellerBalanceRetrieveResponse Execute(IWebDriver driver, ResellerBalanceRetrieveRequest vendorBalanceRetrieveRequest);
+        ResellerBalanceRetrieveResponse Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest);
     }
 }

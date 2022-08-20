@@ -4,26 +4,26 @@
 
     public class DistributorToResellerSendPointsTransferManagementMakeDeposit : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementMakeDeposit(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain)
+        public DistributorToResellerSendPointsTransferManagementMakeDeposit(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
-            if (!response.IsSuccessful)
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
+            if (!response.IsSuccessful || response.ManagementPage == null)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.managementMakeDeposit;
+            response.ResponseType = DistributorToOperatorTransferResponseType.managementMakeDeposit;
 
             // We'll consider it successful if we get this far so as not to duplicate deposits.
             // Any failure up to this point and we can do a retry.
-            response.ManagementPage.MakeDeposit(vendorToOperatorSendPointsTransferRequest.Points);
+            response.ManagementPage.MakeDeposit(distributorToResellerSendPointsTransferRequest.Points);
 
             return response;
         }

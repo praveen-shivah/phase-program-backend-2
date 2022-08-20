@@ -4,6 +4,6 @@
 
     public interface IDistributorToResellerSendPointsTransferChain
     {
-        DistributorToResellerTransferResponse Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest);
+        DistributorToResellerTransferResponse Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest);
     }
 }

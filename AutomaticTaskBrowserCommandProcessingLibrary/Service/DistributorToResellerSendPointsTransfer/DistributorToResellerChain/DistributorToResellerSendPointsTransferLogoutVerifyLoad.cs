@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class DistributorToResellerSendPointsTransferManagementPageVerifyLoad : IDistributorToResellerSendPointsTransferChain
+    public class DistributorToResellerSendPointsTransferLogoutVerifyLoad : IDistributorToResellerSendPointsTransferChain
     {
         private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementPageVerifyLoad(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
+        public DistributorToResellerSendPointsTransferLogoutVerifyLoad(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
             this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
@@ -14,18 +14,13 @@
         DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
             var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
-            if (!response.IsSuccessful || response.ManagementPage == null)
+            if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = DistributorToOperatorTransferResponseType.managementVerifyLoad;
-            if (response.ManagementPage.IsPageUrlSet() && response.ManagementPage.VerifyPageLoaded())
-            {
-                return response;
-            }
-
-            response.IsSuccessful = false;
+            response.ResponseType = DistributorToOperatorTransferResponseType.logoutVerifyLoad;
+            response.LogoutPage.VerifyPageUrl();
 
             return response;
         }

@@ -4,16 +4,16 @@
 
     public class ResellerBalanceRetrieveAdapter : IResellerBalanceRetrieveAdapter
     {
-        private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
+        private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveAdapter(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
+        public ResellerBalanceRetrieveAdapter(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain)
         {
-            this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
+            this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
         }
 
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveAdapter.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            return this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
+            return this.resellerBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
         }
     }
 }

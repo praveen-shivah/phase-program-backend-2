@@ -26,7 +26,7 @@
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.apiStore;
+            response.ResponseType = ResellerBalanceRetrieveResponseType.apiStore;
             response.ResellerBalance = response.ManagementPage.GetBalance();
 
             this.resellerBalance.UpdateBalance(

@@ -2,13 +2,16 @@
 {
     using OpenQA.Selenium;
 
-    public class ResellerBalanceRetrieveChainManagementPageCreate : IResellerBalanceRetrieveChain
+    public class ResellerBalanceRetrieveChainLogoutCreate : IResellerBalanceRetrieveChain
     {
         private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveChainManagementPageCreate(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain)
+        private readonly ILogoutPageFactory logoutPageFactory;
+
+        public ResellerBalanceRetrieveChainLogoutCreate(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain, ILogoutPageFactory logoutPageFactory)
         {
             this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
+            this.logoutPageFactory = logoutPageFactory;
         }
 
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
@@ -19,10 +22,11 @@
                 return response;
             }
 
-            response.ResponseType = ResellerBalanceRetrieveResponseType.managementCreate;
+            response.ResponseType = ResellerBalanceRetrieveResponseType.logoutCreate;
+
             try
             {
-                response.ManagementPage = new RiverSweepsShopsManagement(driver);
+                response.LogoutPage = this.logoutPageFactory.Create(driver, resellerBalanceRetrieveRequest.LoginPageInformation.SoftwareType);
             }
             catch
             {

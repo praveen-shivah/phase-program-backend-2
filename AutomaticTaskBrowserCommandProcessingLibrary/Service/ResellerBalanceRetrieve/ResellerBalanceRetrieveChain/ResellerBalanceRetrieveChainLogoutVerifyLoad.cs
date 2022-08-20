@@ -2,11 +2,11 @@
 {
     using OpenQA.Selenium;
 
-    public class ResellerBalanceRetrieveChainManagementPageCreate : IResellerBalanceRetrieveChain
+    public class ResellerBalanceRetrieveChainLogoutVerifyLoad : IResellerBalanceRetrieveChain
     {
         private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveChainManagementPageCreate(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain)
+        public ResellerBalanceRetrieveChainLogoutVerifyLoad(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain)
         {
             this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
         }
@@ -19,15 +19,8 @@
                 return response;
             }
 
-            response.ResponseType = ResellerBalanceRetrieveResponseType.managementCreate;
-            try
-            {
-                response.ManagementPage = new RiverSweepsShopsManagement(driver);
-            }
-            catch
-            {
-                response.IsSuccessful = false;
-            }
+            response.ResponseType = ResellerBalanceRetrieveResponseType.logoutVerifyLoad;
+            response.LogoutPage.VerifyPageUrl();
 
             return response;
         }

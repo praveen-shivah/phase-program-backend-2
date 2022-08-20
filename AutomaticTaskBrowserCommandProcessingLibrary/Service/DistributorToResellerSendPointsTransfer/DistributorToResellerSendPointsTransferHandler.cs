@@ -6,11 +6,11 @@
 
     public class DistributorToResellerSendPointsTransferHandler : IDistributorToResellerSendPointsTransferHandler
     {
-        private readonly IDistributorToResellerSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter;
+        private readonly IDistributorToResellerSendPointsTransferAdapter distributorToResellerSendPointsTransferAdapter;
 
-        public DistributorToResellerSendPointsTransferHandler(IDistributorToResellerSendPointsTransferAdapter vendorToOperatorSendPointsTransferAdapter)
+        public DistributorToResellerSendPointsTransferHandler(IDistributorToResellerSendPointsTransferAdapter distributorToResellerSendPointsTransferAdapter)
         {
-            this.vendorToOperatorSendPointsTransferAdapter = vendorToOperatorSendPointsTransferAdapter;
+            this.distributorToResellerSendPointsTransferAdapter = distributorToResellerSendPointsTransferAdapter;
         }
 
         public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.distributorToResellerSendPointsTransfer;
@@ -31,7 +31,7 @@
                         try
                         {
                             var request = new DistributorToResellerSendPointsTransferRequest(softwareType, userId, password, accountId, points);
-                            var response = this.vendorToOperatorSendPointsTransferAdapter.Execute(driver, request);
+                            var response = this.distributorToResellerSendPointsTransferAdapter.Execute(driver, request);
                             driver?.Quit();
                             return response.IsSuccessful;
                         }

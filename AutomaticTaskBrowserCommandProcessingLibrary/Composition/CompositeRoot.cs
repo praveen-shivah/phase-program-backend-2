@@ -29,6 +29,8 @@
             this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementVerifyFundsAvailable>();
             this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementLocateDepositBtn>();
             this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferManagementMakeDeposit>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLogoutCreate>();
+            this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLogoutVerifyLoad>();
 
             this.GlobalContainer.Register<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainStart>();
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLoginCreate>();
@@ -36,6 +38,8 @@
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLoginSubmit>();
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveManagementGetBalance>();
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveUpdateApi>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLogoutCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLogoutVerifyLoad>();
 
             return true;
         }

@@ -4,22 +4,22 @@
 
     public class DistributorToResellerSendPointsTransferLoginVerifyLoad : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferLoginVerifyLoad(IDistributorToResellerSendPointsTransferChain riverSweepsVendorToOperatorSendPointsTransfer)
+        public DistributorToResellerSendPointsTransferLoginVerifyLoad(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.riverSweepsVendorToOperatorSendPointsTransfer = riverSweepsVendorToOperatorSendPointsTransfer;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.riverSweepsVendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.loginVerifyLoad;
+            response.ResponseType = DistributorToOperatorTransferResponseType.loginVerifyLoad;
             response.LoginPage.VerifyPageLoaded();
 
             return response;
