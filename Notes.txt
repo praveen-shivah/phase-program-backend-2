@@ -1,0 +1,7 @@
+
+
+Chromium driver must match the current version of chrome:
+
+Chrome driver path can be set with an environment variable or with the constructor:
+new ChromeDriver(@"C:\Program Files (x86)");
+
