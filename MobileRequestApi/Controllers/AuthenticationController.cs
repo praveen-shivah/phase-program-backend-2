@@ -58,6 +58,7 @@
             {
                 var response = new AuthenticateResponseDto
                 {
+                    OrganizationId = result.OrganizationId,
                     IsAuthenticated = true,
                     accessToken = result.JwtToken,
                     roles = result.Roles.ToArray()

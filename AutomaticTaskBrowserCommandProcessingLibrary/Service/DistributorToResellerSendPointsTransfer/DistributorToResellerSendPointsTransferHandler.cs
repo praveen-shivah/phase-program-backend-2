@@ -32,7 +32,7 @@
                         {
                             var request = new DistributorToResellerSendPointsTransferRequest(softwareType, userId, password, accountId, points);
                             var response = this.distributorToResellerSendPointsTransferAdapter.Execute(driver, request);
-                            driver?.Quit();
+                            // driver?.Quit();
                             return response.IsSuccessful;
                         }
                         catch (Exception e)

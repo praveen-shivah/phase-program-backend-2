@@ -70,6 +70,7 @@
             {
                 return new AuthenticationResponse
                 {
+                    OrganizationId = authenticateUserResponse.User.Organization.Id,
                     UserId = authenticateUserResponse.UserId,
                     UserName = authenticateUserResponse.UserName,
                     IsAuthenticated = authenticateUserResponse.IsAuthenticated,

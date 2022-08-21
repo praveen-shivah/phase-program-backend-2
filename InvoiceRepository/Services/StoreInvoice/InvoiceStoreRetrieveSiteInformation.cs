@@ -30,8 +30,8 @@
                 var organizationId = response.Organization.Id;
                 var softwareType = invoiceLineItem.SoftwareType;
                 var site = await dpContext.SiteInformation.Include(x => x.Vendor).SingleOrDefaultAsync(
-                                    x => x.Organization.Id == organizationId && 
-                                    x.ResellerId == response.Invoice.CfResellerId && 
+                                    x => x.Organization.Id == organizationId &&
+                                    x.ResellerId == response.Invoice.CfResellerId &&
                                     x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
 
                 if (site != null)
@@ -46,16 +46,15 @@
                 }
 
                 var siteInformation = new SiteInformation
-                                          {
-                                              Organization = response.Organization,
-                                              Description = invoiceLineItem.SoftwareType,
-                                              Item_Id = invoiceLineItem.ItemId,
-                                              Password = string.Empty,
-                                              UserName = string.Empty,
-                                              URL = string.Empty,
-                                              Vendor = vendor,
-                                              ResellerId = response.Invoice.CfResellerId
-                                          };
+                {
+                    Organization = response.Organization,
+                    Description = invoiceLineItem.SoftwareType,
+                    Item_Id = invoiceLineItem.ItemId,
+                    URL = string.Empty,
+                    Vendor = vendor,
+                    UserName = string.Empty,
+                    ResellerId = response.Invoice.CfResellerId
+                };
 
                 dpContext.SiteInformation.Add(siteInformation);
             }

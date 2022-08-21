@@ -21,10 +21,6 @@
 
             response.ResponseType = DistributorToOperatorTransferResponseType.loginSubmit;
             response.IsSuccessful = response.LoginPage.Submit();
-            if (response.ManagementPage == null)
-            {
-                response.IsSuccessful = false;
-            }
 
             return response;
         }

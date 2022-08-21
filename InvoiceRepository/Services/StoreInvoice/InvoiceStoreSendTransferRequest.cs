@@ -34,22 +34,23 @@
             {
                 var organizationId = response.Organization.Id;
                 var softwareType = invoiceLineItem.SoftwareType;
-                var site = await dpContext.SiteInformation.Include(x => x.Vendor).ThenInclude(x=>x.SoftwareType).SingleAsync(x => x.Organization.Id == organizationId &&
-                                                                                        x.ResellerId == response.Invoice.CfResellerId &&
-                                                                                        x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
+                var site = await dpContext.SiteInformation.Include(x => x.Vendor).ThenInclude(x => x.SoftwareType).SingleAsync(x =>
+                                                                                          x.Organization.Id == organizationId &&
+                                                                                          x.ResellerId == response.Invoice.CfResellerId &&
+                                                                                          x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
                 var vendor = site.Vendor;
 
                 await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
                     new DistributorToResellerSendPointsTransferRequest
-                        {
-                            OrganizationId = request.OrganizationId,
-                            APIKey = response.Organization.APIKey,
-                            SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
-                            UserId = site.UserName,
-                            Password = site.Password,
-                            AccountId = invoiceLineItem.Description.Trim(),
-                            Points = invoiceLineItem.Quantity,
-                        });
+                    {
+                        OrganizationId = request.OrganizationId,
+                        APIKey = response.Organization.APIKey,
+                        SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
+                        UserId = site.Vendor.UserName,
+                        Password = site.Vendor.Password,
+                        AccountId = site.UserName,
+                        Points = invoiceLineItem.Quantity,
+                    });
             }
 
             return response;

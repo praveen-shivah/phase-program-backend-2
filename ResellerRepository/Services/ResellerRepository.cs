@@ -28,7 +28,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var Resellers = await context.Reseller.Where(x => x.Organization.Id == organizationId).ToListAsync();
+                        var Resellers = await context.Reseller.ToListAsync();
                         result.Add(new ResellerDto() { IsPlaceHolder = true });
                         foreach (var Reseller in Resellers)
                         {
@@ -52,7 +52,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var siteInformations = await context.SiteInformation.Where(x => x.Organization.Id == organizationId).ToListAsync();
+                        var siteInformations = await context.SiteInformation.Where(x => x.ResellerId == resellerId).ToListAsync();
                         result.Add(new SiteInformationDto() { IsPlaceHolder = true });
                         foreach (var siteInformation in siteInformations)
                         {
@@ -63,7 +63,6 @@
                                     Item_Id = siteInformation.Item_Id,
                                     Url = siteInformation.URL,
                                     UserName = siteInformation.UserName,
-                                    Password = siteInformation.Password,
                                     VendorId = siteInformation.Vendor.Id.ToString()
                                 });
                         }
