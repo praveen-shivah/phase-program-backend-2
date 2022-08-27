@@ -2,6 +2,8 @@ namespace DataModelsLibrary
 {
     public class Invoice : BaseOrganizationEntity
     {
+        public DateTime? DateTimeSent { get; set; }
+
         public double Balance { get; set; }
 
         public string BalanceFormatted { get; set; }
@@ -24,7 +26,7 @@ namespace DataModelsLibrary
 
         public string InvoiceUrl { get; set; }
 
-        public List<InvoiceLineItem> LineItems { get; set; }
+        public List<InvoiceLineItem>? LineItems { get; set; }
 
         public List<InvoiceRevision> InvoiceRevisions { get; set; }
 

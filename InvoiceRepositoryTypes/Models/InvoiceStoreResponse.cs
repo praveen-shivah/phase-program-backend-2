@@ -24,5 +24,7 @@
         public DataModelsLibrary.Invoice InvoiceRecord { get; set; }
 
         public Organization? Organization { get; set; }
+
+        public Reseller? Reseller { get; set; }
     }
 }

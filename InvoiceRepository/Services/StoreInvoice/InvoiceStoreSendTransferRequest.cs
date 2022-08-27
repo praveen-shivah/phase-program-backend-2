@@ -4,6 +4,8 @@
 
     using AutomaticTaskSharedLibrary;
 
+    using CommonServices;
+
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
@@ -14,18 +16,21 @@
     {
         private readonly IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer;
 
+        private readonly IDateTimeService dateTimeService;
+
         private readonly IInvoiceStore invoiceStore;
 
-        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer)
+        public InvoiceStoreSendTransferRequest(IInvoiceStore invoiceStore, IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer, IDateTimeService dateTimeService)
         {
             this.invoiceStore = invoiceStore;
             this.distributorToOperatorSendPointsTransfer = distributorToOperatorSendPointsTransfer;
+            this.dateTimeService = dateTimeService;
         }
 
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null)
+            if (!response.IsSuccessful || response.Organization == null || response.Invoice.Balance > 0.00 || response.InvoiceRecord.LineItems == null || response.InvoiceRecord.DateTimeSent != null)
             {
                 return response;
             }
@@ -52,6 +57,8 @@
                         Points = invoiceLineItem.Quantity,
                     });
             }
+
+            response.InvoiceRecord.DateTimeSent = this.dateTimeService.UtcNow;
 
             return response;
         }

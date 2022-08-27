@@ -33,8 +33,8 @@
                 return response;
             }
 
-            var reseller = await dpContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.OrganizationId && x.Id == response.Invoice.CfResellerId);
-            if (reseller == null)
+            response.Reseller = await dpContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.OrganizationId && x.Id == response.Invoice.CfResellerId);
+            if (response.Reseller == null)
             {
                 response.IsSuccessful = false;
                 response.InvoiceStoreResponseType = InvoiceStoreResponseType.invalidResellerId;
@@ -50,7 +50,7 @@
                     Organization = response.Organization,
                     Balance = response.Invoice.Balance,
                     BalanceFormatted = response.Invoice.BalanceFormatted,
-                    Reseller = reseller,
+                    Reseller = response.Reseller,
                     CreatedDate = response.Invoice.CreatedDate,
                     CreatedDateFormatted = response.Invoice.CreatedDateFormatted,
                     CreatedTime = response.Invoice.CreatedTime.ToUniversalTime(),
