@@ -6,7 +6,9 @@
 
         riverSweeps = 2,
 
-        dragon = 3
+        dragon = 3,
+
+        ultraMonster = 4
     }
 
 }

@@ -12,6 +12,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.ultraMonster:
+                    return new UltraMonsterLogin(webDriver, loginPageInformation);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);
             }

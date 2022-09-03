@@ -14,6 +14,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsResellerBalancePage(driver);
+                case SoftwareTypeEnum.ultraMonster:
+                    return new UltraMonsterResellerBalancePage(driver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }
