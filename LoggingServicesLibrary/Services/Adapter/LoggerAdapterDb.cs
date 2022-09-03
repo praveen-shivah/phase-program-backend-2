@@ -55,8 +55,9 @@
                         message,
                         method,
                         exception == null ? Environment.StackTrace : exception.StackTrace);
-                    var errorLogDbPostingResponse = this.errorLogDbPosting.Post(context, errorLogDbPostingRequest);
-                    if (errorLogDbPostingResponse.IsSuccessful)
+                    var task = this.errorLogDbPosting.PostAsync(context, errorLogDbPostingRequest);
+                    task.Wait();
+                    if (task.Result.IsSuccessful)
                     {
                         var significantEventLogDbPostingRequest = new SignificantEventLogDbPostingRequest(
                             0,

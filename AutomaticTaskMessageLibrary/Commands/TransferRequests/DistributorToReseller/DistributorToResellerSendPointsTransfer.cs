@@ -19,7 +19,12 @@
 
         async Task<DistributorToOperatorSendPointsTransferResponse> IDistributorToOperatorSendPointsTransfer.SendPointsTransfer(DistributorToResellerSendPointsTransferRequest request)
         {
-            var placeMessageOnServiceBusRequest = new PlaceMessageOnServiceBusRequest(new AutomaticTaskTransferPoints() { DistributorToResellerSendPointsTransferRequest = request });
+            var placeMessageOnServiceBusRequest = new PlaceMessageOnServiceBusRequest(new AutomaticTaskTransferPoints()
+            {
+                OrganizationId = request.OrganizationId.ToString(),
+                APIKey = request.APIKey,
+                DistributorToResellerSendPointsTransferRequest = request
+            });
             var response = await this.placeMessageOnServiceBus.Send(placeMessageOnServiceBusRequest);
             return new DistributorToOperatorSendPointsTransferResponse() { IsSuccessful = response.IsSuccessful };
         }

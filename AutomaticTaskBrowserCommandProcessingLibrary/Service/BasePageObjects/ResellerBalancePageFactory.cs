@@ -13,7 +13,7 @@
             switch (softwareType)
             {
                 case SoftwareTypeEnum.riverSweeps:
-                    return new RiverSweepsRellerBalancePage(driver);
+                    return new RiverSweepsResellerBalancePage(driver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

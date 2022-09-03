@@ -6,11 +6,11 @@
 
     public class ResellerBalanceRetrieveHandler : IResellerBalanceRetrieveHandler
     {
-        private readonly IResellerBalanceRetrieveAdapter vendorBalanceRetrieveAdapter;
+        private readonly IResellerBalanceRetrieveAdapter resellerBalanceRetrieveAdapter;
 
-        public ResellerBalanceRetrieveHandler(IResellerBalanceRetrieveAdapter vendorBalanceRetrieveAdapter)
+        public ResellerBalanceRetrieveHandler(IResellerBalanceRetrieveAdapter resellerBalanceRetrieveAdapter)
         {
-            this.vendorBalanceRetrieveAdapter = vendorBalanceRetrieveAdapter;
+            this.resellerBalanceRetrieveAdapter = resellerBalanceRetrieveAdapter;
         }
 
         public AutomaticTaskType AutomaticTaskType => AutomaticTaskType.distributorToResellerSendPointsTransfer;
@@ -32,7 +32,7 @@
                         try
                         {
                             var request = new ResellerBalanceRetrieveRequest(softwareType, organizationId, apiKey, resellerId, userId, password);
-                            var response = this.vendorBalanceRetrieveAdapter.Execute(driver, request);
+                            var response = this.resellerBalanceRetrieveAdapter.Execute(driver, request);
                             driver.Quit();
                             return response.IsSuccessful;
                         }

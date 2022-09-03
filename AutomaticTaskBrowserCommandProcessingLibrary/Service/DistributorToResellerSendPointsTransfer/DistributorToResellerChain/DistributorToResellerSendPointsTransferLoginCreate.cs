@@ -4,30 +4,30 @@
 
     public class DistributorToResellerSendPointsTransferLoginCreate : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
         private readonly ILoginPageFactory loginPageFactory;
 
-        public DistributorToResellerSendPointsTransferLoginCreate(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain, 
+        public DistributorToResellerSendPointsTransferLoginCreate(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain, 
                                                              ILoginPageFactory loginPageFactory)
         {
-            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
             this.loginPageFactory = loginPageFactory;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.loginCreate;
+            response.ResponseType = DistributorToOperatorTransferResponseType.loginCreate;
 
             try
             {
-                response.LoginPage = this.loginPageFactory.Create(driver, vendorToOperatorSendPointsTransferRequest.LoginPageInformation);
+                response.LoginPage = this.loginPageFactory.Create(driver, distributorToResellerSendPointsTransferRequest.LoginPageInformation);
             }
             catch
             {

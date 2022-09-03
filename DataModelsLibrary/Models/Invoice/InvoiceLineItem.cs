@@ -6,5 +6,6 @@ namespace DataModelsLibrary
         public string ItemId { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
+        public string SoftwareType { get; set; }
     }
 }

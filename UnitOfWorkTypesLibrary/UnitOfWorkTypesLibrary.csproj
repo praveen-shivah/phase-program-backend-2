@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
   </ItemGroup>
 
 </Project>

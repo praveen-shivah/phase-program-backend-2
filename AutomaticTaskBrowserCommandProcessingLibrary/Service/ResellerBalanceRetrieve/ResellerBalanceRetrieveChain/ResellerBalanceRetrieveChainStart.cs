@@ -11,7 +11,7 @@
             return new ResellerBalanceRetrieveResponse
             {
                 IsSuccessful = true,
-                ResponseType = VendorBalanceRetrieveResponseType.start
+                ResponseType = ResellerBalanceRetrieveResponseType.start
             };
         }
     }

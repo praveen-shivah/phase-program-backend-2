@@ -69,7 +69,7 @@
                 }
                 else
                 {
-                    dbContextTransaction = this.unitOfWorkContextContainer.CurrentDbContext.Database.BeginTransaction();
+                    dbContextTransaction = await this.unitOfWorkContextContainer.CurrentDbContext.Database.BeginTransactionAsync();
                     this.unitOfWorkContextContainer.NumberOfTransactions++;
                 }
 

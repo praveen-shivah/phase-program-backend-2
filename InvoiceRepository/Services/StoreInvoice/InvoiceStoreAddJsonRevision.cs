@@ -18,13 +18,15 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful)
+            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord.DateTimeSent != null)
             {
                 return response;
             }
 
             var invoiceRevision = new InvoiceRevision()
             {
+                Organization = response.Organization,
+                ResellerId = response.Invoice.CfResellerId,
                 InvoiceId = response.InvoiceRecord.Id,
                 Invoice_Id = response.Invoice.InvoiceId,
                 Json = request.JsonString

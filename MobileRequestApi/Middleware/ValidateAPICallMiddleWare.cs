@@ -61,23 +61,16 @@
                 {
                     // Anonymous or not - must have valid organizationId/key
                     var organizationId = 0;
-                    int? userId = 0;
                     var values = context.Request.Headers["OrganizationId"];
+                    context.Items["UserId"] = null;
+                    context.Items["OrganizationId"] = null;
 
                     if (values.Count > 0)
                     {
                         organizationId = int.Parse(values[0]);
                     }
 
-                    if (organizationId <= 0)
-                    {
-                        userId = null;
-                    }
-                    else if (!context.Request.Headers.TryGetValue("APIKey", out var apiKey))
-                    {
-                        userId = null;
-                    }
-                    else
+                    if (context.Request.Headers.TryGetValue("APIKey", out var apiKey))
                     {
                         var organizationResponse = await this.organizationRepository.GetOrganizationRequestAsync(
                                                        new OrganizationRequest()
@@ -90,14 +83,7 @@
                         {
                             context.Items["OrganizationId"] = organizationId;
                         }
-                        else
-                        {
-                            context.Items["OrganizationId"] = null;
-                            userId = null;
-                        }
                     }
-
-                    context.Items["UserId"] = userId;
                 }
 
                 await this.next(context);

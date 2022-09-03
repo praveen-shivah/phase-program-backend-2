@@ -2,9 +2,11 @@
 {
     public enum SoftwareTypeEnum
     {
-        riverSweeps = 1,
+        none = 1,
 
-        dragon = 2
+        riverSweeps = 2,
+
+        dragon = 3
     }
 
 }

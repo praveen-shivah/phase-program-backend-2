@@ -4,27 +4,30 @@
 
     public class ResellerBalanceRetrieveChainLoginSubmit : IResellerBalanceRetrieveChain
     {
-        private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
+        private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveChainLoginSubmit(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
+        private readonly IManagementPageFactory managementPageFactory;
+
+        public ResellerBalanceRetrieveChainLoginSubmit(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain, IManagementPageFactory managementPageFactory)
         {
-            this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
+            this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
+            this.managementPageFactory = managementPageFactory;
         }
 
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            var response = this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
+            var response = this.resellerBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.loginSubmit;
+            response.ResponseType = ResellerBalanceRetrieveResponseType.loginSubmit;
 
             response.IsSuccessful = response.LoginPage.Submit();
             if (response.IsSuccessful)
             {
-                response.ManagementPage = new RiverSweepsShopsManagement(driver);
+                response.ManagementPage = this.managementPageFactory.Create(driver, resellerBalanceRetrieveRequest.SoftwareType);
             }
 
             return response;

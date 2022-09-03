@@ -4,16 +4,16 @@
 
     public class DistributorToResellerTransferAdapter : IDistributorToResellerSendPointsTransferAdapter
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerTransferAdapter(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransferChain)
+        public DistributorToResellerTransferAdapter(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransferChain = vendorToOperatorSendPointsTransferChain;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferAdapter.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferAdapter.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            return this.vendorToOperatorSendPointsTransferChain.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            return this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
         }
     }
 }

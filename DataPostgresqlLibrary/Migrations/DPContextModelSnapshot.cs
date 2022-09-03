@@ -17,7 +17,7 @@ namespace DataPostgresqlLibrary.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -231,26 +231,10 @@ namespace DataPostgresqlLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Balance")
-                        .HasColumnType("integer");
+                    b.Property<double>("Balance")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("BalanceFormatted")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfCustomerType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfCustomerTypeUnformatted")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfSiteNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CfSiteNumberUnformatted")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -276,6 +260,9 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime?>("DateTimeSent")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("InvoiceId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -294,7 +281,7 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ResellerId")
+                    b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Status")
@@ -345,6 +332,10 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SoftwareType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("InvoiceId");
@@ -380,6 +371,9 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -694,9 +688,8 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("URL")
                         .IsRequired()
@@ -712,6 +705,8 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ResellerId");
 
                     b.HasIndex("VendorId");
 
@@ -836,15 +831,18 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("ResellerId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("SoftwareTypeId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasIndex("ResellerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("SoftwareTypeId");
 
@@ -935,11 +933,15 @@ namespace DataPostgresqlLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataModelsLibrary.Reseller", null)
+                    b.HasOne("DataModelsLibrary.Reseller", "Reseller")
                         .WithMany("Invoice")
-                        .HasForeignKey("ResellerId");
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Organization");
+
+                    b.Navigation("Reseller");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.InvoiceLineItem", b =>
@@ -1063,6 +1065,12 @@ namespace DataPostgresqlLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DataModelsLibrary.Reseller", null)
+                        .WithMany("SiteInformation")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataModelsLibrary.Vendor", "Vendor")
                         .WithMany()
                         .HasForeignKey("VendorId")
@@ -1106,10 +1114,6 @@ namespace DataPostgresqlLibrary.Migrations
 
             modelBuilder.Entity("DataModelsLibrary.Vendor", b =>
                 {
-                    b.HasOne("DataModelsLibrary.Reseller", null)
-                        .WithMany("Vendor")
-                        .HasForeignKey("ResellerId");
-
                     b.HasOne("DataModelsLibrary.SoftwareType", "SoftwareType")
                         .WithMany()
                         .HasForeignKey("SoftwareTypeId")
@@ -1139,7 +1143,7 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Navigation("Invoice");
 
-                    b.Navigation("Vendor");
+                    b.Navigation("SiteInformation");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.User", b =>

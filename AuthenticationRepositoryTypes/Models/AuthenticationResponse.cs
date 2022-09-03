@@ -4,6 +4,7 @@
 
     public class AuthenticationResponse
     {
+        public int OrganizationId { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
         public bool IsSuccessful { get; set; }

@@ -1,5 +1,7 @@
 ﻿namespace LoggingServicesLibrary
 {
+    using System.Threading.Tasks;
+
     using DataPostgresqlLibrary;
 
     using SharedUtilities;
@@ -15,9 +17,9 @@
             this.guidFactory = guidFactory;
         }
 
-        ErrorLogDbPostingResponse IErrorLogDbPosting.Post(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
-            var response = this.errorLogDbPosting.Post(dataContext, errorLogDbPostingRequest);
+            var response = await this.errorLogDbPosting.PostAsync(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)
             {
                 return response;

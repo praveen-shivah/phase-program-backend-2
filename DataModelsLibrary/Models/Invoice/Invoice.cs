@@ -2,17 +2,13 @@ namespace DataModelsLibrary
 {
     public class Invoice : BaseOrganizationEntity
     {
-        public int Balance { get; set; }
+        public DateTime? DateTimeSent { get; set; }
+
+        public double Balance { get; set; }
 
         public string BalanceFormatted { get; set; }
 
-        public string CfCustomerType { get; set; }
-
-        public string CfCustomerTypeUnformatted { get; set; }
-
-        public string CfSiteNumber { get; set; }
-
-        public string CfSiteNumberUnformatted { get; set; }
+        public Reseller Reseller { get; set; }
 
         public string CreatedDate { get; set; }
 
@@ -30,7 +26,7 @@ namespace DataModelsLibrary
 
         public string InvoiceUrl { get; set; }
 
-        public List<InvoiceLineItem> LineItems { get; set; }
+        public List<InvoiceLineItem>? LineItems { get; set; }
 
         public List<InvoiceRevision> InvoiceRevisions { get; set; }
 

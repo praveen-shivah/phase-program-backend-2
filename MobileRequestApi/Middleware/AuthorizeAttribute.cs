@@ -20,6 +20,13 @@
         {
             try
             {
+                // skip authorization if action is decorated with [AllowAnonymous] attribute
+                var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+                if (allowAnonymous)
+                {
+                    return;
+                }
+
                 // Anonymous or not - must have valid organizationId/key
                 var organizationId = 0;
                 var value = context.HttpContext.Items["OrganizationId"];
@@ -32,13 +39,6 @@
                 if (organizationId <= 0)
                 {
                     context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                    return;
-                }
-
-                // skip authorization if action is decorated with [AllowAnonymous] attribute
-                var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-                if (allowAnonymous)
-                {
                     return;
                 }
 

@@ -4,25 +4,30 @@
 
     public class DistributorToResellerSendPointsTransferManagementPageCreate : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementPageCreate(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
+        private readonly IManagementPageFactory managementPageFactory;
+
+        public DistributorToResellerSendPointsTransferManagementPageCreate(
+            IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain,
+            IManagementPageFactory managementPageFactory)
         {
-            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
+            this.managementPageFactory = managementPageFactory;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.managementCreate;
+            response.ResponseType = DistributorToOperatorTransferResponseType.managementCreate;
             try
             {
-                response.ManagementPage = new RiverSweepsShopsManagement(driver);
+                response.ManagementPage = this.managementPageFactory.Create(driver, distributorToResellerSendPointsTransferRequest.SoftwareType);
             }
             catch
             {

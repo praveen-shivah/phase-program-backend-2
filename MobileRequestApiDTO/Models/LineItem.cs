@@ -7,7 +7,7 @@ namespace ApiDTO
         public string DiscountAmountFormatted { get; set; }
 
         [JsonProperty("bcy_rate")]
-        public int BcyRate { get; set; }
+        public double BcyRate { get; set; }
 
         [JsonProperty("item_total_formatted")]
         public string ItemTotalFormatted { get; set; }
@@ -37,7 +37,7 @@ namespace ApiDTO
         public string ItemTypeFormatted { get; set; }
 
         [JsonProperty("purchase_rate")]
-        public int PurchaseRate { get; set; }
+        public string PurchaseRate { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -58,7 +58,7 @@ namespace ApiDTO
         public string BillItemId { get; set; }
 
         [JsonProperty("rate")]
-        public int Rate { get; set; }
+        public double Rate { get; set; }
 
         [JsonProperty("project_id")]
         public string ProjectId { get; set; }
@@ -91,7 +91,7 @@ namespace ApiDTO
         public string TaxName { get; set; }
 
         [JsonProperty("item_total")]
-        public int ItemTotal { get; set; }
+        public double ItemTotal { get; set; }
 
         [JsonProperty("header_name")]
         public string HeaderName { get; set; }
@@ -135,5 +135,4 @@ namespace ApiDTO
         [JsonProperty("expense_id")]
         public string ExpenseId { get; set; }
     }
-
 }

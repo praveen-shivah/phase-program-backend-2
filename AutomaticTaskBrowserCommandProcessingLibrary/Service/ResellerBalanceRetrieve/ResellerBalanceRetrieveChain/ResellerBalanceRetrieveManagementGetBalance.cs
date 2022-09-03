@@ -4,22 +4,22 @@
 
     public class ResellerBalanceRetrieveManagementGetBalance : IResellerBalanceRetrieveChain
     {
-        private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
+        private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        public ResellerBalanceRetrieveManagementGetBalance(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain)
+        public ResellerBalanceRetrieveManagementGetBalance(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain)
         {
-            this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
+            this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
         }
 
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            var response = this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
+            var response = this.resellerBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.managementRetrieveBalance;
+            response.ResponseType = ResellerBalanceRetrieveResponseType.managementRetrieveBalance;
 
             response.ResellerBalance = response.ManagementPage.GetBalance();
 

@@ -4,27 +4,23 @@
 
     public class DistributorToResellerSendPointsTransferLoginSubmit : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferLoginSubmit(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
+        public DistributorToResellerSendPointsTransferLoginSubmit(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.loginSubmit;
+            response.ResponseType = DistributorToOperatorTransferResponseType.loginSubmit;
             response.IsSuccessful = response.LoginPage.Submit();
-            if (response.ManagementPage == null)
-            {
-                response.IsSuccessful = false;
-            }
 
             return response;
         }

@@ -1,6 +1,8 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    using ApiDTO;
+    using DataModelsLibrary;
+
+    using Invoice = ApiDTO.Invoice;
 
     public enum InvoiceStoreResponseType
     {
@@ -8,6 +10,7 @@
         success,
         databaseError,
         invalidOrganizationId,
+        invalidResellerId,
         jsonDeserializationError
     }
 
@@ -19,5 +22,9 @@
         public Invoice Invoice { get; set; }
 
         public DataModelsLibrary.Invoice InvoiceRecord { get; set; }
+
+        public Organization? Organization { get; set; }
+
+        public Reseller? Reseller { get; set; }
     }
 }

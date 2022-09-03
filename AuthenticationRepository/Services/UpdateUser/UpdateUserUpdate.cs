@@ -1,5 +1,7 @@
 ﻿namespace AuthenticationRepository
 {
+    using AuthenticationRepositoryTypes;
+
     using DataPostgresqlLibrary;
 
     public class UpdateUserUpdate : IUpdateUser

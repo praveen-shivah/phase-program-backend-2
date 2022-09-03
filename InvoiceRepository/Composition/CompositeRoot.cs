@@ -17,6 +17,7 @@
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreCreateInvoice>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreAddJsonRevision>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreUpdateInvoice>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreRetrieveSiteInformation>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IInvoiceStore, InvoiceStoreSendTransferRequest>(Lifestyle.Transient);
 
             return true;

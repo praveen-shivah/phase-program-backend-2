@@ -1,0 +1,67 @@
+﻿namespace InvoiceRepository
+{
+    using DataModelsLibrary;
+
+    using DataPostgresqlLibrary;
+
+    using InvoiceRepositoryTypes;
+
+    using Microsoft.EntityFrameworkCore;
+
+    internal class InvoiceStoreRetrieveSiteInformation : IInvoiceStore
+    {
+        private readonly IInvoiceStore invoiceStore;
+
+        public InvoiceStoreRetrieveSiteInformation(IInvoiceStore invoiceStore)
+        {
+            this.invoiceStore = invoiceStore;
+        }
+
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        {
+            var response = await this.invoiceStore.Store(dpContext, request);
+            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord.LineItems == null || response.InvoiceRecord.DateTimeSent != null)
+            {
+                return response;
+            }
+
+            foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
+            {
+                var organizationId = response.Organization.Id;
+                var softwareType = invoiceLineItem.SoftwareType;
+                var site = await dpContext.SiteInformation.Include(x => x.Vendor).SingleOrDefaultAsync(
+                                    x => x.Organization.Id == organizationId &&
+                                    x.ResellerId == response.Invoice.CfResellerId &&
+                                    x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
+
+                if (site != null)
+                {
+                    continue;
+                }
+
+                var vendor = await dpContext.Vendor.SingleOrDefaultAsync(x => x.Name.ToUpper() == invoiceLineItem.SoftwareType.ToUpper());
+                if (vendor == null)
+                {
+                    continue;
+                }
+
+                var siteInformation = new SiteInformation
+                {
+                    Organization = response.Organization,
+                    Description = invoiceLineItem.SoftwareType,
+                    Item_Id = invoiceLineItem.ItemId,
+                    URL = string.Empty,
+                    Vendor = vendor,
+                    UserName = string.Empty,
+                    ResellerId = response.Invoice.CfResellerId
+                };
+
+                dpContext.SiteInformation.Add(siteInformation);
+            }
+
+            await dpContext.SaveChangesAsync();
+
+            return response;
+        }
+    }
+}

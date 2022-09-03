@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
-    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
   </ItemGroup>
 
   <ItemGroup>

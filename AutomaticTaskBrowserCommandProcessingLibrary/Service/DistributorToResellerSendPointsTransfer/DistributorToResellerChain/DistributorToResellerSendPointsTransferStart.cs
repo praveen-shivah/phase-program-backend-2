@@ -6,12 +6,12 @@
     {
         DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(
             IWebDriver driver,
-            DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+            DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
             return new DistributorToResellerTransferResponse
             {
                 IsSuccessful = true,
-                ResponseType = VendorToOperatorTransferResponseType.start
+                ResponseType = DistributorToOperatorTransferResponseType.start
             };
         }
     }

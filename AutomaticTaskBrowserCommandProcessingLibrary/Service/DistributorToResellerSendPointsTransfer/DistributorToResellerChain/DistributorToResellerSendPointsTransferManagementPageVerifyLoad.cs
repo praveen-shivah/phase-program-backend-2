@@ -4,22 +4,22 @@
 
     public class DistributorToResellerSendPointsTransferManagementPageVerifyLoad : IDistributorToResellerSendPointsTransferChain
     {
-        private readonly IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer;
+        private readonly IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain;
 
-        public DistributorToResellerSendPointsTransferManagementPageVerifyLoad(IDistributorToResellerSendPointsTransferChain vendorToOperatorSendPointsTransfer)
+        public DistributorToResellerSendPointsTransferManagementPageVerifyLoad(IDistributorToResellerSendPointsTransferChain distributorToResellerSendPointsTransferChain)
         {
-            this.vendorToOperatorSendPointsTransfer = vendorToOperatorSendPointsTransfer;
+            this.distributorToResellerSendPointsTransferChain = distributorToResellerSendPointsTransferChain;
         }
 
-        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest vendorToOperatorSendPointsTransferRequest)
+        DistributorToResellerTransferResponse IDistributorToResellerSendPointsTransferChain.Execute(IWebDriver driver, DistributorToResellerSendPointsTransferRequest distributorToResellerSendPointsTransferRequest)
         {
-            var response = this.vendorToOperatorSendPointsTransfer.Execute(driver, vendorToOperatorSendPointsTransferRequest);
-            if (!response.IsSuccessful)
+            var response = this.distributorToResellerSendPointsTransferChain.Execute(driver, distributorToResellerSendPointsTransferRequest);
+            if (!response.IsSuccessful || response.ManagementPage == null)
             {
                 return response;
             }
 
-            response.ResponseType = VendorToOperatorTransferResponseType.managementVerifyLoad;
+            response.ResponseType = DistributorToOperatorTransferResponseType.managementVerifyLoad;
             if (response.ManagementPage.IsPageUrlSet() && response.ManagementPage.VerifyPageLoaded())
             {
                 return response;

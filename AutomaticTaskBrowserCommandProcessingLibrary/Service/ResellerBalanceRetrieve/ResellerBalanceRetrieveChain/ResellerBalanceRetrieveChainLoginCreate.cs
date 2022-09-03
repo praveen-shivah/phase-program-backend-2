@@ -4,29 +4,29 @@
 
     public class ResellerBalanceRetrieveChainLoginCreate : IResellerBalanceRetrieveChain
     {
-        private readonly IResellerBalanceRetrieveChain vendorBalanceRetrieveChain;
+        private readonly IResellerBalanceRetrieveChain resellerBalanceRetrieveChain;
 
-        private readonly ILoginPageFactory vendorToOperatorTransferLoginPageFactory;
+        private readonly ILoginPageFactory loginPageFactory;
 
-        public ResellerBalanceRetrieveChainLoginCreate(IResellerBalanceRetrieveChain vendorBalanceRetrieveChain, ILoginPageFactory vendorToOperatorTransferLoginPageFactory)
+        public ResellerBalanceRetrieveChainLoginCreate(IResellerBalanceRetrieveChain resellerBalanceRetrieveChain, ILoginPageFactory loginPageFactory)
         {
-            this.vendorBalanceRetrieveChain = vendorBalanceRetrieveChain;
-            this.vendorToOperatorTransferLoginPageFactory = vendorToOperatorTransferLoginPageFactory;
+            this.resellerBalanceRetrieveChain = resellerBalanceRetrieveChain;
+            this.loginPageFactory = loginPageFactory;
         }
 
         ResellerBalanceRetrieveResponse IResellerBalanceRetrieveChain.Execute(IWebDriver driver, ResellerBalanceRetrieveRequest resellerBalanceRetrieveRequest)
         {
-            var response = this.vendorBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
+            var response = this.resellerBalanceRetrieveChain.Execute(driver, resellerBalanceRetrieveRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.ResponseType = VendorBalanceRetrieveResponseType.loginCreate;
+            response.ResponseType = ResellerBalanceRetrieveResponseType.loginCreate;
 
             try
             {
-                response.LoginPage = this.vendorToOperatorTransferLoginPageFactory.Create(driver, resellerBalanceRetrieveRequest.LoginPageInformation);
+                response.LoginPage = this.loginPageFactory.Create(driver, resellerBalanceRetrieveRequest.LoginPageInformation);
             }
             catch
             {

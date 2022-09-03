@@ -28,7 +28,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var organizationRecord = await context.Organization.SingleOrDefaultAsync(x => x.UserId == organizationRequest.OrganizationId && x.APIKey == organizationRequest.APIKey);
+                        var organizationRecord = await context.Organization.SingleOrDefaultAsync(x => x.Id.ToString() == organizationRequest.OrganizationId && x.APIKey == organizationRequest.APIKey);
                         if (organizationRecord == null)
                         {
                             return WorkItemResultEnum.cancelWithoutError;
