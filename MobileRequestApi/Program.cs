@@ -88,7 +88,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerReposit
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0";
+connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0;Include Error Detail=true";
 
 builder.Services.AddDbContext<DPContext>(options =>
     {

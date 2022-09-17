@@ -38,7 +38,7 @@
             response.InvoiceRecord.CustomerName = response.Invoice.CustomerName;
             response.InvoiceRecord.InvoiceId = response.Invoice.InvoiceId;
             response.InvoiceRecord.InvoiceNumber = response.Invoice.InvoiceNumber;
-            response.InvoiceRecord.InvoiceUrl = response.Invoice.InvoiceUrl;
+            response.InvoiceRecord.InvoiceUrl = response.Invoice.InvoiceUrl ?? string.Empty;
 
             var lineItems = await dpContext.InvoiceLineItem.Where(x => x.InvoiceId == response.InvoiceRecord.Id).ToListAsync();
             dpContext.InvoiceLineItem.RemoveRange(lineItems);

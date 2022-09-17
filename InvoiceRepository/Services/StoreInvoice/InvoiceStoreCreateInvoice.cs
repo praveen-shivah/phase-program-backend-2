@@ -58,7 +58,7 @@
                     CustomerName = response.Invoice.CustomerName,
                     InvoiceId = response.Invoice.InvoiceId,
                     InvoiceNumber = response.Invoice.InvoiceNumber,
-                    InvoiceUrl = response.Invoice.InvoiceUrl,
+                    InvoiceUrl = response.Invoice.InvoiceUrl ?? string.Empty,
                     Status = response.Invoice.Status,
                     StatusFormatted = response.Invoice.StatusFormatted,
                 };
