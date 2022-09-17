@@ -21,6 +21,7 @@
             return Task.Factory.StartNew(
                 () =>
                     {
+                        var invoiceLineItemId = automaticTaskTransferPoints.DistributorToResellerSendPointsTransferRequest.InvoiceLineItemId;
                         var softwareType = automaticTaskTransferPoints.DistributorToResellerSendPointsTransferRequest.SoftwareType;
                         var userId = automaticTaskTransferPoints.DistributorToResellerSendPointsTransferRequest.UserId;
                         var password = automaticTaskTransferPoints.DistributorToResellerSendPointsTransferRequest.Password;
@@ -30,9 +31,9 @@
                         var driver = new ChromeDriver(@"C:\Program Files (x86)");
                         try
                         {
-                            var request = new DistributorToResellerSendPointsTransferRequest(softwareType, userId, password, accountId, points);
+                            var request = new DistributorToResellerSendPointsTransferRequest(invoiceLineItemId, softwareType, userId, password, accountId, points);
                             var response = this.distributorToResellerSendPointsTransferAdapter.Execute(driver, request);
-                            // driver?.Quit();
+                            // ZQ driver?.Quit();
                             return response.IsSuccessful;
                         }
                         catch (Exception e)

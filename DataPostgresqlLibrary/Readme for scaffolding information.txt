@@ -6,7 +6,7 @@ reference: https://github.com/TrackableEntities/EntityFrameworkCore.Scaffolding.
 
 have to install this: dotnet tool install --global dotnet-ef
 
-
-dotnet ef dbcontext scaffold "host=localhost;database=postgres;user id=postgres;password=~!AmyLee~!0" Npgsql.EntityFrameworkCore.PostgreSQL --project DataModelsLibrary --context-dir Data --output-dir Models --data-annotations --context DPContext --force
+This project uses code first - no scaffolding
+Make changes to the database models and then create a migration by running below
 
 dotnet ef migrations add "Added username to vendor" -s DummyProjectForMigrations --context DPContext --project "DataPostgresqlLibrary"

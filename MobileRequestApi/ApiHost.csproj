@@ -27,6 +27,7 @@
     <ProjectReference Include="..\AuthenticationRepository\AuthenticationRepository.csproj" />
     <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
     <ProjectReference Include="..\AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj" />
+    <ProjectReference Include="..\AutomaticTaskQueueLibrary\AutomaticTaskQueueLibrary.csproj" />
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\DataSeedingLibrary\DataSeedingLibrary.csproj" />
     <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />

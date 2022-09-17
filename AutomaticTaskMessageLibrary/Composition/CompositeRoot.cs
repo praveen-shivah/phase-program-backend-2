@@ -4,6 +4,8 @@
 
     using AutomaticTaskLibrary;
 
+    using AutomaticTaskSharedLibrary;
+
     using InvoiceRepository;
 
     using SimpleInjector;

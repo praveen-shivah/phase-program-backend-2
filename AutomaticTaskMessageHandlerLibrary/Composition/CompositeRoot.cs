@@ -2,13 +2,11 @@
 {
     using ApplicationLifeCycle;
 
-    using AutomaticTaskLibrary;
+    using AutomaticTaskSharedLibrary;
 
     using DatabaseClassLibrary;
 
     using DataPostgresqlLibrary;
-
-    using InvoiceRepository;
 
     using LoggingLibrary;
 
@@ -32,6 +30,8 @@
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().Build());
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
+
+            this.GlobalContainer.Register<IEndpointConfigurationFactory, EndpointConfigurationFactoryTestingLocal>();
 
             return true;
         }

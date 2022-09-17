@@ -6,6 +6,8 @@
 
     using CommonServices;
 
+    using DataModelsLibrary;
+
     using DataPostgresqlLibrary;
 
     using InvoiceRepositoryTypes;
@@ -30,7 +32,7 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null || response.Invoice.Balance > 0.00 || response.InvoiceRecord.LineItems == null || response.InvoiceRecord.DateTimeSent != null)
+            if (!response.IsSuccessful || response.Organization == null || response.Invoice.Balance > 0.00 || response.InvoiceRecord.LineItems == null)
             {
                 return response;
             }
@@ -45,20 +47,20 @@
                                                                                           x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
                 var vendor = site.Vendor;
 
-                await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
-                    new DistributorToResellerSendPointsTransferRequest
-                    {
-                        OrganizationId = request.OrganizationId,
-                        APIKey = response.Organization.APIKey,
-                        SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
-                        UserId = site.Vendor.UserName,
-                        Password = site.Vendor.Password,
-                        AccountId = site.UserName,
-                        Points = invoiceLineItem.Quantity,
-                    });
-            }
+                var queueRecord = new TransferPointsQueue()
+                {
+                    InvoiceLineItemId = invoiceLineItem.Id,
+                    Organization = response.Organization,
+                    APIKey = response.Organization.APIKey,
+                    SoftwareType = (SoftwareTypeEnum)vendor.SoftwareType.Id,
+                    UserId = site.Vendor.UserName,
+                    Password = site.Vendor.Password,
+                    AccountId = site.UserName,
+                    Points = invoiceLineItem.Quantity
+                };
 
-            response.InvoiceRecord.DateTimeSent = this.dateTimeService.UtcNow;
+                await dpContext.TransferPointsQueue.AddAsync(queueRecord);
+            }
 
             return response;
         }

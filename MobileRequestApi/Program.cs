@@ -9,6 +9,8 @@ using AuthenticationRepository;
 
 using AuthenticationRepositoryTypes;
 
+using AutomaticTaskQueueLibrary;
+
 using CommonServices;
 
 using DataPostgresqlLibrary;
@@ -54,7 +56,6 @@ var logger = loggerFactory.Create("HostingApplicationService");
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
     {
@@ -66,7 +67,6 @@ builder.Services.AddCors(options =>
     });
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -85,6 +85,8 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalance
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAuthenticationRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ISecretKeyRetrieval>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
+
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -97,6 +99,7 @@ builder.Services.AddDbContext<DPContext>(options =>
 
 // Register background services here
 builder.Services.AddHostedService<DataHostedService>();
+builder.Services.AddHostedService<AutomaticTaskQueueService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

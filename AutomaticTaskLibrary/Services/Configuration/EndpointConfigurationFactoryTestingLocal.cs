@@ -1,4 +1,4 @@
-﻿namespace AutomaticTaskMessageLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
     using AutomaticTaskSharedLibrary;
 

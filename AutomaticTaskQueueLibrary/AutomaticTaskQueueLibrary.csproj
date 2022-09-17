@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AutomaticTaskQueueServiceProcessor\Interfaces\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
+    <ProjectReference Include="..\InvoiceRepository\InvoiceRepository.csproj" />
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -2,7 +2,8 @@
 {
     public enum ApiEndPointType
     {
-        resellerBalance
+        resellerBalance,
+        resellerTransferPointsCompleted
     }
 
     public interface IApiURLFactory

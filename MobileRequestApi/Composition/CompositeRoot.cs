@@ -4,6 +4,8 @@
 
     using ApplicationLifeCycle;
 
+    using AutomaticTaskSharedLibrary;
+
     using DatabaseClassLibrary;
 
     using DataPostgresqlLibrary;
@@ -38,6 +40,7 @@
             this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
+
             return true;
         }
     }

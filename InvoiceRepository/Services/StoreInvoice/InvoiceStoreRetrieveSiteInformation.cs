@@ -20,7 +20,7 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord.LineItems == null || response.InvoiceRecord.DateTimeSent != null)
+            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord == null || response.InvoiceRecord.LineItems == null)
             {
                 return response;
             }

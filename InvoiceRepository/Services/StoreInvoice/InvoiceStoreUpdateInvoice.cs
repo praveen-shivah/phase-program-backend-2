@@ -20,7 +20,7 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null || response.Reseller == null || response.InvoiceRecord.DateTimeSent != null)
+            if (!response.IsSuccessful || response.Organization == null || response.Reseller == null)
             {
                 return response;
             }
@@ -40,12 +40,18 @@
             response.InvoiceRecord.InvoiceNumber = response.Invoice.InvoiceNumber;
             response.InvoiceRecord.InvoiceUrl = response.Invoice.InvoiceUrl ?? string.Empty;
 
+            // Business rule: new items are allowed to be added to an invoice, but any items that have already started or completed processing
+            // will not be allowed to change.
             var lineItems = await dpContext.InvoiceLineItem.Where(x => x.InvoiceId == response.InvoiceRecord.Id).ToListAsync();
-            dpContext.InvoiceLineItem.RemoveRange(lineItems);
+            var itemsToBeDeleted = lineItems.Where(x => x.DateTimeProcessStarted != null || x.DateTimeSent != null);
+            dpContext.InvoiceLineItem.RemoveRange(itemsToBeDeleted);
             await dpContext.SaveChangesAsync();
 
             foreach (var item in response.Invoice.LineItems)
             {
+                var alreadyProcessed = lineItems.Any(x => x.ItemId == item.ItemId && (x.DateTimeProcessStarted != null || x.DateTimeSent != null));
+                if (alreadyProcessed) continue;
+
                 var softwareTypeField = item.ItemCustomFields.SingleOrDefault(x => x.Placeholder.ToUpper() == "CF_SOFTWARE_TYPE");
                 if (softwareTypeField == null || softwareTypeField.Value.ToUpper() == "NONE")
                 {
