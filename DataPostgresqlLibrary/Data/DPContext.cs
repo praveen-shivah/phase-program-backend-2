@@ -76,6 +76,8 @@
 
         public DbSet<Vendor> Vendor { get; set; }
 
+        public DbSet<VendorCredentialsByOrganization> VendorCredentialsByOrganizations { get; set; }
+
         public DbSet<TransferPointsQueue> TransferPointsQueue { get; set; }
 
         public override int SaveChanges()

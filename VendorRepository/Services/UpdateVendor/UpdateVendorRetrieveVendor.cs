@@ -34,9 +34,7 @@
                 {
                     IsActive = request.VendorDto.IsActive,
                     Name = request.VendorDto.Name,
-                    SoftwareType = softwareType,
-                    Password = string.Empty,
-                    UserName = string.Empty
+                    SoftwareType = softwareType
                 };
                 dpContext.Vendor.Add(vendor);
                 await dpContext.SaveChangesAsync();

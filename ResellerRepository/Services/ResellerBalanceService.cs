@@ -46,6 +46,12 @@
                         if (record != null)
                         {
                             record.DateTimeSent = this.dateTimeService.UtcNow;
+
+                            var invoiceLineItemRecord = await context.InvoiceLineItem.SingleOrDefaultAsync(x => x.ItemId == record.ItemId);
+                            if (invoiceLineItemRecord != null)
+                            {
+                                invoiceLineItemRecord.DateTimeSent = this.dateTimeService.UtcNow;
+                            }
                         }
 
                         return WorkItemResultEnum.doneContinue;

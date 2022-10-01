@@ -40,9 +40,7 @@
                             ModifiedOn = DateTime.UtcNow,
                             IsActive = true,
                             Name = softwareType.Name,
-                            SoftwareTypeId = softwareType.Id,
-                            Password = string.Empty,
-                            UserName = string.Empty
+                            SoftwareTypeId = softwareType.Id
                         });
             }
 

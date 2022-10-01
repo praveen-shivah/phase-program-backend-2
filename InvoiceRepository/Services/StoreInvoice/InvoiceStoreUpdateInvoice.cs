@@ -43,7 +43,8 @@
             // Business rule: new items are allowed to be added to an invoice, but any items that have already started or completed processing
             // will not be allowed to change.
             var lineItems = await dpContext.InvoiceLineItem.Where(x => x.InvoiceId == response.InvoiceRecord.Id).ToListAsync();
-            var itemsToBeDeleted = lineItems.Where(x => x.DateTimeProcessStarted != null || x.DateTimeSent != null);
+
+            var itemsToBeDeleted = lineItems.Where(x => x.DateTimeProcessStarted == null && x.DateTimeSent == null);
             dpContext.InvoiceLineItem.RemoveRange(itemsToBeDeleted);
             await dpContext.SaveChangesAsync();
 

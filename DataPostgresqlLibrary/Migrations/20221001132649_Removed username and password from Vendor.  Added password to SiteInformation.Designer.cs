@@ -3,6 +3,7 @@ using System;
 using DataPostgresqlLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataPostgresqlLibrary.Migrations
 {
     [DbContext(typeof(DPContext))]
-    partial class DPContextModelSnapshot : ModelSnapshot
+    [Migration("20221001132649_Removed username and password from Vendor.  Added password to SiteInformation")]
+    partial class RemovedusernameandpasswordfromVendorAddedpasswordtoSiteInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -674,10 +676,6 @@ namespace DataPostgresqlLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
@@ -695,10 +693,18 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -793,10 +799,6 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Property<int>("InvoiceLineItemId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("ItemId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
@@ -901,43 +903,6 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasIndex("SoftwareTypeId");
 
                     b.ToTable("Vendor");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.VendorCredentialsByOrganization", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("VendorId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("VendorCredentialsByOrganizations");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.Address", b =>
@@ -1225,25 +1190,6 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Navigation("SoftwareType");
                 });
 
-            modelBuilder.Entity("DataModelsLibrary.VendorCredentialsByOrganization", b =>
-                {
-                    b.HasOne("DataModelsLibrary.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataModelsLibrary.Vendor", "Vendor")
-                        .WithMany("VendorCredentialsByOrganizations")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Vendor");
-                });
-
             modelBuilder.Entity("DataModelsLibrary.Contact", b =>
                 {
                     b.Navigation("AddressList");
@@ -1270,11 +1216,6 @@ namespace DataPostgresqlLibrary.Migrations
             modelBuilder.Entity("DataModelsLibrary.User", b =>
                 {
                     b.Navigation("RefreshTokens");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.Vendor", b =>
-                {
-                    b.Navigation("VendorCredentialsByOrganizations");
                 });
 #pragma warning restore 612, 618
         }

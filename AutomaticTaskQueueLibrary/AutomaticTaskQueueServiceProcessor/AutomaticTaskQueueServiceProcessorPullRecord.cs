@@ -2,6 +2,8 @@
 
 using DataPostgresqlLibrary;
 
+using Microsoft.EntityFrameworkCore;
+
 public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueServiceProcessor
 {
     private IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
@@ -22,7 +24,14 @@ public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueS
         }
 
 
-        response.QueueRecord = context.TransferPointsQueue.SingleOrDefault(x => x.DateTimeSent == null && x.DateTimeProcessStarted == null);
+        response.QueueRecord = await context.TransferPointsQueue.Include(x => x.Organization).FirstOrDefaultAsync(x => x.DateTimeSent == null && x.DateTimeProcessStarted == null);
+        if (response.QueueRecord == null)
+        {
+            return response;
+        }
+
+        response.InvoiceLineItemRecord = await context.InvoiceLineItem.SingleOrDefaultAsync(x => x.ItemId == response.QueueRecord.ItemId);
+
         return response;
     }
 }

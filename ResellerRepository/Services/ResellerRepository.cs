@@ -62,7 +62,7 @@
                                     Description = siteInformation.Description,
                                     Item_Id = siteInformation.Item_Id,
                                     Url = siteInformation.URL,
-                                    UserName = siteInformation.UserName,
+                                    UserName = siteInformation.AccountId,
                                     VendorId = siteInformation.Vendor.Id.ToString()
                                 });
                         }

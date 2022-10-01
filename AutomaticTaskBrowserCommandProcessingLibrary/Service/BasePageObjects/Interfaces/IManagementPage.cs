@@ -8,7 +8,7 @@
 
         bool VerifyFundsAvailable(int points);
 
-        bool MakeDeposit(int amount);
+        bool MakeDeposit(int amountInPennies, string invoiceLineItemId);
 
         bool VerifyPageLoaded();
 

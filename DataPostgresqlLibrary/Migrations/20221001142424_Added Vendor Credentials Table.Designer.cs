@@ -3,6 +3,7 @@ using System;
 using DataPostgresqlLibrary;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataPostgresqlLibrary.Migrations
 {
     [DbContext(typeof(DPContext))]
-    partial class DPContextModelSnapshot : ModelSnapshot
+    [Migration("20221001142424_Added Vendor Credentials Table")]
+    partial class AddedVendorCredentialsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -674,10 +676,6 @@ namespace DataPostgresqlLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AccountId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
@@ -695,10 +693,18 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("ResellerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -793,10 +799,6 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.Property<int>("InvoiceLineItemId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("ItemId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
@@ -937,7 +939,7 @@ namespace DataPostgresqlLibrary.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("VendorCredentialsByOrganizations");
+                    b.ToTable("VendorCredentialsByOrganization");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.Address", b =>

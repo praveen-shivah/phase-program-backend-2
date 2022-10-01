@@ -7,14 +7,15 @@ using SeleniumExtras.PageObjects;
 
 public class UltraMonsterLogin : BaseLoginPage
 {
-    private readonly string pageLoadedText = "";
+    private readonly string pageLoadedText = "passWd";
 
     private readonly string pageUrl = "https://go123.ultramonster.net/#/login";
 
-    [FindsBy(How = How.Name, Using = "yt0")]
+    [FindsBy(How = How.XPath, Using = "//*[@id='app']/div/div/form/button[1]")]
     [CacheLookup]
     private IWebElement logIn;
-    [FindsBy(How = How.Id, Using = "passwd")]
+
+    [FindsBy(How = How.Name, Using = "passWd")]
     private IWebElement password;
 
     private readonly int timeout = 15;
@@ -22,7 +23,7 @@ public class UltraMonsterLogin : BaseLoginPage
     [FindsBy(How = How.XPath, Using = @"//*[@id='yw0']/div/ul/li")]
     private IWebElement errorMessage;
 
-    [FindsBy(How = How.Id, Using = "userName")]
+    [FindsBy(How = How.Name, Using = "userName")]
     private IWebElement userName;
 
     public UltraMonsterLogin(
@@ -59,7 +60,7 @@ public class UltraMonsterLogin : BaseLoginPage
 
     protected override bool verifyPageLoaded(IWebDriver driver)
     {
-        new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.PageSource.Contains(this.pageLoadedText); });
+        new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return this.checkPageSource(d.PageSource); });
         return true;
     }
 
@@ -67,5 +68,10 @@ public class UltraMonsterLogin : BaseLoginPage
     {
         new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.Url.Contains(this.pageUrl); });
         return true;
+    }
+
+    private bool checkPageSource(string pageSource)
+    {
+        return pageSource.Contains(this.pageLoadedText);
     }
 }

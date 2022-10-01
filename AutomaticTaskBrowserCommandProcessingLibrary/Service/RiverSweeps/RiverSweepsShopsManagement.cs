@@ -65,7 +65,7 @@
             return result;
         }
 
-        protected override bool makeDeposit(int amount)
+        protected override bool makeDeposit(int amount, string invoiceLineItemId)
         {
             this.depositAmountElement.SendKeys(amount.ToString());
             // this.depositButtonElement.Click();

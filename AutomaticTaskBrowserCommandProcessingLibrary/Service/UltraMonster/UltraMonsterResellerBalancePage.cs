@@ -9,28 +9,30 @@
     {
         private readonly IWebDriver driver;
 
-        private readonly string pageLoadedText = "</body>";
+        private readonly string pageLoadedText = "Agent account";
 
-        private readonly string pageUrl = "https://go123.ultramonster.net/#/index";
+        private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
 
-        [FindsBy(How = How.XPath, Using = @"/html/body/div[1]/div/div[2]/div/div[1]/div[3]/p/span")]
-        [CacheLookup]
-        private IWebElement? currentBalanceAmount;
+        private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
 
         public UltraMonsterResellerBalancePage(IWebDriver driver)
         {
             this.driver = driver;
             PageFactory.InitElements(driver, this);
+            this.driver.Url = this.pageUrl;
         }
 
         protected override string getBalance()
         {
-            if (this.currentBalanceAmount == null)
+            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
+            var currentBalanceAmountElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.currentBalanceAmountElementLocator));
+            if (currentBalanceAmountElement == null)
             {
                 return "0.00";
             }
 
-            return this.currentBalanceAmount.Text;
+            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Myscore:", string.Empty);
+            return balanceAsString;
         }
 
         protected override bool isPageUrlSet()

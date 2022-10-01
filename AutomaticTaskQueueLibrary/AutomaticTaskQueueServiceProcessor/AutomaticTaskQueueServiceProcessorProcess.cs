@@ -32,7 +32,7 @@ public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServ
         AutomaticTaskQueueServiceProcessorRequest request)
     {
         var response = await this.automaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(context, request);
-        if (!response.IsSuccessful || response.QueueRecord == null)
+        if (!response.IsSuccessful || response.QueueRecord == null || response.InvoiceLineItemRecord == null)
         {
             return response;
         }
@@ -52,6 +52,7 @@ public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServ
             });
 
         response.QueueRecord.DateTimeProcessStarted = this.dateTimeService.UtcNow;
+        response.InvoiceLineItemRecord.DateTimeProcessStarted = this.dateTimeService.UtcNow;
 
         return response;
     }
