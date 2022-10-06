@@ -9,8 +9,6 @@ public class RiverSweepsLogout : BaseLogoutPage
 {
     private readonly string logoutPageUrl = "https://river-pay.com/office/logout";
 
-    private readonly int timeout = 15;
-
     public RiverSweepsLogout(IWebDriver driver)
         : base(driver)
     {
@@ -25,7 +23,7 @@ public class RiverSweepsLogout : BaseLogoutPage
 
     protected override bool verifyPageUrl(IWebDriver driver)
     {
-        new WebDriverWait(driver, TimeSpan.FromSeconds(this.timeout)).Until(d => { return d.Url.Contains(this.logoutPageUrl); });
+        this.wait.Until(d => { return d.Url.Contains(this.logoutPageUrl); });
         return true;
     }
 }

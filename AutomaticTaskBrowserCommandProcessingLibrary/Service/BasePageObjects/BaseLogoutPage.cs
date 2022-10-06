@@ -2,13 +2,10 @@
 {
     using OpenQA.Selenium;
 
-    public abstract class BaseLogoutPage : ILogoutPage
+    public abstract class BaseLogoutPage : BasePage, ILogoutPage
     {
-        protected readonly IWebDriver driver;
-
-        protected BaseLogoutPage(IWebDriver driver)
+        protected BaseLogoutPage(IWebDriver driver) : base(driver)
         {
-            this.driver = driver;
         }
 
         bool ILogoutPage.Logout()

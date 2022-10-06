@@ -1,18 +1,13 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public abstract class BaseManagementPage : IManagementPage
-    {
-        bool IManagementPage.IsPageUrlSet()
-        {
-            try
-            {
-                return this.isPageUrlSet();
-            }
-            catch
-            {
-            }
+    using OpenQA.Selenium;
 
-            return false;
+    public abstract class BaseManagementPage : BasePage,
+                                               IManagementPage
+    {
+        protected BaseManagementPage(IWebDriver driver)
+            : base(driver)
+        {
         }
 
         string IManagementPage.GetBalance()
@@ -28,7 +23,18 @@
             return string.Empty;
         }
 
-        protected abstract string getBalance();
+        bool IManagementPage.IsPageUrlSet()
+        {
+            try
+            {
+                return this.isPageUrlSet();
+            }
+            catch
+            {
+            }
+
+            return false;
+        }
 
         bool IManagementPage.LocateDepositButtonAndClick(string userId)
         {
@@ -82,7 +88,7 @@
             return false;
         }
 
-        protected abstract bool verifyPageLoaded();
+        protected abstract string getBalance();
 
         protected abstract bool isPageUrlSet();
 
@@ -91,5 +97,7 @@
         protected abstract bool makeDeposit(int amountAsPennies, string invoiceLineItemId);
 
         protected abstract bool verifyFundsAvailable(int points);
+
+        protected abstract bool verifyPageLoaded();
     }
 }

@@ -1,7 +1,14 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public abstract class BaseResellerBalancePage : IResellerBalancePage
+    using OpenQA.Selenium;
+
+    public abstract class BaseResellerBalancePage : BasePage, IResellerBalancePage
     {
+        protected BaseResellerBalancePage(IWebDriver driver)
+            : base(driver)
+        {
+        }
+
         string IResellerBalancePage.GetBalance()
         {
             try

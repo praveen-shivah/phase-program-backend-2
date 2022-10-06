@@ -2,15 +2,13 @@
 {
     using OpenQA.Selenium;
 
-    public abstract class BaseLoginPage : ILoginPage
+    public abstract class BaseLoginPage : BasePage, ILoginPage
     {
-        private readonly IWebDriver driver;
-
         private readonly LoginPageInformation loginPageInformation;
 
         protected BaseLoginPage(IWebDriver driver, LoginPageInformation loginPageInformation)
+            : base(driver)
         {
-            this.driver = driver;
             this.loginPageInformation = loginPageInformation;
         }
 
