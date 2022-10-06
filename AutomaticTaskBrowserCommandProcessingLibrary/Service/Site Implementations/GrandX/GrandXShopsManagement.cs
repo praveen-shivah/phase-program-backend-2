@@ -5,10 +5,8 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class UltraMonsterShopsManagement : BaseManagementPage
+    public class GrandXShopsManagement : BaseManagementPage
     {
-        private readonly IWebDriver driver;
-
         private readonly string pageLoadedText = "Agent account";
 
         private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
@@ -22,17 +20,16 @@
         private By userAccountIdElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[2]/div/a/span");
         private By agentAccountRadioButtonElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[1]/div/div/label[1]/span[2]");
 
-        public UltraMonsterShopsManagement(IWebDriver driver)
+        public GrandXShopsManagement(IWebDriver driver)
+            : base(driver)
         {
-            this.driver = driver;
             PageFactory.InitElements(driver, this);
             this.driver.Url = this.pageUrl;
         }
 
         protected override string getBalance()
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var currentBalanceAmountElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.currentBalanceAmountElementLocator));
+            var currentBalanceAmountElement = this.getElementByLocator(this.currentBalanceAmountElementLocator);
             if (currentBalanceAmountElement == null)
             {
                 return "0.00";
@@ -44,16 +41,13 @@
 
         protected override bool isPageUrlSet()
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var result = wait.Until(d => d.Url.Contains(this.pageUrl));
+            var result = this.wait.Until(d => d.Url.Contains(this.pageUrl));
             return result;
         }
 
         protected override bool locateDepositButtonAndClick(string userId)
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-
-            var agentAccountRadioButtonElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.agentAccountRadioButtonElementLocator));
+            var agentAccountRadioButtonElement = this.getElementByLocator(this.agentAccountRadioButtonElementLocator);
             if (agentAccountRadioButtonElement == null)
             {
                 return false;
@@ -61,7 +55,7 @@
 
             agentAccountRadioButtonElement.Click();
 
-            var searchInputBoxElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.searchInputBoxElementLocator));
+            var searchInputBoxElement = this.getElementByLocator(this.searchInputBoxElementLocator);
             if (searchInputBoxElement == null)
             {
                 return false;
@@ -69,7 +63,7 @@
 
             searchInputBoxElement.SendKeys(userId);
 
-            var okButton = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.okButtonLocator));
+            var okButton = this.getElementByLocator(this.okButtonLocator);
             if (okButton == null)
             {
                 return false;
@@ -77,7 +71,7 @@
 
             okButton.Click();
 
-            var userAccountIdElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(userAccountIdElementLocator));
+            var userAccountIdElement = this.getElementByLocator(userAccountIdElementLocator);
             if (userAccountIdElement == null)
             {
                 return false;
@@ -89,7 +83,7 @@
                 return false;
             }
 
-            var setScoreButton = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.setScoreButtonLocator));
+            var setScoreButton = this.getElementByLocator(this.setScoreButtonLocator);
             if (setScoreButton == null)
             {
                 return false;
@@ -102,8 +96,7 @@
 
         protected override bool makeDeposit(int amountAsPennies, string invoiceLineItemId)
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var setPointsInputELement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.setPointsInputELementLocator));
+            var setPointsInputELement = this.getElementByLocator(this.setPointsInputELementLocator);
             if (setPointsInputELement == null)
             {
                 return false;
@@ -112,7 +105,7 @@
             var amountAsPenniesAsDollars = Math.Round(amountAsPennies / 100.0, 2);
             setPointsInputELement.SendKeys(amountAsPenniesAsDollars.ToString());
 
-            var setPointsRemarksInputELement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.setPointsRemarksInputELementLocator));
+            var setPointsRemarksInputELement = this.getElementByLocator(this.setPointsRemarksInputELementLocator);
             if (setPointsRemarksInputELement == null)
             {
                 return false;
@@ -127,8 +120,7 @@
 
         protected override bool verifyFundsAvailable(int points)
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var currentBalanceAmountElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(this.currentBalanceAmountElementLocator));
+            var currentBalanceAmountElement = this.getElementByLocator(this.currentBalanceAmountElementLocator);
             if (currentBalanceAmountElement == null)
             {
                 return false;
@@ -142,8 +134,7 @@
 
         protected override bool verifyPageLoaded()
         {
-            var wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
-            var result = wait.Until(d => this.checkPageSource(d.PageSource));
+            var result = this.wait.Until(d => this.checkPageSource(d.PageSource));
             return result;
         }
 
