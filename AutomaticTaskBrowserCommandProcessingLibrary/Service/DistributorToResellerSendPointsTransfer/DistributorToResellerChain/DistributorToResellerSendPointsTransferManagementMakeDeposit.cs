@@ -23,7 +23,7 @@
 
             // We'll consider it successful if we get this far so as not to duplicate deposits.
             // Any failure up to this point and we can do a retry.
-            response.ManagementPage.MakeDeposit(distributorToResellerSendPointsTransferRequest.Points);
+            response.ManagementPage.MakeDeposit(distributorToResellerSendPointsTransferRequest.Points, distributorToResellerSendPointsTransferRequest.InvoiceLineItemId.ToString());
 
             return response;
         }

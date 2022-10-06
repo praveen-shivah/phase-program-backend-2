@@ -4,7 +4,7 @@
 
     public abstract class BaseLogoutPage : ILogoutPage
     {
-        private readonly IWebDriver driver;
+        protected readonly IWebDriver driver;
 
         protected BaseLogoutPage(IWebDriver driver)
         {

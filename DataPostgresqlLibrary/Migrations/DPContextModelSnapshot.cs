@@ -260,9 +260,6 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("DateTimeSent")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("InvoiceId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -310,6 +307,12 @@ namespace DataPostgresqlLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateTimeProcessStarted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateTimeSent")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -671,6 +674,10 @@ namespace DataPostgresqlLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
@@ -692,10 +699,6 @@ namespace DataPostgresqlLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -761,6 +764,65 @@ namespace DataPostgresqlLibrary.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("StateProvince");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.TransferPointsQueue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("APIKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AccountId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateTimeProcessStarted")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateTimeSent")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("InvoiceLineItemId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ItemId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SoftwareType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("TransferPointsQueue");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.User", b =>
@@ -831,22 +893,51 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("SoftwareTypeId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SoftwareTypeId");
 
                     b.ToTable("Vendor");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.VendorCredentialsByOrganization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("VendorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("VendorCredentialsByOrganizations");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.Address", b =>
@@ -1101,6 +1192,17 @@ namespace DataPostgresqlLibrary.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("DataModelsLibrary.TransferPointsQueue", b =>
+                {
+                    b.HasOne("DataModelsLibrary.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("DataModelsLibrary.User", b =>
                 {
                     b.HasOne("DataModelsLibrary.Organization", "Organization")
@@ -1121,6 +1223,25 @@ namespace DataPostgresqlLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("SoftwareType");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.VendorCredentialsByOrganization", b =>
+                {
+                    b.HasOne("DataModelsLibrary.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataModelsLibrary.Vendor", "Vendor")
+                        .WithMany("VendorCredentialsByOrganizations")
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("DataModelsLibrary.Contact", b =>
@@ -1149,6 +1270,11 @@ namespace DataPostgresqlLibrary.Migrations
             modelBuilder.Entity("DataModelsLibrary.User", b =>
                 {
                     b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("DataModelsLibrary.Vendor", b =>
+                {
+                    b.Navigation("VendorCredentialsByOrganizations");
                 });
 #pragma warning restore 612, 618
         }

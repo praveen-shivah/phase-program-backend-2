@@ -1,0 +1,6 @@
+﻿namespace AutomaticTaskQueueLibrary;
+
+public interface IAutomaticTaskQueueServiceProcessorRepository
+{
+    Task<AutomaticTaskQueueServiceProcessorResponse> AutomaticTaskQueueServiceProcessorAsync(AutomaticTaskQueueServiceProcessorRequest request);
+}

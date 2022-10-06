@@ -38,6 +38,14 @@
             return result ? this.Ok() : this.StatusCode(500, 0);
         }
 
+        [HttpPost("reseller-transfer-points-completed")]
+        public async Task<IActionResult> ResellerTransferPointsCompleted(ResellerTransferPointsCompletedDto resellerTransferPointsCompleted)
+        {
+            this.logger.Debug(LogClass.General, "ResellerTransferPointsCompleted received");
+            var result = await this.resellerBalanceService.TransferPointsCompleted(resellerTransferPointsCompleted);
+            return result ? this.Ok() : this.StatusCode(500, 0);
+        }
+
         [HttpGet("get-resellers")]
         public async Task<ActionResult<List<ResellerDto>>> GetResellers()
         {

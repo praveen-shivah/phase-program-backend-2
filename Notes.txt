@@ -5,3 +5,8 @@ Chromium driver must match the current version of chrome:
 Chrome driver path can be set with an environment variable or with the constructor:
 new ChromeDriver(@"C:\Program Files (x86)");
 
+AutomaticTaskMessageHandlerHost will run in docker up on a service
+ApiHost will run on a cloud service that zoho books will connect to
+  It will be responsible for queuing up messages and sending those not sent to AutomaticTaskMessageHandlerHost
+
+

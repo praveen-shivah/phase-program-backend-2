@@ -43,11 +43,11 @@
             return false;
         }
 
-        bool IManagementPage.MakeDeposit(int amount)
+        bool IManagementPage.MakeDeposit(int amountAsPennies, string invoiceLineItemId)
         {
             try
             {
-                return this.makeDeposit(amount);
+                return this.makeDeposit(amountAsPennies, invoiceLineItemId);
             }
             catch
             {
@@ -88,7 +88,7 @@
 
         protected abstract bool locateDepositButtonAndClick(string userId);
 
-        protected abstract bool makeDeposit(int amount);
+        protected abstract bool makeDeposit(int amountAsPennies, string invoiceLineItemId);
 
         protected abstract bool verifyFundsAvailable(int points);
     }

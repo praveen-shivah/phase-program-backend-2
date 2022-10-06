@@ -12,6 +12,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsShopsManagement(webDriver);
+                case SoftwareTypeEnum.ultraMonster:
+                    return new UltraMonsterShopsManagement(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

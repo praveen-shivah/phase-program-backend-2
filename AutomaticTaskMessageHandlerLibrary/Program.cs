@@ -3,8 +3,6 @@ using System.Reflection;
 
 using AutomaticTaskBrowserCommandProcessingLibrary;
 
-using AutomaticTaskMessageLibrary;
-
 using AutomaticTaskSharedLibrary;
 
 using log4net;

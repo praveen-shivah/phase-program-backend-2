@@ -10,6 +10,7 @@
         {
             this.GlobalContainer.Register<IApiURLFactory, ApiURLFactory>();
             this.GlobalContainer.Register<IResellerBalance, ResellerBalance>();
+            this.GlobalContainer.Register<IResellerTransferPointsCompleted, ResellerTransferPointsCompleted>();
             this.GlobalContainer.Register<IWebRequestClient, WebRequestClient>();
 
             return true;

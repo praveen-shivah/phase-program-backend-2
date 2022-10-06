@@ -12,6 +12,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsLogout(webDriver);
+                case SoftwareTypeEnum.ultraMonster:
+                    return new UltraMonsterLogout(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

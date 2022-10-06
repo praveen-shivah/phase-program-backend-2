@@ -1,10 +1,8 @@
-﻿namespace AutomaticTaskMessageLibrary
+﻿namespace AutomaticTaskSharedLibrary
 {
-    using AutomaticTaskSharedLibrary;
-
     using NServiceBus;
 
-    public class EndpointConfigurationFactory : IEndpointConfigurationFactory
+    public class EndpointConfigurationFactoryAzure : IEndpointConfigurationFactory
     {
         EndpointConfiguration IEndpointConfigurationFactory.CreateEndpointConfiguration(string endpointName, string destinationName)
         {

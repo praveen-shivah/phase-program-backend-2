@@ -34,7 +34,7 @@
                 {
                     IsActive = request.VendorDto.IsActive,
                     Name = request.VendorDto.Name,
-                    SoftwareType = softwareType,
+                    SoftwareType = softwareType
                 };
                 dpContext.Vendor.Add(vendor);
                 await dpContext.SaveChangesAsync();

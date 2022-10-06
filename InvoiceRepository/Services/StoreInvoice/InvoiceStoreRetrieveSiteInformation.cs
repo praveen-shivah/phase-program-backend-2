@@ -20,7 +20,7 @@
         async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
         {
             var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord.LineItems == null || response.InvoiceRecord.DateTimeSent != null)
+            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord == null || response.InvoiceRecord.LineItems == null)
             {
                 return response;
             }
@@ -32,7 +32,7 @@
                 var site = await dpContext.SiteInformation.Include(x => x.Vendor).SingleOrDefaultAsync(
                                     x => x.Organization.Id == organizationId &&
                                     x.ResellerId == response.Invoice.CfResellerId &&
-                                    x.Vendor.SoftwareType.Name.ToUpper() == softwareType.ToUpper());
+                                    x.Vendor.Name.ToUpper().Trim() == softwareType.ToUpper());
 
                 if (site != null)
                 {
@@ -52,11 +52,11 @@
                     Item_Id = invoiceLineItem.ItemId,
                     URL = string.Empty,
                     Vendor = vendor,
-                    UserName = string.Empty,
+                    AccountId = string.Empty,
                     ResellerId = response.Invoice.CfResellerId
                 };
 
-                dpContext.SiteInformation.Add(siteInformation);
+                await dpContext.SiteInformation.AddAsync(siteInformation);
             }
 
             await dpContext.SaveChangesAsync();

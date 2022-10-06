@@ -4,6 +4,7 @@
 
     public class DistributorToResellerSendPointsTransferRequest
     {
+        public int InvoiceLineItemId { get; set; }
         public int OrganizationId { get; set; }
         public string APIKey { get; set; }
         public SoftwareTypeEnum SoftwareType { get; set; }
