@@ -16,7 +16,15 @@
 
         protected IWebElement getElementByLocator(By locator)
         {
-            return this.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+            try
+            {
+                return this.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+            }
+            catch (Exception e)
+            {
+            }
+
+            return null;
         }
     }
 }
