@@ -24,7 +24,7 @@ public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueS
         }
 
 
-        response.QueueRecord = await context.TransferPointsQueue.Include(x => x.Organization).FirstOrDefaultAsync(x => x.DateTimeSent == null && x.DateTimeProcessStarted == null);
+        response.QueueRecord = await context.TransferPointsQueue.Include(x => x.Organization).FirstOrDefaultAsync(x => x.DateTimeSent == null && x.DateTimeProcessStarted == null && !string.IsNullOrWhiteSpace(x.AccountId));
         if (response.QueueRecord == null)
         {
             return response;

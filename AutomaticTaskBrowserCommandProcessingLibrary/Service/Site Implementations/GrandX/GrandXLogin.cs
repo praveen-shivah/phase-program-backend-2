@@ -6,13 +6,13 @@ using SeleniumExtras.PageObjects;
 
 public class GrandXLogin : BaseLoginPage
 {
-    private readonly string pageLoadedText = "passWd";
+    private readonly string pageLoadedText = "Password";
 
-    private readonly string pageUrl = "https://go123.vpower777.com/#/login";
+    private readonly string pageUrl = "https://grandx.org/xo/login";
 
-    private By userNameLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
-    private By passwordLocator = By.XPath("//*[@id='app']/div/div/form/div[2]/div/div/input");
-    private By loginBtnLocator = By.XPath("//*[@id='app']/div/div/form/button[1]");
+    private By userNameLocator = By.XPath("/html/body/div/div/div[1]/form/div[2]/div[1]/input");
+    private By passwordLocator = By.XPath("/html/body/div/div/div[1]/form/div[2]/div[2]/input");
+    private By loginBtnLocator = By.XPath("/html/body/div/div/div[1]/form/button");
 
     public GrandXLogin(
         IWebDriver driver,

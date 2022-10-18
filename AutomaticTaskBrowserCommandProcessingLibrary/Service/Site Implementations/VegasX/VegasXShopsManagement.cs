@@ -34,7 +34,7 @@
                 return "0.00";
             }
 
-            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Myscore:", string.Empty);
+            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Credits:", string.Empty);
             return balanceAsString;
         }
 

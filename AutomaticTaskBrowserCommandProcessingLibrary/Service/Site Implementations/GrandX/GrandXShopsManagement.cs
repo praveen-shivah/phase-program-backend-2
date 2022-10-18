@@ -7,18 +7,18 @@
 
     public class GrandXShopsManagement : BaseManagementPage
     {
-        private readonly string pageLoadedText = "Agent account";
+        private readonly string pageLoadedText = "Accounts Limit";
 
-        private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
+        private readonly string pageUrl = "https://grandx.org/xo/shops";
 
-        private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
-        private By setPointsInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[3]/div/div/input");
-        private By setPointsRemarksInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[4]/div/div/textarea");
-        private By setScoreButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[10]/div/button[1]/span");
-        private By okButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[3]/div/button");
-        private By searchInputBoxElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[2]/div/div/div/div[1]/input");
-        private By userAccountIdElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[2]/div/a/span");
-        private By agentAccountRadioButtonElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[1]/div/div/label[1]/span[2]");
+        private By currentBalanceAmountElementLocator = By.XPath("//*[@id='isideScore']/div[1]/small");
+        private By searchInputBoxElementLocator = By.XPath("//*[@id='search-input']");
+        private By searchButtonElementLocator = By.XPath("//*[@id='searchbutton']");
+        private By shopUserNameElementLocator = By.XPath("//*[@id='userForm']/div[2]/table/tbody/tr/td[2]/a");
+        private By setPointsInputELementLocator = By.XPath("//*[@id='score']");
+        private By plusCreditButtonLocator = By.XPath("//*[@id='scoreInButton']");
+        private By negativeCreditbuttonLocator = By.XPath("//*[@id='scoreOutButton']");
+
 
         public GrandXShopsManagement(IWebDriver driver)
             : base(driver)
@@ -35,7 +35,7 @@
                 return "0.00";
             }
 
-            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Myscore:", string.Empty);
+            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Credits:", string.Empty);
             return balanceAsString;
         }
 
@@ -47,49 +47,37 @@
 
         protected override bool locateDepositButtonAndClick(string userId)
         {
-            var agentAccountRadioButtonElement = this.getElementByLocator(this.agentAccountRadioButtonElementLocator);
-            if (agentAccountRadioButtonElement == null)
-            {
-                return false;
-            }
-
-            agentAccountRadioButtonElement.Click();
-
             var searchInputBoxElement = this.getElementByLocator(this.searchInputBoxElementLocator);
             if (searchInputBoxElement == null)
             {
                 return false;
             }
 
+            searchInputBoxElement.Click();
             searchInputBoxElement.SendKeys(userId);
 
-            var okButton = this.getElementByLocator(this.okButtonLocator);
-            if (okButton == null)
+            var searchButtonElement = this.getElementByLocator(this.searchButtonElementLocator);
+            if (searchButtonElement == null)
             {
                 return false;
             }
 
-            okButton.Click();
+            searchButtonElement.Click();
 
-            var userAccountIdElement = this.getElementByLocator(userAccountIdElementLocator);
-            if (userAccountIdElement == null)
+
+            var shopUserNameElement = this.getElementByLocator(shopUserNameElementLocator);
+            if (shopUserNameElement == null)
             {
                 return false;
             }
 
-            var test = userAccountIdElement.Text.ToLower();
+            var test = shopUserNameElement.Text.ToLower();
             if (test != userId.ToLower())
             {
                 return false;
             }
 
-            var setScoreButton = this.getElementByLocator(this.setScoreButtonLocator);
-            if (setScoreButton == null)
-            {
-                return false;
-            }
-
-            setScoreButton.Click();
+            shopUserNameElement.Click();
 
             return true;
         }
@@ -103,19 +91,31 @@
             }
 
             var amountAsPenniesAsDollars = Math.Round(amountAsPennies / 100.0, 2);
-            setPointsInputELement.SendKeys(amountAsPenniesAsDollars.ToString());
-
-            var setPointsRemarksInputELement = this.getElementByLocator(this.setPointsRemarksInputELementLocator);
-            if (setPointsRemarksInputELement == null)
+            if (amountAsPenniesAsDollars > 0)
             {
-                return false;
+                setPointsInputELement.SendKeys(amountAsPenniesAsDollars.ToString());
+
+                var creditbuttonElement = this.getElementByLocator(this.plusCreditButtonLocator);
+                if (creditbuttonElement == null)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                amountAsPenniesAsDollars = -amountAsPenniesAsDollars;
+                setPointsInputELement.SendKeys(amountAsPenniesAsDollars.ToString());
+
+                var creditbuttonElement = this.getElementByLocator(this.negativeCreditbuttonLocator);
+                if (creditbuttonElement == null)
+                {
+                    return false;
+                }
+
             }
 
-            setPointsRemarksInputELement.SendKeys($"Invoice line item id: {invoiceLineItemId}");
-
-            // this.depositButtonElement.Click();
-
-            return true;
+            // this.creditbuttonElement.Click();
+            return false;
         }
 
         protected override bool verifyFundsAvailable(int points)
@@ -126,7 +126,7 @@
                 return false;
             }
 
-            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Myscore:", string.Empty);
+            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Credits:", string.Empty);
             var currentBalance = decimal.Parse(balanceAsString);
             var pointsAsDollars = points * 1.0M / 100.0M;
             return currentBalance >= pointsAsDollars;
