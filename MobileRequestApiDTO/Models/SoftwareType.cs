@@ -16,7 +16,33 @@
 
         grandX = 7,
 
-        pampazar = 8
+        pampazar = 8,
+
+        gaminator = 9,
+
+        sinCity = 10,
+
+        goldenBuffalo = 11,
+
+        poseidonX = 12,
+
+        bcLive = 13,
+
+        fortune2Go = 14,
+
+        fusionSkye = 15,
+
+        orionStar = 16,
+
+        goldenDragon = 17,
+
+        royalEagle = 18,
+
+        fireStorm = 19,
+
+        magicCity = 20,
+
+        nobel777 = 21,
     }
 
 }

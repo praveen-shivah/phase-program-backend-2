@@ -20,6 +20,8 @@
                     return new VegasXShopsManagement(webDriver);
                 case SoftwareTypeEnum.grandX:
                     return new GrandXShopsManagement(webDriver);
+                case SoftwareTypeEnum.gaminator:
+                    return new GaminatorG3ShopsManagement(webDriver);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarShopsManagement(webDriver);
                 default:

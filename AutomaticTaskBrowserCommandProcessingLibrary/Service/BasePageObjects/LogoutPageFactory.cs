@@ -20,6 +20,8 @@
                     return new VegasXLogout(webDriver);
                 case SoftwareTypeEnum.grandX:
                     return new GrandXLogout(webDriver);
+                case SoftwareTypeEnum.gaminator:
+                    return new GaminatorG3Logout(webDriver);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarLogout(webDriver);
                 default:

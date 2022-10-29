@@ -20,6 +20,8 @@
                     return new VegasXLogin(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.grandX:
                     return new GrandXLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.gaminator:
+                    return new GaminatorG3Login(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarLogin(webDriver, loginPageInformation);
                 default:

@@ -22,6 +22,8 @@
                     return new VegasXResellerBalancePage(driver);
                 case SoftwareTypeEnum.grandX:
                     return new GrandXResellerBalancePage(driver);
+                case SoftwareTypeEnum.gaminator:
+                    return new GaminatorG3ResellerBalancePage(driver);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarResellerBalancePage(driver);
                 default:
