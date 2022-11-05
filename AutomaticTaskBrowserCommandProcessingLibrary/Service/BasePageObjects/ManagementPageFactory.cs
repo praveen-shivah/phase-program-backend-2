@@ -24,6 +24,12 @@
                     return new GaminatorG3ShopsManagement(webDriver);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarShopsManagement(webDriver);
+                case SoftwareTypeEnum.goldenBuffalo:
+                    return new GoldenBuffaloShopsManagement(webDriver);
+                case SoftwareTypeEnum.poseidonX:
+                    return new PoseidonXShopsManagement(webDriver);
+                case SoftwareTypeEnum.bcLive:
+                    return new BCLiveShopsManagement(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

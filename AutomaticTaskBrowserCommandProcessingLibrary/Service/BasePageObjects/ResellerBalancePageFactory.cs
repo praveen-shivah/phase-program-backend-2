@@ -26,6 +26,12 @@
                     return new GaminatorG3ResellerBalancePage(driver);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarResellerBalancePage(driver);
+                case SoftwareTypeEnum.goldenBuffalo:
+                    return new GoldenBuffaloResellerBalancePage(driver);
+                case SoftwareTypeEnum.poseidonX:
+                    return new PoseidonXResellerBalancePage(driver);
+                case SoftwareTypeEnum.bcLive:
+                    return new BCLiveResellerBalancePage(driver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

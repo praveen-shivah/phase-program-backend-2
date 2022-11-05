@@ -24,6 +24,13 @@
                     return new GaminatorG3Login(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.pampazar:
                     return new PampazarLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.goldenBuffalo:
+                    return new GoldenBuffaloLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.poseidonX:
+                    return new PoseidonXLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.bcLive:
+                    return new BCLiveLogin(webDriver, loginPageInformation);
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);
             }

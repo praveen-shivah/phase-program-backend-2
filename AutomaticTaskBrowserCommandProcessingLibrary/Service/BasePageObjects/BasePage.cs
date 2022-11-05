@@ -15,6 +15,7 @@
         {
             this.driver = driver;
             this.wait = new WebDriverWait(this.driver, TimeSpan.FromSeconds(CommandProcessingConstants.WEB_DRIVER_WAIT_TIMEOUT_SECONDS));
+            this.driver.Manage().Window.Maximize();
         }
 
         protected IWebElement? getElementByLocator(By locator)
