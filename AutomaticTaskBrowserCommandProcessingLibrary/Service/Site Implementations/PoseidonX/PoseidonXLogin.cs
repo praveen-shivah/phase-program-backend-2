@@ -6,13 +6,14 @@ using SeleniumExtras.PageObjects;
 
 public class PoseidonXLogin : BaseLoginPage
 {
-    private readonly string pageLoadedText = "Password";
+    private readonly string pageLoadedText = "Version:";
 
     private readonly string pageUrl = "https://poseidonx.xyz:8781/default.aspx";
 
-    private By userNameLocator = By.XPath("//*[@id=\"UserLogin_username\"]");
-    private By passwordLocator = By.XPath("//*[@id=\"UserLogin_password\"]");
-    private By loginBtnLocator = By.XPath("//*[@id=\"content\"]/div/div[2]/div/div/form/fieldset/div[4]/input");
+    private By userNameLocator = By.Id("txtLoginName");
+    private By passwordLocator = By.Id("txtLoginPass");
+
+    private By loginBtnLocator = By.Id("btnLogin");
 
     public PoseidonXLogin(
         IWebDriver driver,

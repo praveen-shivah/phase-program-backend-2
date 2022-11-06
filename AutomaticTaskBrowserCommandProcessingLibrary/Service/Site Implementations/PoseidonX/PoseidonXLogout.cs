@@ -8,9 +8,6 @@ public class PoseidonXLogout : BaseLogoutPage
 {
     private readonly string logoutPageUrl = "https://poseidonx.xyz:8781/LoginOut.aspx";
 
-    private By logOutButtonLocator = By.XPath("");
-    private By okButtonLocator = By.XPath("");
-
     public PoseidonXLogout(IWebDriver driver)
         : base(driver)
     {
@@ -19,11 +16,7 @@ public class PoseidonXLogout : BaseLogoutPage
 
     protected override bool logout(IWebDriver webDriver)
     {
-        var logOutButton = this.getElementByLocator(this.logOutButtonLocator);
-        logOutButton.Click();
-
-        var okButton = this.getElementByLocator(this.okButtonLocator);
-        okButton.Click();
+        webDriver.Url = this.logoutPageUrl;
 
         return true;
     }
