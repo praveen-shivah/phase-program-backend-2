@@ -10,9 +10,9 @@ public class BCLiveLogin : BaseLoginPage
 
     private readonly string pageUrl = "http://byagent.bclive.vip/Login.aspx";
 
-    private By userNameLocator = By.XPath("//*[@id=\"UserLogin_username\"]");
-    private By passwordLocator = By.XPath("//*[@id=\"UserLogin_password\"]");
-    private By loginBtnLocator = By.XPath("//*[@id=\"content\"]/div/div[2]/div/div/form/fieldset/div[4]/input");
+    private By userNameLocator = By.Id("txtLoginName");
+    private By passwordLocator = By.Id("txtLoginPass");
+    private By loginBtnLocator = By.Id("btnLogin");
 
     public BCLiveLogin(
         IWebDriver driver,

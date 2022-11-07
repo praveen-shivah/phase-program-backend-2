@@ -7,27 +7,28 @@
 
     public class BCLiveShopsManagement : BaseManagementPage
     {
-        private readonly string pageLoadedText = "Dashboard";
+        private readonly string pageLoadedText = "Welcome,";
 
         private readonly string pageUrl = "http://byagent.bclive.vip/Index.aspx?73";
 
-        private readonly By searchFolderButtonElementLocator = By.XPath("//*[@id=\"node-breadcrumbs\"]/li");
-        private readonly By searchInputBoxElementLocator = By.XPath("//*[@id=\"tree-search\"]");
-        private readonly By searchButtonHallElementLocator = By.XPath("//*[@id=\"node-tree\"]/ul[2]/li/ul/li[1]/ul/li[3]/span/span[3]");
-        private readonly By searchButtonAgentElementLocator = By.XPath("//*[@id=\"node-tree\"]/ul[2]/li/ul/li[1]/span/span[3]");
-        
-        private readonly By plusCurrencySelectorElementLocator = By.XPath("//*[@id=\"ChangeNodeLimit_currency_id\"]");
-        private readonly By plusCreditButtonLocator = By.XPath("//*[@id=\"operation-panel-content\"]/a[2]");
-        private readonly By plusCreditInputElementLocator = By.XPath("//*[@id=\"ChangeNodeLimit_amount\"]");
-        private readonly By plusCreditInputButtonElementLocator = By.XPath("//*[@id=\"change-node-limit\"]/div[4]/div/button");
+        private readonly By agentManagementBalanceLocator = By.XPath("//*[@id=\"form1\"]/table[1]/tbody/tr/td[2]");
+        private readonly By agentManagementButtonLocator = By.XPath("//*[@id=\"M_1\"]/table/tbody/tr[2]");
 
-        private readonly By negativeCurrencySelectorElementLocator = By.XPath("//*[@id=\"ChangeNodeLimit_currency_id\"]");
-        private readonly By negativeCreditButtonLocator = By.XPath("//*[@id=\"operation-panel-content\"]/a[3]");
-        private readonly By negativeCreditInputElementLocator = By.XPath("//*[@id=\"ChangeNodeLimit_amount\"]");
-        private readonly By negativeCreditInputButtonElementLocator = By.XPath("//*[@id=\"change-node-limit\"]/div[4]/div/button");
+        private readonly By agentAccountsSearchInputLocator = By.XPath("//*[@id=\"txtAccounts\"]");
+        private readonly By agentAccountSearchButtonLocator = By.Id("btnQuery");
 
-        private readonly By currentBalanceAmountElementLocator = By.XPath("//*[@id='isideScore']/div[1]/small");
-        private readonly By shopUserNameElementLocator = By.XPath("//*[@id='userForm']/div[2]/table/tbody/tr/td[2]/a");
+        private readonly By rechargeLinkLocator = By.XPath("//*[@id=\"list\"]/tbody/tr[2]/td[2]/a[2]");
+        private readonly By redeemLinkLocator = By.XPath("//*[@id=\"list\"]/tbody/tr[2]/td[2]/a[3]");
+
+        private readonly By rechargeNameLocator = By.XPath("//*[@id=\"dialogConfirmBox\"]/div[2]/div/div[1]/div/input[1]");
+        private readonly By rechargeInputLocator = By.XPath("//*[@id=\"scoreRecharge\"]");
+        private readonly By rechargeSaveButtonLocator = By.XPath("//*[@id=\"dialogConfirmBox\"]/div[2]/div/div[2]/a[1]");
+
+        private readonly By redeemNameLocator = By.XPath("//*[@id=\"dialogConfirmBox\"]/div[2]/div/div[1]/div/input[1]");
+        private readonly By redeemInputLocator = By.XPath("//*[@id=\"scoreRecharge\"]");
+        private readonly By redeemSaveButtonLocator = By.XPath("//*[@id=\"dialogConfirmBox\"]/div[2]/div/div[2]/a[1]");
+
+        private string userId;
 
 
         public BCLiveShopsManagement(IWebDriver driver)
@@ -39,14 +40,39 @@
 
         protected override string getBalance()
         {
-            var currentBalanceAmountElement = this.getElementByLocator(this.currentBalanceAmountElementLocator);
-            if (currentBalanceAmountElement == null)
+            var frames = this.driver.FindElements(By.TagName("iframe"));
+            this.driver.SwitchTo().Frame(0);
+            try
             {
-                return "0.00";
-            }
+                var agentManagementButtonElement = this.getElementByLocator(this.agentManagementButtonLocator);
+                if (agentManagementButtonElement == null)
+                {
+                    return string.Empty;
+                }
 
-            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Credits:", string.Empty);
-            return balanceAsString;
+                agentManagementButtonElement.Click();
+                this.driver.SwitchTo().ParentFrame();
+                frames = this.driver.FindElements(By.TagName("iframe"));
+                this.driver.SwitchTo().Frame(1);
+
+                var currentBalanceAmountElement = this.getElementByLocator(this.agentManagementBalanceLocator);
+                if (currentBalanceAmountElement == null)
+                {
+                    return "0.00";
+                }
+
+                // Find "Your Balance: and strip everthing (including 'Your Balance:') to the left
+                var text = currentBalanceAmountElement.Text;
+                text = text.Substring(text.IndexOf("Your Balance:", StringComparison.Ordinal) + "Your Balance:".Length);
+                var balanceAsString = text.Replace(" ", string.Empty);
+                return balanceAsString;
+            }
+            finally
+            {
+                this.driver.SwitchTo().ParentFrame();
+                var source = this.driver.PageSource;
+                frames = this.driver.FindElements(By.TagName("iframe"));
+            }
         }
 
         protected override bool isPageUrlSet()
@@ -57,30 +83,36 @@
 
         protected override bool locateDepositButtonAndClick(string userId)
         {
-            var searchFolderButtonElement = this.getElementByLocator(this.searchFolderButtonElementLocator);
-            if (searchFolderButtonElement == null)
+            // Have to go to iFrame on the left panel
+            this.driver.SwitchTo().Frame(1);
+
+            this.userId = userId;
+            var agentManagementButtonElement = this.getElementByLocator(this.agentManagementButtonLocator);
+            if (agentManagementButtonElement == null)
             {
                 return false;
             }
 
-            searchFolderButtonElement.Click();
+            agentManagementButtonElement.Click();
 
-            var searchInputBoxElement = this.getElementByLocator(this.searchInputBoxElementLocator);
-            if (searchInputBoxElement == null)
+            this.driver.SwitchTo().ParentFrame();
+            this.driver.SwitchTo().Frame(2);
+
+            var agentAccountsSearchInputElement = this.getElementByLocator(this.agentAccountsSearchInputLocator);
+            if (agentAccountsSearchInputElement == null)
             {
                 return false;
             }
 
-            searchInputBoxElement.SendKeys(userId);
+            agentAccountsSearchInputElement.SendKeys(userId);
 
-
-            var searchButtonElement = this.getElementByLocators(this.searchButtonHallElementLocator, this.searchButtonAgentElementLocator);
-            if (searchButtonElement == null)
+            var agentAccountSearchButtonElement = this.getElementByLocator(this.agentAccountSearchButtonLocator);
+            if (agentAccountSearchButtonElement == null)
             {
                 return false;
             }
 
-            searchButtonElement.Click();
+            agentAccountSearchButtonElement.Click();
 
 
             return true;
@@ -91,47 +123,49 @@
             var amountAsPenniesAsDollars = Math.Round(amountAsPennies / 100.0, 2);
             if (amountAsPenniesAsDollars > 0)
             {
-                var plusCreditButtonElement = this.getElementByLocator(this.plusCreditButtonLocator);
+                var plusCreditButtonElement = this.getElementByLocator(this.rechargeLinkLocator);
                 if (plusCreditButtonElement == null) return false;
 
                 plusCreditButtonElement.Click();
 
-                var currency = this.getElementByLocator(this.plusCurrencySelectorElementLocator);
-                if(currency == null) return false;
+                var nameElement = this.getElementByLocator(this.rechargeNameLocator);
+                if (nameElement == null) return false;
 
-                currency.SendKeys(Keys.Down);
-                currency.Click();
-                currency.SendKeys(Keys.Return);
+                var text = nameElement.GetAttribute("value").ToLower();
+                if (text != this.userId.ToLower())
+                {
+                    return false;
+                }
 
-                var plus = this.getElementByLocator(this.plusCreditInputElementLocator);
-                if (plus == null) return false;
-                plus.SendKeys(amountAsPenniesAsDollars.ToString());
+                var rechargeInputElement = this.getElementByLocator(this.rechargeInputLocator);
+                if (rechargeInputElement == null) return false;
+                rechargeInputElement.SendKeys(amountAsPenniesAsDollars.ToString());
 
-                var plusButton = this.getElementByLocator(this.plusCreditInputButtonElementLocator);
-                if(plusButton == null) return false;
-                // plusButton.Click();
+                var rechargeSaveButtonElement = this.getElementByLocator(this.rechargeSaveButtonLocator);
+                if (rechargeSaveButtonElement == null) return false;
+                // rechargeSaveButtonElement.Click();
             }
             else
             {
-                var negativeCreditButtonElement = this.getElementByLocator(this.negativeCreditButtonLocator);
+                var negativeCreditButtonElement = this.getElementByLocator(this.redeemLinkLocator);
                 if (negativeCreditButtonElement == null) return false;
 
                 negativeCreditButtonElement.Click();
 
-                var currency = this.getElementByLocator(this.negativeCurrencySelectorElementLocator);
-                if (currency == null) return false;
+                var nameElement = this.getElementByLocator(this.redeemNameLocator);
+                if (nameElement == null) return false;
+                if (nameElement.Text.ToLower() != this.userId.ToLower())
+                {
+                    return false;
+                }
 
-                currency.SendKeys(Keys.Down);
-                currency.Click();
-                currency.SendKeys(Keys.Return);
-                
-                var negative = this.getElementByLocator(this.negativeCreditInputElementLocator);
-                if (negative == null) return false;
-                negative.SendKeys(amountAsPenniesAsDollars.ToString());
+                var redeemInputElement = this.getElementByLocator(this.redeemInputLocator);
+                if (redeemInputElement == null) return false;
+                redeemInputElement.SendKeys(amountAsPennies.ToString());
 
-                var negativeButton = this.getElementByLocator(this.negativeCreditInputButtonElementLocator);
-                if (negativeButton == null) return false;
-                // negativeButton.Click();
+                var redeemSaveButtonElement = this.getElementByLocator(this.redeemSaveButtonLocator);
+                if (redeemSaveButtonElement == null) return false;
+                // redeemSaveButtonElement.Click();
             }
 
             return false;
@@ -140,17 +174,10 @@
         // For this site, balance is not available on the main screen.
         protected override bool verifyFundsAvailable(int points)
         {
-            return true;
-
-            var currentBalanceAmountElement = this.getElementByLocator(this.currentBalanceAmountElementLocator);
-            if (currentBalanceAmountElement == null)
-            {
-                return false;
-            }
-
-            var balanceAsString = currentBalanceAmountElement.Text.Replace(" ", string.Empty).Replace("Credits:", string.Empty);
+            var balanceAsString = this.getBalance();
             var currentBalance = decimal.Parse(balanceAsString);
             var pointsAsDollars = points * 1.0M / 100.0M;
+            return true;
             return currentBalance >= pointsAsDollars;
         }
 
