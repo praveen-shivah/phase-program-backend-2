@@ -52,9 +52,9 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var siteInformations = await context.SiteInformation.Where(x => x.ResellerId == resellerId).ToListAsync();
+                        var siteInformationList = await context.SiteInformation.Include("Vendor").Where(x => x.ResellerId == resellerId).ToListAsync();
                         result.Add(new SiteInformationDto() { IsPlaceHolder = true });
-                        foreach (var siteInformation in siteInformations)
+                        foreach (var siteInformation in siteInformationList)
                         {
                             result.Add(
                                 new SiteInformationDto()
