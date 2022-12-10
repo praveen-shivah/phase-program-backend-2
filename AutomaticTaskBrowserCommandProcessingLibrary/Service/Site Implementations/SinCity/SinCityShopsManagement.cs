@@ -5,7 +5,7 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class BCLiveShopsManagement : BaseManagementPage
+    public class SinCityShopsManagement : BaseManagementPage
     {
         private readonly string pageLoadedText = "Welcome,";
 
@@ -31,7 +31,7 @@
         private string userId;
 
 
-        public BCLiveShopsManagement(IWebDriver driver)
+        public SinCityShopsManagement(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);

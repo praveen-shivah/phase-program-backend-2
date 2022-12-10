@@ -12,10 +12,14 @@
         {
             this.GlobalContainer.Register<IResellerBalanceService, ResellerBalanceService>(Lifestyle.Transient);
             this.GlobalContainer.Register<IResellerRepository, ResellerRepository>(Lifestyle.Transient);
+            this.GlobalContainer.Register<IUpdateResellerSiteRepository, UpdateResellerSiteRepository>(Lifestyle.Transient);
 
             this.GlobalContainer.Register<IUpdateReseller, UpdateResellerStart>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerRetrieveReseller>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerUpdate>(Lifestyle.Transient);
+
+            this.GlobalContainer.Register<IUpdateResellerSite, UpdateResellerSiteStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IUpdateResellerSite, UpdateResellerSiteProcess>(Lifestyle.Transient);
 
             return true;
         }

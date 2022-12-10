@@ -23,11 +23,14 @@
 
         private readonly IResellerRepository resellerRepository;
 
-        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService, IResellerRepository resellerRepository)
+        private readonly IUpdateResellerSiteRepository updateResellerSiteRepository;
+
+        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService, IResellerRepository resellerRepository, IUpdateResellerSiteRepository updateResellerSiteRepository)
         {
             this.logger = logger;
             this.resellerBalanceService = resellerBalanceService;
             this.resellerRepository = resellerRepository;
+            this.updateResellerSiteRepository = updateResellerSiteRepository;
         }
 
         [HttpPost("reseller-balance")]
@@ -70,6 +73,20 @@
             this.logger.Debug(LogClass.General, "UpdateReseller received");
 
             var result = await this.resellerRepository.UpdateResellerRequestAsync(this.OrganizationId, resellerDto);
+            return this.Ok(result);
+        }
+
+        [HttpPost("update-reseller-site")]
+        public async Task<IActionResult> UpdateResellerSite(UpdateResellerSiteRequestDto updateResellerSiteRequestDto)
+        {
+            this.logger.Debug(LogClass.General, "UpdateResellerSite received");
+            var result = await this.updateResellerSiteRepository.UpdateResellerSiteAsync(
+                new UpdateResellerSiteRequest()
+                    {
+                        OrganizationId = this.OrganizationId,
+                        AccountId = updateResellerSiteRequestDto.AccountId,
+                        Id = updateResellerSiteRequestDto.Id
+                    });
             return this.Ok(result);
         }
     }

@@ -4,14 +4,14 @@ using OpenQA.Selenium;
 
 using SeleniumExtras.PageObjects;
 
-public class BCLiveLogout : BaseLogoutPage
+public class SinCity : BaseLogoutPage
 {
     private readonly string logoutPageUrl = "http://byagent.bclive.vip/LoginOut.aspx";
 
     private By logOutButtonLocator = By.XPath("");
     private By okButtonLocator = By.XPath("");
 
-    public BCLiveLogout(IWebDriver driver)
+    public SinCity(IWebDriver driver)
         : base(driver)
     {
         PageFactory.InitElements(driver, this);

@@ -85,6 +85,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalance
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAuthenticationRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ISecretKeyRetrieval>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerSiteRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
 
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());

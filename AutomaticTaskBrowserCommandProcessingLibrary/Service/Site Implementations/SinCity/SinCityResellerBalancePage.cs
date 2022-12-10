@@ -4,7 +4,7 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class BCLiveResellerBalancePage : BaseResellerBalancePage
+    public class SinCityResellerBalancePage : BaseResellerBalancePage
     {
         private readonly string pageLoadedText = "Agent account";
 
@@ -12,7 +12,7 @@
 
         private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
 
-        public BCLiveResellerBalancePage(IWebDriver driver)
+        public SinCityResellerBalancePage(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);

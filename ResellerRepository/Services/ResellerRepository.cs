@@ -59,10 +59,11 @@
                             result.Add(
                                 new SiteInformationDto()
                                 {
+                                    Id = siteInformation.Id,
                                     Description = siteInformation.Description,
                                     Item_Id = siteInformation.Item_Id,
                                     Url = siteInformation.URL,
-                                    UserName = siteInformation.AccountId,
+                                    AccountId = siteInformation.AccountId,
                                     VendorId = siteInformation.Vendor.Id.ToString()
                                 });
                         }

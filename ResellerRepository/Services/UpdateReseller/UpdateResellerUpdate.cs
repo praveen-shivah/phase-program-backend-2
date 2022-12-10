@@ -2,8 +2,6 @@
 {
     using DataPostgresqlLibrary;
 
-    using Microsoft.EntityFrameworkCore;
-
     using ResellerRepositoryTypes;
 
     public class UpdateResellerUpdate : IUpdateReseller

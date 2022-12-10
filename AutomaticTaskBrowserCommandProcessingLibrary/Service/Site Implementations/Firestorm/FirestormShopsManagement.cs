@@ -31,7 +31,7 @@
         private string userId;
 
 
-        public BCLiveShopsManagement(IWebDriver driver)
+        public FirestormShopsManagement(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);
