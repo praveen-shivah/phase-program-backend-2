@@ -48,6 +48,13 @@
         }
 
         [AllowAnonymous]
+        [HttpGet("health-check")]
+        public IActionResult Get()
+        {
+            return this.Ok();
+        }
+
+        [AllowAnonymous]
         [HttpPost("admin-login")]
         public async Task<ActionResult<AuthenticateResponseDto>> AdminLogin(AuthenticateRequestDto authenticateDto)
         {
@@ -98,7 +105,7 @@
             this.logger.Debug(LogClass.General, "GetUsers received");
 
             var result = await this.authenticationRepository.GetUsers();
-           return this.Ok(result);
+            return this.Ok(result);
         }
 
         [HttpPost("update-user")]

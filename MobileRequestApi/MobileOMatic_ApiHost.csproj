@@ -7,8 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.33" />
-    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.23" />
+    <Content Remove="appsettings.Development.json" />
+    <Content Remove="appsettings.Production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.50" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.50" />
     <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />

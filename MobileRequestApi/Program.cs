@@ -90,9 +90,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQu
 
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-connectionString = @"host=localhost;database=postgres2;user id=postgres;pwd=~!AmyLee~!0;Include Error Detail=true";
-
+var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 builder.Services.AddDbContext<DPContext>(options =>
     {
         options.UseNpgsql(connectionString);
@@ -118,7 +116,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseRequestResponseLogging();
     app.UseSwagger();

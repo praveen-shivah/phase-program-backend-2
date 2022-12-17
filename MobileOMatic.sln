@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp9", "ConsoleApp9\ConsoleApp9.csproj", "{084E4685-BC92-4EDE-8C82-639192616C3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiHost", "MobileRequestApi\ApiHost.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileOMatic_ApiHost", "MobileRequestApi\MobileOMatic_ApiHost.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Information", "Docker Information", "{04B0A01A-9B26-4A77-A4FF-F9383FC9A685}"
 	ProjectSection(SolutionItems) = preProject
@@ -97,7 +97,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SiteSide", "SiteSide", "{A1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ZohoSide", "ZohoSide", "{57E6D0DC-5947-4927-A3D9-97745B3E84C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomaticTaskQueueLibrary", "AutomaticTaskQueueLibrary\AutomaticTaskQueueLibrary.csproj", "{7AB82668-99B6-4558-85C7-7DF6FA6A5C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticTaskQueueLibrary", "AutomaticTaskQueueLibrary\AutomaticTaskQueueLibrary.csproj", "{7AB82668-99B6-4558-85C7-7DF6FA6A5C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

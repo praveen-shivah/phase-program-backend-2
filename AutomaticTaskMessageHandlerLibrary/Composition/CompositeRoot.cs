@@ -28,7 +28,6 @@
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterInstance<IConfiguration>(new ConfigurationBuilder().Build());
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IEndpointConfigurationFactory, EndpointConfigurationFactoryTestingLocal>();
