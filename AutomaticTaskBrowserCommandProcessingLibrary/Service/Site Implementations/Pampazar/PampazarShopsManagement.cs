@@ -113,7 +113,7 @@
 
             setPointsRemarksInputELement.SendKeys($"Invoice line item id: {invoiceLineItemId}");
 
-            // this.depositButtonElement.Click();
+            // setPointsRemarksInputELement.Click();
 
             return true;
         }

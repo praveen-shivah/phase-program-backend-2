@@ -115,7 +115,12 @@
             setPointsRemarksInputELement.SendKeys($"Invoice line item id: {invoiceLineItemId}");
             var depositButtonElement = this.getElementByLocator(this.depositOkButtonLocator);
 
-            // this.depositButtonElement.Click();
+            if (depositButtonElement == null)
+            {
+                return false;
+            }
+
+            depositButtonElement.Click();
 
             return true;
         }

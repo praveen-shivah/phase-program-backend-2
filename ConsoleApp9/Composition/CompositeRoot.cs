@@ -2,17 +2,11 @@
 {
     using ApplicationLifeCycle;
 
-    using AutomaticTaskLibrary;
-
     using DatabaseClassLibrary;
 
     using DataPostgresqlLibrary;
 
-    using InvoiceRepository;
-
     using LoggingLibrary;
-
-    using Microsoft.Extensions.Configuration;
 
     using SharedUtilities;
 

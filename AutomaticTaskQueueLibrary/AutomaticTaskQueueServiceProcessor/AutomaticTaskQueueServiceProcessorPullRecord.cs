@@ -2,15 +2,20 @@
 
 using DataPostgresqlLibrary;
 
+using LoggingLibrary;
+
 using Microsoft.EntityFrameworkCore;
 
 public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueServiceProcessor
 {
-    private IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
+    private readonly IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
 
-    public AutomaticTaskQueueServiceProcessorPullRecord(IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor)
+    private readonly ILogger logger;
+
+    public AutomaticTaskQueueServiceProcessorPullRecord(IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor, ILogger logger)
     {
         this.automaticTaskQueueServiceProcessor = automaticTaskQueueServiceProcessor;
+        this.logger = logger;
     }
 
     async Task<AutomaticTaskQueueServiceProcessorResponse> IAutomaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(
@@ -31,6 +36,7 @@ public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueS
         }
 
         response.InvoiceLineItemRecord = await context.InvoiceLineItem.SingleOrDefaultAsync(x => x.ItemId == response.QueueRecord.ItemId);
+        this.logger.Info(LogClass.CommRest, $"AutomaticTaskQueueServiceProcessorPullRecord pulled record Id: {response.QueueRecord.Id} ItemId: {response.QueueRecord.ItemId}");
 
         return response;
     }

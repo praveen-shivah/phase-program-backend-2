@@ -141,7 +141,7 @@
 
                 var rechargeSaveButtonElement = this.getElementByLocator(this.rechargeSaveButtonLocator);
                 if (rechargeSaveButtonElement == null) return false;
-                // rechargeSaveButtonElement.Click();
+                rechargeSaveButtonElement.Click();
             }
             else
             {

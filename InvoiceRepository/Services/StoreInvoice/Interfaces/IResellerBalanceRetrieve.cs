@@ -6,6 +6,6 @@
 
     public interface IResellerBalanceRetrieve
     {
-        Task<ResellerBalanceRetrieveResponse> GetBalance(ResellerBalanceRetrieveRequest request);
+        Task<ResellerBalanceRetrieveResponseDto> GetBalance(ResellerBalanceRetrieveRequestDto requestDto);
     }
 }

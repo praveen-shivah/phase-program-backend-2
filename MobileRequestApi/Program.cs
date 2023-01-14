@@ -7,8 +7,6 @@ using ApiHost.Middleware;
 
 using AuthenticationRepository;
 
-using AuthenticationRepositoryTypes;
-
 using AutomaticTaskQueueLibrary;
 
 using CommonServices;
@@ -25,7 +23,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 using MobileOMaticBackgroundServicesLibrary;
@@ -56,13 +53,13 @@ var logger = loggerFactory.Create("HostingApplicationService");
 
 
 var builder = WebApplication.CreateBuilder(args);
-var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var allowLocalHostOrigins = "allowLocalHostOrigins";
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy(name: myAllowSpecificOrigins,
+        options.AddPolicy(name: allowLocalHostOrigins,
             policy =>
                 {
-                    policy.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    policy.WithOrigins("http://localhost:8080", "http://mobileomatic.us-east-1.elasticbeanstalk.com").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
     });
 
@@ -115,7 +112,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP requestDto pipeline.
 //if (app.Environment.IsDevelopment())
 {
     app.UseRequestResponseLogging();
@@ -125,7 +122,7 @@ var app = builder.Build();
 
 // app.UseHttpsRedirection();
 app.UseValidateAPICall();
-app.UseCors(myAllowSpecificOrigins);
+app.UseCors(allowLocalHostOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

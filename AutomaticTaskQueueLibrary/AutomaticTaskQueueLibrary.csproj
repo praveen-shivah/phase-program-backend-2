@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="AutomaticTaskQueueServiceProcessor\Interfaces\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +21,7 @@
     <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
     <ProjectReference Include="..\InvoiceRepository\InvoiceRepository.csproj" />
+    <ProjectReference Include="..\RestServicesSupport\RestServicesSupport.csproj" />
     <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
   </ItemGroup>
 

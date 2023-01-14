@@ -2,10 +2,8 @@
 {
     using AutomaticTaskSharedLibrary;
 
-    using InvoiceRepositoryTypes;
-
     public interface IDistributorToOperatorSendPointsTransfer
     {
-        Task<DistributorToOperatorSendPointsTransferResponse> SendPointsTransfer(DistributorToResellerSendPointsTransferRequest request);
+        Task<DistributorToOperatorSendPointsTransferResponseDto> SendPointsTransfer(DistributorToResellerSendPointsTransferRequestDto requestDto);
     }
 }

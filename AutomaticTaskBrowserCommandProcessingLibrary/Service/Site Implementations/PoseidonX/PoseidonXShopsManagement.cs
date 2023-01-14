@@ -143,7 +143,7 @@
 
                 var plusButton = this.getElementByLocator(this.plusCreditInputButtonElementLocator);
                 if (plusButton == null) return false;
-                // plusButton.Click();
+                plusButton.Click();
             }
             else
             {
@@ -163,7 +163,7 @@
 
                 var negativeButton = this.getElementByLocator(this.negativeCreditInputButtonElementLocator);
                 if (negativeButton == null) return false;
-                // negativeButton.Click();
+                negativeButton.Click();
             }
 
             return false;

@@ -17,7 +17,7 @@
 
         void IDistributorToResellerSendPointsTransferTest.RunTest()
         {
-            var vendorToOperatorSendPointsTransferRequest = new DistributorToResellerSendPointsTransferRequest
+            var vendorToOperatorSendPointsTransferRequest = new DistributorToResellerSendPointsTransferRequestDto
                                                                 {
                                                                     AccountId = "goldshop",
                                                                     Password = "239239",

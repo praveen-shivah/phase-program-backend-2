@@ -2,8 +2,6 @@
 
 using System.Reflection;
 
-using AutomaticTaskLibrary;
-
 using ConsoleApp9;
 
 using log4net;

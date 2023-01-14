@@ -1,20 +1,16 @@
 ﻿
+using System;
+using System.IO;
 using System.Reflection;
 
 using AutomaticTaskBrowserCommandProcessingLibrary;
 
-using AutomaticTaskSharedLibrary;
-
 using log4net;
 using log4net.Config;
 
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-using NServiceBus;
-using NServiceBus.SimpleInjector;
 
 using SimpleInjector.Lifestyles;
 
@@ -25,49 +21,60 @@ Console.WriteLine("Starting");
 var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("HostingRestService");
 applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.GlobalContainer.Options.AllowOverridingRegistrations = true;
-applicationLifeCycle.GlobalContainer.Options.AutoWirePropertiesImplicitly();
 applicationLifeCycle.Initialize();
 var response = applicationLifeCycle.StartRequest();
 
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
 
-var endpointConfigurationFactory = applicationLifeCycle.Resolve<IEndpointConfigurationFactory>();
-
-var host = Host.CreateDefaultBuilder(args)
-    // Configure a host for the endpoint
-    .ConfigureLogging((context, logging) =>
+var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(
+    serverOptions =>
         {
-            logging.AddConfiguration(context.Configuration.GetSection("Logging"));
-
-            logging.AddConsole();
-        })
-    .UseConsoleLifetime()
-    .ConfigureServices(
-        services =>
-            {
-                services.AddScoped((_) => applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferHandler>());
-                services.AddScoped((_) => applicationLifeCycle.Resolve<IResellerBalanceRetrieveHandler>());
-
-                services.AddTransient<Func<AutomaticTaskType, IAutomaticTaskMessageHandler?>>(
-                    serviceProvider => key =>
-                        {
-                            switch (key)
-                            {
-                                case AutomaticTaskType.distributorToResellerSendPointsTransfer:
-                                    return serviceProvider.GetService<IDistributorToResellerSendPointsTransferHandler>();
-                                case AutomaticTaskType.resellerBalanceRetrieve:
-                                    return serviceProvider.GetService<IResellerBalanceRetrieveHandler>();
-                                default:
-                                    throw new ArgumentOutOfRangeException(nameof(key), key, null);
-                            }
-                        });
-            })
-    .UseNServiceBus(context =>
+            serverOptions.ListenAnyIP(5000);
+            serverOptions.ListenAnyIP(5001);
+        });
+var allowLocalHostOrigins = "allowLocalHostOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: allowLocalHostOrigins,
+        policy =>
         {
-            var endpointConfiguration = endpointConfigurationFactory.CreateEndpointConfiguration(EndpointConfigurationConstants.HandlerEndpoint, EndpointConfigurationConstants.QueueEndpoint);
-            return endpointConfiguration;
-        })
-    .Build();
+            policy.WithOrigins("http://localhost:8080", "http://mobileomatic.us-east-1.elasticbeanstalk.com").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+        });
+});
 
-await host.RunAsync();
+// Add services to the container.
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Register dependencies here
+builder.Services.AddSingleton(logger);
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferProcessor>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceRetrieveProcessor>());
+
+// builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
+
+// Register background services here
+//builder.Services.AddHostedService<DataHostedService>();
+//builder.Services.AddHostedService<AutomaticTaskQueueService>();
+
+
+var app = builder.Build();
+
+// Configure the HTTP requestDto pipeline.
+//if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// app.UseHttpsRedirection();
+app.UseCors(allowLocalHostOrigins);
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();

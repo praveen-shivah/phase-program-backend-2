@@ -143,7 +143,7 @@
 
                 var rechargeSaveButtonElement = this.getElementByLocator(this.rechargeSaveButtonLocator);
                 if (rechargeSaveButtonElement == null) return false;
-                // rechargeSaveButtonElement.Click();
+                rechargeSaveButtonElement.Click();
             }
             else
             {
@@ -165,7 +165,7 @@
 
                 var redeemSaveButtonElement = this.getElementByLocator(this.redeemSaveButtonLocator);
                 if (redeemSaveButtonElement == null) return false;
-                // redeemSaveButtonElement.Click();
+                redeemSaveButtonElement.Click();
             }
 
             return false;

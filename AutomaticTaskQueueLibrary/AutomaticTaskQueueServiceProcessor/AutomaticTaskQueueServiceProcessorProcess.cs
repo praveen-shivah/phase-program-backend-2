@@ -10,20 +10,26 @@ using DataPostgresqlLibrary;
 
 using InvoiceRepository;
 
+using LoggingLibrary;
+
 public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServiceProcessor
 {
-    private IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
+    private readonly IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
 
     private readonly IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer;
+
+    private readonly ILogger logger;
 
     private readonly IDateTimeService dateTimeService;
 
     public AutomaticTaskQueueServiceProcessorProcess(IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor,
                                                      IDistributorToOperatorSendPointsTransfer distributorToOperatorSendPointsTransfer,
+                                                     ILogger logger,
                                                      IDateTimeService dateTimeService)
     {
         this.automaticTaskQueueServiceProcessor = automaticTaskQueueServiceProcessor;
         this.distributorToOperatorSendPointsTransfer = distributorToOperatorSendPointsTransfer;
+        this.logger = logger;
         this.dateTimeService = dateTimeService;
     }
 
@@ -37,22 +43,30 @@ public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServ
             return response;
         }
 
-
-        await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
-            new DistributorToResellerSendPointsTransferRequest
-            {
-                InvoiceLineItemId = response.QueueRecord.InvoiceLineItemId,
-                OrganizationId = response.QueueRecord.Organization.Id,
-                APIKey = response.QueueRecord.Organization.APIKey,
-                SoftwareType = response.QueueRecord.SoftwareType,
-                UserId = response.QueueRecord.UserId,
-                Password = response.QueueRecord.Password,
-                AccountId = response.QueueRecord.AccountId,
-                Points = response.QueueRecord.Points,
-            });
-
         response.QueueRecord.DateTimeProcessStarted = this.dateTimeService.UtcNow;
-        response.InvoiceLineItemRecord.DateTimeProcessStarted = this.dateTimeService.UtcNow;
+        var sendPointsResponse = await this.distributorToOperatorSendPointsTransfer.SendPointsTransfer(
+                                     new DistributorToResellerSendPointsTransferRequestDto
+                                         {
+                                             InvoiceLineItemId = response.QueueRecord.InvoiceLineItemId,
+                                             OrganizationId = response.QueueRecord.Organization.Id,
+                                             APIKey = response.QueueRecord.Organization.APIKey,
+                                             SoftwareType = response.QueueRecord.SoftwareType,
+                                             UserId = response.QueueRecord.UserId,
+                                             Password = response.QueueRecord.Password,
+                                             AccountId = response.QueueRecord.AccountId,
+                                             Points = response.QueueRecord.Points,
+                                         });
+
+        this.logger.Info(LogClass.CommRest, $"AutomaticTaskQueueServiceProcessorProcess Id {response.QueueRecord.Id}  IsSuccessful: {sendPointsResponse.IsSuccessful}");
+        if (sendPointsResponse.IsSuccessful)
+        {
+            response.QueueRecord.DateTimeSent = this.dateTimeService.UtcNow;
+            response.InvoiceLineItemRecord.DateTimeProcessStarted = this.dateTimeService.UtcNow;
+        }
+        else
+        {
+            response.QueueRecord.DateTimeProcessStarted = null;
+        }
 
         return response;
     }

@@ -30,7 +30,6 @@
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.22.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NServiceBus" Version="7.7.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.0" />
@@ -52,6 +51,8 @@
     <ProjectReference Include="..\OrganizationRepository\OrganizationRepository.csproj" />
     <ProjectReference Include="..\ResellerRepositoryTypes\ResellerRepositoryTypes.csproj" />
     <ProjectReference Include="..\ResellerRepository\ResellerRepository.csproj" />
+    <ProjectReference Include="..\RestServicesSupportTypes\RestServicesSupportTypes.csproj" />
+    <ProjectReference Include="..\RestServicesSupport\RestServicesSupport.csproj" />
     <ProjectReference Include="..\SecurityUtilitiesTypes\SecurityUtilitiesTypes.csproj" />
     <ProjectReference Include="..\SecurityUtilities\SecurityUtilities.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />

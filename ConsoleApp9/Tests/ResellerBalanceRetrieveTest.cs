@@ -17,7 +17,7 @@
 
         void IResellerBalanceRetrieveTest.RunTest()
         {
-            var request = new ResellerBalanceRetrieveRequest
+            var request = new ResellerBalanceRetrieveRequestDto
                                                    {
                                                        OrganizationId = "1",
                                                        ApiKey = "test",

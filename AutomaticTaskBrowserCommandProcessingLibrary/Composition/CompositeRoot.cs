@@ -10,10 +10,10 @@
         {
             this.GlobalContainer.Register<IBrowserContextFactory, BrowserContextFactory>(Lifestyle.Singleton);
 
-            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferHandler, DistributorToResellerSendPointsTransferHandler>();
+            this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferProcessor, DistributorToResellerSendPointsTransferProcessor>();
             this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferAdapter, DistributorToResellerTransferAdapter>();
 
-            this.GlobalContainer.Register<IResellerBalanceRetrieveHandler, ResellerBalanceRetrieveHandler>();
+            this.GlobalContainer.Register<IResellerBalanceRetrieveProcessor, ResellerBalanceRetrieveProcessor>();
             this.GlobalContainer.Register<IResellerBalanceRetrieveAdapter, ResellerBalanceRetrieveAdapter>();
 
             this.GlobalContainer.Register<ILoginPageFactory, LoginPageFactory>();

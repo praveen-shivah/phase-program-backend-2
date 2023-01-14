@@ -1,6 +1,9 @@
-﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
+﻿using AutomaticTaskSharedLibrary;
+
+namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
-    public interface IDistributorToResellerSendPointsTransferHandler : IAutomaticTaskMessageHandler
+    public interface IDistributorToResellerSendPointsTransferHandler
     {
+        Task<bool> Execute(ResellerBalanceRetrieveRequestDto resellerBalanceRetrieveRequestDto);
     }
 }

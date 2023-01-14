@@ -1,8 +1,6 @@
 ﻿namespace AutomaticTaskMessageLibrary
 {
-    using NServiceBus;
-
-    public class TransferPointsRequest : ICommand
+    public class TransferPointsRequest
     {
         public int SiteId { get; set; }
         public int OperatorId { get; set; }

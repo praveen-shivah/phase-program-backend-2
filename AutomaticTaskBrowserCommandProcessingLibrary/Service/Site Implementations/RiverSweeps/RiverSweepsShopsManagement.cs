@@ -14,6 +14,8 @@
         private By depositAmountLocator = By.XPath("//*[@id='modal-deposite-amount']");
         private By tableAccountsLocator = By.Id("table-accounts");
 
+        private By depositApplyLocator = By.XPath("/html/body/div[1]/div[2]/div/div[2]/div/div[1]/form/div[3]/input[1]");
+
         public RiverSweepsShopsManagement(IWebDriver driver)
             : base(driver)
         {
@@ -49,7 +51,6 @@
             }
 
             depositButtonElement.Click();
-            var depositAmountElement = this.getElementByLocator(this.depositAmountLocator);
 
             return true;
         }
@@ -57,8 +58,20 @@
         protected override bool makeDeposit(int amount, string invoiceLineItemId)
         {
             var depositAmountElement = this.getElementByLocator(this.depositAmountLocator);
+            if (depositAmountElement == null)
+            {
+                return false;
+            }
+
             depositAmountElement.SendKeys(amount.ToString());
-            // depositButtonElement.Click();
+
+            var depositApplyButton = this.getElementByLocator(this.depositApplyLocator);
+            if (depositApplyButton == null)
+            {
+                return false;
+            }
+
+            depositApplyButton.Click();
 
             return true;
         }

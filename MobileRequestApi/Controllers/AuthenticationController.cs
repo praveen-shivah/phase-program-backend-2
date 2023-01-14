@@ -24,7 +24,7 @@
     [Authorize]
     [ApiController]
     [Route("api/authentication")]
-    [EnableCors("_myAllowSpecificOrigins")]
+    [EnableCors("allowLocalHostOrigins")]
     public class AuthenticationController : ApiControllerBase
     {
         private readonly IAuthenticationRepository authenticationRepository;
@@ -158,7 +158,7 @@
         private string ipAddress()
         {
             string? result;
-            // get source ip address for the current request
+            // get source ip address for the current requestDto
             if (this.Request.Headers.ContainsKey("X-Forwarded-For"))
             {
                 result = this.Request.Headers["X-Forwarded-For"];

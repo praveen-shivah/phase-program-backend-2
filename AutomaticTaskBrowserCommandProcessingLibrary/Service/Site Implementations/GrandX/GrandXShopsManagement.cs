@@ -100,6 +100,7 @@
                 {
                     return false;
                 }
+                creditbuttonElement.Click();
             }
             else
             {
@@ -111,10 +112,9 @@
                 {
                     return false;
                 }
-
+                creditbuttonElement.Click();
             }
 
-            // this.creditbuttonElement.Click();
             return false;
         }
 
