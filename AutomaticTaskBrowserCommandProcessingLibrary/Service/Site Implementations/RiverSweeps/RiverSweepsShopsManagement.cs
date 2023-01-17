@@ -55,7 +55,7 @@
             return true;
         }
 
-        protected override bool makeDeposit(int amount, string invoiceLineItemId)
+        protected override bool makeDeposit(int amountAsPennies, string invoiceLineItemId)
         {
             var depositAmountElement = this.getElementByLocator(this.depositAmountLocator);
             if (depositAmountElement == null)
@@ -63,7 +63,8 @@
                 return false;
             }
 
-            depositAmountElement.SendKeys(amount.ToString());
+            var amountAsPenniesAsDollars = Math.Round(amountAsPennies / 100.0, 2);
+            depositAmountElement.SendKeys(amountAsPenniesAsDollars.ToString());
 
             var depositApplyButton = this.getElementByLocator(this.depositApplyLocator);
             if (depositApplyButton == null)

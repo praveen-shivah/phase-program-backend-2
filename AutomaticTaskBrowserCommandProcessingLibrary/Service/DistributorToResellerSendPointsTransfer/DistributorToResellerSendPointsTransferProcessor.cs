@@ -30,7 +30,7 @@
                         {
                             var request = new DistributorToResellerSendPointsTransferRequest(invoiceLineItemId, softwareType, userId, password, accountId, points);
                             var response = this.distributorToResellerSendPointsTransferAdapter.Execute(driver, request);
-                            // ZQ driver?.Quit();
+                            driver?.Quit();
                             return response.IsSuccessful;
                         }
                         catch (Exception e)
