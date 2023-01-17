@@ -27,5 +27,7 @@
         public string ResellerBalance { get; set; }
 
         public ILogoutPage LogoutPage { get; set; }
+
+        public int BalanceAsPoints { get; set; }
     }
 }

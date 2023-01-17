@@ -19,6 +19,7 @@
                 return response;
             }
 
+            response.LogoutPage.Logout();
             response.ResponseType = ResellerBalanceRetrieveResponseType.logoutVerifyLoad;
             response.LogoutPage.VerifyPageUrl();
 

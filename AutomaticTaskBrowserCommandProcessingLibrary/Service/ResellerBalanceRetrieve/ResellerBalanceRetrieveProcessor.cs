@@ -2,6 +2,8 @@
 {
     using AutomaticTaskSharedLibrary;
 
+    using InvoiceRepositoryTypes;
+
     using OpenQA.Selenium.Chrome;
 
     public class ResellerBalanceRetrieveProcessor : IResellerBalanceRetrieveProcessor
@@ -13,9 +15,9 @@
             this.resellerBalanceRetrieveAdapter = resellerBalanceRetrieveAdapter;
         }
 
-        Task<bool> IResellerBalanceRetrieveProcessor.Execute(ResellerBalanceRetrieveRequestDto resellerBalanceRetrieveRequestDto)
+        Task<ResellerBalanceRetrieveResponseDto> IResellerBalanceRetrieveProcessor.Execute(ResellerBalanceRetrieveRequestDto resellerBalanceRetrieveRequestDto)
         {
-            return Task.Factory.StartNew(
+            return Task<ResellerBalanceRetrieveResponseDto>.Factory.StartNew(
                 () =>
                     {
                         var resellerId = resellerBalanceRetrieveRequestDto.ResellerId;
@@ -31,14 +33,25 @@
                             var request = new ResellerBalanceRetrieveRequest(softwareType, organizationId, apiKey, resellerId, userId, password);
                             var response = this.resellerBalanceRetrieveAdapter.Execute(driver, request);
                             driver.Quit();
-                            return response.IsSuccessful;
+
+                            var result = new ResellerBalanceRetrieveResponseDto()
+                            {
+                                IsSuccessful = response.IsSuccessful,
+                                BalanceAsPoints = response.BalanceAsPoints
+                            };
+                            return result;
                         }
                         catch
                         {
                         }
 
                         driver.Quit();
-                        return false;
+
+                        return new ResellerBalanceRetrieveResponseDto()
+                        {
+                            IsSuccessful = false,
+                            BalanceAsPoints = 0
+                        };
                     });
         }
     }

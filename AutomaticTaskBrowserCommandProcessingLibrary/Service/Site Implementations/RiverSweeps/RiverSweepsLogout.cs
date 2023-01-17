@@ -7,6 +7,7 @@ using SeleniumExtras.PageObjects;
 
 public class RiverSweepsLogout : BaseLogoutPage
 {
+    private readonly string loginPageUrl = "https://river-pay.com/office/login";
     private readonly string logoutPageUrl = "https://river-pay.com/office/logout";
 
     public RiverSweepsLogout(IWebDriver driver)
@@ -23,7 +24,7 @@ public class RiverSweepsLogout : BaseLogoutPage
 
     protected override bool verifyPageUrl(IWebDriver driver)
     {
-        this.wait.Until(d => { return d.Url.Contains(this.logoutPageUrl); });
+        this.wait.Until(d => { return d.Url.Contains(this.loginPageUrl); });
         return true;
     }
 }

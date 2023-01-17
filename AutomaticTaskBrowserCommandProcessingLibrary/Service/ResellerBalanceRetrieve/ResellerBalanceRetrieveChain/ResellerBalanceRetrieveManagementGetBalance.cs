@@ -22,6 +22,7 @@
             response.ResponseType = ResellerBalanceRetrieveResponseType.managementRetrieveBalance;
 
             response.ResellerBalance = response.ManagementPage.GetBalance();
+            response.BalanceAsPoints = (int)(double.Parse(response.ResellerBalance) * 100);
 
             return response;
         }
