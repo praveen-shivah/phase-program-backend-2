@@ -4,14 +4,14 @@ using OpenQA.Selenium;
 
 using SeleniumExtras.PageObjects;
 
-public class VPowerLogout : BaseLogoutPage
+public class VBlinkLogout : BaseLogoutPage
 {
-    private readonly string logoutPageUrl = "https://river-pay.com/office/logout";
+    private readonly string logoutPageUrl = "https://gm.vblink777.club/#/manage-user/search";
 
     private By logOutButtonLocator = By.XPath("");
     private By okButtonLocator = By.XPath("");
 
-    public VPowerLogout(IWebDriver driver)
+    public VBlinkLogout(IWebDriver driver)
         : base(driver)
     {
         PageFactory.InitElements(driver, this);
@@ -19,12 +19,6 @@ public class VPowerLogout : BaseLogoutPage
 
     protected override bool logout(IWebDriver webDriver)
     {
-        var logOutButton = this.getElementByLocator(this.logOutButtonLocator);
-        logOutButton.Click();
-
-        var okButton = this.getElementByLocator(this.okButtonLocator);
-        okButton.Click();
-
         return true;
     }
 

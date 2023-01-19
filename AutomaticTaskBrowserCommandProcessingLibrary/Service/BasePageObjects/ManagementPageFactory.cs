@@ -14,8 +14,8 @@
                     return new RiverSweepsShopsManagement(webDriver);
                 case SoftwareTypeEnum.ultraPanda:
                     return new UltraPandaShopsManagement(webDriver);
-                case SoftwareTypeEnum.vPower:
-                    return new VPowerShopsManagement(webDriver);
+                case SoftwareTypeEnum.vBlink:
+                    return new VBlinkShopsManagement(webDriver);
                 case SoftwareTypeEnum.vegasX:
                     return new VegasXShopsManagement(webDriver);
                 case SoftwareTypeEnum.grandX:

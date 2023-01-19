@@ -1,27 +1,26 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
     using OpenQA.Selenium;
-    using OpenQA.Selenium.Support.UI;
 
     using SeleniumExtras.PageObjects;
 
-    public class VPowerShopsManagement : BaseManagementPage
+    public class VBlinkShopsManagement : BaseManagementPage
     {
         private readonly string pageLoadedText = "Agent account";
 
-        private readonly string pageUrl = "https://go123.vpower777.com/#/manage-user/search";
+        private readonly string pageUrl = "https://gm.vblink777.club/#/manage-user/search";
 
         private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
         private By setPointsInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[3]/div/div/input");
         private By setPointsRemarksInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[4]/div/div/textarea");
-        private By setScoreButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[11]/div/button[1]");
+        private By setScoreButtonLocator = By.XPath("/html/body/div/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[16]/div/button[1]");
         private By okButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[3]/div/button");
         private By searchInputBoxElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[2]/div/div/div/div[1]/input");
         private By userAccountIdElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[2]/div/a/span");
         private By agentAccountRadioButtonElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[1]/div/div/label[1]/span[2]");
         private By depositOkButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[5]/div/button[1]");
 
-        public VPowerShopsManagement(IWebDriver driver)
+        public VBlinkShopsManagement(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);

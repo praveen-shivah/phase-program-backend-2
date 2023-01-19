@@ -4,17 +4,17 @@ using OpenQA.Selenium;
 
 using SeleniumExtras.PageObjects;
 
-public class VPowerLogin : BaseLoginPage
+public class VBlinkLogin : BaseLoginPage
 {
     private readonly string pageLoadedText = "passWd";
 
-    private readonly string pageUrl = "https://go123.vpower777.com/#/login";
+    private readonly string pageUrl = "https://gm.vblink777.club/#/login";
 
-    private By userNameLocator = By.XPath("//*[@id='app']/div/div/form/div[1]/div/div[1]/input");
-    private By passwordLocator = By.XPath("//*[@id='app']/div/div/form/div[2]/div/div/input");
-    private By loginBtnLocator = By.XPath("//*[@id='app']/div/div/form/button[1]");
+    private readonly By loginBtnLocator = By.XPath("//*[@id='app']/div/div/form/button[1]");
+    private readonly By passwordLocator = By.XPath("//*[@id='app']/div/div/form/div[2]/div/div/input");
+    private readonly By userNameLocator = By.XPath("//*[@id='app']/div/div/form/div[1]/div/div[1]/input");
 
-    public VPowerLogin(
+    public VBlinkLogin(
         IWebDriver driver,
         LoginPageInformation loginPageInformation)
         : base(driver, loginPageInformation)

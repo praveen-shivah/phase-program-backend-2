@@ -17,9 +17,7 @@
         private By okButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[3]/div/button");
         private By searchInputBoxElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[2]/div/div/div/div[1]/input");
         private By userAccountIdElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[2]/div/a/span");
-
         private By okSetScoreOkButtonLocator = By.XPath("/html/body/div/div/div[2]/section/div/div[4]/div/form/div[5]/div/button[1]");
-
         private By agentAccountRadioButtonElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[1]/div/div/label[1]/span[2]");
 
         public UltraPandaShopsManagement(IWebDriver driver)

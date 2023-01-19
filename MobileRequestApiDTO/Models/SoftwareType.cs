@@ -45,6 +45,8 @@
         nobel777 = 21,
 
         ultraPanda = 22,
+
+        vBlink = 23
     }
 
 }

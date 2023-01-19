@@ -4,15 +4,15 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class VPowerResellerBalancePage : BaseResellerBalancePage
+    public class VBlinkResellerBalancePage : BaseResellerBalancePage
     {
         private readonly string pageLoadedText = "Agent account";
 
-        private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
+        private readonly string pageUrl = "https://gm.vblink777.club/#/manage-user/search";
 
         private By currentBalanceAmountElementLocator = By.XPath("/html/body/div[1]/div/div[2]/div/div[1]/div[3]/p");
 
-        public VPowerResellerBalancePage(IWebDriver driver)
+        public VBlinkResellerBalancePage(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);

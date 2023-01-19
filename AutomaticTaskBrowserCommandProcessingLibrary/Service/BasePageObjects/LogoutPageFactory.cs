@@ -14,8 +14,8 @@
                     return new RiverSweepsLogout(webDriver);
                 case SoftwareTypeEnum.ultraPanda:
                     return new UltraPandaLogout(webDriver);
-                case SoftwareTypeEnum.vPower:
-                    return new VPowerLogout(webDriver);
+                case SoftwareTypeEnum.vBlink:
+                    return new VBlinkLogout(webDriver);
                 case SoftwareTypeEnum.vegasX:
                     return new VegasXLogout(webDriver);
                 case SoftwareTypeEnum.grandX:
