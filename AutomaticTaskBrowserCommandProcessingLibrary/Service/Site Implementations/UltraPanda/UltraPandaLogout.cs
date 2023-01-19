@@ -4,15 +4,15 @@ using OpenQA.Selenium;
 
 using SeleniumExtras.PageObjects;
 
-public class UltraMonsterLogout : BaseLogoutPage
+public class UltraPandaLogout : BaseLogoutPage
 {
-    private readonly string logoutPageUrl = "https://river-pay.com/office/logout";
+    private readonly string logoutPageUrl = "https://ht.ultrapanda.mobi/#/index";
 
     private By logoutBtnLocator = By.XPath(@"/html/body/div[1]/div/div[1]/div/div[1]/div/ul/li[2]/button");
     private By okBtnLocator = By.XPath(@"/html/body/div[3]/div/div[3]/button[2]");
 
 
-    public UltraMonsterLogout(IWebDriver driver)
+    public UltraPandaLogout(IWebDriver driver)
         : base(driver)
     {
         PageFactory.InitElements(driver, this);
@@ -20,6 +20,7 @@ public class UltraMonsterLogout : BaseLogoutPage
 
     protected override bool logout(IWebDriver webDriver)
     {
+        return true;
         var logoutBtn = this.getElementByLocator(this.logoutBtnLocator);
         logoutBtn.Click();
 
@@ -31,7 +32,7 @@ public class UltraMonsterLogout : BaseLogoutPage
 
     protected override bool verifyPageUrl(IWebDriver driver)
     {
-        this.wait.Until(d => { return d.Url.Contains(this.logoutPageUrl); });
+        // this.wait.Until(d => { return d.Url.Contains(this.logoutPageUrl); });
         return true;
     }
 }

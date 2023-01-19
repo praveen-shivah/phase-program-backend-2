@@ -4,15 +4,15 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class UltraMonsterResellerBalancePage : BaseResellerBalancePage
+    public class UltraPandaResellerBalancePage : BaseResellerBalancePage
     {
         private readonly string pageLoadedText = "Agent account";
 
-        private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
+        private readonly string pageUrl = "https://ht.ultrapanda.mobi/#/manage-user/search";
 
         private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
 
-        public UltraMonsterResellerBalancePage(IWebDriver driver)
+        public UltraPandaResellerBalancePage(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);

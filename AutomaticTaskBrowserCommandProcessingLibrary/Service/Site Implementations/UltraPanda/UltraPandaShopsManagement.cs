@@ -4,22 +4,25 @@
 
     using SeleniumExtras.PageObjects;
 
-    public class UltraMonsterShopsManagement : BaseManagementPage
+    public class UltraPandaShopsManagement : BaseManagementPage
     {
         private readonly string pageLoadedText = "Agent account";
 
-        private readonly string pageUrl = "https://go123.ultramonster.net/#/manage-user/search";
+        private readonly string pageUrl = "https://ht.ultrapanda.mobi/#/manage-user/search";
 
         private By currentBalanceAmountElementLocator = By.XPath("//*[@id='app']/div/div[2]/div/div[1]/div[3]/p");
         private By setPointsInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[3]/div/div/input");
         private By setPointsRemarksInputELementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/form/div[4]/div/div/textarea");
-        private By setScoreButtonLocator = By.XPath("/html/body/div[1]/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[10]/div/button[1]/span");
+        private By setScoreButtonLocator = By.XPath("/html/body/div/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[16]/div/button[1]");
         private By okButtonLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[3]/div/button");
         private By searchInputBoxElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[2]/div/div/div/div[1]/input");
         private By userAccountIdElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[4]/div/div/div/div/div[3]/table/tbody/tr/td[2]/div/a/span");
+
+        private By okSetScoreOkButtonLocator = By.XPath("/html/body/div/div/div[2]/section/div/div[4]/div/form/div[5]/div/button[1]");
+
         private By agentAccountRadioButtonElementLocator = By.XPath("//*[@id='app']/div/div[2]/section/div/div[1]/form/div[1]/div/div/label[1]/span[2]");
 
-        public UltraMonsterShopsManagement(IWebDriver driver)
+        public UltraPandaShopsManagement(IWebDriver driver)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);
@@ -95,22 +98,30 @@
 
         protected override bool makeDeposit(int amountAsPennies, string invoiceLineItemId)
         {
-            var setPointsInputELement = this.getElementByLocator(this.setPointsInputELementLocator);
-            if (setPointsInputELement == null)
+            var setPointsInputElement = this.getElementByLocator(this.setPointsInputELementLocator);
+            if (setPointsInputElement == null)
             {
                 return false;
             }
 
             var amountAsPenniesAsDollars = Math.Round(amountAsPennies / 100.0, 2);
-            setPointsInputELement.SendKeys(amountAsPenniesAsDollars.ToString());
+            setPointsInputElement.SendKeys(amountAsPenniesAsDollars.ToString());
 
-            var setPointsRemarksInputELement = this.getElementByLocator(this.setPointsRemarksInputELementLocator);
-            if (setPointsRemarksInputELement == null)
+            var setPointsRemarksInputElement = this.getElementByLocator(this.setPointsRemarksInputELementLocator);
+            if (setPointsRemarksInputElement == null)
             {
                 return false;
             }
 
-            setPointsRemarksInputELement.SendKeys($"Invoice line item id: {invoiceLineItemId}");
+            setPointsRemarksInputElement.SendKeys($"Invoice line item id: {invoiceLineItemId}");
+
+            var okSetScoreOkButtonElement = this.getElementByLocator(this.okSetScoreOkButtonLocator);
+            if (okSetScoreOkButtonElement == null)
+            {
+                return false;
+            }
+
+            okSetScoreOkButtonElement.Click();
 
             return true;
         }

@@ -43,6 +43,8 @@
         magicCity = 20,
 
         nobel777 = 21,
+
+        ultraPanda = 22,
     }
 
 }

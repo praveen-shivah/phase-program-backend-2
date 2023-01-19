@@ -12,8 +12,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsLogin(webDriver, loginPageInformation);
-                case SoftwareTypeEnum.ultraMonster:
-                    return new UltraMonsterLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.ultraPanda:
+                    return new UltraPandaLogin(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.vPower:
                     return new VPowerLogin(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.vegasX:

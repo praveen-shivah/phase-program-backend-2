@@ -5,18 +5,18 @@ using OpenQA.Selenium.Support.UI;
 
 using SeleniumExtras.PageObjects;
 
-public class UltraMonsterLogin : BaseLoginPage
+public class UltraPandaLogin : BaseLoginPage
 {
     private readonly string pageLoadedText = "passWd";
 
-    private readonly string pageUrl = "https://go123.ultramonster.net/#/login";
+    private readonly string pageUrl = "https://ht.ultrapanda.mobi/#/login";
 
     private By loginBtnLocator = By.XPath("//*[@id='app']/div/div/form/button[1]");
     private By passwordLocator = By.Name("passWd");
     private By errorMessageLocator = By.XPath(@"//*[@id='yw0']/div/ul/li");
     private By userNameLocator = By.Name("userName");
 
-    public UltraMonsterLogin(
+    public UltraPandaLogin(
         IWebDriver driver,
         LoginPageInformation loginPageInformation)
         : base(driver, loginPageInformation)

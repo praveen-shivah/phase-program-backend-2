@@ -14,8 +14,8 @@
             {
                 case SoftwareTypeEnum.riverSweeps:
                     return new RiverSweepsResellerBalancePage(driver);
-                case SoftwareTypeEnum.ultraMonster:
-                    return new UltraMonsterResellerBalancePage(driver);
+                case SoftwareTypeEnum.ultraPanda:
+                    return new UltraPandaResellerBalancePage(driver);
                 case SoftwareTypeEnum.vPower:
                     return new VPowerResellerBalancePage(driver);
                 case SoftwareTypeEnum.vegasX:
