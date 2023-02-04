@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings.DevDeployed.json" />
     <Content Remove="appsettings.Development.json" />
     <Content Remove="appsettings.Production.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\DevDeployed.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appsettings.DevDeployed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

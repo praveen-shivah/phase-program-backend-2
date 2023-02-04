@@ -26,7 +26,7 @@ public class AutomaticTaskQueueService : BackgroundService
         {
             var response = await this.automaticTaskQueueServiceProcessorRepository.AutomaticTaskQueueServiceProcessorAsync(new AutomaticTaskQueueServiceProcessorRequest());
 
-            await Task.Delay(20000, stoppingToken);
+            await Task.Delay(1000, stoppingToken);
         }
 
         this.logger.Debug(LogClass.General, "GracePeriod background task is stopping.");
