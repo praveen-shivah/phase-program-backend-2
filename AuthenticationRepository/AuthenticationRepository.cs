@@ -6,6 +6,8 @@
 
     using DatabaseContext;
 
+    using LoggingLibrary;
+
     using Microsoft.EntityFrameworkCore;
 
     using UnitOfWorkTypesLibrary;
@@ -20,15 +22,19 @@
 
         private readonly IUpdateUser updateUser;
 
+        private readonly ILogger logger;
+
         private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         public AuthenticationRepository(
+            ILogger logger,
             IUnitOfWorkFactory<DataContext> unitOfWorkFactory,
             IAuthenticateUser authenticateUser,
             IRefreshToken refreshToken,
             ILogout logout,
             IUpdateUser updateUser)
         {
+            this.logger = logger;
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.authenticateUser = authenticateUser;
             this.refreshToken = refreshToken;
@@ -42,6 +48,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
+                        this.logger.Info(LogClass.CommRest, "Calling authenticate user");
                         authenticateUserResponse = await this.authenticateUser.Authenticate(
                                                        context,
                                                        new AuthenticateUserRequest
@@ -50,49 +57,75 @@
                                                            Password = authenticationRequest.Password,
                                                            IpAddress = authenticationRequest.IpAddress
                                                        });
+                        this.logger.Info(LogClass.CommRest, "Calling authenticate user done");
 
                         return WorkItemResultEnum.doneContinue;
                     });
 
-            var result = await uow.ExecuteAsync();
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || authenticateUserResponse == null)
+            try
             {
-                return new AuthenticationResponse
-                {
-                    IsSuccessful = false,
-                    IsAuthenticated = false
-                };
-            }
+                this.logger.Info(LogClass.CommRest, "Calling authenticate user done before executeAsync()");
+                var result = await uow.ExecuteAsync();
+                this.logger.Info(LogClass.CommRest, "Calling authenticate user done after executeAsync()");
 
-            if (authenticateUserResponse.IsSuccessful && authenticateUserResponse.IsAuthenticated)
-            {
+                if (result != WorkItemResultEnum.commitSuccessfullyCompleted || authenticateUserResponse == null)
+                {
+                    this.logger.Info(LogClass.CommRest, "authenticate user repository failed");
+                    return new AuthenticationResponse
+                    {
+                        IsSuccessful = false,
+                        IsAuthenticated = false
+                    };
+                }
+
+                if (authenticateUserResponse.IsSuccessful && authenticateUserResponse.IsAuthenticated)
+                {
+                    this.logger.Info(LogClass.CommRest, "authenticate user respository success - building response");
+                    return new AuthenticationResponse
+                    {
+                        OrganizationId = authenticateUserResponse.User.Organization.Id,
+                        UserId = authenticateUserResponse.UserId,
+                        UserName = authenticateUserResponse.UserName,
+                        IsAuthenticated = authenticateUserResponse.IsAuthenticated,
+                        IsSuccessful = true,
+                        Roles = authenticateUserResponse.Roles,
+                        JwtToken = authenticateUserResponse.JwtToken,
+                        RefreshToken = new RefreshTokenDto()
+                        {
+                            Created = authenticateUserResponse.RefreshToken.Created,
+                            CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
+                            Expires = authenticateUserResponse.RefreshToken.Expires,
+                            Token = authenticateUserResponse.RefreshToken.Token
+                        }
+                    };
+                }
+
+                this.logger.Info(LogClass.CommRest, "authenticate user respository not authenticated - building response");
                 return new AuthenticationResponse
                 {
-                    OrganizationId = authenticateUserResponse.User.Organization.Id,
                     UserId = authenticateUserResponse.UserId,
                     UserName = authenticateUserResponse.UserName,
                     IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                     IsSuccessful = true,
-                    Roles = authenticateUserResponse.Roles,
-                    JwtToken = authenticateUserResponse.JwtToken,
-                    RefreshToken = new RefreshTokenDto()
-                    {
-                        Created = authenticateUserResponse.RefreshToken.Created,
-                        CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
-                        Expires = authenticateUserResponse.RefreshToken.Expires,
-                        Token = authenticateUserResponse.RefreshToken.Token
-                    }
+                    Roles = authenticateUserResponse.Roles
                 };
             }
-
-            return new AuthenticationResponse
+            catch (Exception e)
             {
-                UserId = authenticateUserResponse.UserId,
-                UserName = authenticateUserResponse.UserName,
-                IsAuthenticated = authenticateUserResponse.IsAuthenticated,
-                IsSuccessful = true,
-                Roles = authenticateUserResponse.Roles
-            };
+                var innerMessage = string.Empty;
+                if(e.InnerException != null)
+                    innerMessage = e.InnerException.Message;
+
+                this.logger.Info(LogClass.CommRest, $"authenticate user repository error: {e.Message} {innerMessage}");
+                return new AuthenticationResponse
+                {
+                    UserId = 0,
+                    UserName = string.Empty,
+                    IsAuthenticated = false,
+                    IsSuccessful = false,
+                    Roles = new List<int>()
+                };
+            }
         }
 
         async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(int organizationId, UserDto userDto)
@@ -124,7 +157,7 @@
                         userList.Add(new UserDto() { IsPlaceHolder = true });
                         foreach (var user in list)
                         {
-                            userList.Add(new UserDto(){Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive});
+                            userList.Add(new UserDto() { Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive });
                         }
 
                         return WorkItemResultEnum.doneContinue;
@@ -135,7 +168,7 @@
                 return new List<UserDto>();
             }
 
-            return userList.OrderBy(x=>x.UserName).ToList();
+            return userList.OrderBy(x => x.UserName).ToList();
         }
 
         async Task<LogoutResponse> IAuthenticationRepository.Logout(LogoutRequest logoutRequest)

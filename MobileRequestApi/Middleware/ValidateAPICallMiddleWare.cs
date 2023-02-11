@@ -5,9 +5,10 @@
 
     using AuthenticationRepository;
 
+    using LoggingLibrary;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Logging;
 
     using OrganizationRepositoryTypes;
 
@@ -23,15 +24,18 @@
     {
         private readonly RequestDelegate next;
 
+        private readonly ILogger logger;
+
         private readonly IJwtValidate jwtValidate;
 
         private readonly IOrganizationRepository organizationRepository;
 
         private readonly IAuthenticationRepository authenticationRepository;
 
-        public ValidateAPICallMiddleWare(RequestDelegate next, ILoggerFactory loggerFactory, IJwtValidate jwtValidate, IOrganizationRepository organizationRepository, IAuthenticationRepository authenticationRepository)
+        public ValidateAPICallMiddleWare(RequestDelegate next, ILogger logger, IJwtValidate jwtValidate, IOrganizationRepository organizationRepository, IAuthenticationRepository authenticationRepository)
         {
             this.next = next;
+            this.logger = logger;
             this.jwtValidate = jwtValidate;
             this.organizationRepository = organizationRepository;
             this.authenticationRepository = authenticationRepository;
@@ -60,6 +64,7 @@
                 } else
                 {
                     // Anonymous or not - must have valid organizationId/key
+                    this.logger.Info(LogClass.CommRest, "ValidateAPICallMiddleWare");
                     var organizationId = 0;
                     var values = context.Request.Headers["OrganizationId"];
                     context.Items["UserId"] = null;
@@ -86,12 +91,14 @@
                     }
                 }
 
+                this.logger.Info(LogClass.CommRest, "ValidateAPICallMiddleWare 2");
                 await this.next(context);
             }
             catch
             {
                 context.Items["OrganizationId"] = null;
                 context.Items["UserId"] = null;
+                this.logger.Info(LogClass.CommRest, "ValidateAPICallMiddleWare 3");
                 await this.next(context);
             }
         }

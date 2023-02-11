@@ -119,6 +119,7 @@ var app = builder.Build();
 // Configure the HTTP requestDto pipeline.
 //if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseRequestResponseLogging();
     app.UseSwagger();
     app.UseSwaggerUI();
