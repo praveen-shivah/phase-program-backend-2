@@ -8,5 +8,6 @@
         public string Url { get; set; }
         public string AccountId { get; set; }
         public string VendorId { get; set; }
+        public int Balance { get; set; }
     }
 }

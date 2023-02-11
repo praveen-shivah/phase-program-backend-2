@@ -1,6 +1,10 @@
 ﻿namespace DatabaseContext
 {
+    using System;
+    using System.Collections.Generic;
+
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata;
 
     public partial class DataContext : DbContext
     {
@@ -21,7 +25,6 @@
         public virtual DbSet<PostalCode> PostalCode { get; set; } = null!;
         public virtual DbSet<RefreshToken> RefreshToken { get; set; } = null!;
         public virtual DbSet<Reseller> Reseller { get; set; } = null!;
-        public virtual DbSet<ResellerVendorBalance> ResellerVendorBalance { get; set; } = null!;
         public virtual DbSet<SignificantEvent> SignificantEvent { get; set; } = null!;
         public virtual DbSet<SignificantEventType> SignificantEventType { get; set; } = null!;
         public virtual DbSet<SiteInformation> SiteInformation { get; set; } = null!;

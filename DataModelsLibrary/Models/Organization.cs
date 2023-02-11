@@ -21,7 +21,6 @@ using Microsoft.EntityFrameworkCore;
             PhoneNumber = new HashSet<PhoneNumber>();
             PostalCode = new HashSet<PostalCode>();
             Reseller = new HashSet<Reseller>();
-            ResellerVendorBalance = new HashSet<ResellerVendorBalance>();
             SiteInformation = new HashSet<SiteInformation>();
             StateProvince = new HashSet<StateProvince>();
             TransferPointsQueue = new HashSet<TransferPointsQueue>();
@@ -61,8 +60,6 @@ using Microsoft.EntityFrameworkCore;
         public virtual ICollection<PostalCode> PostalCode { get; set; }
         [InverseProperty("Organization")]
         public virtual ICollection<Reseller> Reseller { get; set; }
-        [InverseProperty("Organization")]
-        public virtual ICollection<ResellerVendorBalance> ResellerVendorBalance { get; set; }
         [InverseProperty("Organization")]
         public virtual ICollection<SiteInformation> SiteInformation { get; set; }
         [InverseProperty("Organization")]

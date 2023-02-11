@@ -25,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
         public int OrganizationId { get; set; }
+        public int Balance { get; set; }
 
         [ForeignKey(nameof(OrganizationId))]
         [InverseProperty("SiteInformation")]
