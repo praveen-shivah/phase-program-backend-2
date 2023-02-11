@@ -64,7 +64,8 @@
                                     Item_Id = siteInformation.ItemId,
                                     Url = siteInformation.Url,
                                     AccountId = siteInformation.AccountId,
-                                    VendorId = siteInformation.Vendor.Id.ToString()
+                                    VendorId = siteInformation.Vendor.Id.ToString(),
+                                    Balance = siteInformation.Balance
                                 });
                         }
 

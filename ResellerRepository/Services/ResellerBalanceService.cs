@@ -27,7 +27,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var record = await context.ResellerVendorBalance.SingleAsync(x => x.Reseller.Id == resellerBalance.ResellerId);
+                        var record = await context.SiteInformation.SingleAsync(x => x.Reseller.Id == resellerBalance.ResellerId && x.Id == resellerBalance.SiteInformationId);
                         record.Balance = int.Parse(resellerBalance.Balance);
 
                         return WorkItemResultEnum.doneContinue;

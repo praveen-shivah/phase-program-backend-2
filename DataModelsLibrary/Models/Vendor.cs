@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
     {
         public Vendor()
         {
-            ResellerVendorBalance = new HashSet<ResellerVendorBalance>();
             SiteInformation = new HashSet<SiteInformation>();
             VendorCredentialsByOrganizations = new HashSet<VendorCredentialsByOrganizations>();
         }
@@ -28,8 +27,6 @@ using Microsoft.EntityFrameworkCore;
         [ForeignKey(nameof(SoftwareTypeId))]
         [InverseProperty("Vendor")]
         public virtual SoftwareType SoftwareType { get; set; } = null!;
-        [InverseProperty("Vendor")]
-        public virtual ICollection<ResellerVendorBalance> ResellerVendorBalance { get; set; }
         [InverseProperty("Vendor")]
         public virtual ICollection<SiteInformation> SiteInformation { get; set; }
         [InverseProperty("Vendor")]

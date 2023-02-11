@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
         {
             Contact = new HashSet<Contact>();
             Invoice = new HashSet<Invoice>();
-            ResellerVendorBalance = new HashSet<ResellerVendorBalance>();
             SiteInformation = new HashSet<SiteInformation>();
         }
 
@@ -32,8 +31,6 @@ using Microsoft.EntityFrameworkCore;
         public virtual ICollection<Contact> Contact { get; set; }
         [InverseProperty("Reseller")]
         public virtual ICollection<Invoice> Invoice { get; set; }
-        [InverseProperty("Reseller")]
-        public virtual ICollection<ResellerVendorBalance> ResellerVendorBalance { get; set; }
         [InverseProperty("Reseller")]
         public virtual ICollection<SiteInformation> SiteInformation { get; set; }
     }
