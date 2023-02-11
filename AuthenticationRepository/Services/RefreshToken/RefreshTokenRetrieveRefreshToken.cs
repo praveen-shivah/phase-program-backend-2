@@ -1,16 +1,14 @@
 ﻿namespace AuthenticationRepository
 {
-    using System.Security.Cryptography;
-
     using ApiDTO;
 
     using CommonServices;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
-
     using SecurityUtilitiesTypes;
+
+    using System.Security.Cryptography;
+
+    using DatabaseContext;
 
     public class RefreshTokenRetrieveRefreshToken : IRefreshToken
     {
@@ -37,9 +35,9 @@
             this.jwtValidate = jwtValidate;
         }
 
-        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest)
+        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DataContext dataContext, RefreshTokenRequest refreshTokenRequest)
         {
-            var response = await this.refreshToken.Refresh(dpContext, refreshTokenRequest);
+            var response = await this.refreshToken.Refresh(dataContext, refreshTokenRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -47,7 +45,7 @@
 
             try
             {
-                var refreshToken = response.User.RefreshTokens.Single(x => x.Token == refreshTokenRequest.RefreshToken);
+                var refreshToken = response.User.RefreshToken.Single(x => x.Token == refreshTokenRequest.RefreshToken);
                 if (refreshToken.IsRevoked)
                 {
                     this.revokeDescendantRefreshTokens(refreshToken, response.User, refreshTokenRequest.IpAddress, $"Attempted reuse of revoked ancestor token: {refreshToken.Token}");
@@ -63,9 +61,9 @@
                     return response;
                 }
 
-                var newRefreshToken = this.rotateRefreshToken(dpContext, refreshTokenRequest.IpAddress);
+                var newRefreshToken = this.rotateRefreshToken(dataContext, refreshTokenRequest.IpAddress);
                 response.User.CurrentRefreshToken = newRefreshToken.Token;
-                response.User.RefreshTokens.Add(newRefreshToken);
+                response.User.RefreshToken.Add(newRefreshToken);
                 response.RefreshToken = new RefreshTokenDto
                 {
                     Token = newRefreshToken.Token,
@@ -92,7 +90,8 @@
         private void removeOldRefreshTokens(User user)
         {
             // remove old inactive refresh tokens from user based on TTL in app settings
-            user.RefreshTokens.RemoveAll(x => !x.IsActive && x.Created.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()) <= DateTime.UtcNow);
+            var list = user.RefreshToken.ToList();
+            list.RemoveAll(x => !x.IsActive && x.Created.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()) <= DateTime.UtcNow);
         }
 
         private void revokeDescendantRefreshTokens(
@@ -107,7 +106,7 @@
                 return;
             }
 
-            var childToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
+            var childToken = user.RefreshToken.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
 
             switch (childToken)
             {
@@ -134,7 +133,7 @@
             token.ReplacedByToken = replacedByToken;
         }
 
-        private RefreshToken rotateRefreshToken(DPContext dpContext, string ipAddress)
+        private RefreshToken rotateRefreshToken(DataContext dataContext, string ipAddress)
         {
             var refreshToken = new RefreshToken
             {
@@ -156,7 +155,7 @@
                     var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
                     // ensure token is unique by checking against db
-                    var tokenIsUnique = !dpContext.User.Any(u => u.RefreshTokens.Any(t => t.Token == token));
+                    var tokenIsUnique = !dataContext.User.Any(u => u.RefreshToken.Any(t => t.Token == token));
                     if (!tokenIsUnique)
                     {
                         continue;

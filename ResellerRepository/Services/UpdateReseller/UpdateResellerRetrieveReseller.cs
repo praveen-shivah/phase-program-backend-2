@@ -1,8 +1,6 @@
 ﻿namespace ResellerRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -17,16 +15,16 @@
             this.updateReseller = updateReseller;
         }
 
-        async Task<UpdateResellerResponse> IUpdateReseller.UpdateResellerAsync(DPContext dpContext, UpdateResellerRequest request)
+        async Task<UpdateResellerResponse> IUpdateReseller.UpdateResellerAsync(DataContext dataContext, UpdateResellerRequest request)
         {
-            var response = await this.updateReseller.UpdateResellerAsync(dpContext, request);
+            var response = await this.updateReseller.UpdateResellerAsync(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var organization = await dpContext.Organization.SingleAsync(o => o.Id == request.OrganizationId);
-            var Reseller = await dpContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.ResellerDto.Id);
+            var organization = await dataContext.Organization.SingleAsync(o => o.Id == request.OrganizationId);
+            var Reseller = await dataContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.ResellerDto.Id);
             if (Reseller == null)
             {
                 Reseller = new Reseller()
@@ -34,8 +32,8 @@
                     Name = request.ResellerDto.Name,
                     Organization = organization
                 };
-                dpContext.Reseller.Add(Reseller);
-                await dpContext.SaveChangesAsync();
+                dataContext.Reseller.Add(Reseller);
+                await dataContext.SaveChangesAsync();
             }
 
             response.Reseller = Reseller;

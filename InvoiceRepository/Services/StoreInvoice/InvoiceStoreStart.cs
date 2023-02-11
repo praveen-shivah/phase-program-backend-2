@@ -1,12 +1,12 @@
 ﻿namespace InvoiceRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
     internal class InvoiceStoreStart : IInvoiceStore
     {
-        Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
             return Task.FromResult(
                 new InvoiceStoreResponse()

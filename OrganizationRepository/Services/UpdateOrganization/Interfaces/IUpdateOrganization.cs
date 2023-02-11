@@ -1,9 +1,9 @@
 ﻿namespace OrganizationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface IUpdateOrganization
     {
-        Task<UpdateOrganizationResponse> Update(DPContext dpContext, UpdateOrganizationRequest updateOrganizationRequest);
+        Task<UpdateOrganizationResponse> Update(DataContext dataContext, UpdateOrganizationRequest updateOrganizationRequest);
     }
 }

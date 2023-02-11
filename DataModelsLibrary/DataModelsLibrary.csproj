@@ -8,13 +8,24 @@
 
   <ItemGroup>
     <PackageReference Include="EntityFrameworkCore.Scaffolding.Handlebars" Version="6.0.3" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
-    <ProjectReference Include="..\DataSharedLibrary\DataSharedLibrary.csproj" />
     <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
+    <ProjectReference Include="..\UnitOfWorkClassLibrary3\UnitOfWorkClassLibrary3.csproj" />
+    <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Overrides\" />
+    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>

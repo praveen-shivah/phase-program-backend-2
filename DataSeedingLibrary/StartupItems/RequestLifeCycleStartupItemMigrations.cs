@@ -1,12 +1,10 @@
 ﻿namespace DataSeedingLibrary
 {
-    using System.Reflection;
-
     using ApplicationLifeCycle;
 
     using CommonServices;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using LoggingLibrary;
 
@@ -16,6 +14,8 @@
     using SharedUtilities;
 
     using SimpleInjector;
+
+    using System.Reflection;
 
     public class RequestLifeCycleStartupItemMigrations : IRequestLifeCycleStartupItem
     {
@@ -39,18 +39,18 @@
 
         RequestLifeCycleStartupItemPriority IRequestLifeCycleStartupItem.RequestLifeCycleStartupItemPriority => RequestLifeCycleStartupItemPriority.migration;
 
-        bool IRequestLifeCycleStartupItem.Execute()
+        async Task<bool> IRequestLifeCycleStartupItem.ExecuteAsync()
         {
             try
             {
-                var builder = new DbContextOptionsBuilder<DPContext>();
+                var builder = new DbContextOptionsBuilder<DataContext>();
                 var dbConnection = this.connectionFactory.Create();
                 builder.UseNpgsql(dbConnection);
                 var options = builder.Options;
 
-                var context = new DPContext(options, this.configuration, this.dateTimeService);
+                var context = new DataContext(options, this.dateTimeService);
                 context.Database.SetCommandTimeout(15 * 600);
-                context.Database.MigrateAsync().Wait();
+                await context.Database.MigrateAsync();
             }
             catch (Exception e)
             {

@@ -1,8 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -17,19 +15,19 @@
             this.invoiceStore = invoiceStore;
         }
 
-        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
-            var response = await this.invoiceStore.Store(dpContext, request);
-            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord == null || response.InvoiceRecord.LineItems == null)
+            var response = await this.invoiceStore.Store(dataContext, request);
+            if (!response.IsSuccessful || response.Organization == null || response.InvoiceRecord == null || !response.InvoiceRecord.InvoiceLineItem.Any())
             {
                 return response;
             }
 
-            foreach (var invoiceLineItem in response.InvoiceRecord.LineItems)
+            foreach (var invoiceLineItem in response.InvoiceRecord.InvoiceLineItem)
             {
                 var organizationId = response.Organization.Id;
                 var softwareType = invoiceLineItem.SoftwareType;
-                var site = await dpContext.SiteInformation.Include(x => x.Vendor).SingleOrDefaultAsync(
+                var site = await dataContext.SiteInformation.Include(x => x.Vendor).SingleOrDefaultAsync(
                                     x => x.Organization.Id == organizationId &&
                                     x.ResellerId == response.Invoice.CfResellerId &&
                                     x.Vendor.Name.ToUpper().Trim() == softwareType.ToUpper());
@@ -39,7 +37,7 @@
                     continue;
                 }
 
-                var vendor = await dpContext.Vendor.SingleOrDefaultAsync(x => x.Name.ToUpper() == invoiceLineItem.SoftwareType.ToUpper());
+                var vendor = await dataContext.Vendor.SingleOrDefaultAsync(x => x.Name.ToUpper() == invoiceLineItem.SoftwareType.ToUpper());
                 if (vendor == null)
                 {
                     continue;
@@ -49,17 +47,17 @@
                 {
                     Organization = response.Organization,
                     Description = invoiceLineItem.SoftwareType,
-                    Item_Id = invoiceLineItem.ItemId,
-                    URL = string.Empty,
+                    ItemId = invoiceLineItem.ItemId,
+                    Url = string.Empty,
                     Vendor = vendor,
                     AccountId = string.Empty,
                     ResellerId = response.Invoice.CfResellerId
                 };
 
-                await dpContext.SiteInformation.AddAsync(siteInformation);
+                await dataContext.SiteInformation.AddAsync(siteInformation);
             }
 
-            await dpContext.SaveChangesAsync();
+            await dataContext.SaveChangesAsync();
 
             return response;
         }

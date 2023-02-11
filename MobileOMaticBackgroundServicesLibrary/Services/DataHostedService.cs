@@ -1,10 +1,7 @@
 ﻿namespace MobileOMaticBackgroundServicesLibrary
 {
-    using DataPostgresqlLibrary;
-
     using LoggingLibrary;
 
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
 
     public class DataHostedService : BackgroundService

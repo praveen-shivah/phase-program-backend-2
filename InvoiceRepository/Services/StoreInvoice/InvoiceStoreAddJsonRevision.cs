@@ -1,8 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -15,9 +13,9 @@
             this.invoiceStore = invoiceStore;
         }
 
-        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
-            var response = await this.invoiceStore.Store(dpContext, request);
+            var response = await this.invoiceStore.Store(dataContext, request);
             if (!response.IsSuccessful || response.Organization == null)
             {
                 return response;
@@ -28,11 +26,11 @@
                 Organization = response.Organization,
                 ResellerId = response.Invoice.CfResellerId,
                 InvoiceId = response.InvoiceRecord.Id,
-                Invoice_Id = response.Invoice.InvoiceId,
+                InvoiceId1 = response.Invoice.InvoiceId,
                 Json = request.JsonString
             };
 
-            await dpContext.InvoiceRevision.AddAsync(invoiceRevision);
+            await dataContext.InvoiceRevision.AddAsync(invoiceRevision);
 
             return response;
         }

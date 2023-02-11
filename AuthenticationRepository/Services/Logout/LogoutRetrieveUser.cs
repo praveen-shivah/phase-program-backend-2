@@ -1,6 +1,6 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -13,21 +13,21 @@
             this.logout = logout;
         }
 
-        async Task<LogoutResponse> ILogout.Logout(DPContext dpContext, LogoutRequest logoutRequest)
+        async Task<LogoutResponse> ILogout.Logout(DataContext dataContext, LogoutRequest logoutRequest)
         {
-            var response = await this.logout.Logout(dpContext, logoutRequest);
+            var response = await this.logout.Logout(dataContext, logoutRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var user = await dpContext.User.Include(x => x.RefreshTokens).SingleOrDefaultAsync(x => x.Id == logoutRequest.UserId);
+            var user = await dataContext.User.Include(x => x.RefreshToken).SingleOrDefaultAsync(x => x.Id == logoutRequest.UserId);
             if (user == null)
             {
                 return response;
             }
 
-            dpContext.RefreshToken.RemoveRange(user.RefreshTokens);
+            dataContext.RefreshToken.RemoveRange(user.RefreshToken);
             user.CurrentRefreshToken = string.Empty;
 
             return response;

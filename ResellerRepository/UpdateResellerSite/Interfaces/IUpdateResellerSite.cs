@@ -1,8 +1,8 @@
 ﻿namespace ResellerRepository;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 public interface IUpdateResellerSite
 {
-    Task<UpdateResellerSiteResponse> UpdateResellerSiteAsync(DPContext context, UpdateResellerSiteRequest request);
+    Task<UpdateResellerSiteResponse> UpdateResellerSiteAsync(DataContext context, UpdateResellerSiteRequest request);
 }

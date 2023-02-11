@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\UnitOfWorkTypesLibrary\UnitOfWorkTypesLibrary.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />
   </ItemGroup>

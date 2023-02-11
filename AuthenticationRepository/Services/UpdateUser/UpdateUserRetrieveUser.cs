@@ -2,9 +2,7 @@
 {
     using AuthenticationRepositoryTypes;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -17,15 +15,15 @@
             this.updateUser = updateUser;
         }
 
-        async Task<UpdateUserResponse> IUpdateUser.Update(DPContext dpContext, UpdateUserRequest updateUserRequest)
+        async Task<UpdateUserResponse> IUpdateUser.Update(DataContext dataContext, UpdateUserRequest updateUserRequest)
         {
-            var response = await this.updateUser.Update(dpContext, updateUserRequest);
+            var response = await this.updateUser.Update(dataContext, updateUserRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var user = await dpContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
+            var user = await dataContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
             if (user == null)
             {
                 if (updateUserRequest.UserDto.UserName.ToUpper() == AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
@@ -34,7 +32,7 @@
                     return response;
                 }
 
-                var organization = await dpContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
+                var organization = await dataContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
                 user = new User
                            {
                                Organization = organization,
@@ -42,7 +40,7 @@
                                UserName = updateUserRequest.UserDto.UserName,
                                Email = updateUserRequest.UserDto.Email
                            };
-                dpContext.User.Add(user);
+                dataContext.User.Add(user);
             }
 
             response.User = user;

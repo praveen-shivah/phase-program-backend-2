@@ -1,8 +1,8 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 public interface IAutomaticTaskQueueServiceProcessor
 {
-    Task<AutomaticTaskQueueServiceProcessorResponse> AutomaticTaskQueueServiceProcessorAsync(DPContext context, AutomaticTaskQueueServiceProcessorRequest request);
+    Task<AutomaticTaskQueueServiceProcessorResponse> AutomaticTaskQueueServiceProcessorAsync(DataContext context, AutomaticTaskQueueServiceProcessorRequest request);
 }

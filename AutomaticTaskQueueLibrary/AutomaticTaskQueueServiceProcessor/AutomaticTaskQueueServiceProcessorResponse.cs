@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
-using DataModelsLibrary;
+using DatabaseContext;
 
 public class AutomaticTaskQueueServiceProcessorResponse
 {

@@ -1,6 +1,6 @@
 ﻿namespace VendorRepositoryTypes
 {
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     public class UpdateVendorResponse
     {

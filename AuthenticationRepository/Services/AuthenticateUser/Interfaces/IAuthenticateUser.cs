@@ -1,9 +1,9 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface IAuthenticateUser
     {
-        Task<AuthenticateUserResponse> Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest);
+        Task<AuthenticateUserResponse> Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest);
     }
 }

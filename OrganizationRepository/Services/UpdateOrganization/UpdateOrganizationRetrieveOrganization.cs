@@ -1,8 +1,6 @@
 ﻿namespace OrganizationRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -15,28 +13,28 @@
             this.updateOrganization = updateOrganization;
         }
 
-        async Task<UpdateOrganizationResponse> IUpdateOrganization.Update(DPContext dpContext, UpdateOrganizationRequest updateOrganizationRequest)
+        async Task<UpdateOrganizationResponse> IUpdateOrganization.Update(DataContext dataContext, UpdateOrganizationRequest updateOrganizationRequest)
         {
-            var response = await this.updateOrganization.Update(dpContext, updateOrganizationRequest);
+            var response = await this.updateOrganization.Update(dataContext, updateOrganizationRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var organization = await dpContext.Organization.SingleOrDefaultAsync(x => x.Id == updateOrganizationRequest.UpdateOrganizationDto.Id);
+            var organization = await dataContext.Organization.SingleOrDefaultAsync(x => x.Id == updateOrganizationRequest.UpdateOrganizationDto.Id);
             if (organization == null)
             {
                 organization = new Organization()
                 {
                     Id = updateOrganizationRequest.UpdateOrganizationDto.Id,
-                    APIKey = updateOrganizationRequest.UpdateOrganizationDto.APIKey,
+                    Apikey = updateOrganizationRequest.UpdateOrganizationDto.APIKey,
                     Name = updateOrganizationRequest.UpdateOrganizationDto.Name,
-                    URL = updateOrganizationRequest.UpdateOrganizationDto.URL,
+                    Url = updateOrganizationRequest.UpdateOrganizationDto.URL,
                     UserId = updateOrganizationRequest.UpdateOrganizationDto.UserId,
                     Password = updateOrganizationRequest.UpdateOrganizationDto.Password
                 };
 
-                dpContext.Organization.Add(organization);
+                dataContext.Organization.Add(organization);
             }
 
             response.Organization = organization;

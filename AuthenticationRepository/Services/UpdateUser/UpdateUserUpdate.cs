@@ -2,7 +2,7 @@
 {
     using AuthenticationRepositoryTypes;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class UpdateUserUpdate : IUpdateUser
     {
@@ -19,9 +19,9 @@
             this.createPasswordSalt = createPasswordSalt;
         }
 
-        async Task<UpdateUserResponse> IUpdateUser.Update(DPContext dpContext, UpdateUserRequest updateUserRequest)
+        async Task<UpdateUserResponse> IUpdateUser.Update(DataContext dataContext, UpdateUserRequest updateUserRequest)
         {
-            var response = await this.updateUser.Update(dpContext, updateUserRequest);
+            var response = await this.updateUser.Update(dataContext, updateUserRequest);
             if (!response.IsSuccessful)
             {
                 return response;

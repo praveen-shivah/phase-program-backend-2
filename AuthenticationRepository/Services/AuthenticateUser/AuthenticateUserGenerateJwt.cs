@@ -1,19 +1,17 @@
 ﻿namespace AuthenticationRepository
 {
+    using CommonServices;
+
+    using Microsoft.IdentityModel.Tokens;
+
+    using SecurityUtilitiesTypes;
+
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Security.Cryptography;
     using System.Text;
 
-    using CommonServices;
-
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
-
-    using Microsoft.IdentityModel.Tokens;
-
-    using SecurityUtilitiesTypes;
+    using DatabaseContext;
 
     public class AuthenticateUserGenerateJwt : IAuthenticateUser
     {
@@ -30,9 +28,9 @@
             this.dateTimeService = dateTimeService;
         }
 
-        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
+        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest)
         {
-            var response = await this.authenticateUser.Authenticate(dpContext, authenticateUserRequest);
+            var response = await this.authenticateUser.Authenticate(dataContext, authenticateUserRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -51,7 +49,7 @@
             };
 
             response.User.CurrentRefreshToken = refreshToken.Token;
-            response.User.RefreshTokens.Add(refreshToken);
+            response.User.RefreshToken.Add(refreshToken);
             response.RefreshToken = refreshToken;
 
             return response;
@@ -62,7 +60,7 @@
                 var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
                 // ensure token is unique by checking against db
-                var tokenIsUnique = !dpContext.User.Any(u => u.RefreshTokens.Any(t => t.Token == token));
+                var tokenIsUnique = !dataContext.User.Any(u => u.RefreshToken.Any(t => t.Token == token));
                 if (!tokenIsUnique)
                 {
                     return getUniqueToken();

@@ -2,21 +2,21 @@
 {
     using ApiDTO;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
-    using UnitOfWorkTypesLibrary;
-
     using ResellerRepositoryTypes;
+
+    using UnitOfWorkTypesLibrary;
 
     public class ResellerRepository : IResellerRepository
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         private readonly IUpdateReseller updateReseller;
 
-        public ResellerRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IUpdateReseller updateReseller)
+        public ResellerRepository(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IUpdateReseller updateReseller)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.updateReseller = updateReseller;
@@ -61,8 +61,8 @@
                                 {
                                     Id = siteInformation.Id,
                                     Description = siteInformation.Description,
-                                    Item_Id = siteInformation.Item_Id,
-                                    Url = siteInformation.URL,
+                                    Item_Id = siteInformation.ItemId,
+                                    Url = siteInformation.Url,
                                     AccountId = siteInformation.AccountId,
                                     VendorId = siteInformation.Vendor.Id.ToString()
                                 });

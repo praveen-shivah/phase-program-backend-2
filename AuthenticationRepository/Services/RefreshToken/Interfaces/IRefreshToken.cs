@@ -1,11 +1,9 @@
 ﻿namespace AuthenticationRepository
 {
-    using AuthenticationRepositoryTypes;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface IRefreshToken
     {
-        Task<RefreshTokenResponse> Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest);
+        Task<RefreshTokenResponse> Refresh(DataContext dataContext, RefreshTokenRequest refreshTokenRequest);
     }
 }

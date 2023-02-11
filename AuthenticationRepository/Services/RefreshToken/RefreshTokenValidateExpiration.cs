@@ -1,12 +1,8 @@
 ﻿namespace AuthenticationRepository
 {
-    using AuthenticationRepositoryTypes;
-
     using CommonServices;
 
-    using DataPostgresqlLibrary;
-
-    using Microsoft.EntityFrameworkCore;
+    using DatabaseContext;
 
     public class RefreshTokenValidateExpiration : IRefreshToken
     {
@@ -20,9 +16,9 @@
             this.dateTimeService = dateTimeService;
         }
 
-        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest)
+        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DataContext dataContext, RefreshTokenRequest refreshTokenRequest)
         {
-            var response = await this.refreshToken.Refresh(dpContext, refreshTokenRequest);
+            var response = await this.refreshToken.Refresh(dataContext, refreshTokenRequest);
             if (!response.IsSuccessful)
             {
                 return response;

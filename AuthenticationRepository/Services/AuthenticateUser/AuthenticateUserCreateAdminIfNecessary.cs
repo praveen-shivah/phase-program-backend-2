@@ -2,9 +2,7 @@
 {
     using AuthenticationRepositoryTypes;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class AuthenticateUserCreateAdminIfNecessary : IAuthenticateUser
     {
@@ -21,9 +19,9 @@
             this.createPasswordSalt = createPasswordSalt;
         }
 
-        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
+        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest)
         {
-            var response = await this.authenticateUser.Authenticate(dpContext, authenticateUserRequest);
+            var response = await this.authenticateUser.Authenticate(dataContext, authenticateUserRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -34,25 +32,25 @@
                 return response;
             }
 
-            var user = dpContext.User.SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
+            var user = dataContext.User.SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName);
             if (user != null)
             {
                 return response;
             }
 
-            var organization = dpContext.Organization.SingleOrDefault(x => x.Name == AuthenticationConstants.AuthenticationAdminOrganizationName);
+            var organization = dataContext.Organization.SingleOrDefault(x => x.Name == AuthenticationConstants.AuthenticationAdminOrganizationName);
             if (organization == null)
             {
                 organization = new Organization()
                                    {
-                                       APIKey = string.Empty,
+                                       Apikey = string.Empty,
                                        Name = AuthenticationConstants.AuthenticationAdminOrganizationName,
                                        Password = string.Empty,
-                                       URL = string.Empty,
+                                       Url = string.Empty,
                                        UserId = string.Empty
                                    };
-                dpContext.Organization.Add(organization);
-                await dpContext.SaveChangesAsync();
+                dataContext.Organization.Add(organization);
+                await dataContext.SaveChangesAsync();
             }
 
             var salt = this.createPasswordSalt.CreateSalt(32);
@@ -66,8 +64,8 @@
                            Password = this.calculatePassword.calculatePassword(AuthenticationConstants.AuthenticationAdminDefaultPassword, salt),
                            CurrentRefreshToken = string.Empty
                        };
-            dpContext.User.Add(user);
-            await dpContext.SaveChangesAsync();
+            dataContext.User.Add(user);
+            await dataContext.SaveChangesAsync();
 
             return response;
         }

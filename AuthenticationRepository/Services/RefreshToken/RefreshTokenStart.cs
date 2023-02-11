@@ -1,12 +1,10 @@
 ﻿namespace AuthenticationRepository
 {
-    using AuthenticationRepositoryTypes;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class RefreshTokenStart : IRefreshToken
     {
-        Task<RefreshTokenResponse> IRefreshToken.Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest)
+        Task<RefreshTokenResponse> IRefreshToken.Refresh(DataContext dataContext, RefreshTokenRequest refreshTokenRequest)
         {
             return Task.FromResult(new RefreshTokenResponse()
             {

@@ -1,6 +1,6 @@
 ﻿namespace ResellerRepositoryTypes
 {
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     public class UpdateResellerResponse
     {

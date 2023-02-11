@@ -1,16 +1,16 @@
 ﻿namespace ResellerRepository;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using UnitOfWorkTypesLibrary;
 
 public class UpdateResellerSiteRepository : IUpdateResellerSiteRepository
 {
-    private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+    private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
     private readonly IUpdateResellerSite updateResellerSite;
 
-    public UpdateResellerSiteRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IUpdateResellerSite updateResellerSite)
+    public UpdateResellerSiteRepository(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IUpdateResellerSite updateResellerSite)
     {
         this.unitOfWorkFactory = unitOfWorkFactory;
         this.updateResellerSite = updateResellerSite;

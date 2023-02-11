@@ -1,9 +1,9 @@
 ﻿namespace DataSeedingLibrary
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface ISeedData
     {
-        Task<SeedDataResponse> SeedAsync(DPContext context, SeedDataRequest seedDataRequest);
+        Task<SeedDataResponse> SeedAsync(DataContext context, SeedDataRequest seedDataRequest);
     }
 }

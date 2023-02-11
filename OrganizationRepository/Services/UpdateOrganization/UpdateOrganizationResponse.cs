@@ -1,6 +1,6 @@
 ﻿namespace OrganizationRepository
 {
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     public class UpdateOrganizationResponse
     {

@@ -1,6 +1,6 @@
 ﻿namespace ResellerRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using ResellerRepositoryTypes;
 
@@ -13,9 +13,9 @@
             this.updateReseller = updateReseller;
         }
 
-        async Task<UpdateResellerResponse> IUpdateReseller.UpdateResellerAsync(DPContext dpContext, UpdateResellerRequest request)
+        async Task<UpdateResellerResponse> IUpdateReseller.UpdateResellerAsync(DataContext dataContext, UpdateResellerRequest request)
         {
-            var response = await this.updateReseller.UpdateResellerAsync(dpContext, request);
+            var response = await this.updateReseller.UpdateResellerAsync(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;

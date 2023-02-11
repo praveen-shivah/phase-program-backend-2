@@ -2,7 +2,7 @@
 {
     using ApiDTO;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -22,9 +22,9 @@
             this.logger = logger;
         }
 
-        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
-            var response = await this.invoiceStore.Store(dpContext, request);
+            var response = await this.invoiceStore.Store(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;

@@ -1,9 +1,9 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface ILogout
     {
-        Task<LogoutResponse> Logout(DPContext dpContext, LogoutRequest logoutRequest);
+        Task<LogoutResponse> Logout(DataContext dataContext, LogoutRequest logoutRequest);
     }
 }

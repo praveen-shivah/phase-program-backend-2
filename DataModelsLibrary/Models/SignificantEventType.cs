@@ -1,9 +1,18 @@
-﻿namespace DataModelsLibrary
+﻿namespace DatabaseContext
 {
-    using DataSharedLibrary;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-    public class SignificantEventType : BaseEntity
+
+    public partial class SignificantEventType : BaseEntity
     {
-        public string Description { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public string Description { get; set; } = null!;
+        public DateTime CreatedOn { get; set; }
+        public DateTime ModifiedOn { get; set; }
     }
 }

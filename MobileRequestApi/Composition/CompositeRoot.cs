@@ -1,16 +1,10 @@
 ﻿namespace MobileRequestApi
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-
     using ApplicationLifeCycle;
 
     using AutomaticTaskSharedLibrary;
 
-    using DatabaseClassLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -29,6 +23,10 @@
     using SharedUtilities;
 
     using SimpleInjector;
+
+    using System;
+    using System.IO;
+    using System.Xml;
 
     using UnitOfWorkTypesLibrary;
 
@@ -50,7 +48,7 @@
 
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DataContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IRestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>, RestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>>();
             this.GlobalContainer.Register<IRestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>, RestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>>();

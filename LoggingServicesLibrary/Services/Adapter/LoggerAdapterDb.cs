@@ -1,14 +1,12 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using System;
-
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
-
     using log4net;
 
     using LoggingLibrary;
+
+    using System;
+
+    using DatabaseContext;
 
     using UnitOfWorkTypesLibrary;
 
@@ -23,11 +21,11 @@
     {
         private readonly IErrorLogDbPosting errorLogDbPosting;
         private readonly ILog log4Net;
-        private readonly IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory;
+        private readonly IEntityContextFrameWorkFactory<DataContext> entityContextFrameWorkFactory;
         private readonly ISignificantEventLogDbPosting significantEventLogDbPosting;
 
         public LoggerAdapterDb(ILog log4Net,
-                               IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory,
+                               IEntityContextFrameWorkFactory<DataContext> entityContextFrameWorkFactory,
                                IErrorLogDbPosting errorLogDbPosting,
                                ISignificantEventLogDbPosting significantEventLogDbPosting)
             : base(log4Net)

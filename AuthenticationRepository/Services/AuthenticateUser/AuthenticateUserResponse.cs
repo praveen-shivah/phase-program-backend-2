@@ -1,6 +1,6 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     public class AuthenticateUserResponse
     {

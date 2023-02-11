@@ -1,10 +1,10 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class AuthenticateUserStart : IAuthenticateUser
     {
-        Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
+        Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest)
         {
             return Task.FromResult(new AuthenticateUserResponse() { IsSuccessful = true });
         }

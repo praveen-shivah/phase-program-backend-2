@@ -1,11 +1,11 @@
 ﻿namespace VendorRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using VendorRepositoryTypes;
 
     public interface IUpdateVendor
     {
-        Task<UpdateVendorResponse> UpdateVendorAsync(DPContext dpContext, UpdateVendorRequest request);
+        Task<UpdateVendorResponse> UpdateVendorAsync(DataContext dataContext, UpdateVendorRequest request);
     }
 }

@@ -1,18 +1,18 @@
 ﻿namespace AuthenticationRepository
 {
+    using CommonServices;
+
+    using DatabaseContext;
+
+    using Microsoft.IdentityModel.Tokens;
+
+    using SecurityUtilitiesTypes;
+
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Security.Claims;
     using System.Text;
-
-    using CommonServices;
-
-    using DataModelsLibrary;
-
-    using Microsoft.IdentityModel.Tokens;
-
-    using SecurityUtilitiesTypes;
 
     public interface IJwtService
     {

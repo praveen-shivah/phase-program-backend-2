@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using LoggingLibrary;
 
@@ -19,7 +19,7 @@ public class AutomaticTaskQueueServiceProcessorPullRecord : IAutomaticTaskQueueS
     }
 
     async Task<AutomaticTaskQueueServiceProcessorResponse> IAutomaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(
-        DPContext context,
+        DataContext context,
         AutomaticTaskQueueServiceProcessorRequest request)
     {
         var response = await this.automaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(context, request);

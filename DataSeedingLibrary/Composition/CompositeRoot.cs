@@ -14,7 +14,7 @@
         {
             this.GlobalContainer.Register<ISeedData, SeedDataStart>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddOrganizations>(Lifestyle.Singleton);
-            this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddSofwareTypes>(Lifestyle.Singleton);
+            this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddSoftwareTypes>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddVendors>(Lifestyle.Singleton);
 
             this.GlobalContainer.Collection.Append<IRequestLifeCycleStartupItem, DataSeedingSoftwareTypeAndVendorStartupItem>(Lifestyle.Singleton);

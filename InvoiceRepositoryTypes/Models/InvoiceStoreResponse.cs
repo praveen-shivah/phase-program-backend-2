@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     using Invoice = ApiDTO.Invoice;
 
@@ -21,7 +21,7 @@
 
         public Invoice Invoice { get; set; }
 
-        public DataModelsLibrary.Invoice InvoiceRecord { get; set; }
+        public DatabaseContext.Invoice? InvoiceRecord { get; set; }
 
         public Organization? Organization { get; set; }
 

@@ -2,7 +2,7 @@
 {
     using ApiDTO;
 
-    using DataModelsLibrary;
+    using DatabaseContext;
 
     public class RefreshTokenResponse
     {

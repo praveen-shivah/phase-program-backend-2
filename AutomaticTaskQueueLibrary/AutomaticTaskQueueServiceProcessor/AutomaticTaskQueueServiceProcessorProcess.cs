@@ -6,7 +6,7 @@ using AutomaticTaskSharedLibrary;
 
 using CommonServices;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using InvoiceRepository;
 
@@ -34,7 +34,7 @@ public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServ
     }
 
     async Task<AutomaticTaskQueueServiceProcessorResponse> IAutomaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(
-        DPContext context,
+        DataContext context,
         AutomaticTaskQueueServiceProcessorRequest request)
     {
         var response = await this.automaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(context, request);
@@ -49,8 +49,8 @@ public class AutomaticTaskQueueServiceProcessorProcess : IAutomaticTaskQueueServ
                                          {
                                              InvoiceLineItemId = response.QueueRecord.InvoiceLineItemId,
                                              OrganizationId = response.QueueRecord.Organization.Id,
-                                             APIKey = response.QueueRecord.Organization.APIKey,
-                                             SoftwareType = response.QueueRecord.SoftwareType,
+                                             APIKey = response.QueueRecord.Organization.Apikey,
+                                             SoftwareType = (SoftwareTypeEnum)response.QueueRecord.SoftwareType,
                                              UserId = response.QueueRecord.UserId,
                                              Password = response.QueueRecord.Password,
                                              AccountId = response.QueueRecord.AccountId,

@@ -1,10 +1,10 @@
 ﻿namespace OrganizationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class UpdateOrganizationStart : IUpdateOrganization
     {
-        Task<UpdateOrganizationResponse> IUpdateOrganization.Update(DPContext dpContext, UpdateOrganizationRequest updateOrganizationRequest)
+        Task<UpdateOrganizationResponse> IUpdateOrganization.Update(DataContext dataContext, UpdateOrganizationRequest updateOrganizationRequest)
         {
             return Task.FromResult(new UpdateOrganizationResponse() { IsSuccessful = true });
         }

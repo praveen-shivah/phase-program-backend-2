@@ -1,6 +1,6 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using log4net;
 
@@ -10,11 +10,11 @@
 
     public class LoggerAdapterFactory : ILoggerAdapterFactory
     {
-        private readonly IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory;
+        private readonly IEntityContextFrameWorkFactory<DataContext> entityContextFrameWorkFactory;
         private readonly IErrorLogDbPosting errorLogDbPosting;
         private readonly ISignificantEventLogDbPosting significantEventLogDbPosting;
 
-        public LoggerAdapterFactory(IEntityContextFrameWorkFactory<DPContext> entityContextFrameWorkFactory, IErrorLogDbPosting errorLogDbPosting, ISignificantEventLogDbPosting significantEventLogDbPosting)
+        public LoggerAdapterFactory(IEntityContextFrameWorkFactory<DataContext> entityContextFrameWorkFactory, IErrorLogDbPosting errorLogDbPosting, ISignificantEventLogDbPosting significantEventLogDbPosting)
         {
             this.entityContextFrameWorkFactory = entityContextFrameWorkFactory;
             this.errorLogDbPosting = errorLogDbPosting;

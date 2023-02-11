@@ -1,11 +1,11 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using System.Threading.Tasks;
+    using DatabaseContext;
 
-    using DataPostgresqlLibrary;
+    using System.Threading.Tasks;
 
     public interface IErrorLogDbPosting
     {
-        Task<ErrorLogDbPostingResponse> PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest);
+        Task<ErrorLogDbPostingResponse> PostAsync(DataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest);
     }
 }

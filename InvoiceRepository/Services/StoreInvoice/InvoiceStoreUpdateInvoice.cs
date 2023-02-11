@@ -1,8 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -17,9 +15,9 @@
             this.invoiceStore = invoiceStore;
         }
 
-        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
-            var response = await this.invoiceStore.Store(dpContext, request);
+            var response = await this.invoiceStore.Store(dataContext, request);
             if (!response.IsSuccessful || response.Organization == null || response.Reseller == null)
             {
                 return response;
@@ -42,11 +40,11 @@
 
             // Business rule: new items are allowed to be added to an invoice, but any items that have already started or completed processing
             // will not be allowed to change.
-            var lineItems = await dpContext.InvoiceLineItem.Where(x => x.InvoiceId == response.InvoiceRecord.Id).ToListAsync();
+            var lineItems = await dataContext.InvoiceLineItem.Where(x => x.InvoiceId == response.InvoiceRecord.Id).ToListAsync();
 
             var itemsToBeDeleted = lineItems.Where(x => x.DateTimeProcessStarted == null && x.DateTimeSent == null);
-            dpContext.InvoiceLineItem.RemoveRange(itemsToBeDeleted);
-            await dpContext.SaveChangesAsync();
+            dataContext.InvoiceLineItem.RemoveRange(itemsToBeDeleted);
+            await dataContext.SaveChangesAsync();
 
             foreach (var item in response.Invoice.LineItems)
             {
@@ -69,7 +67,7 @@
                     SoftwareType = softwareTypeField.Value
                 };
 
-                await dpContext.InvoiceLineItem.AddAsync(invoiceLineItemRecord);
+                await dataContext.InvoiceLineItem.AddAsync(invoiceLineItemRecord);
             }
 
             return response;

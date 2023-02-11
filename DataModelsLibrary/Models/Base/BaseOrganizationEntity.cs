@@ -1,7 +1,5 @@
-﻿namespace DataModelsLibrary
+﻿namespace DatabaseContext
 {
-    using DataSharedLibrary;
-
     public class BaseOrganizationEntity : BaseEntity
     {
         public Organization Organization { get; set; }

@@ -1,11 +1,8 @@
 ﻿namespace DataSeedingLibrary
 {
-
     using AuthenticationRepositoryTypes;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class SeedDataAddOrganizations : ISeedData
     {
@@ -16,7 +13,7 @@
             this.seedData = seedData;
         }
 
-        async Task<SeedDataResponse> ISeedData.SeedAsync(DPContext context, SeedDataRequest seedDataRequest)
+        async Task<SeedDataResponse> ISeedData.SeedAsync(DataContext context, SeedDataRequest seedDataRequest)
         {
             var response = await this.seedData.SeedAsync(context, seedDataRequest);
             if (!response.IsSuccessful)
@@ -32,11 +29,11 @@
 
             organization = new Organization()
             {
-                APIKey = AuthenticationConstants.OrganizationAPIKey,
+                Apikey = AuthenticationConstants.OrganizationAPIKey,
                 Name = "Multi-Sweeps administration",
                 Password = AuthenticationConstants.AuthenticationAdminDefaultPassword,
                 UserId = AuthenticationConstants.AuthenticationAdminDefaultUserName,
-                URL = string.Empty
+                Url = string.Empty
             };
 
             context.Organization.Add(organization);

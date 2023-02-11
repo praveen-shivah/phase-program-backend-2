@@ -2,7 +2,7 @@
 {
     using ApiDTO;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +12,11 @@
 
     public class VendorRepository : IVendorRepository
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         private readonly IUpdateVendor updateVendor;
 
-        public VendorRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IUpdateVendor updateVendor)
+        public VendorRepository(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IUpdateVendor updateVendor)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.updateVendor = updateVendor;

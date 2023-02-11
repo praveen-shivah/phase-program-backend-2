@@ -1,11 +1,11 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 public class AutomaticTaskQueueServiceProcessorStart : IAutomaticTaskQueueServiceProcessor
 {
     Task<AutomaticTaskQueueServiceProcessorResponse> IAutomaticTaskQueueServiceProcessor.AutomaticTaskQueueServiceProcessorAsync(
-        DPContext context,
+        DataContext context,
         AutomaticTaskQueueServiceProcessorRequest request)
     {
         return Task.FromResult(new AutomaticTaskQueueServiceProcessorResponse() { IsSuccessful = true });

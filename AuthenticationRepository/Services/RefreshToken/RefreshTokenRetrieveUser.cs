@@ -1,10 +1,8 @@
 ﻿namespace AuthenticationRepository
 {
-    using AuthenticationRepositoryTypes;
-
     using CommonServices;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -20,9 +18,9 @@
             this.dateTimeService = dateTimeService;
         }
 
-        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DPContext dpContext, RefreshTokenRequest refreshTokenRequest)
+        async Task<RefreshTokenResponse> IRefreshToken.Refresh(DataContext dataContext, RefreshTokenRequest refreshTokenRequest)
         {
-            var response = await this.refreshToken.Refresh(dpContext, refreshTokenRequest);
+            var response = await this.refreshToken.Refresh(dataContext, refreshTokenRequest);
             if (!response.IsSuccessful)
             {
                 return response;
@@ -30,7 +28,7 @@
 
             try
             {
-                var user = await dpContext.User.Include(x => x.RefreshTokens).Include(o => o.Organization).SingleOrDefaultAsync(x => x.CurrentRefreshToken == refreshTokenRequest.RefreshToken);
+                var user = await dataContext.User.Include(x => x.RefreshToken).Include(o => o.Organization).SingleOrDefaultAsync(x => x.CurrentRefreshToken == refreshTokenRequest.RefreshToken);
                 if (user == null)
                 {
                     response.IsSuccessful = false;

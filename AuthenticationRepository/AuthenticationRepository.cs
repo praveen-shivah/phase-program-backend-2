@@ -4,9 +4,7 @@
 
     using AuthenticationRepositoryTypes;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +20,10 @@
 
         private readonly IUpdateUser updateUser;
 
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         public AuthenticationRepository(
-            IUnitOfWorkFactory<DPContext> unitOfWorkFactory,
+            IUnitOfWorkFactory<DataContext> unitOfWorkFactory,
             IAuthenticateUser authenticateUser,
             IRefreshToken refreshToken,
             ILogout logout,

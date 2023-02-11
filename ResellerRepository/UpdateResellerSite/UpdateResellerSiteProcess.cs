@@ -1,6 +1,6 @@
 ﻿namespace ResellerRepository;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ public class UpdateResellerSiteProcess : IUpdateResellerSite
         this.updateResellerSite = updateResellerSite;
     }
 
-    async Task<UpdateResellerSiteResponse> IUpdateResellerSite.UpdateResellerSiteAsync(DPContext context, UpdateResellerSiteRequest request)
+    async Task<UpdateResellerSiteResponse> IUpdateResellerSite.UpdateResellerSiteAsync(DataContext context, UpdateResellerSiteRequest request)
     {
         var response = await this.updateResellerSite.UpdateResellerSiteAsync(context, request);
         if (!response.IsSuccessful)

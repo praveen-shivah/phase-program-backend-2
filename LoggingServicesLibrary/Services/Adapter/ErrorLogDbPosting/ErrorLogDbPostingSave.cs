@@ -2,9 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class ErrorLogDbPostingSave : IErrorLogDbPosting
     {
@@ -15,7 +13,7 @@
             this.errorLogDbPosting = errorLogDbPosting;
         }
 
-        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
             var response = await this.errorLogDbPosting.PostAsync(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)

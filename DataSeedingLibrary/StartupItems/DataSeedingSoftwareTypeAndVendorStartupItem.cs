@@ -2,17 +2,17 @@
 {
     using ApplicationLifeCycle;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using UnitOfWorkTypesLibrary;
 
     public class DataSeedingSoftwareTypeAndVendorStartupItem : IRequestLifeCycleStartupItem
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         private readonly ISeedData seedData;
 
-        public DataSeedingSoftwareTypeAndVendorStartupItem(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, ISeedData seedData)
+        public DataSeedingSoftwareTypeAndVendorStartupItem(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, ISeedData seedData)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.seedData = seedData;
@@ -20,7 +20,7 @@
 
         RequestLifeCycleStartupItemPriority IRequestLifeCycleStartupItem.RequestLifeCycleStartupItemPriority => RequestLifeCycleStartupItemPriority.seedingData;
 
-        bool IRequestLifeCycleStartupItem.Execute()
+        async Task<bool> IRequestLifeCycleStartupItem.ExecuteAsync()
         {
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
@@ -34,7 +34,7 @@
 
                         return WorkItemResultEnum.rollbackExit;
                     });
-            uow.ExecuteAsync().Wait();
+            await uow.ExecuteAsync();
 
             return true;
         }

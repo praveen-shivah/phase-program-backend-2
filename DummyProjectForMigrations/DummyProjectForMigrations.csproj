@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
+    <ProjectReference Include="..\DataModelsLibrary\DataModelsLibrary.csproj" />
   </ItemGroup>
 
 </Project>

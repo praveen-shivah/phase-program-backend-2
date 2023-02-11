@@ -1,7 +1,6 @@
 ﻿namespace AuthenticationRepository
 {
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -17,15 +16,15 @@
             this.calculatePassword = calculatePassword;
         }
 
-        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DPContext dpContext, AuthenticateUserRequest authenticateUserRequest)
+        async Task<AuthenticateUserResponse> IAuthenticateUser.Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest)
         {
-            var response = await this.authenticateUser.Authenticate(dpContext, authenticateUserRequest);
+            var response = await this.authenticateUser.Authenticate(dataContext, authenticateUserRequest);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var user = dpContext.User.Include(r => r.RefreshTokens).Include(o=>o.Organization).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName && x.IsActive);
+            var user = dataContext.User.Include(r => r.RefreshToken).Include(o=>o.Organization).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName && x.IsActive);
             if (user == null || user.Password != this.calculatePassword.calculatePassword(authenticateUserRequest.Password, user.PasswordSalt))
             {
                 response.IsSuccessful = false;

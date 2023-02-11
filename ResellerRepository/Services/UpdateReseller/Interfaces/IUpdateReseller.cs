@@ -1,11 +1,11 @@
 ﻿namespace ResellerRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using ResellerRepositoryTypes;
 
     public interface IUpdateReseller
     {
-        Task<UpdateResellerResponse> UpdateResellerAsync(DPContext dpContext, UpdateResellerRequest request);
+        Task<UpdateResellerResponse> UpdateResellerAsync(DataContext dataContext, UpdateResellerRequest request);
     }
 }

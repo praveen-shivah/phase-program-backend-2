@@ -4,7 +4,7 @@
 
     using CommonServices;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +12,11 @@
 
     public class ResellerBalanceService : IResellerBalanceService
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         private readonly IDateTimeService dateTimeService;
 
-        public ResellerBalanceService(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IDateTimeService dateTimeService)
+        public ResellerBalanceService(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IDateTimeService dateTimeService)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.dateTimeService = dateTimeService;

@@ -1,13 +1,12 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using CommonServices;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
+
+    using System.Threading.Tasks;
 
     public class ErrorLogDbPostingCheckForExcessive : IErrorLogDbPosting
     {
@@ -20,7 +19,7 @@
             this.dateTimeService = dateTimeService;
         }
 
-        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DPContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
+        async Task<ErrorLogDbPostingResponse> IErrorLogDbPosting.PostAsync(DataContext dataContext, ErrorLogDbPostingRequest errorLogDbPostingRequest)
         {
             var response = await this.errorLogDbPosting.PostAsync(dataContext, errorLogDbPostingRequest);
             if (!response.IsSuccessful)

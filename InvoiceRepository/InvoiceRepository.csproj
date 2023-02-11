@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.50" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.55" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
-    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
     <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
     <ProjectReference Include="..\UnitOfWorkClassLibrary3\UnitOfWorkClassLibrary3.csproj" />

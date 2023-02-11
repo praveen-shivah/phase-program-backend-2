@@ -1,8 +1,6 @@
 ﻿namespace DataSeedingLibrary
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +13,7 @@
             this.seedData = seedData;
         }
 
-        async Task<SeedDataResponse> ISeedData.SeedAsync(DPContext context, SeedDataRequest seedDataRequest)
+        async Task<SeedDataResponse> ISeedData.SeedAsync(DataContext context, SeedDataRequest seedDataRequest)
         {
             var response = await this.seedData.SeedAsync(context, seedDataRequest);
             if (!response.IsSuccessful)

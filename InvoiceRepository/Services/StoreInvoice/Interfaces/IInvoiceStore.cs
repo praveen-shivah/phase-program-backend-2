@@ -1,11 +1,11 @@
 ﻿namespace InvoiceRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
     public interface IInvoiceStore
     {
-        Task<InvoiceStoreResponse> Store(DPContext dpContext, InvoiceStoreRequest request);
+        Task<InvoiceStoreResponse> Store(DataContext dataContext, InvoiceStoreRequest request);
     }
 }

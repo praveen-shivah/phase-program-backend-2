@@ -22,7 +22,7 @@ var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("Hostin
 applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.GlobalContainer.Options.AllowOverridingRegistrations = true;
 applicationLifeCycle.Initialize();
-var response = applicationLifeCycle.StartRequest();
+var response = await applicationLifeCycle.StartRequestAsync();
 
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");

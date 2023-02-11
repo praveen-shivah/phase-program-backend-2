@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -14,10 +14,10 @@
 
         private readonly ILogger logger;
 
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         public InvoiceRepository(
-            IUnitOfWorkFactory<DPContext> unitOfWorkFactory,
+            IUnitOfWorkFactory<DataContext> unitOfWorkFactory,
             IInvoiceStore invoiceStore,
             ILogger logger)
         {

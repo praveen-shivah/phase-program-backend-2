@@ -1,9 +1,9 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface ISignificantEventLogDbPosting
     {
-        SignificantEventLogDbPostingResponse Post(DPContext dataContext, SignificantEventLogDbPostingRequest significantEventLogDbPostingRequest);
+        SignificantEventLogDbPostingResponse Post(DataContext dataContext, SignificantEventLogDbPostingRequest significantEventLogDbPostingRequest);
     }
 }

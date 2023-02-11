@@ -2,7 +2,7 @@
 {
     using ApiDTO;
 
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +12,11 @@
 
     public class OrganizationRepository : IOrganizationRepository
     {
-        private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+        private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
         private readonly IUpdateOrganization updateOrganization;
 
-        public OrganizationRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IUpdateOrganization updateOrganization)
+        public OrganizationRepository(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IUpdateOrganization updateOrganization)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.updateOrganization = updateOrganization;
@@ -28,7 +28,7 @@
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        var organizationRecord = await context.Organization.SingleOrDefaultAsync(x => x.Id.ToString() == organizationRequest.OrganizationId && x.APIKey == organizationRequest.APIKey);
+                        var organizationRecord = await context.Organization.SingleOrDefaultAsync(x => x.Id.ToString() == organizationRequest.OrganizationId && x.Apikey == organizationRequest.APIKey);
                         if (organizationRecord == null)
                         {
                             return WorkItemResultEnum.cancelWithoutError;
@@ -76,10 +76,10 @@
                             result.Add(
                                 new OrganizationDto()
                                     {
-                                        APIKey = organization.APIKey,
+                                        APIKey = organization.Apikey,
                                         Id = organization.Id,
                                         Name = organization.Name,
-                                        URL = organization.URL,
+                                        URL = organization.Url,
                                         UserId = string.Empty,
                                         Password = string.Empty
                                     });

@@ -1,8 +1,6 @@
 ﻿namespace LoggingServicesLibrary
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public class SignificantEventLogDbPostingSave : ISignificantEventLogDbPosting
     {
@@ -13,7 +11,7 @@
             this.significantEventLogDbPosting = significantEventLogDbPosting;
         }
 
-        SignificantEventLogDbPostingResponse ISignificantEventLogDbPosting.Post(DPContext dataContext, SignificantEventLogDbPostingRequest significantEventLogDbPostingRequest)
+        SignificantEventLogDbPostingResponse ISignificantEventLogDbPosting.Post(DataContext dataContext, SignificantEventLogDbPostingRequest significantEventLogDbPostingRequest)
         {
             var response = this.significantEventLogDbPosting.Post(dataContext, significantEventLogDbPostingRequest);
             if (!response.IsSuccessful)

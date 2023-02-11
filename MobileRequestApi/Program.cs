@@ -1,8 +1,3 @@
-using System;
-using System.IO;
-using System.Reflection;
-using System.Text;
-
 using ApiHost.Middleware;
 
 using AuthenticationRepository;
@@ -11,7 +6,7 @@ using AutomaticTaskQueueLibrary;
 
 using CommonServices;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using InvoiceRepositoryTypes;
 
@@ -37,6 +32,11 @@ using SecurityUtilitiesTypes;
 
 using SimpleInjector.Lifestyles;
 
+using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
+
 using VendorRepositoryTypes;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -46,7 +46,7 @@ Console.WriteLine("Starting");
 var applicationLifeCycle = new ApplicationLifeCycle.ApplicationLifeCycle("HostingRestService");
 applicationLifeCycle.GlobalContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 applicationLifeCycle.Initialize();
-var response = applicationLifeCycle.StartRequest();
+var response = await applicationLifeCycle.StartRequestAsync();
 
 var loggerFactory = applicationLifeCycle.Resolve<LoggingLibrary.ILoggerFactory>();
 var logger = loggerFactory.Create("HostingApplicationService");
@@ -71,7 +71,7 @@ builder.Services.AddSwaggerGen();
 
 // Register dependencies here
 builder.Services.AddSingleton(logger);
-builder.Services.AddDbContext<DPContext>();
+builder.Services.AddDbContext<DataContext>();
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IDateTimeService>());
 builder.Services.AddSingleton(applicationLifeCycle.Resolve<IJwtValidate>());
 
@@ -84,11 +84,11 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ISecretKeyRetrie
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerSiteRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
-
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
-builder.Services.AddDbContext<DPContext>(options =>
+
+builder.Services.AddDbContext<DataContext>(options =>
     {
         options.UseNpgsql(connectionString);
     });

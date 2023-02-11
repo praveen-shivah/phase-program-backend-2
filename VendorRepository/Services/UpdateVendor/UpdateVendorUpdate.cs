@@ -1,6 +1,6 @@
 ﻿namespace VendorRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -15,15 +15,15 @@
             this.updateVendor = updateVendor;
         }
 
-        async Task<UpdateVendorResponse> IUpdateVendor.UpdateVendorAsync(DPContext dpContext, UpdateVendorRequest request)
+        async Task<UpdateVendorResponse> IUpdateVendor.UpdateVendorAsync(DataContext dataContext, UpdateVendorRequest request)
         {
-            var response = await this.updateVendor.UpdateVendorAsync(dpContext, request);
+            var response = await this.updateVendor.UpdateVendorAsync(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var softwareType = await dpContext.SoftwareType.SingleAsync(x => x.Id == (int)request.VendorDto.SoftwareType);
+            var softwareType = await dataContext.SoftwareType.SingleAsync(x => x.Id == (int)request.VendorDto.SoftwareType);
 
             response.Vendor.IsActive = request.VendorDto.IsActive;
             response.Vendor.Name = request.VendorDto.Name;

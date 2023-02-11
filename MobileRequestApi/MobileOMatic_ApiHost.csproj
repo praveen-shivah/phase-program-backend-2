@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.50" />
-    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.50" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.55" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.55" />
     <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
@@ -49,7 +49,6 @@
     <ProjectReference Include="..\AutomaticTaskLibrary\AutomaticTaskSharedLibrary.csproj" />
     <ProjectReference Include="..\AutomaticTaskMessageLibrary\AutomaticTaskMessageLibrary.csproj" />
     <ProjectReference Include="..\AutomaticTaskQueueLibrary\AutomaticTaskQueueLibrary.csproj" />
-    <ProjectReference Include="..\DataPostgresqlLibrary\DataPostgresqlLibrary.csproj" />
     <ProjectReference Include="..\DataSeedingLibrary\DataSeedingLibrary.csproj" />
     <ProjectReference Include="..\InvoiceRepositoryTypes\InvoiceRepositoryTypes.csproj" />
     <ProjectReference Include="..\LoggingServicesLibrary\LoggingServicesLibrary.csproj" />

@@ -1,9 +1,9 @@
 ﻿namespace AuthenticationRepository
 {
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     public interface IUpdateUser
     {
-        Task<UpdateUserResponse> Update(DPContext dpContext, UpdateUserRequest updateUserRequest);
+        Task<UpdateUserResponse> Update(DataContext dataContext, UpdateUserRequest updateUserRequest);
     }
 }

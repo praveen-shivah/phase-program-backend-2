@@ -1,10 +1,10 @@
 ﻿namespace ResellerRepository;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 public class UpdateResellerSiteStart : IUpdateResellerSite
 {
-    Task<UpdateResellerSiteResponse> IUpdateResellerSite.UpdateResellerSiteAsync(DPContext context, UpdateResellerSiteRequest request)
+    Task<UpdateResellerSiteResponse> IUpdateResellerSite.UpdateResellerSiteAsync(DataContext context, UpdateResellerSiteRequest request)
     {
         return Task.FromResult(new UpdateResellerSiteResponse() { IsSuccessful = true });
     }

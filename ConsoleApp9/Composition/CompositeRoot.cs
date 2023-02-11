@@ -2,9 +2,7 @@
 {
     using ApplicationLifeCycle;
 
-    using DatabaseClassLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using LoggingLibrary;
 
@@ -26,7 +24,7 @@
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DPContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DataContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
 
             return true;

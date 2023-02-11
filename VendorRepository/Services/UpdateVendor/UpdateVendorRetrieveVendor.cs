@@ -1,8 +1,6 @@
 ﻿namespace VendorRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -17,18 +15,18 @@
             this.updateVendor = updateVendor;
         }
 
-        async Task<UpdateVendorResponse> IUpdateVendor.UpdateVendorAsync(DPContext dpContext, UpdateVendorRequest request)
+        async Task<UpdateVendorResponse> IUpdateVendor.UpdateVendorAsync(DataContext dataContext, UpdateVendorRequest request)
         {
-            var response = await this.updateVendor.UpdateVendorAsync(dpContext, request);
+            var response = await this.updateVendor.UpdateVendorAsync(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            var vendor = await dpContext.Vendor.SingleOrDefaultAsync(x => x.Id == request.VendorDto.Id);
+            var vendor = await dataContext.Vendor.SingleOrDefaultAsync(x => x.Id == request.VendorDto.Id);
             if (vendor == null)
             {
-                var softwareType = await dpContext.SoftwareType.SingleAsync(x => x.Id == (int)request.VendorDto.SoftwareType);
+                var softwareType = await dataContext.SoftwareType.SingleAsync(x => x.Id == (int)request.VendorDto.SoftwareType);
 
                 vendor = new Vendor()
                 {
@@ -36,8 +34,8 @@
                     Name = request.VendorDto.Name,
                     SoftwareType = softwareType
                 };
-                dpContext.Vendor.Add(vendor);
-                await dpContext.SaveChangesAsync();
+                dataContext.Vendor.Add(vendor);
+                await dataContext.SaveChangesAsync();
             }
 
             response.Vendor = vendor;

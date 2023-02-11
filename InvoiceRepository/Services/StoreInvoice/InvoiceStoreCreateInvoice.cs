@@ -1,8 +1,6 @@
 ﻿namespace InvoiceRepository
 {
-    using DataModelsLibrary;
-
-    using DataPostgresqlLibrary;
+    using DatabaseContext;
 
     using InvoiceRepositoryTypes;
 
@@ -17,15 +15,15 @@
             this.invoiceStore = invoiceStore;
         }
 
-        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DPContext dpContext, InvoiceStoreRequest request)
+        async Task<InvoiceStoreResponse> IInvoiceStore.Store(DataContext dataContext, InvoiceStoreRequest request)
         {
-            var response = await this.invoiceStore.Store(dpContext, request);
+            var response = await this.invoiceStore.Store(dataContext, request);
             if (!response.IsSuccessful)
             {
                 return response;
             }
 
-            response.Organization = await dpContext.Organization.SingleOrDefaultAsync(x => x.Id == request.OrganizationId);
+            response.Organization = await dataContext.Organization.SingleOrDefaultAsync(x => x.Id == request.OrganizationId);
             if (response.Organization == null)
             {
                 response.IsSuccessful = false;
@@ -33,7 +31,7 @@
                 return response;
             }
 
-            response.Reseller = await dpContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.OrganizationId && x.Id == response.Invoice.CfResellerId);
+            response.Reseller = await dataContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.OrganizationId && x.Id == response.Invoice.CfResellerId);
             if (response.Reseller == null)
             {
                 response.IsSuccessful = false;
@@ -41,7 +39,7 @@
                 return response;
             }
 
-            var invoiceRecord = await dpContext.Invoice.SingleOrDefaultAsync(x => x.InvoiceId == response.Invoice.InvoiceId);
+            var invoiceRecord = await dataContext.Invoice.SingleOrDefaultAsync(x => x.InvoiceId == response.Invoice.InvoiceId);
             if (invoiceRecord == null)
             {
                 invoiceRecord = new Invoice
@@ -58,13 +56,13 @@
                     CustomerName = response.Invoice.CustomerName,
                     InvoiceId = response.Invoice.InvoiceId,
                     InvoiceNumber = response.Invoice.InvoiceNumber,
-                    InvoiceUrl = response.Invoice.InvoiceUrl ?? string.Empty,
+                    InvoiceUrl = response.Invoice.InvoiceUrl,
                     Status = response.Invoice.Status,
                     StatusFormatted = response.Invoice.StatusFormatted,
                 };
 
-                dpContext.Invoice.Add(invoiceRecord);
-                await dpContext.SaveChangesAsync();
+                dataContext.Invoice.Add(invoiceRecord);
+                await dataContext.SaveChangesAsync();
             }
 
             response.InvoiceRecord = invoiceRecord;

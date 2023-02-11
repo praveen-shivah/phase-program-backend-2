@@ -1,16 +1,16 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
-using DataPostgresqlLibrary;
+using DatabaseContext;
 
 using UnitOfWorkTypesLibrary;
 
 public class AutomaticTaskQueueServiceProcessorRepository : IAutomaticTaskQueueServiceProcessorRepository
 {
-    private readonly IUnitOfWorkFactory<DPContext> unitOfWorkFactory;
+    private readonly IUnitOfWorkFactory<DataContext> unitOfWorkFactory;
 
     private readonly IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor;
 
-    public AutomaticTaskQueueServiceProcessorRepository(IUnitOfWorkFactory<DPContext> unitOfWorkFactory, IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor)
+    public AutomaticTaskQueueServiceProcessorRepository(IUnitOfWorkFactory<DataContext> unitOfWorkFactory, IAutomaticTaskQueueServiceProcessor automaticTaskQueueServiceProcessor)
     {
         this.unitOfWorkFactory = unitOfWorkFactory;
         this.automaticTaskQueueServiceProcessor = automaticTaskQueueServiceProcessor;
