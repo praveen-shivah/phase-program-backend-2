@@ -2,17 +2,22 @@
 {
     using DatabaseContext;
 
+    using LoggingLibrary;
+
     using Microsoft.EntityFrameworkCore;
 
     public class AuthenticateUserRetrieve : IAuthenticateUser
     {
         private readonly IAuthenticateUser authenticateUser;
 
+        private readonly ILogger logger;
+
         private readonly ICalculatePassword calculatePassword;
 
-        public AuthenticateUserRetrieve(IAuthenticateUser authenticateUser, ICalculatePassword calculatePassword)
+        public AuthenticateUserRetrieve(IAuthenticateUser authenticateUser, ILogger logger, ICalculatePassword calculatePassword)
         {
             this.authenticateUser = authenticateUser;
+            this.logger = logger;
             this.calculatePassword = calculatePassword;
         }
 
@@ -23,6 +28,8 @@
             {
                 return response;
             }
+
+            this.logger.Info(LogClass.CommRest, "AuthenticateUserRetrieve");
 
             var user = dataContext.User.Include(r => r.RefreshToken).Include(o=>o.Organization).SingleOrDefault(x => x.UserName == authenticateUserRequest.UserName && x.IsActive);
             if (user == null || user.Password != this.calculatePassword.calculatePassword(authenticateUserRequest.Password, user.PasswordSalt))

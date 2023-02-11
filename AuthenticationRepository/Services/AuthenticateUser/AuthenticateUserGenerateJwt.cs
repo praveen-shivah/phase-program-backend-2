@@ -13,17 +13,22 @@
 
     using DatabaseContext;
 
+    using LoggingLibrary;
+
     public class AuthenticateUserGenerateJwt : IAuthenticateUser
     {
         private readonly IAuthenticateUser authenticateUser;
+
+        private readonly ILogger logger;
 
         private readonly ISecretKeyRetrieval secretKeyRetrieval;
 
         private readonly IDateTimeService dateTimeService;
 
-        public AuthenticateUserGenerateJwt(IAuthenticateUser authenticateUser, ISecretKeyRetrieval secretKeyRetrieval, IDateTimeService dateTimeService)
+        public AuthenticateUserGenerateJwt(IAuthenticateUser authenticateUser, ILogger logger, ISecretKeyRetrieval secretKeyRetrieval, IDateTimeService dateTimeService)
         {
             this.authenticateUser = authenticateUser;
+            this.logger = logger;
             this.secretKeyRetrieval = secretKeyRetrieval;
             this.dateTimeService = dateTimeService;
         }
@@ -36,21 +41,33 @@
                 return response;
             }
 
-            response.JwtToken = generateJwtToken(response.User);
-
-            var refreshToken = new RefreshToken
+            try
             {
-                Token = getUniqueToken(),
-                Expires = this.dateTimeService.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
-                Created = this.dateTimeService.UtcNow,
-                CreatedByIp = authenticateUserRequest.IpAddress,
-                ReasonRevoked = string.Empty,
-                ReplacedByToken = string.Empty
-            };
+                this.logger.Info(LogClass.CommRest, "AuthenticateUserGenerateJwt");
 
-            response.User.CurrentRefreshToken = refreshToken.Token;
-            response.User.RefreshToken.Add(refreshToken);
-            response.RefreshToken = refreshToken;
+                response.JwtToken = generateJwtToken(response.User);
+
+                var refreshToken = new RefreshToken
+                {
+                    Token = getUniqueToken(),
+                    Expires = this.dateTimeService.UtcNow.AddDays(this.secretKeyRetrieval.GetRefreshTokenTTLInDays()),
+                    Created = this.dateTimeService.UtcNow,
+                    CreatedByIp = authenticateUserRequest.IpAddress,
+                    ReasonRevoked = string.Empty,
+                    ReplacedByToken = string.Empty
+                };
+
+                response.User.CurrentRefreshToken = refreshToken.Token;
+                response.User.RefreshToken.Add(refreshToken);
+                response.RefreshToken = refreshToken;
+            }
+            catch (Exception e)
+            {
+                this.logger.Info(LogClass.CommRest, $"AuthenticateUserGenerateJwt error: {e.Message}");
+                response.IsAuthenticated = false;
+                response.IsAuthenticated = false;
+            }
+
 
             return response;
 
@@ -76,7 +93,7 @@
                 var key = Encoding.ASCII.GetBytes(this.secretKeyRetrieval.GetKey());
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new[] { 
+                    Subject = new ClaimsIdentity(new[] {
                         new Claim("UserId", user.Id.ToString()),
                         new Claim("OrganizationId", user.Organization.Id.ToString())
                     }),

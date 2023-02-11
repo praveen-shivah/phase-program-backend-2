@@ -1,6 +1,7 @@
 ﻿namespace ApiHost
 {
     using System.Collections.Generic;
+    using System.Net;
     using System.Threading.Tasks;
 
     using ApiDTO;
@@ -58,23 +59,32 @@
         [HttpPost("admin-login")]
         public async Task<ActionResult<AuthenticateResponseDto>> AdminLogin(AuthenticateRequestDto authenticateDto)
         {
-            this.logger.Debug(LogClass.General, "AdminLogin received");
+            this.logger.Info(LogClass.General, "AdminLogin received");
             var result = await this.authenticationRepository.Authenticate(new AuthenticationRequest(authenticateDto.user, authenticateDto.pwd, this.ipAddress()));
+            this.logger.Info(LogClass.General, "AdminLogin authenticate returned");
 
             if (result.IsSuccessful && result.IsAuthenticated)
             {
+                this.logger.Info(LogClass.General, "AdminLogin authenticate returned success");
                 var response = new AuthenticateResponseDto
-                {
-                    OrganizationId = result.OrganizationId,
-                    IsAuthenticated = true,
-                    accessToken = result.JwtToken,
-                    roles = result.Roles.ToArray()
-                };
+                                   {
+                                       OrganizationId = result.OrganizationId,
+                                       IsAuthenticated = true,
+                                       accessToken = result.JwtToken,
+                                       roles = result.Roles.ToArray()
+                                   };
 
                 this.setTokenCookie(result.RefreshToken.Token);
                 return this.Ok(response);
             }
 
+            if (result.IsSuccessful && !result.IsAuthenticated)
+            {
+                this.logger.Info(LogClass.General, "AdminLogin authenticate returned success but not authenticated");
+                return this.StatusCode((int)HttpStatusCode.Forbidden, 0);
+            }
+
+            this.logger.Info(LogClass.General, "AdminLogin authenticate returned - but not successful");
             return this.StatusCode(500, 0);
         }
 
