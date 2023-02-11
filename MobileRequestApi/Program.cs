@@ -8,6 +8,8 @@ using CommonServices;
 
 using DatabaseContext;
 
+using InvoiceRepository;
+
 using InvoiceRepositoryTypes;
 
 using log4net;
@@ -30,6 +32,7 @@ using ResellerRepositoryTypes;
 
 using SecurityUtilitiesTypes;
 
+using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
 using System;
@@ -85,6 +88,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerReposit
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerSiteRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRetrieveRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 
