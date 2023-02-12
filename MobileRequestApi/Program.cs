@@ -89,6 +89,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerS
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRetrieveRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListResellerRetrieveRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 

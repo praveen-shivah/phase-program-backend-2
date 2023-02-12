@@ -20,11 +20,16 @@
 
         private readonly IInvoiceListRetrieveRepository invoiceListRetrieveRepository;
 
-        public InvoiceReportController(ILogger logger, IInvoiceListRetrieveRepository invoiceListRetrieveRepository)
+        private readonly IInvoiceListResellerRetrieveRepository invoiceListResellerRetrieveRepository;
+
+        public InvoiceReportController(ILogger logger, 
+                                       IInvoiceListRetrieveRepository invoiceListRetrieveRepository,
+                                       IInvoiceListResellerRetrieveRepository invoiceListResellerRetrieveRepository)
         {
             // this.messageSession = messageSession;
             this.logger = logger;
             this.invoiceListRetrieveRepository = invoiceListRetrieveRepository;
+            this.invoiceListResellerRetrieveRepository = invoiceListResellerRetrieveRepository;
         }
 
         [HttpPost("get-invoice-list")]
@@ -40,6 +45,22 @@
                     IsSuccessful = result.IsSuccessful,
                     InvoiceList = result.InvoiceList
                 });
+        }
+
+        [HttpPost("get-reseller-invoice-list")]
+        public async Task<ActionResult<InvoiceListResellerRetrieveResponseDto>> GetResellerInvoiceList(InvoiceListResellerRetrieveRequestDto invoiceListResellerRetrieveRequestDto)
+        {
+            this.logger.Debug(LogClass.General, $"GetResellerInvoiceList");
+            var request = new InvoiceListResellerRetrieveRequest() { OrganizationId = this.OrganizationId, ResellerId = invoiceListResellerRetrieveRequestDto.ResellerId};
+            ;
+            var result = await this.invoiceListResellerRetrieveRepository.InvoiceListResellerRetrieveAsync(request);
+
+            return this.Ok(
+                new InvoiceListResellerRetrieveResponseDto
+                {
+                        IsSuccessful = result.IsSuccessful,
+                        InvoiceList = result.InvoiceList
+                    });
         }
     }
 }
