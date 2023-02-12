@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="InvoiceListResellerRetrieve\Interfaces\" />
     <Folder Include="InvoiceListRetrieve\Interfaces\" />
   </ItemGroup>
 
