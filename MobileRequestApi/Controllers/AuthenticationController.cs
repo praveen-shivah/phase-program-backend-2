@@ -70,11 +70,11 @@
                                    {
                                        OrganizationId = result.OrganizationId,
                                        IsAuthenticated = true,
-                                       accessToken = result.JwtToken,
+                                       accessToken = result.AccessToken,
                                        roles = result.Roles.ToArray()
                                    };
 
-                this.setTokenCookie(result.RefreshToken.Token);
+                this.setTokenCookie(result.RefreshToken);
                 return this.Ok(response);
             }
 

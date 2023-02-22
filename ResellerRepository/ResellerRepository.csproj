@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+    <Folder Include="ResellerSiteInformationPopulate\Interfaces\" />
     <Folder Include="UpdateResellerSite\Interfaces\" />
   </ItemGroup>
 

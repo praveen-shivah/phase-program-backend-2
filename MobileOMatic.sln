@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp9", "ConsoleApp9\ConsoleApp9.csproj", "{084E4685-BC92-4EDE-8C82-639192616C3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileOMatic_ApiHost", "MobileRequestApi\MobileOMatic_ApiHost.csproj", "{DCDC2001-762F-462A-A05B-FFF7BC7D87E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{166142B3-801B-4009-BD76-A059801197F5} = {166142B3-801B-4009-BD76-A059801197F5}
+		{281450F7-B61A-4162-A835-554C87D4DD12} = {281450F7-B61A-4162-A835-554C87D4DD12}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Information", "Docker Information", "{04B0A01A-9B26-4A77-A4FF-F9383FC9A685}"
 	ProjectSection(SolutionItems) = preProject

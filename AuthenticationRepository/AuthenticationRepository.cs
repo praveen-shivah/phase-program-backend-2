@@ -49,7 +49,7 @@
                 async context =>
                     {
                         this.logger.Info(LogClass.CommRest, "Calling authenticate user");
-                        authenticateUserResponse = await this.authenticateUser.Authenticate(
+                        authenticateUserResponse = await this.authenticateUser.AuthenticateUserAsync(
                                                        context,
                                                        new AuthenticateUserRequest
                                                        {
@@ -80,7 +80,7 @@
 
                 if (authenticateUserResponse.IsSuccessful && authenticateUserResponse.IsAuthenticated)
                 {
-                    this.logger.Info(LogClass.CommRest, "authenticate user respository success - building response");
+                    this.logger.Info(LogClass.CommRest, "authenticate user repository success - building response");
                     return new AuthenticationResponse
                     {
                         OrganizationId = authenticateUserResponse.User.Organization.Id,
@@ -89,25 +89,19 @@
                         IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                         IsSuccessful = true,
                         Roles = authenticateUserResponse.Roles,
-                        JwtToken = authenticateUserResponse.JwtToken,
-                        RefreshToken = new RefreshTokenDto()
-                        {
-                            Created = authenticateUserResponse.RefreshToken.Created,
-                            CreatedByIp = authenticateUserResponse.RefreshToken.CreatedByIp,
-                            Expires = authenticateUserResponse.RefreshToken.Expires,
-                            Token = authenticateUserResponse.RefreshToken.Token
-                        }
+                        AccessToken = authenticateUserResponse.AccessToken,
+                        RefreshToken = authenticateUserResponse.RefreshToken
                     };
                 }
 
-                this.logger.Info(LogClass.CommRest, "authenticate user respository not authenticated - building response");
+                this.logger.Info(LogClass.CommRest, "authenticate user repository not authenticated - building response");
                 return new AuthenticationResponse
                 {
                     UserId = authenticateUserResponse.UserId,
                     UserName = authenticateUserResponse.UserName,
                     IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                     IsSuccessful = true,
-                    Roles = authenticateUserResponse.Roles
+                    Roles = new List<int>()
                 };
             }
             catch (Exception e)

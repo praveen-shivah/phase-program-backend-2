@@ -16,10 +16,6 @@
 
     using RestServicesSupportTypes;
 
-    using SecurityUtilities;
-
-    using SecurityUtilitiesTypes;
-
     using SharedUtilities;
 
     using SimpleInjector;
@@ -44,14 +40,14 @@
 
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
-            this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
+            //this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DataContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
 
-            this.GlobalContainer.Register<IRestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>, RestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>>();
-            this.GlobalContainer.Register<IRestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>, RestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>>();
+            //this.GlobalContainer.Register<IRestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>, RestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>>();
+            //this.GlobalContainer.Register<IRestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>, RestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>>();
 
             return true;
         }
