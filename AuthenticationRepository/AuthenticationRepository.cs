@@ -1,5 +1,7 @@
 ﻿namespace AuthenticationRepository
 {
+    using System.Net;
+
     using ApiDTO;
 
     using AuthenticationRepositoryTypes;
@@ -9,6 +11,8 @@
     using LoggingLibrary;
 
     using Microsoft.EntityFrameworkCore;
+
+    using RestServicesSupportTypes;
 
     using UnitOfWorkTypesLibrary;
 
@@ -44,19 +48,34 @@
 
         async Task<AuthenticationResponse> IAuthenticationRepository.Authenticate(AuthenticationRequest authenticationRequest)
         {
-            AuthenticateUserResponse? authenticateUserResponse = null;
+            AuthenticateUserResponse authenticateUserResponse = new AuthenticateUserResponse();
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
                         this.logger.Info(LogClass.CommRest, "Calling authenticate user");
-                        authenticateUserResponse = await this.authenticateUser.AuthenticateUserAsync(
+                        var response = await this.authenticateUser.AuthenticateUserAsync(
                                                        context,
                                                        new AuthenticateUserRequest
                                                        {
+                                                           OrganizationId = authenticationRequest.OrganizationId,
                                                            UserName = authenticationRequest.UserId,
                                                            Password = authenticationRequest.Password,
-                                                           IpAddress = authenticationRequest.IpAddress
+                                                           IpAddress = authenticationRequest.IpAddress,
+                                                           Audience = authenticationRequest.Audience
                                                        });
+
+                        authenticateUserResponse.IsSuccessful = response.IsSuccessful;
+                        authenticateUserResponse.IsAuthenticated = response.IsAuthenticated;
+                        authenticateUserResponse.RefreshToken = response.RefreshToken;
+                        authenticateUserResponse.Roles = response.Roles;
+                        authenticateUserResponse.UserName = response.UserName;
+                        authenticateUserResponse.Claims = response.Claims;
+                        authenticateUserResponse.AccessToken = response.AccessToken;
+                        authenticateUserResponse.User = response.User;
+                        authenticateUserResponse.UserId = response.UserId;
+                        authenticateUserResponse.ErrorMessage = response.ErrorMessage;
+                        authenticateUserResponse.HttpStatusCode = response.HttpStatusCode;
+                        authenticateUserResponse.ResponseTypeEnum = response.ResponseTypeEnum;
                         this.logger.Info(LogClass.CommRest, "Calling authenticate user done");
 
                         return WorkItemResultEnum.doneContinue;
@@ -68,13 +87,16 @@
                 var result = await uow.ExecuteAsync();
                 this.logger.Info(LogClass.CommRest, "Calling authenticate user done after executeAsync()");
 
-                if (result != WorkItemResultEnum.commitSuccessfullyCompleted || authenticateUserResponse == null)
+                if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
                 {
                     this.logger.Info(LogClass.CommRest, "authenticate user repository failed");
                     return new AuthenticationResponse
                     {
                         IsSuccessful = false,
-                        IsAuthenticated = false
+                        IsAuthenticated = false,
+                        ErrorMessage = authenticateUserResponse.ErrorMessage,
+                        HttpStatusCode = authenticateUserResponse.HttpStatusCode,
+                        ResponseTypeEnum = authenticateUserResponse.ResponseTypeEnum
                     };
                 }
 
@@ -83,41 +105,52 @@
                     this.logger.Info(LogClass.CommRest, "authenticate user repository success - building response");
                     return new AuthenticationResponse
                     {
-                        OrganizationId = authenticateUserResponse.User.Organization.Id,
+                        OrganizationId = authenticationRequest.OrganizationId,
                         UserId = authenticateUserResponse.UserId,
                         UserName = authenticateUserResponse.UserName,
                         IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                         IsSuccessful = true,
                         Roles = authenticateUserResponse.Roles,
                         AccessToken = authenticateUserResponse.AccessToken,
-                        RefreshToken = authenticateUserResponse.RefreshToken
+                        RefreshToken = authenticateUserResponse.RefreshToken,
+                        ErrorMessage = authenticateUserResponse.ErrorMessage,
+                        HttpStatusCode = authenticateUserResponse.HttpStatusCode,
+                        ResponseTypeEnum = authenticateUserResponse.ResponseTypeEnum
                     };
                 }
 
                 this.logger.Info(LogClass.CommRest, "authenticate user repository not authenticated - building response");
                 return new AuthenticationResponse
                 {
+                    OrganizationId = authenticationRequest.OrganizationId,
                     UserId = authenticateUserResponse.UserId,
                     UserName = authenticateUserResponse.UserName,
                     IsAuthenticated = authenticateUserResponse.IsAuthenticated,
                     IsSuccessful = true,
-                    Roles = new List<int>()
+                    Roles = new List<int>(),
+                    ErrorMessage = authenticateUserResponse.ErrorMessage,
+                    HttpStatusCode = authenticateUserResponse.HttpStatusCode,
+                    ResponseTypeEnum = authenticateUserResponse.ResponseTypeEnum
                 };
             }
             catch (Exception e)
             {
                 var innerMessage = string.Empty;
-                if(e.InnerException != null)
+                if (e.InnerException != null)
                     innerMessage = e.InnerException.Message;
 
                 this.logger.Info(LogClass.CommRest, $"authenticate user repository error: {e.Message} {innerMessage}");
                 return new AuthenticationResponse
                 {
+                    OrganizationId = authenticationRequest.OrganizationId,
                     UserId = 0,
                     UserName = string.Empty,
                     IsAuthenticated = false,
                     IsSuccessful = false,
-                    Roles = new List<int>()
+                    Roles = new List<int>(),
+                    ErrorMessage = $"Error {e.Message}",
+                    HttpStatusCode = HttpStatusCode.InternalServerError,
+                    ResponseTypeEnum = ResponseTypeEnum.exceptionOccurred
                 };
             }
         }

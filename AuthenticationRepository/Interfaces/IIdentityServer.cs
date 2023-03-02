@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace APISupport
+namespace AuthenticationRepository
 {
     public interface IIdentityServer
     {

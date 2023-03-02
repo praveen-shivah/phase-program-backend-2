@@ -30,11 +30,11 @@
     {
         private readonly IAuthenticationRepository authenticationRepository;
 
+        private readonly IDateTimeService dateTimeService;
+
         private readonly ILogger logger;
 
         private readonly ISecretKeyRetrieval secretKeyRetrieval;
-
-        private readonly IDateTimeService dateTimeService;
 
         public AuthenticationController(
             ILogger logger,
@@ -49,30 +49,27 @@
         }
 
         [AllowAnonymous]
-        [HttpGet("health-check")]
-        public IActionResult Get()
-        {
-            return this.Ok();
-        }
-
-        [AllowAnonymous]
         [HttpPost("admin-login")]
         public async Task<ActionResult<AuthenticateResponseDto>> AdminLogin(AuthenticateRequestDto authenticateDto)
         {
             this.logger.Info(LogClass.General, "AdminLogin received");
-            var result = await this.authenticationRepository.Authenticate(new AuthenticationRequest(authenticateDto.user, authenticateDto.pwd, this.ipAddress()));
+            var result = await this.authenticationRepository.Authenticate(new AuthenticationRequest(this.OrganizationId, authenticateDto.user, authenticateDto.pwd, this.ipAddress(), authenticateDto.audience));
             this.logger.Info(LogClass.General, "AdminLogin authenticate returned");
 
             if (result.IsSuccessful && result.IsAuthenticated)
             {
                 this.logger.Info(LogClass.General, "AdminLogin authenticate returned success");
                 var response = new AuthenticateResponseDto
-                                   {
-                                       OrganizationId = result.OrganizationId,
-                                       IsAuthenticated = true,
-                                       accessToken = result.AccessToken,
-                                       roles = result.Roles.ToArray()
-                                   };
+                {
+                    OrganizationId = result.OrganizationId,
+                    IsAuthenticated = true,
+                    AccessToken = result.AccessToken,
+                    Roles = result.Roles.ToArray(),
+                    ErrorMessage = result.ErrorMessage,
+                    HttpStatusCode = result.HttpStatusCode,
+                    IsSuccessful = true,
+                    ResponseTypeEnum = result.ResponseTypeEnum
+                };
 
                 this.setTokenCookie(result.RefreshToken);
                 return this.Ok(response);
@@ -80,12 +77,52 @@
 
             if (result.IsSuccessful && !result.IsAuthenticated)
             {
+                var response2 = new AuthenticateResponseDto
+                {
+                    OrganizationId = result.OrganizationId,
+                    IsAuthenticated = false,
+                    AccessToken = string.Empty,
+                    Roles = result.Roles.ToArray(),
+                    ErrorMessage = result.ErrorMessage,
+                    HttpStatusCode = result.HttpStatusCode,
+                    IsSuccessful = false,
+                    ResponseTypeEnum = result.ResponseTypeEnum
+                };
+
                 this.logger.Info(LogClass.General, "AdminLogin authenticate returned success but not authenticated");
-                return this.StatusCode((int)HttpStatusCode.Forbidden, 0);
+                return this.StatusCode((int)HttpStatusCode.Forbidden, response2);
             }
 
+            var response3 = new AuthenticateResponseDto
+            {
+                OrganizationId = result.OrganizationId,
+                IsAuthenticated = false,
+                AccessToken = string.Empty,
+                Roles = result.Roles.ToArray(),
+                ErrorMessage = result.ErrorMessage,
+                HttpStatusCode = result.HttpStatusCode,
+                IsSuccessful = false,
+                ResponseTypeEnum = result.ResponseTypeEnum
+            };
+
             this.logger.Info(LogClass.General, "AdminLogin authenticate returned - but not successful");
-            return this.StatusCode(500, 0);
+            return this.StatusCode(500, response3);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("health-check")]
+        public IActionResult Get()
+        {
+            return this.Ok();
+        }
+
+        [HttpGet("get-users")]
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        {
+            this.logger.Debug(LogClass.General, "GetUsers received");
+
+            var result = await this.authenticationRepository.GetUsers();
+            return this.Ok(result);
         }
 
         [AllowAnonymous]
@@ -107,24 +144,6 @@
             }
 
             return this.StatusCode(500, 0);
-        }
-
-        [HttpGet("get-users")]
-        public async Task<ActionResult<List<UserDto>>> GetUsers()
-        {
-            this.logger.Debug(LogClass.General, "GetUsers received");
-
-            var result = await this.authenticationRepository.GetUsers();
-            return this.Ok(result);
-        }
-
-        [HttpPost("update-user")]
-        public async Task<IActionResult> UpdateUser(UserDto userDto)
-        {
-            this.logger.Debug(LogClass.General, "UpdateUser received");
-
-            var result = await this.authenticationRepository.UpdateUser(this.OrganizationId, userDto);
-            return this.Ok(result);
         }
 
         [AllowAnonymous]
@@ -165,6 +184,15 @@
             }
         }
 
+        [HttpPost("update-user")]
+        public async Task<IActionResult> UpdateUser(UserDto userDto)
+        {
+            this.logger.Debug(LogClass.General, "UpdateUser received");
+
+            var result = await this.authenticationRepository.UpdateUser(this.OrganizationId, userDto);
+            return this.Ok(result);
+        }
+
         private string ipAddress()
         {
             string? result;
@@ -188,6 +216,7 @@
             {
                 expires = this.dateTimeService.UtcNow.AddDays(-1D);
             }
+
             // append cookie with refresh token to the http response
             var cookieOptions = new CookieOptions
             {

@@ -1,4 +1,4 @@
-﻿namespace APISupport
+﻿namespace AuthenticationRepository
 {
     public class ISAccountUpdateRequestDto
     {

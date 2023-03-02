@@ -2,19 +2,13 @@
 {
     using ApplicationLifeCycle;
 
-    using AutomaticTaskSharedLibrary;
+    using AuthenticationRepository;
 
     using DatabaseContext;
-
-    using InvoiceRepositoryTypes;
 
     using LoggingLibrary;
 
     using Microsoft.Extensions.Configuration;
-
-    using RestServicesSupport;
-
-    using RestServicesSupportTypes;
 
     using SharedUtilities;
 
@@ -23,6 +17,18 @@
     using System;
     using System.IO;
     using System.Xml;
+
+    using AutomaticTaskSharedLibrary;
+
+    using InvoiceRepositoryTypes;
+
+    using RestServicesSupport;
+
+    using RestServicesSupportTypes;
+
+    using SecurityUtilities;
+
+    using SecurityUtilitiesTypes;
 
     using UnitOfWorkTypesLibrary;
 
@@ -40,14 +46,14 @@
 
             this.GlobalContainer.Register<ILoggerAdapterFactory, LoggerAdapterFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<ILoggerFactory, LoggerFactory>(Lifestyle.Singleton);
-            //this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
+            this.GlobalContainer.Register<ISecretKeyRetrieval, SecretKeyRetrievalSettingsFile>(Lifestyle.Singleton);
 
             this.GlobalContainer.Register<IGuidFactory, GuidFactory>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IConnectionFactory, ConnectionFactoryNormal>(Lifestyle.Singleton);
             this.GlobalContainer.Register<IEntityContextFrameWorkFactory<DataContext>, EntityContextFrameWorkFactoryNormal>(Lifestyle.Singleton);
 
-            //this.GlobalContainer.Register<IRestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>, RestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>>();
-            //this.GlobalContainer.Register<IRestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>, RestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>>();
+            this.GlobalContainer.Register<IRestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>, RestServicesFactory<DistributorToResellerSendPointsTransferRequestDto, DistributorToOperatorSendPointsTransferResponseDto>>();
+            this.GlobalContainer.Register<IRestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>, RestServicesFactory<ResellerBalanceRetrieveRequestDto, ResellerBalanceRetrieveResponseDto>>();
 
             return true;
         }

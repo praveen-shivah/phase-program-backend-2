@@ -2,9 +2,10 @@
 {
     using DatabaseContext;
 
-    public class AuthenticateUserResponse
+    using RestServicesSupportTypes;
+
+    public class AuthenticateUserResponse : BaseResponseDto
     {
-        public bool IsSuccessful { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }

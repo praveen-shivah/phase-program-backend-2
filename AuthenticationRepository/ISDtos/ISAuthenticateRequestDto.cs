@@ -1,4 +1,4 @@
-﻿namespace APISupport
+﻿namespace AuthenticationRepository
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;

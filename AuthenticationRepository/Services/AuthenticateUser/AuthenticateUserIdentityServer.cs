@@ -6,8 +6,6 @@ using DatabaseContext;
 
 using LoggingLibrary;
 
-using APISupport;
-
 public class AuthenticateUserIdentityServer : IAuthenticateUser
 {
     private readonly IAuthenticateUser authenticateUser;
@@ -52,10 +50,15 @@ public class AuthenticateUserIdentityServer : IAuthenticateUser
             {
                 refreshToken = result.RefreshTokenResponseDto.RefreshToken;
             }
+
+            response.IsSuccessful = result.IsSuccessful;
             response.AccessToken = result.AccessToken;
             response.Claims = result.Claims;
             response.IsAuthenticated = result.IsAuthenticated;
             response.RefreshToken = refreshToken;
+            response.ResponseTypeEnum = result.ResponseTypeEnum;
+            response.ErrorMessage = result.ErrorMessage;
+            response.HttpStatusCode = result.HttpStatusCode;
         }
 
         return response;

@@ -1,0 +1,61 @@
+﻿namespace AuthenticationRepository
+{
+    using RestServicesSupportTypes;
+
+    using System.Threading.Tasks;
+
+    public class IdentityServer : IIdentityServer
+    {
+        private string baseUrl = "https://is.trueroute.com/";
+
+        private readonly IRestServices<ISAuthenticateRequestDto, ISAuthenticateResponseDto> isAuthenticate;
+
+        private readonly IRestServices<ISLogoutRequestDto, ISLogoutResponseDto> isLogout;
+
+        private readonly IRestServices<ISRefreshTokenRequestDto, ISRefreshTokenResponseDto> isRefreshTokenRequestDto;
+
+        private readonly IRestServices<ISAccountRequestDto, ISAccountResponseDto> isAccountRequest;
+
+        private readonly IRestServices<ISAccountUpdateRequestDto, ISAccountUpdateResponseDto> isAccountUpdateRequest;
+
+        public IdentityServer(IIdentityServerUrl identityServerUrl,
+                              IRestServices<ISAuthenticateRequestDto, ISAuthenticateResponseDto> isAuthenticate,
+                              IRestServices<ISLogoutRequestDto, ISLogoutResponseDto> isLogout,
+                              IRestServices<ISRefreshTokenRequestDto, ISRefreshTokenResponseDto> isRefreshTokenRequestDto,
+                              IRestServices<ISAccountRequestDto, ISAccountResponseDto> isAccountRequest,
+                              IRestServices<ISAccountUpdateRequestDto, ISAccountUpdateResponseDto> isAccountUpdateRequest)
+        {
+            this.isAuthenticate = isAuthenticate;
+            this.isLogout = isLogout;
+            this.isRefreshTokenRequestDto = isRefreshTokenRequestDto;
+            this.isAccountRequest = isAccountRequest;
+            this.isAccountUpdateRequest = isAccountUpdateRequest;
+            this.baseUrl = identityServerUrl.GetURL();
+        }
+
+        async Task<ISAuthenticateResponseDto> IIdentityServer.Authenticate(ISAuthenticateRequestDto authenticateRequestDto)
+        {
+            return await this.isAuthenticate.Post($"{this.baseUrl}auth/authenticate", authenticateRequestDto);
+        }
+
+        async Task<ISLogoutResponseDto> IIdentityServer.Logout(ISLogoutRequestDto isLogoutRequestDto)
+        {
+            return await this.isLogout.Post($"{this.baseUrl}auth/logout", isLogoutRequestDto);
+        }
+
+        async Task<ISRefreshTokenResponseDto> IIdentityServer.RefreshToken(ISRefreshTokenRequestDto isRefreshTokenRequestDto)
+        {
+            return await this.isRefreshTokenRequestDto.Post($"{this.baseUrl}auth/refresh-token", isRefreshTokenRequestDto);
+        }
+
+        async Task<ISAccountResponseDto> IIdentityServer.GetUserByUserName(string jwtTokenString, ISAccountRequestDto isAccountRequestDto)
+        {
+            return await this.isAccountRequest.Post($"{this.baseUrl}auth/get-user", jwtTokenString, isAccountRequestDto);
+        }
+
+        async Task<ISAccountUpdateResponseDto> IIdentityServer.UpdateUser(string jwtTokenString, ISAccountUpdateRequestDto isAccountUpdateRequestDto)
+        {
+            return await this.isAccountUpdateRequest.Post($"{this.baseUrl}auth/update-user", jwtTokenString, isAccountUpdateRequestDto);
+        }
+    }
+}
