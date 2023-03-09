@@ -16,6 +16,7 @@
 
             this.GlobalContainer.Register<IUpdateReseller, UpdateResellerStart>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerRetrieveReseller>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerAddSitesForEachVendor>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerUpdate>(Lifestyle.Transient);
 
             this.GlobalContainer.Register<IUpdateResellerSite, UpdateResellerSiteStart>(Lifestyle.Transient);

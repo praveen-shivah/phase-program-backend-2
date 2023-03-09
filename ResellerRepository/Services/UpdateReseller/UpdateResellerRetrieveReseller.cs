@@ -1,5 +1,7 @@
 ﻿namespace ResellerRepository
 {
+    using CommonServices;
+
     using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
@@ -24,19 +26,19 @@
             }
 
             var organization = await dataContext.Organization.SingleAsync(o => o.Id == request.OrganizationId);
-            var Reseller = await dataContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.ResellerDto.Id);
-            if (Reseller == null)
+            var reseller = await dataContext.Reseller.SingleOrDefaultAsync(x => x.Id == request.ResellerDto.Id);
+            if (reseller == null)
             {
-                Reseller = new Reseller()
+                reseller = new Reseller()
                 {
                     Name = request.ResellerDto.Name,
                     Organization = organization
                 };
-                dataContext.Reseller.Add(Reseller);
+                dataContext.Reseller.Add(reseller);
                 await dataContext.SaveChangesAsync();
             }
 
-            response.Reseller = Reseller;
+            response.Reseller = reseller;
 
             return response;
         }
