@@ -1,0 +1,6 @@
+﻿namespace ResellerRepository;
+
+public interface IResellerSiteInformationPopulateRepository
+{
+    Task<ResellerSiteInformationPopulateResponse> ResellerSiteInformationPopulateAsync(ResellerSiteInformationPopulateRequest request);
+}

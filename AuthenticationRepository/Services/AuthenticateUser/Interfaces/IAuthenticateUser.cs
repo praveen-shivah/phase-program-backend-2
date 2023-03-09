@@ -4,6 +4,6 @@
 
     public interface IAuthenticateUser
     {
-        Task<AuthenticateUserResponse> Authenticate(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest);
+        Task<AuthenticateUserResponse> AuthenticateUserAsync(DataContext dataContext, AuthenticateUserRequest authenticateUserRequest);
     }
 }
