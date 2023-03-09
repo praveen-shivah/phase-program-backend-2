@@ -40,6 +40,8 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
+using TransferRepository;
+
 using VendorRepositoryTypes;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
@@ -90,6 +92,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQu
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRetrieveRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListResellerRetrieveRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ITransferPointsQueueGetOutstandingItemsRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 
