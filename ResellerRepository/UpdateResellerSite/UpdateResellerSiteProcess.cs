@@ -1,8 +1,12 @@
 ﻿namespace ResellerRepository;
 
+using System.Net;
+
 using DatabaseContext;
 
 using Microsoft.EntityFrameworkCore;
+
+using RestServicesSupportTypes;
 
 public class UpdateResellerSiteProcess : IUpdateResellerSite
 {
@@ -25,10 +29,20 @@ public class UpdateResellerSiteProcess : IUpdateResellerSite
         if (record == null)
         {
             response.IsSuccessful = false;
+            response.ResponseTypeEnum = ResponseTypeEnum.idNotFound;
+            response.ErrorMessage = $"Site information id {request.Id} not found";
+            response.HttpStatusCode = HttpStatusCode.BadRequest;
+
             return response;
         }
 
         record.AccountId = request.AccountId;
+        record.LoginUsername = request.LoginUsername;
+
+        if (request.LoginPassword != "******" || string.IsNullOrEmpty(request.LoginPassword))
+        {
+            record.LoginPassword = request.LoginPassword;
+        }
 
         return response;
     }

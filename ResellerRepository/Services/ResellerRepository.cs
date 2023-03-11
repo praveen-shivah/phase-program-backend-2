@@ -65,7 +65,9 @@
                                     Url = siteInformation.Url,
                                     AccountId = siteInformation.AccountId,
                                     VendorId = siteInformation.Vendor.Id.ToString(),
-                                    Balance = siteInformation.Balance
+                                    Balance = siteInformation.Balance,
+                                    LoginUsername = siteInformation.LoginUsername,
+                                    LoginPassword = "******"
                                 });
                         }
 

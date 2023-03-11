@@ -82,11 +82,13 @@
             this.logger.Debug(LogClass.General, "UpdateResellerSite received");
             var result = await this.updateResellerSiteRepository.UpdateResellerSiteAsync(
                 new UpdateResellerSiteRequest()
-                    {
-                        OrganizationId = this.OrganizationId,
-                        AccountId = updateResellerSiteRequestDto.AccountId,
-                        Id = updateResellerSiteRequestDto.Id
-                    });
+                {
+                    OrganizationId = this.OrganizationId,
+                    AccountId = updateResellerSiteRequestDto.AccountId,
+                    Id = updateResellerSiteRequestDto.Id,
+                    LoginPassword = updateResellerSiteRequestDto.LoginPassword,
+                    LoginUsername = updateResellerSiteRequestDto.LoginUsername
+                });
             return this.Ok(result);
         }
     }

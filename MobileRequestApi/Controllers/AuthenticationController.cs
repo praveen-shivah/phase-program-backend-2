@@ -53,6 +53,10 @@
         public async Task<ActionResult<AuthenticateResponseDto>> AdminLogin(AuthenticateRequestDto authenticateDto)
         {
             this.logger.Info(LogClass.General, "AdminLogin received");
+            if (string.IsNullOrWhiteSpace(authenticateDto.audience))
+            {
+                authenticateDto.audience = this.HttpContext.Session.Id;
+            }
             var result = await this.authenticationRepository.Authenticate(new AuthenticationRequest(this.OrganizationId, authenticateDto.user, authenticateDto.pwd, this.ipAddress(), authenticateDto.audience));
             this.logger.Info(LogClass.General, "AdminLogin authenticate returned");
 
