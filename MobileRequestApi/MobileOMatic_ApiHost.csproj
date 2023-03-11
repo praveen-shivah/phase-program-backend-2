@@ -60,6 +60,7 @@
     <ProjectReference Include="..\RestServicesSupport\RestServicesSupport.csproj" />
     <ProjectReference Include="..\TransferRepository\TransferRepository.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />
+    <ProjectReference Include="..\VendorRepository\VendorRepository.csproj" />
   </ItemGroup>
 
 </Project>

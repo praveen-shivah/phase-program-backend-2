@@ -27,12 +27,8 @@
 
         Task<AuthenticationResponse> GetUserById(int id);
 
-        Task<RefreshTokenResponse> RefreshToken(string refreshToken, int userId, string ipAddress);
+        Task<List<UpdateUserRequestDto>> GetUsers();
 
-        Task<LogoutResponse> Logout(LogoutRequest logoutRequest);
-
-        Task<List<UserDto>> GetUsers();
-
-        Task<UpdateUserResponse> UpdateUser(int organizationId, UserDto userDto);
+        Task<UpdateUserResponse> UpdateUser(string jwtTokenString, int organizationId, UpdateUserRequestDto updateUserRequestDto);
     }
 }

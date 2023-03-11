@@ -4,6 +4,8 @@
 
     using ApiHost;
     using ApiHost.Middleware;
+    using APISupport;
+    using AuthenticationRepositoryTypes;
 
     using InvoiceRepositoryTypes;
 

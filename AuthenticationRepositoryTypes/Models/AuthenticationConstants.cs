@@ -11,5 +11,11 @@
         public const string AuthenticationAdminDefaultEmail = "admin@multisweeps.com";
 
         public const string REQUIRED_ISSUER = @"EBC35473-582C-4139-9CF8-5C52EDF37372";
+
+        public const string POLICY_ADMIN = "5150";
+
+        public const string POLICY_USER = "2105";
+
+        public const string POLICY_ALL = "5150, 2105";
     }
 }

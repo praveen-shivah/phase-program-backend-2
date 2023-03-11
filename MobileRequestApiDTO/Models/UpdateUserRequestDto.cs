@@ -1,12 +1,13 @@
 ﻿namespace ApiDTO
 {
-    public class UserDto : BaseDto
+    public class UpdateUserRequestDto : BaseDto
     {
         public int Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public bool IsActive { get; set; }
-        public string? Password { get; set; }
-        public string? ConfirmPassword { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string Claims { get; set; }
     }
 }

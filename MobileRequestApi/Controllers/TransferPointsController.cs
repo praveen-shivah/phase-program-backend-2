@@ -4,6 +4,9 @@
     using System.Threading.Tasks;
 
     using ApiDTO;
+    using APISupport;
+
+    using AuthenticationRepositoryTypes;
 
     using LoggingLibrary;
 
@@ -13,6 +16,7 @@
 
     using TransferRepository;
 
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/transferpoints")]
     public class TransferPointsController : ApiControllerBase
@@ -28,6 +32,7 @@
         }
 
         [HttpPost("get-transfer-queue")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<TransferPointsQueueGetOutstandingItemsResponseDto>> GetTransferQueue(TransferPointsQueueGetOutstandingItemsRequestDto transferPointsQueueGetOutstandingItemsRequestDto)
         {
             this.logger.Debug(LogClass.General, "GetTransferQueue");

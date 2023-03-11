@@ -1,11 +1,13 @@
 ﻿namespace AuthenticationRepositoryTypes
 {
+    using System.IdentityModel.Tokens.Jwt;
+
     public class JwtValidateResponse
     {
         public bool IsSuccessful { get; set; }
 
-        public int UserId { get; set; }
+        public bool IsExpired { get; set; }
 
-        public int OrganizationId { get; set; }
+        public JwtSecurityToken? JwtSecurityToken { get; set; }
     }
 }

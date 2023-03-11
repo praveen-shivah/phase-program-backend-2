@@ -3,12 +3,14 @@
     using System;
 
     using ApiHost.Middleware;
+    using APISupport;
+    using AuthenticationRepositoryTypes;
 
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/log")]
     public class LogController : ApiControllerBase
@@ -21,6 +23,7 @@
         }
 
         [HttpGet("")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public IActionResult Index()
         {
             this.logger.Debug(LogClass.General, $"GET: test of a log message userId: {this.UserId} organizationId: {this.OrganizationId} ");
@@ -30,6 +33,7 @@
         }
 
         [HttpPost("log")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public IActionResult Log()
         {
             this.logger.Debug(LogClass.General, $"POST: test of a log message userId: {this.UserId} organizationId: {this.OrganizationId} ");

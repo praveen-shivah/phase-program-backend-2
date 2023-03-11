@@ -1,6 +1,8 @@
 ﻿namespace ApiHost
 {
     using ApiDTO;
+    using APISupport;
+    using AuthenticationRepositoryTypes;
 
     using InvoiceRepository;
 
@@ -10,6 +12,7 @@
 
     using System.Threading.Tasks;
 
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/invoicereports")]
     public class InvoiceReportController : ApiControllerBase
@@ -33,6 +36,7 @@
         }
 
         [HttpPost("get-invoice-list")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<InvoiceListResponseDto>> GetInvoiceList(InvoiceListRequestDto invoiceListRequestDto)
         {
             this.logger.Debug(LogClass.General, $"GetInvoiceList");
@@ -48,6 +52,7 @@
         }
 
         [HttpPost("get-reseller-invoice-list")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<InvoiceListResellerRetrieveResponseDto>> GetResellerInvoiceList(InvoiceListResellerRetrieveRequestDto invoiceListResellerRetrieveRequestDto)
         {
             this.logger.Debug(LogClass.General, $"GetResellerInvoiceList");

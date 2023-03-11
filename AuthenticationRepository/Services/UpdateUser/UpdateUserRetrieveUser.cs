@@ -1,10 +1,14 @@
 ﻿namespace AuthenticationRepository
 {
+    using System.Net;
+
     using AuthenticationRepositoryTypes;
 
     using DatabaseContext;
 
     using Microsoft.EntityFrameworkCore;
+
+    using RestServicesSupportTypes;
 
     public class UpdateUserRetrieveUser : IUpdateUser
     {
@@ -23,23 +27,27 @@
                 return response;
             }
 
-            var user = await dataContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UserDto.Id);
+            var user = await dataContext.User.Include(o => o.Organization).SingleOrDefaultAsync(x => x.Id == updateUserRequest.UpdateUserRequestDto.Id);
             if (user == null)
             {
-                if (updateUserRequest.UserDto.UserName.ToUpper() == AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
+                if (updateUserRequest.UpdateUserRequestDto.UserName.ToUpper() == AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
                 {
                     response.IsSuccessful = false;
+                    response.ResponseTypeEnum = ResponseTypeEnum.idNotFound;
+                    response.ErrorMessage = $"Username {updateUserRequest.UpdateUserRequestDto.UserName} not found";
+                    response.HttpStatusCode = HttpStatusCode.BadGateway;
+
                     return response;
                 }
 
                 var organization = await dataContext.Organization.SingleAsync(o => o.Id == updateUserRequest.OrganizationId);
                 user = new User
-                           {
-                               Organization = organization,
-                               CurrentRefreshToken = string.Empty,
-                               UserName = updateUserRequest.UserDto.UserName,
-                               Email = updateUserRequest.UserDto.Email
-                           };
+                {
+                    Organization = organization,
+                    CurrentRefreshToken = string.Empty,
+                    UserName = updateUserRequest.UpdateUserRequestDto.UserName,
+                    Email = updateUserRequest.UpdateUserRequestDto.Email
+                };
                 dataContext.User.Add(user);
             }
 
