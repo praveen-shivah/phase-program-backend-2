@@ -109,6 +109,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRetr
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListResellerRetrieveRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ITransferPointsQueueGetOutstandingItemsRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IIdentityServer>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerBalanceRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 

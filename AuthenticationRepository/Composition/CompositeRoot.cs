@@ -28,6 +28,7 @@
             this.GlobalContainer.Register<IRestServices<ISAccountUpdateRequestDto, ISAccountUpdateResponseDto>, RestServicesExternal<ISAccountUpdateRequestDto, ISAccountUpdateResponseDto>>();
 
             this.GlobalContainer.Register<IAuthenticateUser, AuthenticateUserStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IAuthenticateUser, AuthenticateUserRetrieveUser>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IAuthenticateUser, AuthenticateUserIdentityServer>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IAuthenticateUser, AuthenticateUserParseClaims>(Lifestyle.Transient);
 

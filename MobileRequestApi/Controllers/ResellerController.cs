@@ -1,12 +1,9 @@
 ﻿namespace ApiHost
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     using ApiDTO;
 
-    using ApiHost.Middleware;
     using APISupport;
+
     using AuthenticationRepositoryTypes;
 
     using LoggingLibrary;
@@ -16,6 +13,9 @@
     using ResellerRepository;
 
     using ResellerRepositoryTypes;
+
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     [ApiController]
     [AuthorizePolicy]
@@ -28,19 +28,26 @@
 
         private readonly IResellerRepository resellerRepository;
 
+        private readonly IUpdateResellerBalanceRepository updateResellerBalanceRepository;
+
         private readonly IUpdateResellerSiteRepository updateResellerSiteRepository;
 
-        public ResellerController(ILogger logger, IResellerBalanceService resellerBalanceService, IResellerRepository resellerRepository, IUpdateResellerSiteRepository updateResellerSiteRepository)
+        public ResellerController(ILogger logger,
+                                  IResellerBalanceService resellerBalanceService,
+                                  IResellerRepository resellerRepository,
+                                  IUpdateResellerBalanceRepository updateResellerBalanceRepository,
+                                  IUpdateResellerSiteRepository updateResellerSiteRepository)
         {
             this.logger = logger;
             this.resellerBalanceService = resellerBalanceService;
             this.resellerRepository = resellerRepository;
+            this.updateResellerBalanceRepository = updateResellerBalanceRepository;
             this.updateResellerSiteRepository = updateResellerSiteRepository;
         }
 
         [HttpPost("reseller-balance")]
         [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
-        public async Task<IActionResult> ResellerBalance(ResellerBalanceDTO resellerBalance)
+        public async Task<IActionResult> UpdateBalance(ResellerBalanceDTO resellerBalance)
         {
             this.logger.Debug(LogClass.General, "ResellerBalance received");
             var result = await this.resellerBalanceService.UpdateBalance(resellerBalance);
@@ -63,6 +70,30 @@
             this.logger.Debug(LogClass.General, "GetResellers received");
 
             var result = await this.resellerRepository.GetResellers(this.OrganizationId);
+            return this.Ok(result);
+        }
+
+        [HttpPost("update-reseller-balance")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        public async Task<ActionResult<List<UpdateResellerBalanceResponseDto>>> UpdateResellerBalance(UpdateResellerBalanceRequestDto request)
+        {
+            this.logger.Debug(LogClass.General, "UpdateResellerBalanceRepository received");
+
+            var response = await this.updateResellerBalanceRepository.UpdateResellerBalanceAsync(
+                             new UpdateResellerBalanceRequest()
+                             {
+                                 OrganizationId = this.OrganizationId,
+                                 Balance = request.Balance,
+                                 ResellerId = request.ResellerId
+                             });
+            var result = new UpdateResellerBalanceResponseDto()
+            {
+                IsSuccessful = response.IsSuccessful,
+                ErrorMessage = response.ErrorMessage,
+                HttpStatusCode = response.HttpStatusCode,
+                ResponseTypeEnum = response.ResponseTypeEnum
+            };
+
             return this.Ok(result);
         }
 

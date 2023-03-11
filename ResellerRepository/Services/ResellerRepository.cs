@@ -37,6 +37,7 @@
                                 {
                                     Id = Reseller.Id,
                                     Name = Reseller.Name,
+                                    Balance = Reseller.Balance
                                 });
                         }
 
