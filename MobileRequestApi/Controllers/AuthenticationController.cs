@@ -3,10 +3,13 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Threading.Tasks;
+    using System.Web;
 
     using ApiDTO;
 
     using ApiHost.Middleware;
+
+    using APISupport;
 
     using AuthenticationRepository;
 
@@ -16,19 +19,22 @@
 
     using LoggingLibrary;
 
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     using SecurityUtilitiesTypes;
 
-    [Authorize]
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/authentication")]
     [EnableCors("allowLocalHostOrigins")]
     public class AuthenticationController : ApiControllerBase
     {
         private readonly IAuthenticationRepository authenticationRepository;
+
+        private readonly IIdentityServer identityServer;
 
         private readonly IDateTimeService dateTimeService;
 
@@ -40,12 +46,14 @@
             ILogger logger,
             ISecretKeyRetrieval secretKeyRetrieval,
             IDateTimeService dateTimeService,
-            IAuthenticationRepository authenticationRepository)
+            IAuthenticationRepository authenticationRepository,
+            IIdentityServer identityServer)
         {
             this.logger = logger;
             this.secretKeyRetrieval = secretKeyRetrieval;
             this.dateTimeService = dateTimeService;
             this.authenticationRepository = authenticationRepository;
+            this.identityServer = identityServer;
         }
 
         [AllowAnonymous]
@@ -53,6 +61,10 @@
         public async Task<ActionResult<AuthenticateResponseDto>> AdminLogin(AuthenticateRequestDto authenticateDto)
         {
             this.logger.Info(LogClass.General, "AdminLogin received");
+            if (string.IsNullOrWhiteSpace(authenticateDto.audience))
+            {
+                authenticateDto.audience = this.HttpContext.Session.Id;
+            }
             var result = await this.authenticationRepository.Authenticate(new AuthenticationRequest(this.OrganizationId, authenticateDto.user, authenticateDto.pwd, this.ipAddress(), authenticateDto.audience));
             this.logger.Info(LogClass.General, "AdminLogin authenticate returned");
 
@@ -117,7 +129,8 @@
         }
 
         [HttpGet("get-users")]
-        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
+        public async Task<ActionResult<List<UpdateUserRequestDto>>> GetUsers()
         {
             this.logger.Debug(LogClass.General, "GetUsers received");
 
@@ -129,55 +142,65 @@
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            this.logger.Debug(LogClass.General, "RefreshToken received");
+            this.logger.Debug(LogClass.CommRest, "Logout received");
             this.setTokenCookie(string.Empty);
 
-            if (this.UserId <= 0)
-            {
-                return this.Ok();
-            }
-
-            var result = await this.authenticationRepository.Logout(new LogoutRequest(this.UserId));
+            var userName = this.HttpContext?.User?.Identity?.Name;
+            var result = await this.identityServer.Logout(new ISLogoutRequestDto { UserName = userName });
             if (result.IsSuccessful)
             {
+                if (this.HttpContext != null)
+                {
+                    await this.HttpContext.SignOutAsync();
+                }
+
                 return this.Ok();
             }
 
-            return this.StatusCode(500, 0);
+            return this.StatusCode((int)HttpStatusCode.InternalServerError, 0);
         }
 
         [AllowAnonymous]
         [HttpPost("refresh-token")]
         public async Task<ActionResult<string>> RefreshToken()
         {
-            this.logger.Debug(LogClass.General, "RefreshToken received");
+            this.logger.Debug(LogClass.CommRest, "RefreshToken received");
 
-            var refreshToken = this.Request.Cookies["refreshToken"];
-            if (refreshToken == null)
+            var refreshToken = HttpUtility.UrlDecode(this.Request.Headers["Refresh-Token"]);
+            if (string.IsNullOrEmpty(refreshToken))
             {
-                this.setTokenCookie(string.Empty);
-                return this.Unauthorized("Refresh Token missing.");
+                refreshToken = HttpUtility.UrlDecode(this.Request.Cookies["refreshToken"]);
+                if (string.IsNullOrEmpty(refreshToken))
+                {
+                    this.setTokenCookie(string.Empty);
+                    return this.Unauthorized("Refresh Token missing.");
+                }
             }
 
-            var userId = (int)(this.HttpContext.Items["UserId"] ?? 0);
-            var result = await this.authenticationRepository.RefreshToken(refreshToken, userId, this.ipAddress());
-            switch (result.RefreshTokenResponseType)
+            var result = await this.identityServer.RefreshToken(new ISRefreshTokenRequestDto
             {
-                case RefreshTokenResponseType.successful:
-                    this.setTokenCookie(result.RefreshToken.Token);
+                RefreshToken = refreshToken,
+                IPAddress = this.ipAddress(),
+                Issuer = AuthenticationConstants.REQUIRED_ISSUER
+            });
+
+            switch (result.RefreshTokenDtoType)
+            {
+                case RefreshTokenDtoType.successful:
+                    this.setTokenCookie(result.RefreshToken);
                     return this.Ok(result.JwtToken);
-                case RefreshTokenResponseType.notFound:
+                case RefreshTokenDtoType.notFound:
                     this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Invalid Refresh Token.");
-                case RefreshTokenResponseType.expired:
+                case RefreshTokenDtoType.expired:
                     this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Token expired.");
-                case RefreshTokenResponseType.currentTokenNotFound:
+                case RefreshTokenDtoType.currentTokenNotFound:
                     this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Invalid Refresh Token.");
-                case RefreshTokenResponseType.attemptedReuse:
-                case RefreshTokenResponseType.notActive:
-                case RefreshTokenResponseType.duplicated:
+                case RefreshTokenDtoType.attemptedReuse:
+                case RefreshTokenDtoType.notActive:
+                case RefreshTokenDtoType.duplicated:
                 default:
                     this.setTokenCookie(string.Empty);
                     return this.Unauthorized("Invalid Refresh Token.");
@@ -185,12 +208,19 @@
         }
 
         [HttpPost("update-user")]
-        public async Task<IActionResult> UpdateUser(UserDto userDto)
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
+        public async Task<ActionResult<UpdateUserResponseDto>> UpdateUser(UpdateUserRequestDto updateUserRequestDto)
         {
             this.logger.Debug(LogClass.General, "UpdateUser received");
-
-            var result = await this.authenticationRepository.UpdateUser(this.OrganizationId, userDto);
-            return this.Ok(result);
+            var result = await this.authenticationRepository.UpdateUser(this.JwtTokenString, this.OrganizationId, updateUserRequestDto);
+            var response = new UpdateUserResponseDto()
+            {
+                ErrorMessage = result.ErrorMessage,
+                HttpStatusCode = result.HttpStatusCode,
+                IsSuccessful = result.IsSuccessful,
+                ResponseTypeEnum = result.ResponseTypeEnum
+            };
+            return this.Ok(response);
         }
 
         private string ipAddress()

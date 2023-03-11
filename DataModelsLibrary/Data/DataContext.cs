@@ -52,6 +52,13 @@
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
+            modelBuilder.Entity<SiteInformation>(entity =>
+            {
+                entity.Property(e => e.LoginPassword).HasDefaultValueSql("''::character varying");
+
+                entity.Property(e => e.LoginUsername).HasDefaultValueSql("''::character varying");
+            });
+
             modelBuilder.Entity<TransferPointsQueue>(entity =>
             {
                 entity.Property(e => e.ItemId).HasDefaultValueSql("''::text");

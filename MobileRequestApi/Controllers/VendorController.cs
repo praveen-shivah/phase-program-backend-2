@@ -8,12 +8,15 @@ namespace ApiHost
     using ApiDTO;
 
     using ApiHost.Middleware;
+    using APISupport;
+
+    using AuthenticationRepositoryTypes;
 
     using LoggingLibrary;
 
     using VendorRepositoryTypes;
 
-    [Authorize]
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/vendor")]
     public class VendorController : Controller
@@ -29,6 +32,7 @@ namespace ApiHost
         }
 
         [HttpGet("get-vendors")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<List<VendorDto>>> GetVendors()
         {
             this.logger.Debug(LogClass.General, "GetVendors received");
@@ -38,6 +42,7 @@ namespace ApiHost
         }
 
         [HttpPost("update-vendor")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> UpdateVendor(VendorDto vendorDto)
         {
             this.logger.Debug(LogClass.General, "UpdateVendor received");

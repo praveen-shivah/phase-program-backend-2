@@ -2,20 +2,19 @@
 
 namespace ApiHost
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     using ApiDTO;
 
-    using ApiHost.Middleware;
+    using APISupport;
+    using AuthenticationRepositoryTypes;
 
     using LoggingLibrary;
 
-    using Microsoft.AspNetCore.Cors;
-
     using OrganizationRepositoryTypes;
 
-    [Authorize]
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    [AuthorizePolicy]
     [ApiController]
     [Route("api/organization")]
     public class OrganizationController : Controller
@@ -31,6 +30,7 @@ namespace ApiHost
         }
 
         [HttpGet("get-organizations")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<List<OrganizationDto>>> GetUsers()
         {
             this.logger.Debug(LogClass.General, "GetUsers received");
@@ -40,6 +40,7 @@ namespace ApiHost
         }
 
         [HttpPost("update-organization")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> UpdateOrganization(OrganizationDto organizationDto)
         {
             this.logger.Debug(LogClass.General, "UpdateOrganization received");

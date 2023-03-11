@@ -20,10 +20,6 @@
     {
         private readonly IAuthenticateUser authenticateUser;
 
-        private readonly IRefreshToken refreshToken;
-
-        private readonly ILogout logout;
-
         private readonly IUpdateUser updateUser;
 
         private readonly ILogger logger;
@@ -34,15 +30,11 @@
             ILogger logger,
             IUnitOfWorkFactory<DataContext> unitOfWorkFactory,
             IAuthenticateUser authenticateUser,
-            IRefreshToken refreshToken,
-            ILogout logout,
             IUpdateUser updateUser)
         {
             this.logger = logger;
             this.unitOfWorkFactory = unitOfWorkFactory;
             this.authenticateUser = authenticateUser;
-            this.refreshToken = refreshToken;
-            this.logout = logout;
             this.updateUser = updateUser;
         }
 
@@ -155,36 +147,47 @@
             }
         }
 
-        async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(int organizationId, UserDto userDto)
+        async Task<UpdateUserResponse> IAuthenticationRepository.UpdateUser(string jwtTokenString, int organizationId, UpdateUserRequestDto updateUserRequestDto)
         {
+            var result = new UpdateUserResponse() { IsSuccessful = true };
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
-                        await this.updateUser.Update(context, new UpdateUserRequest(organizationId, userDto));
+                        var response = await this.updateUser.Update(context, new UpdateUserRequest(jwtTokenString, organizationId, updateUserRequestDto));
+                        result.IsSuccessful = response.IsSuccessful;
+                        result.ErrorMessage = response.ErrorMessage;
+                        result.HttpStatusCode = response.HttpStatusCode;
+                        result.ResponseTypeEnum = response.ResponseTypeEnum;
 
                         return WorkItemResultEnum.doneContinue;
                     });
-            var result = await uow.ExecuteAsync();
+            var uowResult = await uow.ExecuteAsync();
 
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
+            if (uowResult != WorkItemResultEnum.commitSuccessfullyCompleted)
             {
-                return new UpdateUserResponse() { IsSuccessful = false };
+                return new UpdateUserResponse()
+                {
+                    IsSuccessful = false,
+                    ResponseTypeEnum = ResponseTypeEnum.databaseError,
+                    ErrorMessage = "database error",
+                    HttpStatusCode = HttpStatusCode.InternalServerError
+                };
             }
 
-            return new UpdateUserResponse() { IsSuccessful = true };
+            return result;
         }
 
-        async Task<List<UserDto>> IAuthenticationRepository.GetUsers()
+        async Task<List<UpdateUserRequestDto>> IAuthenticationRepository.GetUsers()
         {
-            var userList = new List<UserDto>();
+            var userList = new List<UpdateUserRequestDto>();
             var uow = this.unitOfWorkFactory.Create(
                 async context =>
                     {
                         var list = await context.User.ToListAsync();
-                        userList.Add(new UserDto() { IsPlaceHolder = true });
+                        userList.Add(new UpdateUserRequestDto() { IsPlaceHolder = true });
                         foreach (var user in list)
                         {
-                            userList.Add(new UserDto() { Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive });
+                            userList.Add(new UpdateUserRequestDto() { Id = user.Id, Email = user.Email, UserName = user.UserName, IsActive = user.IsActive });
                         }
 
                         return WorkItemResultEnum.doneContinue;
@@ -192,48 +195,10 @@
             var result = await uow.ExecuteAsync();
             if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
             {
-                return new List<UserDto>();
+                return new List<UpdateUserRequestDto>();
             }
 
             return userList.OrderBy(x => x.UserName).ToList();
-        }
-
-        async Task<LogoutResponse> IAuthenticationRepository.Logout(LogoutRequest logoutRequest)
-        {
-            var logoutResponse = new LogoutResponse() { IsSuccessful = true };
-            var uow = this.unitOfWorkFactory.Create(
-                async context =>
-                    {
-                        logoutResponse = await this.logout.Logout(context, logoutRequest);
-                        return WorkItemResultEnum.doneContinue;
-                    });
-
-            var result = await uow.ExecuteAsync();
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted)
-            {
-                return new LogoutResponse() { IsSuccessful = false };
-            }
-
-            return logoutResponse;
-        }
-
-        async Task<RefreshTokenResponse> IAuthenticationRepository.RefreshToken(string refreshToken, int userId, string ipAddress)
-        {
-            RefreshTokenResponse? refreshTokenResponse = null;
-            var uow = this.unitOfWorkFactory.Create(
-                async context =>
-                    {
-                        refreshTokenResponse = await this.refreshToken.Refresh(context, new RefreshTokenRequest { RefreshToken = refreshToken, IpAddress = ipAddress });
-                        return WorkItemResultEnum.doneContinue;
-                    });
-
-            var result = await uow.ExecuteAsync();
-            if (result != WorkItemResultEnum.commitSuccessfullyCompleted || refreshTokenResponse == null)
-            {
-                return new RefreshTokenResponse { IsSuccessful = false };
-            }
-
-            return refreshTokenResponse;
         }
 
         async Task<AuthenticationResponse> IAuthenticationRepository.GetUserById(int id)

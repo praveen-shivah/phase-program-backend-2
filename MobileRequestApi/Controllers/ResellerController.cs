@@ -5,6 +5,10 @@
 
     using ApiDTO;
 
+    using ApiHost.Middleware;
+    using APISupport;
+    using AuthenticationRepositoryTypes;
+
     using LoggingLibrary;
 
     using Microsoft.AspNetCore.Mvc;
@@ -14,6 +18,7 @@
     using ResellerRepositoryTypes;
 
     [ApiController]
+    [AuthorizePolicy]
     [Route("api/reseller")]
     public class ResellerController : ApiControllerBase
     {
@@ -34,6 +39,7 @@
         }
 
         [HttpPost("reseller-balance")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> ResellerBalance(ResellerBalanceDTO resellerBalance)
         {
             this.logger.Debug(LogClass.General, "ResellerBalance received");
@@ -42,6 +48,7 @@
         }
 
         [HttpPost("reseller-transfer-points-completed")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> ResellerTransferPointsCompleted(ResellerTransferPointsCompletedDto resellerTransferPointsCompleted)
         {
             this.logger.Debug(LogClass.General, "ResellerTransferPointsCompleted received");
@@ -50,6 +57,7 @@
         }
 
         [HttpGet("get-resellers")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<List<ResellerDto>>> GetResellers()
         {
             this.logger.Debug(LogClass.General, "GetResellers received");
@@ -59,6 +67,7 @@
         }
 
         [HttpGet("get-reseller-sites")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<ActionResult<List<SiteInformationDto>>> GetResellerSites(int resellerId)
         {
             this.logger.Debug(LogClass.General, "GetResellerSites received");
@@ -68,6 +77,7 @@
         }
 
         [HttpPost("update-reseller")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> UpdateReseller(ResellerDto resellerDto)
         {
             this.logger.Debug(LogClass.General, "UpdateReseller received");
@@ -77,16 +87,19 @@
         }
 
         [HttpPost("update-reseller-site")]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public async Task<IActionResult> UpdateResellerSite(UpdateResellerSiteRequestDto updateResellerSiteRequestDto)
         {
             this.logger.Debug(LogClass.General, "UpdateResellerSite received");
             var result = await this.updateResellerSiteRepository.UpdateResellerSiteAsync(
                 new UpdateResellerSiteRequest()
-                    {
-                        OrganizationId = this.OrganizationId,
-                        AccountId = updateResellerSiteRequestDto.AccountId,
-                        Id = updateResellerSiteRequestDto.Id
-                    });
+                {
+                    OrganizationId = this.OrganizationId,
+                    AccountId = updateResellerSiteRequestDto.AccountId,
+                    Id = updateResellerSiteRequestDto.Id,
+                    LoginPassword = updateResellerSiteRequestDto.LoginPassword,
+                    LoginUsername = updateResellerSiteRequestDto.LoginUsername
+                });
             return this.Ok(result);
         }
     }

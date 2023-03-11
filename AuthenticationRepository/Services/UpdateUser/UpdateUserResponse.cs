@@ -2,10 +2,10 @@
 {
     using DatabaseContext;
 
-    public class UpdateUserResponse
-    {
-        public bool IsSuccessful { get; set; }
+    using RestServicesSupportTypes;
 
+    public class UpdateUserResponse : BaseResponseDto
+    {
         public User User { get; set; }
     }
 }

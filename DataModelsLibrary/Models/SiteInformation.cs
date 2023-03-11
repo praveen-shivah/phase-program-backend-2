@@ -26,6 +26,10 @@ using Microsoft.EntityFrameworkCore;
         public DateTime ModifiedOn { get; set; }
         public int OrganizationId { get; set; }
         public int Balance { get; set; }
+        [StringLength(100)]
+        public string LoginUsername { get; set; } = null!;
+        [StringLength(100)]
+        public string LoginPassword { get; set; } = null!;
 
         [ForeignKey(nameof(OrganizationId))]
         [InverseProperty("SiteInformation")]

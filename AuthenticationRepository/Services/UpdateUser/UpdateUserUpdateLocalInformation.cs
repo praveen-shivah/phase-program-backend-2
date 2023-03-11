@@ -4,7 +4,7 @@
 
     using DatabaseContext;
 
-    public class UpdateUserUpdate : IUpdateUser
+    public class UpdateUserUpdateLocalInformation : IUpdateUser
     {
         private readonly IUpdateUser updateUser;
 
@@ -12,7 +12,7 @@
 
         private readonly ICreatePasswordSalt createPasswordSalt;
 
-        public UpdateUserUpdate(IUpdateUser updateUser, ICalculatePassword calculatePassword, ICreatePasswordSalt createPasswordSalt)
+        public UpdateUserUpdateLocalInformation(IUpdateUser updateUser, ICalculatePassword calculatePassword, ICreatePasswordSalt createPasswordSalt)
         {
             this.updateUser = updateUser;
             this.calculatePassword = calculatePassword;
@@ -27,17 +27,11 @@
                 return response;
             }
 
-            response.User.Email = updateUserRequest.UserDto.Email;
+            response.User.Email = updateUserRequest.UpdateUserRequestDto.Email;
 
             if (response.User.UserName.ToUpper() != AuthenticationConstants.AuthenticationAdminDefaultUserName.ToUpper())
             {
-                response.User.UserName = updateUserRequest.UserDto.UserName;
-            }
-
-            if (!string.IsNullOrEmpty(updateUserRequest.UserDto.Password) && !string.IsNullOrEmpty(updateUserRequest.UserDto.ConfirmPassword))
-            {
-                response.User.PasswordSalt = this.createPasswordSalt.CreateSalt(32);
-                response.User.Password = this.calculatePassword.calculatePassword(updateUserRequest.UserDto.Password, response.User.PasswordSalt);
+                response.User.UserName = updateUserRequest.UpdateUserRequestDto.UserName;
             }
 
             return response;

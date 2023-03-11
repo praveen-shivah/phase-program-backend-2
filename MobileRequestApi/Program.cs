@@ -40,6 +40,8 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
+using ApiHost;
+
 using TransferRepository;
 
 using VendorRepositoryTypes;
@@ -70,9 +72,22 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromSeconds(10);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    options =>
+        {
+            options.OperationFilter<JwtTokenHeaderFilter>();
+        });
 
 // Register dependencies here
 builder.Services.AddSingleton(logger);
@@ -93,6 +108,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IJwtService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRetrieveRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListResellerRetrieveRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ITransferPointsQueueGetOutstandingItemsRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IIdentityServer>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 
@@ -130,6 +146,7 @@ var app = builder.Build();
 }
 
 // app.UseHttpsRedirection();
+app.UseSession();
 app.UseValidateAPICall();
 app.UseCors(allowLocalHostOrigins);
 app.UseAuthentication();

@@ -2,6 +2,8 @@
 
 using DatabaseContext;
 
+using Microsoft.EntityFrameworkCore.Update;
+
 using UnitOfWorkTypesLibrary;
 
 public class UpdateResellerSiteRepository : IUpdateResellerSiteRepository
@@ -24,6 +26,9 @@ public class UpdateResellerSiteRepository : IUpdateResellerSiteRepository
                 {
                     var response = await this.updateResellerSite.UpdateResellerSiteAsync(context, request);
                     result.IsSuccessful = response.IsSuccessful;
+                    result.ResponseTypeEnum = response.ResponseTypeEnum;
+                    result.HttpStatusCode = response.HttpStatusCode;
+                    result.ErrorMessage = response.ErrorMessage;
 
                     if (response.IsSuccessful)
                     {

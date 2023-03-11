@@ -4,14 +4,17 @@
 
     public class UpdateUserRequest
     {
-        public UpdateUserRequest(int organizationId, UserDto userDto)
+        public UpdateUserRequest(string jwtToken, int organizationId, UpdateUserRequestDto updateUserRequestDto)
         {
+            this.JwtToken = jwtToken;
             this.OrganizationId = organizationId;
-            this.UserDto = userDto;
+            this.UpdateUserRequestDto = updateUserRequestDto;
         }
+
+        public string JwtToken { get; }
 
         public int OrganizationId { get; }
 
-        public UserDto UserDto { get; }
+        public UpdateUserRequestDto UpdateUserRequestDto { get; }
     }
 }

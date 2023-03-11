@@ -20,6 +20,7 @@
             this.GlobalContainer.RegisterDecorator<IUpdateReseller, UpdateResellerUpdate>(Lifestyle.Transient);
 
             this.GlobalContainer.Register<IUpdateResellerSite, UpdateResellerSiteStart>(Lifestyle.Transient);
+            this.GlobalContainer.RegisterDecorator<IUpdateResellerSite, UpdateResellerSiteValidateNewInformation>(Lifestyle.Transient);
             this.GlobalContainer.RegisterDecorator<IUpdateResellerSite, UpdateResellerSiteProcess>(Lifestyle.Transient);
 
             return true;
