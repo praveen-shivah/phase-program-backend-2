@@ -46,7 +46,8 @@
                     Organization = organization,
                     CurrentRefreshToken = string.Empty,
                     UserName = updateUserRequest.UpdateUserRequestDto.UserName,
-                    Email = updateUserRequest.UpdateUserRequestDto.Email
+                    Email = updateUserRequest.UpdateUserRequestDto.Email,
+                    IsActive = updateUserRequest.UpdateUserRequestDto.IsActive
                 };
                 dataContext.User.Add(user);
             }

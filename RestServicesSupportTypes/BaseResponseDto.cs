@@ -19,7 +19,8 @@ namespace RestServicesSupportTypes
         hardwareError,
         printerError,
         invalidObjectReturned,
-        exceptionOccurred
+        exceptionOccurred,
+        disabled
     }
 
     public class BaseResponseDto
