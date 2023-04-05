@@ -26,7 +26,7 @@
         [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public IActionResult Index()
         {
-            this.logger.Debug(LogClass.General, $"GET: test of a log message userId: {this.UserId} organizationId: {this.OrganizationId} ");
+            this.logger.Debug(LogClass.General, $"GET: test of a log message userName: {this.UserName} organizationId: {this.OrganizationId} ");
             this.logger.Error(LogClass.General, "LogController", "Index", "Test of an error message", new Exception("Test of an error exception"));
 
             return this.Ok();
@@ -36,7 +36,7 @@
         [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
         public IActionResult Log()
         {
-            this.logger.Debug(LogClass.General, $"POST: test of a log message userId: {this.UserId} organizationId: {this.OrganizationId} ");
+            this.logger.Debug(LogClass.General, $"POST: test of a log message userName: {this.UserName} organizationId: {this.OrganizationId} ");
             this.logger.Error(LogClass.General, "LogController", "Index", "Test of an error message", new Exception("Test of an error exception"));
 
             return this.Ok();

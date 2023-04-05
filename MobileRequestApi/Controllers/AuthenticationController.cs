@@ -1,6 +1,7 @@
 ﻿namespace ApiHost
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web;
@@ -212,7 +213,8 @@
         public async Task<ActionResult<UpdateUserResponseDto>> UpdateUser(UpdateUserRequestDto updateUserRequestDto)
         {
             this.logger.Debug(LogClass.General, "UpdateUser received");
-            var result = await this.authenticationRepository.UpdateUser(this.JwtTokenString, this.OrganizationId, updateUserRequestDto);
+            var jwtTokenString = this.HttpContext.Request.Headers["Access-Token"].FirstOrDefault()?.Split(' ').Last();
+            var result = await this.authenticationRepository.UpdateUser(jwtTokenString, this.OrganizationId, updateUserRequestDto);
             var response = new UpdateUserResponseDto()
             {
                 ErrorMessage = result.ErrorMessage,

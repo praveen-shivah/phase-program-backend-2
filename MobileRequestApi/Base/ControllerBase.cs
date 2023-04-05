@@ -1,16 +1,33 @@
 ﻿namespace ApiHost
 {
     using Microsoft.AspNetCore.Mvc;
+
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
 
     public abstract class ApiControllerBase : Controller
     {
-        protected string JwtTokenString
+        private JwtSecurityToken? JwtSecurityToken
         {
             get
             {
-                var token = this.HttpContext.Request.Headers["Access-Token"].FirstOrDefault()?.Split(' ').Last();
-                return token ?? string.Empty;
+                var item = HttpContext.Items["JwtSecurityToken"];
+                if (item == null) return null;
+
+                return (JwtSecurityToken)item;
+            }
+        }
+
+        protected int ResellerId
+        {
+            get
+            {
+                var token = this.JwtSecurityToken;
+                if (token == null) return 0;
+
+                var organizationId = token.Claims.SingleOrDefault(x => x.Type.Trim().ToLower().StartsWith("resellerid"));
+                if (organizationId == null) return 0;
+                return int.Parse(organizationId.Value);
             }
         }
 
@@ -18,19 +35,43 @@
         {
             get
             {
-                return 1;
-                var value = this.HttpContext.Items["OrganizationId"] ?? 0;
-                return (int)value;
+                var token = this.JwtSecurityToken;
+                if (token == null) return 1;
+
+                var organizationId = token.Claims.SingleOrDefault(x => x.Type.Trim().ToLower().StartsWith("organizationid"));
+                if (organizationId == null) return 1;
+                return int.Parse(organizationId.Value);
             }
         }
 
-        protected int UserId
+        protected string UserName
         {
             get
             {
-                var value = this.HttpContext.Items["UserId"] ?? 0;
-                return (int)value;
+                var token = this.JwtSecurityToken;
+                if (token == null) return string.Empty;
+
+                var userName = token.Claims.SingleOrDefault(x => x.Type.Trim().ToLower().StartsWith("username"));
+                if (userName == null) return string.Empty;
+                return userName.Value.ToString();
             }
+        }
+
+        protected string ipAddress()
+        {
+            string? result;
+
+            // get source ip address for the current request
+            if (this.Request.Headers.ContainsKey("X-Forwarded-For"))
+            {
+                result = this.Request.Headers["X-Forwarded-For"];
+            }
+            else
+            {
+                result = this.HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+            }
+
+            return result ?? string.Empty;
         }
     }
 }

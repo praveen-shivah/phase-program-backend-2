@@ -25,12 +25,15 @@ public class UpdateResellerSiteProcess : IUpdateResellerSite
             return response;
         }
 
-        var record = await context.SiteInformation.SingleOrDefaultAsync(x => x.Id == request.Id);
+        var record = request.IgnoreResellerId ?
+                 await context.SiteInformation.SingleOrDefaultAsync(x => x.Id == request.Id) : 
+                 await context.SiteInformation.SingleOrDefaultAsync(x => x.Id == request.Id && x.ResellerId == request.ResellerId);
+
         if (record == null)
         {
             response.IsSuccessful = false;
             response.ResponseTypeEnum = ResponseTypeEnum.idNotFound;
-            response.ErrorMessage = $"Site information id {request.Id} not found";
+            response.ErrorMessage = $"Site information id {request.Id} for reseller id {request.ResellerId} not found.  ignoreResellerId set to {request.IgnoreResellerId}";
             response.HttpStatusCode = HttpStatusCode.BadRequest;
 
             return response;
