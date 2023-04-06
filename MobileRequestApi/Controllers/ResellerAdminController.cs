@@ -20,7 +20,7 @@
     [ApiController]
     [AuthorizePolicy]
     [Route("api/reseller")]
-    public class ResellerController : ApiControllerBase
+    public class ResellerAdminController : ApiControllerBase
     {
         private readonly ILogger logger;
 
@@ -32,7 +32,7 @@
 
         private readonly IUpdateResellerSiteRepository updateResellerSiteRepository;
 
-        public ResellerController(ILogger logger,
+        public ResellerAdminController(ILogger logger,
                                   IResellerBalanceService resellerBalanceService,
                                   IResellerRepository resellerRepository,
                                   IUpdateResellerBalanceRepository updateResellerBalanceRepository,
@@ -46,7 +46,7 @@
         }
 
         [HttpPost("reseller-balance")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<IActionResult> UpdateBalance(ResellerBalanceDTO resellerBalance)
         {
             this.logger.Debug(LogClass.General, "ResellerBalance received");
@@ -55,7 +55,7 @@
         }
 
         [HttpPost("reseller-transfer-points-completed")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<IActionResult> ResellerTransferPointsCompleted(ResellerTransferPointsCompletedDto resellerTransferPointsCompleted)
         {
             this.logger.Debug(LogClass.General, "ResellerTransferPointsCompleted received");
@@ -64,7 +64,7 @@
         }
 
         [HttpGet("get-resellers")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<ActionResult<List<ResellerDto>>> GetResellers()
         {
             this.logger.Debug(LogClass.General, "GetResellers received");
@@ -74,7 +74,7 @@
         }
 
         [HttpPost("update-reseller-balance")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<ActionResult<List<UpdateResellerBalanceResponseDto>>> UpdateResellerBalance(UpdateResellerBalanceRequestDto request)
         {
             this.logger.Debug(LogClass.General, "UpdateResellerBalanceRepository received");
@@ -98,7 +98,7 @@
         }
 
         [HttpGet("get-reseller-sites")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<ActionResult<List<SiteInformationDto>>> GetResellerSites(int resellerId)
         {
             this.logger.Debug(LogClass.General, "GetResellerSites received");
@@ -108,7 +108,7 @@
         }
 
         [HttpPost("update-reseller")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_USER)]
         public async Task<IActionResult> UpdateReseller(ResellerDto resellerDto)
         {
             this.logger.Debug(LogClass.General, "UpdateReseller received");
@@ -118,7 +118,7 @@
         }
 
         [HttpPost("update-reseller-site")]
-        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ALL)]
+        [AuthorizePolicy(Policy = AuthenticationConstants.POLICY_ADMIN)]
         public async Task<IActionResult> UpdateResellerSite(UpdateResellerSiteRequestDto updateResellerSiteRequestDto)
         {
             this.logger.Debug(LogClass.General, "UpdateResellerSite received");
@@ -126,6 +126,7 @@
                 new UpdateResellerSiteRequest()
                 {
                     OrganizationId = this.OrganizationId,
+                    IgnoreResellerId = true,
                     AccountId = updateResellerSiteRequestDto.AccountId,
                     Id = updateResellerSiteRequestDto.Id,
                     LoginPassword = updateResellerSiteRequestDto.LoginPassword,

@@ -1,6 +1,7 @@
-﻿namespace ResellerRepository;
+﻿using RestServicesSupportTypes;
 
-public class UpdateResellerSiteResponseDto
+namespace ResellerRepository;
+
+public class UpdateResellerSiteResponseDto : BaseResponseDto
 {
-    public bool IsSuccessful { get; set; }
 }

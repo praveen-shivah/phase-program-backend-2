@@ -14,8 +14,10 @@
 
         public const string POLICY_ADMIN = "5150";
 
-        public const string POLICY_USER = "2105";
+        public const string POLICY_USER = $"2001, {POLICY_ADMIN}";
 
-        public const string POLICY_ALL = "5150, 2105";
+        public const string POLICY_RESELLER = "3001";
+
+        public const string POLICY_ALL = $"{POLICY_USER}, {POLICY_RESELLER}";
     }
 }
