@@ -29,7 +29,7 @@
                 this.logger.Error(LogClass.Configuration, "IdentityServerUrl", "GetUrl", $"Error {e.Message} {e.StackTrace}", e);
             }
 
-            return "https://is.trueroute.com/";
+            return "http://localhost/";
         }
     }
 }

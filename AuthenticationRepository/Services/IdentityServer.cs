@@ -6,7 +6,7 @@
 
     public class IdentityServer : IIdentityServer
     {
-        private string baseUrl = "https://is.trueroute.com/";
+        private string baseUrl = "http://localhost/";
 
         private readonly IRestServices<ISAuthenticateRequestDto, ISAuthenticateResponseDto> isAuthenticate;
 
