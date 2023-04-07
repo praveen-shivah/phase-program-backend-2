@@ -103,6 +103,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestServicesSupport", "Rest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransferRepository", "TransferRepository\TransferRepository.csproj", "{CEF32AE7-AF69-4A45-8B82-1D8DB58A62D0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{8B4BB801-9E6D-4853-969F-99586A444DF4}"
+	ProjectSection(SolutionItems) = preProject
+		Documentation\ApplicationLifeCycleLibrary.docx = Documentation\ApplicationLifeCycleLibrary.docx
+		Documentation\DatabaseDesign_Migration.docx = Documentation\DatabaseDesign_Migration.docx
+		Documentation\MobileOMatic Process Flow.docx = Documentation\MobileOMatic Process Flow.docx
+		Documentation\RESTEndpointFlow.pdf = Documentation\RESTEndpointFlow.pdf
+		Documentation\Services Overview.pdf = Documentation\Services Overview.pdf
+		Documentation\Services Overview.vsdx = Documentation\Services Overview.vsdx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
