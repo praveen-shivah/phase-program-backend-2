@@ -9,23 +9,23 @@
         [Required]
         public int OrganizationId { get; set; }
 
-        [DefaultValue("primepay@primerogames.com")]
+        [DefaultValue("admin")]
         [Required]
         public string User { get; set; }
 
-        [DefaultValue("password")]
+        [DefaultValue("admin")]
         [Required]
         public string Password { get; set; }
 
-        [DefaultValue("")]
+        [DefaultValue("1234")]
         [Required]
         public string Audience { get; set; }
 
-        [DefaultValue("")]
+        [DefaultValue("1234")]
         [Required]
         public string Issuer { get; set; }
 
-        [DefaultValue("107.222.175.60, 172.31.18.54")]
+        [DefaultValue("127.0.0.1")]
         [Required]
         public string IPAddress { get; set; }
     }
