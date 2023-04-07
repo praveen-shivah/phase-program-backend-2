@@ -2,7 +2,7 @@
 
 namespace TransferRepository;
 
-using RestServicesSupportTypes;
+using APISupportTypes;
 
 public class TransferPointsQueueGetOutstandingItemsResponseDto : BaseResponseDto
 {

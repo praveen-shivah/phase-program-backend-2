@@ -1,10 +1,10 @@
 ﻿namespace AutomaticTaskQueueLibrary
 {
+    using APISupportTypes;
+
     using AutomaticTaskSharedLibrary;
 
     using InvoiceRepository;
-
-    using RestServicesSupportTypes;
 
     public class DistributorToOperatorSendPointsTransfer : IDistributorToOperatorSendPointsTransfer
     {

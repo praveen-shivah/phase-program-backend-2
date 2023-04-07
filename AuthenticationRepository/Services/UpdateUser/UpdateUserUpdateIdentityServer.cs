@@ -1,5 +1,7 @@
 ﻿namespace AuthenticationRepository
 {
+    using APISupportTypes;
+
     using AuthenticationRepositoryTypes;
 
     using DatabaseContext;

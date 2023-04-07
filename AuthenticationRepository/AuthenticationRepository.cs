@@ -1,8 +1,8 @@
 ﻿namespace AuthenticationRepository
 {
-    using System.Net;
-
     using ApiDTO;
+
+    using APISupportTypes;
 
     using AuthenticationRepositoryTypes;
 
@@ -12,7 +12,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using RestServicesSupportTypes;
+    using System.Net;
 
     using UnitOfWorkTypesLibrary;
 

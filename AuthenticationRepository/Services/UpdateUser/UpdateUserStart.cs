@@ -1,10 +1,10 @@
 ﻿namespace AuthenticationRepository
 {
-    using System.Net;
+    using APISupportTypes;
 
     using DatabaseContext;
 
-    using RestServicesSupportTypes;
+    using System.Net;
 
     public class UpdateUserStart : IUpdateUser
     {

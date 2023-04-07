@@ -1,6 +1,6 @@
 ﻿namespace AuthenticationRepositoryTypes
 {
-    using RestServicesSupportTypes;
+    using APISupportTypes;
 
     public class AuthenticationResponse : BaseResponseDto
     {

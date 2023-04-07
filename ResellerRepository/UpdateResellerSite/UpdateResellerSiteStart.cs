@@ -1,10 +1,10 @@
 ﻿namespace ResellerRepository;
 
-using System.Net;
+using APISupportTypes;
 
 using DatabaseContext;
 
-using RestServicesSupportTypes;
+using System.Net;
 
 public class UpdateResellerSiteStart : IUpdateResellerSite
 {

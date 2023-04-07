@@ -1,8 +1,8 @@
 ﻿namespace RestServicesSupport
 {
-    using LoggingLibrary;
+    using APISupportTypes;
 
-    using RestServicesSupportTypes;
+    using LoggingLibrary;
 
     public class RestServicesFactory<TRequest, TResponse> : IRestServicesFactory<TRequest, TResponse> where TResponse : BaseResponseDto, new() where TRequest : class
     {

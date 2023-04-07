@@ -1,12 +1,12 @@
 ﻿namespace AutomaticTaskQueueLibrary;
 
+using APISupportTypes;
+
 using AutomaticTaskSharedLibrary;
 
 using InvoiceRepository;
 
 using InvoiceRepositoryTypes;
-
-using RestServicesSupportTypes;
 
 public class ResellerBalanceRetrieve : IResellerBalanceRetrieve
 {

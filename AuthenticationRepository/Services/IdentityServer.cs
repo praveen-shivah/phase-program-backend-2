@@ -1,8 +1,19 @@
 ﻿namespace AuthenticationRepository
 {
-    using RestServicesSupportTypes;
+    using APISupportTypes;
 
     using System.Threading.Tasks;
+
+    using ISAccountRequestDto = APISupportTypes.ISAccountRequestDto;
+    using ISAccountResponseDto = APISupportTypes.ISAccountResponseDto;
+    using ISAccountUpdateRequestDto = APISupportTypes.ISAccountUpdateRequestDto;
+    using ISAccountUpdateResponseDto = APISupportTypes.ISAccountUpdateResponseDto;
+    using ISAuthenticateRequestDto = APISupportTypes.ISAuthenticateRequestDto;
+    using ISAuthenticateResponseDto = APISupportTypes.ISAuthenticateResponseDto;
+    using ISLogoutRequestDto = APISupportTypes.ISLogoutRequestDto;
+    using ISLogoutResponseDto = APISupportTypes.ISLogoutResponseDto;
+    using ISRefreshTokenRequestDto = APISupportTypes.ISRefreshTokenRequestDto;
+    using ISRefreshTokenResponseDto = APISupportTypes.ISRefreshTokenResponseDto;
 
     public class IdentityServer : IIdentityServer
     {

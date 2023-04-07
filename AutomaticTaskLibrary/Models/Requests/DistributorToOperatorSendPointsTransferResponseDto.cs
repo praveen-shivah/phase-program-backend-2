@@ -1,6 +1,6 @@
 ﻿namespace AutomaticTaskSharedLibrary
 {
-    using RestServicesSupportTypes;
+    using APISupportTypes;
 
     public class DistributorToOperatorSendPointsTransferResponseDto : BaseResponseDto
     {

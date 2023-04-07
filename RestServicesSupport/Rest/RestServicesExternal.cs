@@ -1,14 +1,14 @@
 ﻿namespace RestServicesSupport
 {
-    using System.Net;
-
     using LoggingLibrary;
 
     using Newtonsoft.Json;
 
-    using RestServicesSupportTypes;
-
     using RestSharp;
+
+    using System.Net;
+
+    using APISupportTypes;
 
     public class RestServicesExternal<TRequest, TResponse> : IRestServices<TRequest, TResponse> where TResponse : BaseResponseDto, new() where TRequest : class
     {

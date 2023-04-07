@@ -2,13 +2,21 @@
 {
     using ApplicationLifeCycle;
 
-    using AuthenticationRepository;
+    using AutomaticTaskSharedLibrary;
 
     using DatabaseContext;
+
+    using InvoiceRepositoryTypes;
 
     using LoggingLibrary;
 
     using Microsoft.Extensions.Configuration;
+
+    using RestServicesSupport;
+
+    using SecurityUtilities;
+
+    using SecurityUtilitiesTypes;
 
     using SharedUtilities;
 
@@ -18,17 +26,7 @@
     using System.IO;
     using System.Xml;
 
-    using AutomaticTaskSharedLibrary;
-
-    using InvoiceRepositoryTypes;
-
-    using RestServicesSupport;
-
-    using RestServicesSupportTypes;
-
-    using SecurityUtilities;
-
-    using SecurityUtilitiesTypes;
+    using APISupportTypes;
 
     using UnitOfWorkTypesLibrary;
 

@@ -1,6 +1,6 @@
 ﻿namespace AuthenticationRepository
 {
-    using System.Net;
+    using APISupportTypes;
 
     using AuthenticationRepositoryTypes;
 
@@ -8,7 +8,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using RestServicesSupportTypes;
+    using System.Net;
 
     public class UpdateUserRetrieveUser : IUpdateUser
     {

@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.68" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.69" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
-    <ProjectReference Include="..\RestServicesSupportTypes\RestServicesSupportTypes.csproj" />
   </ItemGroup>
 
 </Project>

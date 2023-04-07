@@ -1,8 +1,8 @@
 ﻿namespace ResellerRepository;
 
-using DatabaseContext;
+using APISupportTypes;
 
-using RestServicesSupportTypes;
+using DatabaseContext;
 
 public class UpdateResellerBalanceResponse : BaseResponseDto
 {

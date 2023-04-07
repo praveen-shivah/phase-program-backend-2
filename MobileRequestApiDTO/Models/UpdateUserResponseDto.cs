@@ -1,6 +1,6 @@
 ﻿namespace ApiDTO
 {
-    using RestServicesSupportTypes;
+    using APISupportTypes;
 
     public class UpdateUserResponseDto : BaseResponseDto
     {

@@ -1,6 +1,6 @@
 ﻿namespace ResellerRepository;
 
-using RestServicesSupportTypes;
+using APISupportTypes;
 
 public class UpdateResellerSiteResponse : BaseResponseDto
 {

@@ -2,6 +2,8 @@
 
 namespace AuthenticationRepository
 {
+    using APISupportTypes;
+
     public interface IIdentityServer
     {
         Task<ISAuthenticateResponseDto> Authenticate(ISAuthenticateRequestDto authenticateRequestDto);

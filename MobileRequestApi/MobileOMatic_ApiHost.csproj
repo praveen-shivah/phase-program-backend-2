@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.68" />
-    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.68" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.69" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.69" />
     <PackageReference Include="GamingSystem.SharedUtilities" Version="1.0.70" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
@@ -56,7 +56,6 @@
     <ProjectReference Include="..\OrganizationRepository\OrganizationRepository.csproj" />
     <ProjectReference Include="..\ResellerRepositoryTypes\ResellerRepositoryTypes.csproj" />
     <ProjectReference Include="..\ResellerRepository\ResellerRepository.csproj" />
-    <ProjectReference Include="..\RestServicesSupportTypes\RestServicesSupportTypes.csproj" />
     <ProjectReference Include="..\RestServicesSupport\RestServicesSupport.csproj" />
     <ProjectReference Include="..\TransferRepository\TransferRepository.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />

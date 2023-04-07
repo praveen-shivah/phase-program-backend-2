@@ -1,8 +1,8 @@
 ﻿namespace AuthenticationRepository
 {
-    using DatabaseContext;
+    using APISupportTypes;
 
-    using RestServicesSupportTypes;
+    using DatabaseContext;
 
     public class AuthenticateUserStart : IAuthenticateUser
     {

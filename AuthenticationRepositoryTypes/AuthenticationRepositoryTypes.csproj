@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
-    <ProjectReference Include="..\RestServicesSupportTypes\RestServicesSupportTypes.csproj" />
   </ItemGroup>
 
 </Project>

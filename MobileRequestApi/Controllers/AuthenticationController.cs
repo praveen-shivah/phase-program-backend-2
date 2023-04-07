@@ -12,6 +12,8 @@
 
     using APISupport;
 
+    using APISupportTypes;
+
     using AuthenticationRepository;
 
     using AuthenticationRepositoryTypes;
@@ -26,6 +28,8 @@
     using Microsoft.AspNetCore.Mvc;
 
     using SecurityUtilitiesTypes;
+
+    using IIdentityServer = AuthenticationRepository.IIdentityServer;
 
     [AuthorizePolicy]
     [ApiController]

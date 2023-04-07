@@ -1,12 +1,12 @@
 ﻿namespace ResellerRepository;
 
-using System.Net;
-
 using DatabaseContext;
 
 using Microsoft.EntityFrameworkCore;
 
-using RestServicesSupportTypes;
+using System.Net;
+
+using APISupportTypes;
 
 public class UpdateResellerSiteProcess : IUpdateResellerSite
 {

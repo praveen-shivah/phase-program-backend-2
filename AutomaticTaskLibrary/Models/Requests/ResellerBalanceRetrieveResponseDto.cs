@@ -1,6 +1,6 @@
 ﻿namespace InvoiceRepositoryTypes
 {
-    using RestServicesSupportTypes;
+    using APISupportTypes;
 
     public class ResellerBalanceRetrieveResponseDto : BaseResponseDto
     {
