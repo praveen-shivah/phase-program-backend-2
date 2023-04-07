@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.63" />
+    <PackageReference Include="GamingSystem.LoggingLibraryTypes" Version="1.0.68" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
   </ItemGroup>

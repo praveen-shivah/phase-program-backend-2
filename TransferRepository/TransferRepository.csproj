@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.63" />
+    <PackageReference Include="GamingSystem.ApplicationLifeCycle" Version="1.0.68" />
   </ItemGroup>
 
   <ItemGroup>
