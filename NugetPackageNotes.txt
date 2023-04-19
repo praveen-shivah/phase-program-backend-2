@@ -1,0 +1,11 @@
+
+This solution will not compile without adding the following to packages sources:
+
+Go to "Tools - NuGet Package Manager - Package Manager Settings - Package Sources"
+
+Add a source:
+GamingSystemNuget
+https://pkgs.dev.azure.com/carl0182/0def81a5-5356-4ebe-a3f9-589eb1aadc25/_packaging/GamingSystemNuget/nuget/v3/index.json
+
+It may pop and ask you to login, hit cancel.
+In the Package Manager Console window there should be a link and a code.
