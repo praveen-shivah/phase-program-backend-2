@@ -86,11 +86,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResellerRepositoryTypes", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSeedingLibrary", "DataSeedingLibrary\DataSeedingLibrary.csproj", "{57D3C053-C78A-45DB-B6B6-418A59E53CE0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{C2001509-E384-4D78-9176-430B9AED8109}"
-	ProjectSection(SolutionItems) = preProject
-		Notes.txt = Notes.txt
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyProjectForMigrations", "DummyProjectForMigrations\DummyProjectForMigrations.csproj", "{FFC58534-26AF-4534-AB00-3C1D330620E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SiteSide", "SiteSide", "{A1630574-3BCF-45CE-A9ED-63B533290D56}"
@@ -107,7 +102,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		Documentation\ApplicationLifeCycleLibrary.docx = Documentation\ApplicationLifeCycleLibrary.docx
 		Documentation\DatabaseDesign_Migration.docx = Documentation\DatabaseDesign_Migration.docx
+		ChromeDriver_notes.txt = ChromeDriver_notes.txt
 		Documentation\MobileOMatic Process Flow.docx = Documentation\MobileOMatic Process Flow.docx
+		NugetPackageNotes.txt = NugetPackageNotes.txt
 		Documentation\RESTEndpointFlow.pdf = Documentation\RESTEndpointFlow.pdf
 		Documentation\Services Overview.pdf = Documentation\Services Overview.pdf
 		Documentation\Services Overview.vsdx = Documentation\Services Overview.vsdx
@@ -409,7 +406,6 @@ Global
 		{8FA99A67-720E-4A49-B99C-7B631EB478D3} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{82D68B67-C4F2-4125-A902-76AADCB76882} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 		{57D3C053-C78A-45DB-B6B6-418A59E53CE0} = {44413A29-0B96-4D93-9727-65FA1682DF01}
-		{C2001509-E384-4D78-9176-430B9AED8109} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
 		{FFC58534-26AF-4534-AB00-3C1D330620E7} = {44413A29-0B96-4D93-9727-65FA1682DF01}
 		{A1630574-3BCF-45CE-A9ED-63B533290D56} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
 		{57E6D0DC-5947-4927-A3D9-97745B3E84C5} = {3CE12A3C-1D02-4661-A4D5-29905ED26725}
