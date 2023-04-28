@@ -26,9 +26,13 @@ using Microsoft.EntityFrameworkCore;
         public DateTime ModifiedOn { get; set; }
         public int OrganizationId { get; set; }
         public string ItemId { get; set; } = null!;
+        public int? TransferPointsQueueTypeId { get; set; }
 
         [ForeignKey(nameof(OrganizationId))]
         [InverseProperty("TransferPointsQueue")]
         public virtual Organization Organization { get; set; } = null!;
+        [ForeignKey(nameof(TransferPointsQueueTypeId))]
+        [InverseProperty("TransferPointsQueue")]
+        public virtual TransferPointsQueueType? TransferPointsQueueType { get; set; }
     }
 }
