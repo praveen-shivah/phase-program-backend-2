@@ -1,5 +1,6 @@
 ﻿namespace DataSeedingLibrary
 {
+    using ApiDTO.Models;
     using AuthenticationRepositoryTypes;
 
     using DatabaseContext;
@@ -22,10 +23,10 @@
                 return response;
             }
 
-            var transferPointsQueueTypeValues = Enum.GetValues(typeof(TransferPointsQueueType));
+            var transferPointsQueueTypeValues = Enum.GetValues(typeof(TransferPointsQueueTypeEnum));
             foreach (int transferPointsQueueTypeValue in transferPointsQueueTypeValues)
             {
-                var name = Enum.GetName(typeof(TransferPointsQueueType), transferPointsQueueTypeValue);
+                var name = Enum.GetName(typeof(TransferPointsQueueTypeEnum), transferPointsQueueTypeValue);
                 if (name == null)
                 {
                     continue;
