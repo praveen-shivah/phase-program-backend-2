@@ -31,6 +31,7 @@
         public virtual DbSet<SoftwareType> SoftwareType { get; set; } = null!;
         public virtual DbSet<StateProvince> StateProvince { get; set; } = null!;
         public virtual DbSet<TransferPointsQueue> TransferPointsQueue { get; set; } = null!;
+        public virtual DbSet<TransferPointsQueueType> TransferPointsQueueType { get; set; } = null!;
         public virtual DbSet<User> User { get; set; } = null!;
         public virtual DbSet<Vendor> Vendor { get; set; } = null!;
         public virtual DbSet<VendorCredentialsByOrganizations> VendorCredentialsByOrganizations { get; set; } = null!;
@@ -47,10 +48,6 @@
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(LOCALTIMESTAMP AT TIME ZONE 'UTC'::text)");
             });
 
-            modelBuilder.Entity<SignificantEventType>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-            });
 
             modelBuilder.Entity<SiteInformation>(entity =>
             {
@@ -62,6 +59,11 @@
             modelBuilder.Entity<TransferPointsQueue>(entity =>
             {
                 entity.Property(e => e.ItemId).HasDefaultValueSql("''::text");
+
+                entity.HasOne(d => d.TransferPointsQueueType)
+                    .WithMany(p => p.TransferPointsQueue)
+                    .HasForeignKey(d => d.TransferPointsQueueTypeId)
+                    .HasConstraintName("FK_TransferPointsQueue_TransferPointsType_TransferPointsTypeId");
             });
 
             OnModelCreatingPartial(modelBuilder);

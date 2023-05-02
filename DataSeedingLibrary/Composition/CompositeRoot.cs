@@ -13,6 +13,7 @@
             this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddSoftwareTypes>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddVendors>(Lifestyle.Singleton);
             this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddMissingSitesToResellers>(Lifestyle.Singleton);
+            this.GlobalContainer.RegisterDecorator<ISeedData, SeedDataAddTransferPointsQueueTypes>(Lifestyle.Singleton);
 
             this.GlobalContainer.Collection.Append<IRequestLifeCycleStartupItem, DataSeedingSoftwareTypeAndVendorStartupItem>(Lifestyle.Singleton);
             this.GlobalContainer.Collection.Append<IRequestLifeCycleStartupItem, RequestLifeCycleStartupItemMigrations>(Lifestyle.Singleton);
