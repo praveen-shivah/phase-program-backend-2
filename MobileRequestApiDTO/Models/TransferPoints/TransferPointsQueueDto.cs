@@ -12,6 +12,7 @@ public class TransferPointsQueueDto
     public int Points { get; set; }
 
     public string SoftwareType { get; set; } = string.Empty;
+    public string TransferPointsQueueType { get; set; } = string.Empty;
 
     public string UserId { get; set; } = null!;
 }

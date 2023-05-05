@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ApiDTO.Models
+﻿namespace ApiDTO
 {
+    using System.ComponentModel;
     public enum TransferPointsQueueTypeEnum
     {
         none = 1,

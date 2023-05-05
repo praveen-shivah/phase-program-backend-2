@@ -1,6 +1,6 @@
 ﻿namespace DataSeedingLibrary
 {
-    using ApiDTO.Models;
+    using ApiDTO;
     using AuthenticationRepositoryTypes;
 
     using DatabaseContext;
