@@ -51,8 +51,9 @@
                         Id = item.Id,
                         Points = item.Points,
                         SoftwareType = ((SoftwareTypeEnum)item.SoftwareType).GetEnumAttributeDescription(),
-                        UserId = item.UserId
-                    });
+                        UserId = item.UserId,
+                        TransferPointsQueueType = ((TransferPointsQueueTypeEnum)item.TransferPointsQueueTypeId).GetEnumAttributeDescription()
+                    }); ;
             }
 
             var result = new TransferPointsQueueGetOutstandingItemsResponseDto
