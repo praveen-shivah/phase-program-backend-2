@@ -3,11 +3,11 @@
     "AutomaticTaskMessageHandlerHost": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:39441/",
+      "applicationUrl": "http://localhost:5000/",
       "dotnetRunMessages": true
     },
     "WSL": {
