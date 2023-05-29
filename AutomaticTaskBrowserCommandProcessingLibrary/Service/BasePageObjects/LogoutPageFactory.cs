@@ -30,6 +30,8 @@
                     return new PoseidonXLogout(webDriver);
                 case SoftwareTypeEnum.bcLive:
                     return new BCLiveLogout(webDriver);
+                case SoftwareTypeEnum.goldenDragon:
+                    return new GoldenDragonLogout(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }
