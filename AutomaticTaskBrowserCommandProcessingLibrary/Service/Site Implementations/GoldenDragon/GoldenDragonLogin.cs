@@ -6,20 +6,19 @@ using SeleniumExtras.PageObjects;
 
 public class GoldenDragonLogin : BaseLoginPage
 {
-    private readonly string pageLoadedText = "Password";
+    private readonly string pageLoadedText = "Log In";
 
-    private readonly string pageUrl = "http://byagent.dingyou518.com/Login.aspx";
+    private readonly string pageUrl = "https://pos.goldendragoncity.com/Drawer/";
 
-    private By userNameLocator = By.XPath("//*[@id=\"txtLoginName\"]");
-    private By passwordLocator = By.XPath("//*[@id=\"txtLoginPass\"]");
-    private By loginBtnLocator = By.XPath("//*[@id=\"btnLogin\"]");
+    private By userNameLocator = By.XPath("//*[@id=\"username\"]");
+    private By passwordLocator = By.XPath("//*[@id=\"password\"]");
+    private By loginBtnLocator = By.XPath("//*[@id=\"login_email\"]");
 
     public GoldenDragonLogin(
         IWebDriver driver,
-        LoginPageInformation loginPageInformation)
-        : base(driver, loginPageInformation)
+        LoginPageInformation loginPageInformation): base(driver, loginPageInformation)
     {
-        driver.Url = this.pageUrl;
+        driver.Url = loginPageInformation.LoginPage;
         PageFactory.InitElements(driver, this);
     }
 
@@ -35,16 +34,19 @@ public class GoldenDragonLogin : BaseLoginPage
 
     protected override bool submit(IWebDriver driver, LoginPageInformation loginPageInformation)
     {
+        this.SetIframe(0);
         var userNameElement = this.getElementByLocator(this.userNameLocator);
         var passwordElement = this.getElementByLocator(this.passwordLocator);
         userNameElement.SendKeys(loginPageInformation.SiteUserId);
+        passwordElement.Click();
+        passwordElement.Clear();
         passwordElement.SendKeys(loginPageInformation.SitePassword);
 
         this.clickLogInButton();
 
-        this.wait.Until(d => driver.Url != this.pageUrl);
-
-        return driver.Url != this.pageUrl;
+        this.wait.Until(d => driver.Url.ToString() == this.pageUrl);
+        var url = driver.Url.ToString();
+        return url == this.pageUrl;
     }
 
     protected override bool verifyPageLoaded(IWebDriver driver)

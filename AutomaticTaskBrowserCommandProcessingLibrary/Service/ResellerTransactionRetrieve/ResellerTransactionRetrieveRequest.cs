@@ -1,10 +1,15 @@
-﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
-{
-    using ApiDTO;
+﻿using ApiDTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-    public class ResellerBalanceRetrieveRequest
+namespace AutomaticTaskBrowserCommandProcessingLibrary
+{
+    public class ResellerTransactionRetrieveRequest
     {
-        public ResellerBalanceRetrieveRequest(
+        public ResellerTransactionRetrieveRequest(
             SoftwareTypeEnum softwareType,
             string organizationId,
             string apiKey,

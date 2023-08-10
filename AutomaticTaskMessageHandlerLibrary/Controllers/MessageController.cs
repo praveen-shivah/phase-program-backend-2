@@ -23,14 +23,18 @@
 
         private readonly IResellerBalanceRetrieveProcessor resellerBalanceRetrieveProcessor;
 
+        private readonly IResellerTransactionRetrieveProcessor resellerTransactionRetrieveProcessor;
+
         public MessageController(
             ILogger logger,
             IDistributorToResellerSendPointsTransferProcessor distributorToResellerSendPointsTransferProcessor,
-            IResellerBalanceRetrieveProcessor resellerBalanceRetrieveProcessor)
+            IResellerBalanceRetrieveProcessor resellerBalanceRetrieveProcessor,
+            IResellerTransactionRetrieveProcessor resellerTransactionRetrieveProcessor)
         {
             this.logger = logger;
             this.distributorToResellerSendPointsTransferProcessor = distributorToResellerSendPointsTransferProcessor;
             this.resellerBalanceRetrieveProcessor = resellerBalanceRetrieveProcessor;
+            this.resellerTransactionRetrieveProcessor = resellerTransactionRetrieveProcessor;
         }
 
         [HttpPost("retrieve-balance")]
@@ -54,6 +58,20 @@
             this.logger.Debug(LogClass.General, "TransferPoints received");
             var response = await this.distributorToResellerSendPointsTransferProcessor.Execute(request);
             var result = new DistributorToOperatorSendPointsTransferResponseDto { IsSuccessful = response };
+            return this.Ok(result);
+        }
+
+        [HttpPost("retrieve-transaction")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ResellerTransactionRetrieveResponseDto>> RetrieveTransaction(ResellerTransactionRetrieveRequestDto request)
+        {
+            this.logger.Debug(LogClass.General, "RetrieveBalance received");
+            var response = await this.resellerTransactionRetrieveProcessor.Execute(request);
+            var result = new ResellerTransactionRetrieveResponseDto
+            {
+                IsSuccessful = response.IsSuccessful,
+                Details = response.Details
+            };
             return this.Ok(result);
         }
     }

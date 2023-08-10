@@ -1,7 +1,7 @@
 ﻿namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
     using ApplicationLifeCycle;
-
+    using AutomaticTaskBrowserCommandProcessingLibrary.Service.ResellerTransactionRetrieve.ResellerTransactionRetrieveChain;
     using SimpleInjector;
 
     public class CompositeRoot : CompositeRootBase
@@ -16,10 +16,14 @@
             this.GlobalContainer.Register<IResellerBalanceRetrieveProcessor, ResellerBalanceRetrieveProcessor>();
             this.GlobalContainer.Register<IResellerBalanceRetrieveAdapter, ResellerBalanceRetrieveAdapter>();
 
+            this.GlobalContainer.Register<IResellerTransactionRetrieveProcessor, ResellerTransactionRetrieveProcessor>();
+            this.GlobalContainer.Register<IResellerTransactionRetrieveAdapter, ResellerTransactionRetrieveAdapter>();
+
             this.GlobalContainer.Register<ILoginPageFactory, LoginPageFactory>();
             this.GlobalContainer.Register<ILogoutPageFactory, LogoutPageFactory>();
             this.GlobalContainer.Register<IManagementPageFactory, ManagementPageFactory>();
             this.GlobalContainer.Register<IResellerBalancePageFactory, ResellerBalancePageFactory>();
+            this.GlobalContainer.Register<ITransactionReportsPageFactory, TransactionReportsPageFactory>();
 
             this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferStart>();
             this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLoginCreate>();
@@ -43,6 +47,16 @@
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveUpdateApi>();
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLogoutCreate>();
             this.GlobalContainer.RegisterDecorator<IResellerBalanceRetrieveChain, ResellerBalanceRetrieveChainLogoutVerifyLoad>();
+
+            this.GlobalContainer.Register<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainStart>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLoginCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLoginVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLoginSubmit>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainTransactionReportsCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainTransactionReportsVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainTransactionReportsRetrive>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLogoutCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLogoutVerifyLoad>();
 
             return true;
         }

@@ -7,9 +7,9 @@
 
     public class GoldenDragonShopsManagement : BaseManagementPage
     {
-        private readonly string pageLoadedText = "Welcome,";
+        private readonly string pageLoadedText = "Welcome";
 
-        private readonly string pageUrl = "http://byagent.dingyou518.com/Index.aspx?77";
+        private readonly string pageUrl = "https://pos.goldendragoncity.com/Drawer/";
 
         private readonly By agentManagementBalanceLocator = By.XPath("//*[@id=\"form1\"]/table[1]/tbody/tr/td[2]");
         private readonly By agentManagementButtonLocator = By.XPath("//*[@id=\"M_1\"]/table/tbody/tr[2]");
@@ -39,37 +39,24 @@
 
         protected override string getBalance()
         {
-            var frames = this.driver.FindElements(By.TagName("iframe"));
-            this.driver.SwitchTo().Frame(0);
             try
             {
-                var agentManagementButtonElement = this.getElementByLocator(this.agentManagementButtonLocator);
-                if (agentManagementButtonElement == null)
+                var lis = this.driver.FindElements(By.XPath("//li[@class=\"clearfix\"]"));
+                foreach(var li in lis)
                 {
-                    return string.Empty;
+                    var strTitle = li.FindElement(By.ClassName("title-name")).Text;
+                    if(strTitle == "Balance")
+                    {
+                        var strBalance = li.FindElement(By.ClassName("txt-bluegreen")).Text;
+                        return strBalance.Replace("$", string.Empty);
+                    }
                 }
-
-                agentManagementButtonElement.Click();
-                this.driver.SwitchTo().ParentFrame();
-                this.driver.SwitchTo().Frame(1);
-
-                var currentBalanceAmountElement = this.getElementByLocator(this.agentManagementBalanceLocator);
-                if (currentBalanceAmountElement == null)
-                {
-                    return "0.00";
-                }
-
-                // Find "Your Balance: and strip everthing (including 'Your Balance:') to the left
-                var text = currentBalanceAmountElement.Text;
-                text = text.Substring(text.IndexOf("Your Balance:", StringComparison.Ordinal) + "Your Balance:".Length);
-                var balanceAsString = text.Replace(" ", string.Empty);
-                return balanceAsString;
+                return "0.00";
             }
             finally
             {
                 this.driver.SwitchTo().ParentFrame();
                 var source = this.driver.PageSource;
-                frames = this.driver.FindElements(By.TagName("iframe"));
             }
         }
 

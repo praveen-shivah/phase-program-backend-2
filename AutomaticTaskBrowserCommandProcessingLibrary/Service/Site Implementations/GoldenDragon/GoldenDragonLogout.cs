@@ -6,10 +6,10 @@ using SeleniumExtras.PageObjects;
 
 public class GoldenDragonLogout : BaseLogoutPage
 {
-    private readonly string logoutPageUrl = "http://byagent.dingyou518.com/LoginOut.aspx";
+    private readonly string logoutPageUrl = "https://pos.goldendragoncity.com/pos/4432243";
 
-    private By logOutButtonLocator = By.XPath("");
-    private By okButtonLocator = By.XPath("");
+    private By logOutButtonLocator = By.XPath("//*[@id=\"Logout\"]/a");
+    private By logOutYesButtonLocator = By.XPath("//*[@id=\"ajs-ok\"]");
 
     public GoldenDragonLogout(IWebDriver driver)
         : base(driver)
@@ -22,8 +22,19 @@ public class GoldenDragonLogout : BaseLogoutPage
         var logOutButton = this.getElementByLocator(this.logOutButtonLocator);
         logOutButton.Click();
 
-        var okButton = this.getElementByLocator(this.okButtonLocator);
-        okButton.Click();
+        IList<IWebElement> btnCollection = this.driver.FindElements(this.logOutYesButtonLocator);
+        foreach (IWebElement btn in btnCollection)
+        {
+            try
+            {
+                if (btn.Text == "No, Just Logout")
+                {
+                    btn.Click();
+                    break;
+                }
+            }
+            catch(Exception ex) { }
+        }
 
         return true;
     }
