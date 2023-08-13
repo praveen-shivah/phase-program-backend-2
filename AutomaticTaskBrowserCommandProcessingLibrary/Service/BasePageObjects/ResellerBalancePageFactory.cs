@@ -28,6 +28,8 @@
                     return new PampazarResellerBalancePage(driver);
                 case SoftwareTypeEnum.goldenBuffalo:
                     return new GoldenBuffaloResellerBalancePage(driver);
+                case SoftwareTypeEnum.goldenDragon:
+                    return new GoldenDragonResellerBalancePage(driver);
                 case SoftwareTypeEnum.poseidonX:
                     return new PoseidonXResellerBalancePage(driver);
                 case SoftwareTypeEnum.bcLive:

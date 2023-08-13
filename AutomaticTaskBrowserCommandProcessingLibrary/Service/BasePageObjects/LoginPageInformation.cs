@@ -19,5 +19,6 @@
         public string SiteUserId { get; }
 
         public SoftwareTypeEnum SoftwareType { get; }
+        public string LoginPage { get; set; }
     }
 }

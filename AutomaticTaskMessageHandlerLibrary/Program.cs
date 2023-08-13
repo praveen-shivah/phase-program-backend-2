@@ -54,6 +54,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(logger);
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferProcessor>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceRetrieveProcessor>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerTransactionRetrieveProcessor>());
 
 // builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
 

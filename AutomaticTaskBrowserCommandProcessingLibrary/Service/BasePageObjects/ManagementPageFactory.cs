@@ -26,6 +26,8 @@
                     return new PampazarShopsManagement(webDriver);
                 case SoftwareTypeEnum.goldenBuffalo:
                     return new GoldenBuffaloShopsManagement(webDriver);
+                case SoftwareTypeEnum.goldenDragon:
+                    return new GoldenDragonShopsManagement(webDriver);
                 case SoftwareTypeEnum.poseidonX:
                     return new PoseidonXShopsManagement(webDriver);
                 case SoftwareTypeEnum.bcLive:

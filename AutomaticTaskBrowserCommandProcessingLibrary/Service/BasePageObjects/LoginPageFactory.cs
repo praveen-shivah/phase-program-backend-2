@@ -30,6 +30,8 @@
                     return new PoseidonXLogin(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.bcLive:
                     return new BCLiveLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.goldenDragon:
+                    return new GoldenDragonLogin(webDriver, loginPageInformation);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);
