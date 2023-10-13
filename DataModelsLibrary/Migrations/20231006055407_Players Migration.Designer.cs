@@ -3,6 +3,7 @@ using System;
 using DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataModelsLibrary.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DPContextModelSnapshot : ModelSnapshot
+    [Migration("20231006055407_Players Migration")]
+    partial class PlayersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -964,43 +966,17 @@ namespace DataModelsLibrary.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("LoginPassword")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("LoginPassword")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LoginUsername")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MobileId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("LoginUsername")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PlayerId")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int>("ResellerId")
                         .HasColumnType("integer");

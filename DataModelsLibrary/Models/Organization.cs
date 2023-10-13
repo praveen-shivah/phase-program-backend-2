@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
 
     public partial class Organization : BaseEntity
@@ -26,6 +26,7 @@ using Microsoft.EntityFrameworkCore;
             TransferPointsQueue = new HashSet<TransferPointsQueue>();
             User = new HashSet<User>();
             VendorCredentialsByOrganizations = new HashSet<VendorCredentialsByOrganizations>();
+            Players = new HashSet<Players>();
         }
 
         [Key]
@@ -70,5 +71,7 @@ using Microsoft.EntityFrameworkCore;
         public virtual ICollection<User> User { get; set; }
         [InverseProperty("Organization")]
         public virtual ICollection<VendorCredentialsByOrganizations> VendorCredentialsByOrganizations { get; set; }
+        [InverseProperty("Organization")]
+        public virtual ICollection<Players> Players { get; set; } 
     }
 }

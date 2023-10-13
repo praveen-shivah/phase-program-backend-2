@@ -4,15 +4,19 @@ using System.IO;
 using System.Reflection;
 
 using AutomaticTaskBrowserCommandProcessingLibrary;
-
 using log4net;
 using log4net.Config;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-
+using PlayersRepositoryTypes;
 using SimpleInjector.Lifestyles;
+using CommonServices;
+using DatabaseContext;
+using Microsoft.Extensions.Configuration;
+using SharedUtilities;
+using Microsoft.EntityFrameworkCore;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -44,6 +48,7 @@ builder.Services.AddCors(options =>
         });
 });
 
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -52,9 +57,25 @@ builder.Services.AddSwaggerGen();
 
 // Register dependencies here
 builder.Services.AddSingleton(logger);
+builder.Services.AddDbContext<DataContext>();
+builder.Services.AddSingleton(applicationLifeCycle.Resolve<IDateTimeService>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IDistributorToResellerSendPointsTransferProcessor>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerBalanceRetrieveProcessor>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerTransactionRetrieveProcessor>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IResellerPlayersRetrieveProcessor>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IPlayersRepository>());
+
+var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+});
+
+//builder.Services.AddTransient<IPlayersInformationRepository, PlayersRepository.Services.PlayersRepository>();
+//builder.Services.AddTransient<IPlayersRepository, PlayersInformationUpdate>();
+//builder.Services.AddTransient<IPlayersInformationRepository, PlayersRepository.Services.PlayersRepository>();
+
 
 // builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IAutomaticTaskQueueServiceProcessorRepository>());
 

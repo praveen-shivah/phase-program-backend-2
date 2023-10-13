@@ -101,14 +101,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{8B4BB801-9E6D-4853-969F-99586A444DF4}"
 	ProjectSection(SolutionItems) = preProject
 		Documentation\ApplicationLifeCycleLibrary.docx = Documentation\ApplicationLifeCycleLibrary.docx
-		Documentation\DatabaseDesign_Migration.docx = Documentation\DatabaseDesign_Migration.docx
 		ChromeDriver_notes.txt = ChromeDriver_notes.txt
+		Documentation\DatabaseDesign_Migration.docx = Documentation\DatabaseDesign_Migration.docx
 		Documentation\MobileOMatic Process Flow.docx = Documentation\MobileOMatic Process Flow.docx
 		NugetPackageNotes.txt = NugetPackageNotes.txt
 		Documentation\RESTEndpointFlow.pdf = Documentation\RESTEndpointFlow.pdf
 		Documentation\Services Overview.pdf = Documentation\Services Overview.pdf
 		Documentation\Services Overview.vsdx = Documentation\Services Overview.vsdx
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayersRepository", "PlayersRepository\PlayersRepository.csproj", "{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayersRepositoryTypes", "PlayersRepositoryTypes\PlayersRepositoryTypes.csproj", "{967B4C56-4762-449D-BF10-7F46FA563781}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -374,6 +378,22 @@ Global
 		{CEF32AE7-AF69-4A45-8B82-1D8DB58A62D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CEF32AE7-AF69-4A45-8B82-1D8DB58A62D0}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
 		{CEF32AE7-AF69-4A45-8B82-1D8DB58A62D0}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Debug-Linux|Any CPU.ActiveCfg = Debug|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Debug-Linux|Any CPU.Build.0 = Debug|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Release-Linux|Any CPU.ActiveCfg = Release|Any CPU
+		{967B4C56-4762-449D-BF10-7F46FA563781}.Release-Linux|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -412,6 +432,8 @@ Global
 		{7AB82668-99B6-4558-85C7-7DF6FA6A5C10} = {57E6D0DC-5947-4927-A3D9-97745B3E84C5}
 		{991A58AD-7D36-48D4-84D7-4DB31315F81B} = {32A6DEAF-2409-4341-984D-4BF92708F525}
 		{CEF32AE7-AF69-4A45-8B82-1D8DB58A62D0} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{84C448A0-CFE3-488F-9CA8-5B18B8727C3A} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
+		{967B4C56-4762-449D-BF10-7F46FA563781} = {04F3A803-EB5A-49FD-AE92-090C9B8B52A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B70FE91-13AB-4324-B0D4-CBA8FCB24D18}
