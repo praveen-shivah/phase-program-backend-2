@@ -19,11 +19,15 @@
             this.GlobalContainer.Register<IResellerTransactionRetrieveProcessor, ResellerTransactionRetrieveProcessor>();
             this.GlobalContainer.Register<IResellerTransactionRetrieveAdapter, ResellerTransactionRetrieveAdapter>();
 
+            this.GlobalContainer.Register<IResellerPlayersRetrieveProcessor, ResellerPlayersRetrieveProcessor>();
+            this.GlobalContainer.Register<IResellerPlayersRetrieveAdapter, ResellerPlayersRetrieveAdapter>();
+
             this.GlobalContainer.Register<ILoginPageFactory, LoginPageFactory>();
             this.GlobalContainer.Register<ILogoutPageFactory, LogoutPageFactory>();
             this.GlobalContainer.Register<IManagementPageFactory, ManagementPageFactory>();
             this.GlobalContainer.Register<IResellerBalancePageFactory, ResellerBalancePageFactory>();
             this.GlobalContainer.Register<ITransactionReportsPageFactory, TransactionReportsPageFactory>();
+            this.GlobalContainer.Register<IResellerPlayerPageFactory, PlayersPageFactory>();
 
             this.GlobalContainer.Register<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferStart>();
             this.GlobalContainer.RegisterDecorator<IDistributorToResellerSendPointsTransferChain, DistributorToResellerSendPointsTransferLoginCreate>();
@@ -57,6 +61,15 @@
             this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainTransactionReportsRetrive>();
             this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLogoutCreate>();
             this.GlobalContainer.RegisterDecorator<IResellerTransactionRetrieveChain, ResellerTransactionRetrieveChainLogoutVerifyLoad>();
+
+            this.GlobalContainer.Register<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainStart>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainLoginCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainLoginVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainLoginSubmit>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainSavePlayer>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainSavePlayerVerifyLoad>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainLogoutCreate>();
+            this.GlobalContainer.RegisterDecorator<IResellerPlayersRetrieveChain, ResellerPlayersRetrieveChainLogoutVerifyLoad>();
 
             return true;
         }

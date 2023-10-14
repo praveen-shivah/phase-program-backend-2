@@ -1,3 +1,4 @@
+using CommonServices;
 using DatabaseContext;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ var connection = connectionFactory.Create();
 var connectionString = connection.ConnectionString;
 
 builder.Services.AddDbContext<DataContext>((s, options) => options.UseNpgsql(connectionString));
-//builder.Services.AddSingleton<IDateTimeService, DateTimeServiceWithOffset>();
+builder.Services.AddSingleton<IDateTimeService, DateTimeServiceWithOffset>();
 
 var app = builder.Build();
 

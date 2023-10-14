@@ -20,5 +20,6 @@
 
         public SoftwareTypeEnum SoftwareType { get; }
         public string LoginPage { get; set; }
+        public int Drawer { get; set; }
     }
 }

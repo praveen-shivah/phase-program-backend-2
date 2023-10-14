@@ -10,6 +10,7 @@ namespace AutomaticTaskSharedLibrary
     public class ResellerTransactionRetrieveResponseDto : BaseResponseDto
     {
         public ResellerTransactionDetail[] Details { get; set; }
+        public bool IsSuccessful { get; set; }
     }
 
 

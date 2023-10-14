@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
 
 [Index(nameof(OrganizationId), Name = "IX_Reseller_OrganizationId")]
@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
             Contact = new HashSet<Contact>();
             Invoice = new HashSet<Invoice>();
             SiteInformation = new HashSet<SiteInformation>();
+            Players = new HashSet<Players>();
         }
 
         [Key]
@@ -34,5 +35,7 @@ using Microsoft.EntityFrameworkCore;
         public virtual ICollection<Invoice> Invoice { get; set; }
         [InverseProperty("Reseller")]
         public virtual ICollection<SiteInformation> SiteInformation { get; set; }
+        [InverseProperty("Reseller")]
+        public virtual ICollection<Players> Players { get; set; }
     }
 }
