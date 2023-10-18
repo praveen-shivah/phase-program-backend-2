@@ -10,18 +10,6 @@ namespace DataModelsLibrary.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_PlayersInformation_Organization_OrganizationId",
-                table: "PlayersInformation");
-
-            migrationBuilder.DropIndex(
-                name: "IX_PlayersInformation_OrganizationId",
-                table: "PlayersInformation");
-
-            migrationBuilder.DropColumn(
-                name: "OrganizationId",
-                table: "PlayersInformation");
-
             migrationBuilder.CreateTable(
                 name: "Players",
                 columns: table => new
@@ -33,9 +21,15 @@ namespace DataModelsLibrary.Migrations
                     ModifiedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ResellerId = table.Column<int>(type: "integer", nullable: false),
                     VendorId = table.Column<int>(type: "integer", nullable: false),
-                    LoginUsername = table.Column<int>(type: "integer", nullable: false),
-                    LoginPassword = table.Column<int>(type: "integer", nullable: false),
-                    Balance = table.Column<int>(type: "integer", nullable: false)
+                    LoginUsername = table.Column<string>(type: "text", nullable: false),
+                    LoginPassword = table.Column<string>(type: "text", nullable: false),
+                    Balance = table.Column<int>(type: "integer", nullable: false),
+                    PlayerId = table.Column<string>(type: "text", nullable: false),
+                    MobileId = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Gender = table.Column<string>(type: "text", nullable: false),
+                    Phone = table.Column<string>(type: "text", nullable: false),
+                    Mail = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,26 +74,6 @@ namespace DataModelsLibrary.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Players");
-
-            migrationBuilder.AddColumn<int>(
-                name: "OrganizationId",
-                table: "PlayersInformation",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PlayersInformation_OrganizationId",
-                table: "PlayersInformation",
-                column: "OrganizationId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PlayersInformation_Organization_OrganizationId",
-                table: "PlayersInformation",
-                column: "OrganizationId",
-                principalTable: "Organization",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }
