@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataModelsLibrary.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231006092241_Players Fields Update Migration")]
-    partial class PlayersFieldsUpdateMigration
+    [Migration("20231017073815_Players Migration ")]
+    partial class PlayersMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -461,6 +461,75 @@ namespace DataModelsLibrary.Migrations
                     b.HasIndex(new[] { "OrganizationId" }, "IX_PhoneNumber_OrganizationId");
 
                     b.ToTable("PhoneNumber");
+                });
+
+            modelBuilder.Entity("DatabaseContext.Players", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LoginPassword")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LoginUsername")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Mail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MobileId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PlayerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ResellerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VendorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ResellerId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("DatabaseContext.PostalCode", b =>
@@ -952,117 +1021,6 @@ namespace DataModelsLibrary.Migrations
                     b.ToTable("VendorCredentialsByOrganizations");
                 });
 
-            modelBuilder.Entity("DataModelsLibrary.Models.Players", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Balance")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LoginPassword")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LoginUsername")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MobileId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PlayerId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ResellerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("VendorId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("ResellerId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.Models.PlayersInformation", b =>
-                {
-                    b.Property<int>("PlayerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PlayerId"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MobileId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("PlayerId");
-
-                    b.ToTable("PlayersInformation");
-                });
-
             modelBuilder.Entity("DatabaseContext.Address", b =>
                 {
                     b.HasOne("DatabaseContext.City", "City")
@@ -1217,6 +1175,33 @@ namespace DataModelsLibrary.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("DatabaseContext.Players", b =>
+                {
+                    b.HasOne("DatabaseContext.Organization", "Organization")
+                        .WithMany("Players")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatabaseContext.Reseller", "Reseller")
+                        .WithMany("Players")
+                        .HasForeignKey("ResellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatabaseContext.Vendor", "Vendor")
+                        .WithMany("Players")
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Reseller");
+
+                    b.Navigation("Vendor");
+                });
+
             modelBuilder.Entity("DatabaseContext.PostalCode", b =>
                 {
                     b.HasOne("DatabaseContext.Country", "Country")
@@ -1357,33 +1342,6 @@ namespace DataModelsLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Organization");
-
-                    b.Navigation("Vendor");
-                });
-
-            modelBuilder.Entity("DataModelsLibrary.Models.Players", b =>
-                {
-                    b.HasOne("DatabaseContext.Organization", "Organization")
-                        .WithMany("Players")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DatabaseContext.Reseller", "Reseller")
-                        .WithMany("Players")
-                        .HasForeignKey("ResellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DatabaseContext.Vendor", "Vendor")
-                        .WithMany("Players")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Reseller");
 
                     b.Navigation("Vendor");
                 });

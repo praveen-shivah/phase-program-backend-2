@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AutomaticTaskBrowserCommandProcessingLibrary\AutomaticTaskBrowserCommandProcessingLibrary.csproj" />
     <ProjectReference Include="..\DataModelsLibrary\DataModelsLibrary.csproj" />
+    <ProjectReference Include="..\DataSeedingLibrary\DataSeedingLibrary.csproj" />
     <ProjectReference Include="..\PlayersRepositoryTypes\PlayersRepositoryTypes.csproj" />
     <ProjectReference Include="..\PlayersRepository\PlayersRepository.csproj" />
   </ItemGroup>

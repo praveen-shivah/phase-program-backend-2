@@ -45,6 +45,7 @@ using ApiHost;
 using TransferRepository;
 
 using VendorRepositoryTypes;
+using PlayersRepositoryTypes;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -110,6 +111,7 @@ builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IInvoiceListRese
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<ITransferPointsQueueGetOutstandingItemsRepository>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IIdentityServer>());
 builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IUpdateResellerBalanceRepository>());
+builder.Services.AddTransient(_ => applicationLifeCycle.Resolve<IPlayersRepository>());
 
 var connectionString = builder.Configuration.GetConnectionString("MobileOMatic");
 
