@@ -60,5 +60,37 @@
                 throw ex;
             }
         }
+        async Task<List<PlayerDto>> IPlayersRepository.GetPlayers(int softwareType)
+        {
+            var result = new List<PlayerDto>();
+            var uow = this.unitOfWorkFactory.Create(
+                async context =>
+                {
+                    var players = await context.Players.Where(p => p.VendorId == softwareType).ToListAsync();
+                    result.Add(new PlayerDto() { IsPlaceHolder = true });
+                    foreach (var player in players)
+                    {
+                        result.Add(
+                            new PlayerDto()
+                            {
+                                PlayerId = player.PlayerId,
+                                MobileId = player.MobileId,
+                                Name = player.Name,
+                                Gender = player.Gender,
+                                Phone = player.Phone,
+                                Mail = player.Mail,
+                                LoginUsername = player.LoginUsername,
+                                Balance = player.Balance.ToString(),
+                                OrganizationId = player.OrganizationId,
+                                ResellerId = player.ResellerId,
+                                VendorId = player.VendorId
+                            });
+                    }
+
+                    return WorkItemResultEnum.doneContinue;
+                });
+            var response = await uow.ExecuteAsync();
+            return response == WorkItemResultEnum.commitSuccessfullyCompleted ? result : new List<PlayerDto>();
+        }
     }
 }
