@@ -20,6 +20,10 @@
             {
                 case SoftwareTypeEnum.goldenDragon:
                     return new GoldenDragonPlayersPage(webDriver, playersInformationRepository);
+                case SoftwareTypeEnum.fireStorm:
+                    return new FirestormPlayersPage(webDriver, playersInformationRepository);
+                case SoftwareTypeEnum.magicCity:
+                    return new MagicCityPlayersPage(webDriver, playersInformationRepository);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }

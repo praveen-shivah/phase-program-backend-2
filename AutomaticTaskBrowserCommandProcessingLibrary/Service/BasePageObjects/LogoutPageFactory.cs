@@ -32,6 +32,10 @@
                     return new BCLiveLogout(webDriver);
                 case SoftwareTypeEnum.goldenDragon:
                     return new GoldenDragonLogout(webDriver);
+                case SoftwareTypeEnum.fireStorm:
+                    return new FirestormLogout(webDriver);
+                case SoftwareTypeEnum.magicCity:
+                    return new MagicCityLogout(webDriver);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(softwareType), softwareType, null);
             }
