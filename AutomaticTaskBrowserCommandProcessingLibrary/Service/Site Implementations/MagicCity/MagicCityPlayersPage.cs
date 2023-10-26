@@ -25,7 +25,11 @@
         }
         private void parseTable(ResellerPlayersRetrieveRequest request)
         {
-            Thread.Sleep(8000);
+            var body = getElementByLocator(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]/div[3]/table/tbody"));
+            while (body.Text == "No Data")
+            {
+                body = getElementByLocator(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]/div[3]/table/tbody"));
+            }
             IWebElement tableElement = driver.FindElement(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]"));
                 IList<IWebElement> trCollection = tableElement.FindElements(By.TagName("tr"));
                 IList<IWebElement> tdCollection;

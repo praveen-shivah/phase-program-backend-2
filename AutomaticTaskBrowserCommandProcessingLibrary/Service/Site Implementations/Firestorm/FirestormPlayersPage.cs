@@ -30,7 +30,11 @@
         }
         private void parseTable(ResellerPlayersRetrieveRequest request)
         {
-            Thread.Sleep(8000);
+            var btn_export = getElementByLocator(By.XPath("//*[@id=\"btn_export\"]"));
+            while (btn_export.Text != "Excel")
+            {
+                btn_export = getElementByLocator(By.XPath("//*[@id=\"btn_export\"]"));
+            }
             IWebElement nxtbtnElement = driver.FindElement(this.nxtBtnElementLocator);
             string strBtnClass = nxtbtnElement.GetAttribute("class");
             IList<IWebElement> pageBtns = driver.FindElements(this.pageBtnElementLocator);
