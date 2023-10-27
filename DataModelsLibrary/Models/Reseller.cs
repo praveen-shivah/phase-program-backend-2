@@ -16,6 +16,7 @@ using System.ComponentModel.DataAnnotations.Schema;
             Invoice = new HashSet<Invoice>();
             SiteInformation = new HashSet<SiteInformation>();
             Players = new HashSet<Players>();
+            Transaction = new HashSet<Transaction>();
         }
 
         [Key]
@@ -37,5 +38,7 @@ using System.ComponentModel.DataAnnotations.Schema;
         public virtual ICollection<SiteInformation> SiteInformation { get; set; }
         [InverseProperty("Reseller")]
         public virtual ICollection<Players> Players { get; set; }
+        [InverseProperty("Reseller")]
+        public virtual ICollection<Transaction> Transaction { get; set; }
     }
 }

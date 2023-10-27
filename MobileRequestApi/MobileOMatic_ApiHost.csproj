@@ -58,6 +58,7 @@
     <ProjectReference Include="..\ResellerRepositoryTypes\ResellerRepositoryTypes.csproj" />
     <ProjectReference Include="..\ResellerRepository\ResellerRepository.csproj" />
     <ProjectReference Include="..\RestServicesSupport\RestServicesSupport.csproj" />
+    <ProjectReference Include="..\TransactionRepositoryTypes\TransactionRepositoryTypes.csproj" />
     <ProjectReference Include="..\TransferRepository\TransferRepository.csproj" />
     <ProjectReference Include="..\VendorRepositoryTypes\VendorRepositoryTypes.csproj" />
     <ProjectReference Include="..\VendorRepository\VendorRepository.csproj" />

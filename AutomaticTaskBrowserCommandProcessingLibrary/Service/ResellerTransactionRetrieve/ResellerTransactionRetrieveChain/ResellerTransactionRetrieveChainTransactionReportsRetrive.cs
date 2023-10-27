@@ -26,7 +26,7 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
 
             response.ResponseType = ResellerTransactionRetrieveResponseType.transactionReportRetrive;
 
-            response.Details = response.TransactionReportsPage.FetchReport();
+            response.Details = response.TransactionReportsPage.SaveReport(resellerTransactionRetrieveRequest);
 
             return response;
         }

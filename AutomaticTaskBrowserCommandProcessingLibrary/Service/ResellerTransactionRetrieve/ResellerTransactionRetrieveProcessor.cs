@@ -29,11 +29,13 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
                     var password = resellerTransactionRetrieveRequestDto.Password;
                     var organizationId = resellerTransactionRetrieveRequestDto.OrganizationId;
                     var apiKey = resellerTransactionRetrieveRequestDto.ApiKey;
+                    var drawer = resellerTransactionRetrieveRequestDto.Drawer;
+                    var vendor = resellerTransactionRetrieveRequestDto.VendorId;
 
                     var driver = new ChromeDriver(@"C:\Program Files (x86)");
                     try
                     {
-                        var request = new ResellerTransactionRetrieveRequest(softwareType, organizationId, apiKey, resellerId, userId, password);
+                        var request = new ResellerTransactionRetrieveRequest(softwareType, organizationId, apiKey, resellerId, userId, password, drawer, vendor);
                         var response = this.resellerTransactionRetrieveAdapter.Execute(driver, request);
                         driver.Quit();
 

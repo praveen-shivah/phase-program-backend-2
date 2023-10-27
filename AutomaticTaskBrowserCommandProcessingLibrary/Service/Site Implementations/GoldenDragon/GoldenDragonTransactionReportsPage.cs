@@ -1,4 +1,5 @@
-﻿using AutomaticTaskSharedLibrary;
+﻿using ApiDTO;
+using AutomaticTaskSharedLibrary;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransactionRepositoryTypes;
 
 namespace AutomaticTaskBrowserCommandProcessingLibrary
 {
@@ -18,16 +20,18 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
         private By detailReportsElementLocator = By.XPath("//*[@id='DetailReports']/tbody");
         private By nxtBtnElementLocator = By.XPath("//*[@id='DetailReports_next']");
         private By pageBtnElementLocator = By.XPath("//*[@id='DetailReports_paginate']/span/a");
+        private By todayElementLocator = By.XPath("//*[@id=\"_SearchForm_\"]/ul/li[5]/button[1]");
         private List<ResellerTransactionDetail> resellerTransactionDetails = null;
 
-
+        private readonly ITransactionRepository transactionRepository;
         private readonly string pageUrl = "https://pos.goldendragoncity.com/Reports/TransactionReports";
-        public GoldenDragonTransactionReportsPage(IWebDriver driver)
+        public GoldenDragonTransactionReportsPage(IWebDriver driver, ITransactionRepository transactionRepository)
             : base(driver)
         {
             PageFactory.InitElements(driver, this);
             this.driver.Url = this.pageUrl;
             this.resellerTransactionDetails = new List<ResellerTransactionDetail>();
+            this.transactionRepository = transactionRepository;
         }
 
         protected override bool isPageUrlSet()
@@ -42,7 +46,7 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
             return result;
         }
 
-        private void parseTable()
+        private void parseTable(ResellerTransactionRetrieveRequest request)
         {
             IWebElement nxtbtnElement = driver.FindElement(this.nxtBtnElementLocator);
             string strBtnClass = nxtbtnElement.GetAttribute("class");
@@ -69,7 +73,10 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
                                 Type = tdCollection[3].Text,
                                 Amount = tdCollection[4].Text,
                                 Comps = tdCollection[5].Text,
-                                Free = tdCollection[6].Text
+                                Free = tdCollection[6].Text,
+                                OrganizationId = request.OrganizationId,
+                                ResellerId = request.OrganizationId,
+                                VendorId = request.OrganizationId,
                             });
                         }
                     }
@@ -87,24 +94,35 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
             }
         }
 
-        protected override ResellerTransactionDetail[] fetchReport()
+        protected override ResellerTransactionDetail[] saveReport(ResellerTransactionRetrieveRequest request)
         {
-
-            var lastWeekElement = getElementByLocator(this.lastWeekElementLocator);
+            var todayElement = getElementByLocator(this.todayElementLocator);
+            todayElement.Click();
             var reportsBtnElement = getElementByLocator(this.reportsBtnElementLocator);
-            lastWeekElement.Click();
             reportsBtnElement.Click();
             this.wait.Until(d => d.PageSource.Contains("Transaction Detail Reports"));
             Thread.Sleep(10 * 1000);
-            parseTable();
-
-            var thisWeekElement = getElementByLocator(this.thisWeekElementLocator);
-            thisWeekElement.Click();
-            reportsBtnElement = getElementByLocator(this.reportsBtnElementLocator);
-            reportsBtnElement.Click();
-            this.wait.Until(d => d.PageSource.Contains("Transaction Detail Reports"));
-            Thread.Sleep(10 * 1000);
-            parseTable();
+            parseTable(request);
+            foreach (var resellerTransactionDetail in resellerTransactionDetails)
+            {
+                TransactionDto transaction = new TransactionDto
+                {
+                    CustomerID = resellerTransactionDetail.CustomerID,
+                    Time = resellerTransactionDetail.Time,
+                    Station = resellerTransactionDetail.Station,
+                    Type = resellerTransactionDetail.Type,
+                    Amount = resellerTransactionDetail.Amount,
+                    Comps = resellerTransactionDetail.Comps,
+                    Free = resellerTransactionDetail.Free,
+                    OrganizationId = request.OrganizationId,
+                    ResellerId = request.ResellerId,
+                    VendorId = request.VendorId,
+                    LoginUsername = request.LoginPageInformation.SiteUserId,
+                    LoginPassword = request.LoginPageInformation.SitePassword
+                };
+                //transactionRepository.GetTransaction("9626433");
+                transactionRepository.AddTransactionRequestAsync(transaction).GetAwaiter().GetResult();
+            }
             return resellerTransactionDetails.ToArray();
         }
     }

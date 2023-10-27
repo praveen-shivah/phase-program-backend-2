@@ -24,6 +24,8 @@
     <ProjectReference Include="..\DataSeedingLibrary\DataSeedingLibrary.csproj" />
     <ProjectReference Include="..\PlayersRepositoryTypes\PlayersRepositoryTypes.csproj" />
     <ProjectReference Include="..\PlayersRepository\PlayersRepository.csproj" />
+    <ProjectReference Include="..\TransactionRepositoryTypes\TransactionRepositoryTypes.csproj" />
+    <ProjectReference Include="..\TransactionRepository\TransactionRepository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
