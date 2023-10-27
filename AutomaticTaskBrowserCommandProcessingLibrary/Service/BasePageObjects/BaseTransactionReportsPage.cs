@@ -41,11 +41,11 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
             return false;
         }
 
-        ResellerTransactionDetail[] ITransactionReportsPage.FetchReport()
+        ResellerTransactionDetail[] ITransactionReportsPage.SaveReport(ResellerTransactionRetrieveRequest request)
         {
             try
             {
-                return this.fetchReport();
+                return this.saveReport(request);
             }
             catch
             {
@@ -57,6 +57,6 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
 
         protected abstract bool verifyPageLoaded();
 
-        protected abstract ResellerTransactionDetail[] fetchReport();
+        protected abstract ResellerTransactionDetail[] saveReport(ResellerTransactionRetrieveRequest request);
     }
 }

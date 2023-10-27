@@ -23,5 +23,8 @@ namespace AutomaticTaskSharedLibrary
         public string Amount { get; set; }
         public string Comps { get; set; }
         public string Free { get; set; }
+        public int OrganizationId { get; set; }
+        public int ResellerId { get; set; }
+        public int VendorId { get; set; }
     }
 }

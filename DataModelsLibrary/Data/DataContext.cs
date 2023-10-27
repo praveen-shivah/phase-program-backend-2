@@ -36,6 +36,7 @@
         public virtual DbSet<Vendor> Vendor { get; set; } = null!;
         public virtual DbSet<VendorCredentialsByOrganizations> VendorCredentialsByOrganizations { get; set; } = null!;
         public virtual DbSet<Players> Players { get; set; } = null!;
+        public virtual DbSet<Transaction> Transaction { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

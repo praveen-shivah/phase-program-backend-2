@@ -15,6 +15,7 @@ using System.ComponentModel.DataAnnotations.Schema;
             SiteInformation = new HashSet<SiteInformation>();
             VendorCredentialsByOrganizations = new HashSet<VendorCredentialsByOrganizations>();
             Players = new HashSet<Players>();
+            Transaction = new HashSet<Transaction>();
         }
 
         [Key]
@@ -34,5 +35,7 @@ using System.ComponentModel.DataAnnotations.Schema;
         public virtual ICollection<VendorCredentialsByOrganizations> VendorCredentialsByOrganizations { get; set; }
         [InverseProperty("Vendor")]
         public virtual ICollection<Players> Players { get; set; }
+        [InverseProperty("Vendor")]
+        public virtual ICollection<Transaction> Transaction { get; set; }
     }
 }

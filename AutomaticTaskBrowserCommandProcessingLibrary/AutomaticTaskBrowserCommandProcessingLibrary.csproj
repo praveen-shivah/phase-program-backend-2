@@ -24,6 +24,7 @@
     <ProjectReference Include="..\LoggingServicesLibrary\LoggingServicesLibrary.csproj" />
     <ProjectReference Include="..\MobileRequestApiDTO\ApiDTO.csproj" />
     <ProjectReference Include="..\PlayersRepositoryTypes\PlayersRepositoryTypes.csproj" />
+    <ProjectReference Include="..\TransactionRepositoryTypes\TransactionRepositoryTypes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

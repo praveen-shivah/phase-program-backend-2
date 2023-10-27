@@ -11,6 +11,6 @@ namespace AutomaticTaskBrowserCommandProcessingLibrary
     {
         bool IsPageUrlSet();
         bool VerifyPageLoaded();
-        ResellerTransactionDetail[] FetchReport();
+        ResellerTransactionDetail[] SaveReport(ResellerTransactionRetrieveRequest request);
     }
 }
