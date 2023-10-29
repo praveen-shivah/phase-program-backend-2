@@ -32,7 +32,10 @@
                     return new BCLiveLogin(webDriver, loginPageInformation);
                 case SoftwareTypeEnum.goldenDragon:
                     return new GoldenDragonLogin(webDriver, loginPageInformation);
-
+                case SoftwareTypeEnum.fireStorm:
+                    return new FirestormLogin(webDriver, loginPageInformation);
+                case SoftwareTypeEnum.magicCity:
+                    return new MagicCityLogin(webDriver, loginPageInformation);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(loginPageInformation.SoftwareType), loginPageInformation.SoftwareType, null);
             }

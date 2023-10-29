@@ -5,7 +5,7 @@
     using OpenQA.Selenium;
     using PlayersRepositoryTypes;
     using SeleniumExtras.PageObjects;
-    public class GoldenDragonPlayersPage : BasePlayersPage
+    public class MagicCityPlayersPage : BasePlayersPage
     {
         private readonly string pageLoadedText = "Customer Info";
         private By nxtBtnElementLocator = By.XPath("//*[@id=\"CustomerInfo_next\"]");
@@ -15,9 +15,8 @@
 
         private readonly IPlayersRepository playersRepository;
 
-        private readonly string pageUrl = "https://pos.goldendragoncity.com/CustomerAccount/CustomerInfo";
-
-        public GoldenDragonPlayersPage(IWebDriver driver, IPlayersRepository playersRepository) : base(driver)
+        private readonly string pageUrl = "https://pos.magiccity777.com/Customer/CustomerInfo";
+        public MagicCityPlayersPage(IWebDriver driver, IPlayersRepository playersRepository) : base(driver)
         {
             PageFactory.InitElements(driver, this);
             this.driver.Url = this.pageUrl;
@@ -26,19 +25,12 @@
         }
         private void parseTable(ResellerPlayersRetrieveRequest request)
         {
-            var btn_export = getElementByLocator(By.XPath("//*[@id=\"btn_export\"]"));
-            while (btn_export.Text != "Excel")
+            var body = getElementByLocator(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]/div[3]/table/tbody"));
+            while (body.Text == "No Data")
             {
-                btn_export = getElementByLocator(By.XPath("//*[@id=\"btn_export\"]"));
+                body = getElementByLocator(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]/div[3]/table/tbody"));
             }
-            IWebElement nxtbtnElement = driver.FindElement(this.nxtBtnElementLocator);
-            string strBtnClass = nxtbtnElement.GetAttribute("class");
-            IList<IWebElement> pageBtns = driver.FindElements(this.pageBtnElementLocator);
-            int cnt = pageBtns.Count;
-            while (!strBtnClass.Contains("disabled") || cnt == 1)
-            {
-                cnt = 2;
-                IWebElement tableElement = driver.FindElement(By.XPath("//*[@id='CustomerInfo']"));
+            IWebElement tableElement = driver.FindElement(By.XPath("//*[@id=\"__layout\"]/section/div[2]/main/section[2]/div[1]"));
                 IList<IWebElement> trCollection = tableElement.FindElements(By.TagName("tr"));
                 IList<IWebElement> tdCollection;
                 foreach (IWebElement element in trCollection)
@@ -66,25 +58,10 @@
                     }
                     catch { }
                 }
-                try
-                {
-                    nxtbtnElement = driver.FindElement(this.nxtBtnElementLocator);
-                    strBtnClass = nxtbtnElement.GetAttribute("class");
-                    nxtbtnElement.Click();
-                    Thread.Sleep(10 * 1000);
-                }
-                catch { break; }
-            }
         }
         protected override bool isPageUrlSet()
         {
             var result = this.wait.Until(d => d.Url.Contains(this.pageUrl));
-            return result;
-        }
-
-        protected override bool verifyPageLoaded()
-        {
-            var result = this.wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
             return result;
         }
 
@@ -110,6 +87,12 @@
                 playersRepository.AddPlayerRequestAsync(playerInformation).GetAwaiter().GetResult();
             }
             return resellerPlayersDetails.ToArray();
+        }
+
+        protected override bool verifyPageLoaded()
+        {
+            var result = this.wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
+            return result;
         }
     }
 }

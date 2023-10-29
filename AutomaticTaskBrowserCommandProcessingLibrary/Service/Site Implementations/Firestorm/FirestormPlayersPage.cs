@@ -5,24 +5,28 @@
     using OpenQA.Selenium;
     using PlayersRepositoryTypes;
     using SeleniumExtras.PageObjects;
-    public class GoldenDragonPlayersPage : BasePlayersPage
+    public class FirestormPlayersPage : BasePlayersPage
     {
         private readonly string pageLoadedText = "Customer Info";
         private By nxtBtnElementLocator = By.XPath("//*[@id=\"CustomerInfo_next\"]");
         private By pageBtnElementLocator = By.XPath("//*[@id=\"CustomerInfo_paginate\"]/span/a");
-
         private List<ResellerPlayersDetail> resellerPlayersDetails;
 
         private readonly IPlayersRepository playersRepository;
 
-        private readonly string pageUrl = "https://pos.goldendragoncity.com/CustomerAccount/CustomerInfo";
-
-        public GoldenDragonPlayersPage(IWebDriver driver, IPlayersRepository playersRepository) : base(driver)
+        private readonly string pageUrl = "https://pos.firestormhub.com/CustomerAccount/CustomerInfo";
+        public FirestormPlayersPage(IWebDriver driver, IPlayersRepository playersRepository) : base(driver)
         {
             PageFactory.InitElements(driver, this);
             this.driver.Url = this.pageUrl;
             this.resellerPlayersDetails = new List<ResellerPlayersDetail>();
             this.playersRepository = playersRepository;
+        }
+
+        protected override bool isPageUrlSet()
+        {
+            var result = this.wait.Until(d => d.Url.Contains(this.pageUrl));
+            return result;
         }
         private void parseTable(ResellerPlayersRetrieveRequest request)
         {
@@ -76,17 +80,6 @@
                 catch { break; }
             }
         }
-        protected override bool isPageUrlSet()
-        {
-            var result = this.wait.Until(d => d.Url.Contains(this.pageUrl));
-            return result;
-        }
-
-        protected override bool verifyPageLoaded()
-        {
-            var result = this.wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
-            return result;
-        }
 
         protected override ResellerPlayersDetail[] savePlayersDetails(ResellerPlayersRetrieveRequest request)
         {
@@ -110,6 +103,12 @@
                 playersRepository.AddPlayerRequestAsync(playerInformation).GetAwaiter().GetResult();
             }
             return resellerPlayersDetails.ToArray();
+        }
+
+        protected override bool verifyPageLoaded()
+        {
+            var result = this.wait.Until(d => d.PageSource.Contains(this.pageLoadedText));
+            return result;
         }
     }
 }

@@ -6,10 +6,9 @@ using SeleniumExtras.PageObjects;
 
 public class FirestormLogout : BaseLogoutPage
 {
-    private readonly string logoutPageUrl = "http://byagent.bclive.vip/LoginOut.aspx";
+    private readonly string logoutPageUrl = "https://pos.firestormhub.com/pos/9797040";
 
-    private By logOutButtonLocator = By.XPath("");
-    private By okButtonLocator = By.XPath("");
+    private By logOutButtonLocator = By.XPath("//*[@id=\"Logout\"]/a");
 
     public FirestormLogout(IWebDriver driver)
         : base(driver)
@@ -21,9 +20,6 @@ public class FirestormLogout : BaseLogoutPage
     {
         var logOutButton = this.getElementByLocator(this.logOutButtonLocator);
         logOutButton.Click();
-
-        var okButton = this.getElementByLocator(this.okButtonLocator);
-        okButton.Click();
 
         return true;
     }
