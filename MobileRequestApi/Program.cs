@@ -46,6 +46,7 @@ using TransferRepository;
 
 using VendorRepositoryTypes;
 using PlayersRepositoryTypes;
+using Microsoft.AspNetCore.Hosting;
 
 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
@@ -61,6 +62,12 @@ var logger = loggerFactory.Create("HostingApplicationService");
 
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.WebHost.ConfigureKestrel(
+//    serverOptions =>
+//    {
+//        serverOptions.ListenAnyIP(5000);
+//        serverOptions.ListenAnyIP(5001);
+//    });
 var allowLocalHostOrigins = "allowLocalHostOrigins";
 builder.Services.AddCors(options =>
     {

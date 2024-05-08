@@ -19,7 +19,7 @@
             }
 
             var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
-            if (descriptor == null || descriptor.ActionName == "AdminLogin" || descriptor.ActionName == "Logout" || descriptor.ActionName == "RefreshToken")
+            if (descriptor == null || descriptor.ActionName == "login" || descriptor.ActionName == "Logout" || descriptor.ActionName == "RefreshToken")
             {
                 return;
             }
